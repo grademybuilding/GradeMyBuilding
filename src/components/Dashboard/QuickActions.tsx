@@ -2,6 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus, Search, Camera, FileText } from "lucide-react";
 
+interface QuickActionsProps {
+  onTabChange: (tab: string) => void;
+}
+
 const quickActions = [
   {
     id: 'new-inspection',
@@ -33,7 +37,7 @@ const quickActions = [
   },
 ];
 
-export function QuickActions() {
+export function QuickActions({ onTabChange }: QuickActionsProps) {
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -43,11 +47,16 @@ export function QuickActions() {
         <div className="grid grid-cols-2 gap-3">
           {quickActions.map((action) => {
             const Icon = action.icon;
+            const handleClick = action.id === 'new-inspection' 
+              ? () => onTabChange('new-inspection')
+              : () => console.log(`Clicked ${action.id}`);
+              
             return (
               <Button
                 key={action.id}
                 variant={action.variant}
                 className="h-auto p-4 flex flex-col items-center gap-2 text-center"
+                onClick={handleClick}
               >
                 <Icon className="h-6 w-6" />
                 <div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Header } from "@/components/Layout/Header";
 import { Navigation } from "@/components/Layout/Navigation";
 import { Dashboard } from "@/pages/Dashboard";
+import { NewInspection } from "@/pages/NewInspection";
 import { cn } from "@/lib/utils";
 
 const Index = () => {
@@ -11,7 +12,9 @@ const Index = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard onTabChange={setActiveTab} />;
+      case 'new-inspection':
+        return <NewInspection onBack={() => setActiveTab('dashboard')} />;
       case 'inspections':
         return (
           <div className="p-4">
