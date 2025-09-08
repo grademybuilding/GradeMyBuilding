@@ -20,7 +20,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           <Menu className="h-5 w-5" />
         </Button>
         <div className="flex items-center gap-2">
-          <img src={logo} alt="GradeMyBuilding" className="h-8 w-auto" />
+          <img src={logo} alt="GradeMyBuilding" className="h-12 w-auto" />
         </div>
       </div>
       
