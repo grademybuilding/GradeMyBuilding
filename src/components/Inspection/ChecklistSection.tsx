@@ -390,15 +390,6 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                         />
                       </div>
                     )}
-
-                    {/* Notes section for all types */}
-                    <Textarea
-                      placeholder={`Notes for ${item.item.toLowerCase()}...`}
-                      value={notes[item.id] || ''}
-                      onChange={(e) => handleNoteChange(item.id, e.target.value)}
-                      rows={2}
-                      className="text-sm"
-                    />
                   </div>
                 ))}
             </div>
