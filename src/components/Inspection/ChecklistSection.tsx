@@ -18,54 +18,6 @@ interface ChecklistItem {
 }
 
 const inspectionChecklist: ChecklistItem[] = [
-  // Roof Inspection - General
-  { 
-    id: 'roof-inspection-method', 
-    category: 'Roof', 
-    subcategory: 'General',
-    item: 'Inspection Method', 
-    required: true, 
-    type: 'multiselect',
-    options: ['Binoculars', 'Ground', 'Ladder', 'Roof', 'Drone', 'Moisture meter']
-  },
-  { 
-    id: 'roof-type-style', 
-    category: 'Roof', 
-    subcategory: 'General',
-    item: 'Roof Type/Style', 
-    required: true, 
-    type: 'multiselect',
-    options: ['Gable', 'Shed', 'Mansard', 'Combination', 'Gambrel', 'Flat', 'Hip']
-  },
-  
-  // Roof Inspection - Coverings
-  { 
-    id: 'roof-age', 
-    category: 'Roof', 
-    subcategory: 'Coverings',
-    item: 'Age (Year Installed)', 
-    required: true, 
-    type: 'year'
-  },
-  { 
-    id: 'roof-material', 
-    category: 'Roof', 
-    subcategory: 'Coverings',
-    item: 'Material', 
-    required: true, 
-    type: 'multiselect',
-    options: ['Asbestos', 'Ceramic', 'Wood', 'Asphalt', 'Fiberglass', 'Metal', 'Tile', 'Concrete', 'Slate', 'Solar', 'EPDM']
-  },
-  { 
-    id: 'roof-overall-rating', 
-    category: 'Roof', 
-    subcategory: 'Coverings',
-    item: 'Inspector Overall Rating', 
-    required: true, 
-    type: 'rating',
-    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
-  },
-
   // Roof Defects - Coverings
   {
     id: 'roof-under-driven-nails',
@@ -146,32 +98,7 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Ponding',
     required: false,
     type: 'checkbox'
-  },
-  
-  // Foundation & Structure
-  { id: 'foundation-cracks', category: 'Foundation & Structure', item: 'Check for foundation cracks', required: true, type: 'checkbox' },
-  { id: 'structural-integrity', category: 'Foundation & Structure', item: 'Assess structural integrity', required: true, type: 'checkbox' },
-  { id: 'load-bearing', category: 'Foundation & Structure', item: 'Inspect load-bearing elements', required: true, type: 'checkbox' },
-  
-  // Electrical Systems
-  { id: 'electrical-panel', category: 'Electrical', item: 'Inspect electrical panel', required: true, type: 'checkbox' },
-  { id: 'outlet-safety', category: 'Electrical', item: 'Check outlet safety and GFCI', required: true, type: 'checkbox' },
-  { id: 'wiring-condition', category: 'Electrical', item: 'Assess wiring condition', required: true, type: 'checkbox' },
-  
-  // Plumbing
-  { id: 'water-pressure', category: 'Plumbing', item: 'Test water pressure', required: true, type: 'checkbox' },
-  { id: 'leak-detection', category: 'Plumbing', item: 'Check for leaks', required: true, type: 'checkbox' },
-  { id: 'drain-function', category: 'Plumbing', item: 'Verify drain functionality', required: true, type: 'checkbox' },
-  
-  // HVAC
-  { id: 'heating-system', category: 'HVAC', item: 'Inspect heating system', required: true, type: 'checkbox' },
-  { id: 'ventilation', category: 'HVAC', item: 'Check ventilation adequacy', required: true, type: 'checkbox' },
-  { id: 'ductwork', category: 'HVAC', item: 'Examine ductwork condition', required: false, type: 'checkbox' },
-  
-  // Safety & Security
-  { id: 'smoke-detectors', category: 'Safety', item: 'Test smoke detectors', required: true, type: 'checkbox' },
-  { id: 'carbon-monoxide', category: 'Safety', item: 'Check CO detectors', required: true, type: 'checkbox' },
-  { id: 'security-systems', category: 'Safety', item: 'Verify security systems', required: false, type: 'checkbox' },
+  }
 ];
 
 interface ChecklistSectionProps {
