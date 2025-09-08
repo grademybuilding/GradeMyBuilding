@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { CalendarIcon, ClipboardCheck } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -14,7 +15,45 @@ interface InspectionDetailsProps {
   onChange: (field: string, value: any) => void;
 }
 
+const inspectionCategories = [
+  'Residential', 'Commercial', 'Sewer', 'Spa/Swimming Pool', 'Radon', 'Well', 'Water Testing', 'Green Features'
+];
+
+const weatherConditions = [
+  'Clear', 'Cloudy', 'Dry', 'Heavy Rain', 'Hot', 'Humid', 'Light Rain', 'Recent Rain', 'Snow'
+];
+
+const occupancyOptions = [
+  'Utilities Off', 'Furnished', 'Occupied', 'Vacant'
+];
+
+const attendanceOptions = [
+  'Listing Agent', 'Buyer\'s Agent', 'Home Owner', 'Buyer', 'Seller'
+];
+
+const residentialBuildingTypes = [
+  'Detached', 'Single Family', 'Multi-Family', 'Attached', 'Condominium', 
+  'Townhouse', 'Modular', 'Manufactured'
+];
+
+const commercialBuildingTypes = [
+  'Office', 'Industrial', 'Retail', 'Restaurant', 'Shopping Center', 
+  'Specialty', 'Health Care', 'Hospitality', 'Sports & Entertainment'
+];
+
 export function InspectionDetails({ formData, onChange }: InspectionDetailsProps) {
+  const handleMultiSelect = (field: string, option: string) => {
+    const current = formData[field] || [];
+    const updated = current.includes(option)
+      ? current.filter((item: string) => item !== option)
+      : [...current, option];
+    onChange(field, updated);
+  };
+
+  const isSelected = (field: string, option: string) => {
+    return (formData[field] || []).includes(option);
+  };
+
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -23,26 +62,9 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
           Inspection Details
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
+        {/* Basic Inspection Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="inspectionType">Inspection Type *</Label>
-            <Select value={formData.inspectionType || ''} onValueChange={(value) => onChange('inspectionType', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select inspection type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pre-purchase">Pre-Purchase</SelectItem>
-                <SelectItem value="annual">Annual Inspection</SelectItem>
-                <SelectItem value="safety">Safety Inspection</SelectItem>
-                <SelectItem value="insurance">Insurance Inspection</SelectItem>
-                <SelectItem value="compliance">Code Compliance</SelectItem>
-                <SelectItem value="warranty">Warranty Inspection</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
           <div className="space-y-2">
             <Label>Inspection Date *</Label>
             <Popover>
@@ -69,9 +91,7 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
               </PopoverContent>
             </Popover>
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
           <div className="space-y-2">
             <Label htmlFor="inspectorName">Inspector Name *</Label>
             <Input
@@ -81,7 +101,150 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
               onChange={(e) => onChange('inspectorName', e.target.value)}
             />
           </div>
-          
+        </div>
+
+        {/* Inspection Categories */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Inspection Categories</Label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {inspectionCategories.map((category) => (
+              <div key={category} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`category-${category}`}
+                  checked={isSelected('inspectionCategories', category)}
+                  onCheckedChange={() => handleMultiSelect('inspectionCategories', category)}
+                />
+                <Label htmlFor={`category-${category}`} className="text-sm">
+                  {category}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Weather Conditions */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Weather Conditions</Label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {weatherConditions.map((condition) => (
+              <div key={condition} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`weather-${condition}`}
+                  checked={isSelected('weatherConditions', condition)}
+                  onCheckedChange={() => handleMultiSelect('weatherConditions', condition)}
+                />
+                <Label htmlFor={`weather-${condition}`} className="text-sm">
+                  {condition}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Temperature */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="temperature">Temperature (Approximate)</Label>
+            <Input
+              id="temperature"
+              type="number"
+              placeholder="72"
+              value={formData.temperature || ''}
+              onChange={(e) => onChange('temperature', e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="temperatureUnit">Temperature Unit</Label>
+            <Select value={formData.temperatureUnit || 'F'} onValueChange={(value) => onChange('temperatureUnit', value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select unit" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="F">Fahrenheit (°F)</SelectItem>
+                <SelectItem value="C">Celsius (°C)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Occupancy */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Occupancy</Label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {occupancyOptions.map((option) => (
+              <div key={option} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`occupancy-${option}`}
+                  checked={isSelected('occupancy', option)}
+                  onCheckedChange={() => handleMultiSelect('occupancy', option)}
+                />
+                <Label htmlFor={`occupancy-${option}`} className="text-sm">
+                  {option}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* In Attendance */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">In Attendance</Label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {attendanceOptions.map((option) => (
+              <div key={option} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`attendance-${option}`}
+                  checked={isSelected('attendance', option)}
+                  onCheckedChange={() => handleMultiSelect('attendance', option)}
+                />
+                <Label htmlFor={`attendance-${option}`} className="text-sm">
+                  {option}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Building Type - Residential */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Residential Building Type</Label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {residentialBuildingTypes.map((type) => (
+              <div key={type} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`residential-${type}`}
+                  checked={isSelected('residentialBuildingTypes', type)}
+                  onCheckedChange={() => handleMultiSelect('residentialBuildingTypes', type)}
+                />
+                <Label htmlFor={`residential-${type}`} className="text-sm">
+                  {type}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Building Type - Commercial */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Commercial Building Type</Label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {commercialBuildingTypes.map((type) => (
+              <div key={type} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`commercial-${type}`}
+                  checked={isSelected('commercialBuildingTypes', type)}
+                  onCheckedChange={() => handleMultiSelect('commercialBuildingTypes', type)}
+                />
+                <Label htmlFor={`commercial-${type}`} className="text-sm">
+                  {type}
+                </Label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Additional Details */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="license">License Number</Label>
             <Input
@@ -91,9 +254,6 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
               onChange={(e) => onChange('license', e.target.value)}
             />
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="startTime">Start Time</Label>
             <Input
@@ -102,23 +262,6 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
               value={formData.startTime || ''}
               onChange={(e) => onChange('startTime', e.target.value)}
             />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="estimatedDuration">Est. Duration (hours)</Label>
-            <Select value={formData.estimatedDuration || ''} onValueChange={(value) => onChange('estimatedDuration', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select duration" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1 hour</SelectItem>
-                <SelectItem value="2">2 hours</SelectItem>
-                <SelectItem value="3">3 hours</SelectItem>
-                <SelectItem value="4">4 hours</SelectItem>
-                <SelectItem value="6">6 hours</SelectItem>
-                <SelectItem value="8">Full day</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
       </CardContent>
