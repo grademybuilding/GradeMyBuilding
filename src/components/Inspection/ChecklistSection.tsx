@@ -4,6 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, AlertTriangle, X } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { defectDescriptions } from "@/data/defectDescriptions";
 
 interface ChecklistItem {
   id: string;
@@ -62,6 +64,88 @@ const inspectionChecklist: ChecklistItem[] = [
     required: true, 
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+
+  // Roof Defects - Coverings
+  {
+    id: 'roof-under-driven-nails',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Under-Driven Nails',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-tiles-cracked-broken',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Tiles Cracked/Broken',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-splitting',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Splitting',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-shingles-missing',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Shingles Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-underlayment-damage',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Underlayment Damage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-improper-nailing',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Improper/Incomplete Nailing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-discoloration',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Discoloration',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-delamination',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Delamination',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-damaged-general',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Damaged (General)',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-ponding',
+    category: 'Roof',
+    subcategory: 'Defects - Coverings',
+    item: 'Ponding',
+    required: false,
+    type: 'checkbox'
   },
   
   // Foundation & Structure
@@ -272,7 +356,15 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         {item.subcategory && (
-                          <Badge variant="outline" className="text-xs bg-muted">
+                          <Badge 
+                            variant="outline" 
+                            className={cn(
+                              "text-xs",
+                              item.subcategory.includes('Defects') 
+                                ? "bg-red-50 text-red-700 border-red-200" 
+                                : "bg-muted"
+                            )}
+                          >
                             {item.subcategory}
                           </Badge>
                         )}
@@ -285,6 +377,19 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     </div>
                     
                     {renderItemContent(item)}
+
+                    {/* Show defect description for defect items when checked as fail */}
+                    {item.subcategory?.includes('Defects') && checkedItems[item.id] === 'fail' && (
+                      <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+                        <p className="text-xs text-red-800 font-medium mb-1">Standard Defect Description:</p>
+                        <div 
+                          className="text-xs text-red-700"
+                          dangerouslySetInnerHTML={{ 
+                            __html: defectDescriptions[item.id] || 'No description available.' 
+                          }} 
+                        />
+                      </div>
+                    )}
 
                     {/* Notes section for all types */}
                     <Textarea
