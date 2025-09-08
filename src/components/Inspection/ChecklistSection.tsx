@@ -8,35 +8,86 @@ import { useState } from "react";
 interface ChecklistItem {
   id: string;
   category: string;
+  subcategory?: string;
   item: string;
   required: boolean;
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect';
+  options?: string[];
 }
 
 const inspectionChecklist: ChecklistItem[] = [
+  // Roof Inspection - General
+  { 
+    id: 'roof-inspection-method', 
+    category: 'Roof', 
+    subcategory: 'General',
+    item: 'Inspection Method', 
+    required: true, 
+    type: 'multiselect',
+    options: ['Binoculars', 'Ground', 'Ladder', 'Roof', 'Drone', 'Moisture meter']
+  },
+  { 
+    id: 'roof-type-style', 
+    category: 'Roof', 
+    subcategory: 'General',
+    item: 'Roof Type/Style', 
+    required: true, 
+    type: 'multiselect',
+    options: ['Gable', 'Shed', 'Mansard', 'Combination', 'Gambrel', 'Flat', 'Hip']
+  },
+  
+  // Roof Inspection - Coverings
+  { 
+    id: 'roof-age', 
+    category: 'Roof', 
+    subcategory: 'Coverings',
+    item: 'Age (Year Installed)', 
+    required: true, 
+    type: 'year'
+  },
+  { 
+    id: 'roof-material', 
+    category: 'Roof', 
+    subcategory: 'Coverings',
+    item: 'Material', 
+    required: true, 
+    type: 'multiselect',
+    options: ['Asbestos', 'Ceramic', 'Wood', 'Asphalt', 'Fiberglass', 'Metal', 'Tile', 'Concrete', 'Slate', 'Solar', 'EPDM']
+  },
+  { 
+    id: 'roof-overall-rating', 
+    category: 'Roof', 
+    subcategory: 'Coverings',
+    item: 'Inspector Overall Rating', 
+    required: true, 
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  
   // Foundation & Structure
-  { id: 'foundation-cracks', category: 'Foundation & Structure', item: 'Check for foundation cracks', required: true },
-  { id: 'structural-integrity', category: 'Foundation & Structure', item: 'Assess structural integrity', required: true },
-  { id: 'load-bearing', category: 'Foundation & Structure', item: 'Inspect load-bearing elements', required: true },
+  { id: 'foundation-cracks', category: 'Foundation & Structure', item: 'Check for foundation cracks', required: true, type: 'checkbox' },
+  { id: 'structural-integrity', category: 'Foundation & Structure', item: 'Assess structural integrity', required: true, type: 'checkbox' },
+  { id: 'load-bearing', category: 'Foundation & Structure', item: 'Inspect load-bearing elements', required: true, type: 'checkbox' },
   
   // Electrical Systems
-  { id: 'electrical-panel', category: 'Electrical', item: 'Inspect electrical panel', required: true },
-  { id: 'outlet-safety', category: 'Electrical', item: 'Check outlet safety and GFCI', required: true },
-  { id: 'wiring-condition', category: 'Electrical', item: 'Assess wiring condition', required: true },
+  { id: 'electrical-panel', category: 'Electrical', item: 'Inspect electrical panel', required: true, type: 'checkbox' },
+  { id: 'outlet-safety', category: 'Electrical', item: 'Check outlet safety and GFCI', required: true, type: 'checkbox' },
+  { id: 'wiring-condition', category: 'Electrical', item: 'Assess wiring condition', required: true, type: 'checkbox' },
   
   // Plumbing
-  { id: 'water-pressure', category: 'Plumbing', item: 'Test water pressure', required: true },
-  { id: 'leak-detection', category: 'Plumbing', item: 'Check for leaks', required: true },
-  { id: 'drain-function', category: 'Plumbing', item: 'Verify drain functionality', required: true },
+  { id: 'water-pressure', category: 'Plumbing', item: 'Test water pressure', required: true, type: 'checkbox' },
+  { id: 'leak-detection', category: 'Plumbing', item: 'Check for leaks', required: true, type: 'checkbox' },
+  { id: 'drain-function', category: 'Plumbing', item: 'Verify drain functionality', required: true, type: 'checkbox' },
   
   // HVAC
-  { id: 'heating-system', category: 'HVAC', item: 'Inspect heating system', required: true },
-  { id: 'ventilation', category: 'HVAC', item: 'Check ventilation adequacy', required: true },
-  { id: 'ductwork', category: 'HVAC', item: 'Examine ductwork condition', required: false },
+  { id: 'heating-system', category: 'HVAC', item: 'Inspect heating system', required: true, type: 'checkbox' },
+  { id: 'ventilation', category: 'HVAC', item: 'Check ventilation adequacy', required: true, type: 'checkbox' },
+  { id: 'ductwork', category: 'HVAC', item: 'Examine ductwork condition', required: false, type: 'checkbox' },
   
   // Safety & Security
-  { id: 'smoke-detectors', category: 'Safety', item: 'Test smoke detectors', required: true },
-  { id: 'carbon-monoxide', category: 'Safety', item: 'Check CO detectors', required: true },
-  { id: 'security-systems', category: 'Safety', item: 'Verify security systems', required: false },
+  { id: 'smoke-detectors', category: 'Safety', item: 'Test smoke detectors', required: true, type: 'checkbox' },
+  { id: 'carbon-monoxide', category: 'Safety', item: 'Check CO detectors', required: true, type: 'checkbox' },
+  { id: 'security-systems', category: 'Safety', item: 'Verify security systems', required: false, type: 'checkbox' },
 ];
 
 interface ChecklistSectionProps {
@@ -46,12 +97,38 @@ interface ChecklistSectionProps {
 
 export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) {
   const [checkedItems, setCheckedItems] = useState<Record<string, 'pass' | 'fail' | 'na'>>({});
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [yearValues, setYearValues] = useState<Record<string, string>>({});
+  const [ratingValues, setRatingValues] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
     setCheckedItems(updated);
     onChange('checklist', updated);
+  };
+
+  const handleMultiSelect = (itemId: string, option: string) => {
+    const current = selectedOptions[itemId] || [];
+    const updated = current.includes(option)
+      ? current.filter(item => item !== option)
+      : [...current, option];
+    
+    const updatedSelections = { ...selectedOptions, [itemId]: updated };
+    setSelectedOptions(updatedSelections);
+    onChange('checklistSelections', updatedSelections);
+  };
+
+  const handleYearChange = (itemId: string, year: string) => {
+    const updated = { ...yearValues, [itemId]: year };
+    setYearValues(updated);
+    onChange('checklistYears', updated);
+  };
+
+  const handleRatingChange = (itemId: string, rating: string) => {
+    const updated = { ...ratingValues, [itemId]: rating };
+    setRatingValues(updated);
+    onChange('checklistRatings', updated);
   };
 
   const handleNoteChange = (itemId: string, note: string) => {
@@ -75,6 +152,104 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     }
   };
 
+  const renderItemContent = (item: ChecklistItem) => {
+    switch (item.type) {
+      case 'multiselect':
+        return (
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              {item.options?.map((option) => (
+                <label key={option} className="flex items-center space-x-2 text-sm">
+                  <Checkbox
+                    checked={(selectedOptions[item.id] || []).includes(option)}
+                    onCheckedChange={() => handleMultiSelect(item.id, option)}
+                  />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        );
+        
+      case 'year':
+        return (
+          <div className="space-y-2">
+            <input
+              type="number"
+              placeholder="Enter year (e.g., 2020)"
+              value={yearValues[item.id] || ''}
+              onChange={(e) => handleYearChange(item.id, e.target.value)}
+              className="w-full px-3 py-2 border border-input rounded-md text-sm"
+              min="1900"
+              max={new Date().getFullYear()}
+            />
+          </div>
+        );
+        
+      case 'rating':
+        return (
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              {item.options?.map((rating) => (
+                <button
+                  key={rating}
+                  type="button"
+                  onClick={() => handleRatingChange(item.id, rating)}
+                  className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                    ratingValues[item.id] === rating
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                  }`}
+                >
+                  {rating}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+        
+      case 'checkbox':
+      default:
+        return (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'pass')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'pass'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+              }`}
+            >
+              Pass
+            </button>
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'fail')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'fail'
+                  ? 'bg-red-600 text-white'
+                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+              }`}
+            >
+              Fail
+            </button>
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'na')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'na'
+                  ? 'bg-amber-600 text-white'
+                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+              }`}
+            >
+              N/A
+            </button>
+          </div>
+        );
+    }
+  };
+
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -93,62 +268,32 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {inspectionChecklist
                 .filter(item => item.category === category)
                 .map((item) => (
-                  <div key={item.id} className="space-y-2 p-3 border border-border rounded-lg">
+                  <div key={item.id} className="space-y-3 p-4 border border-border rounded-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
+                        {item.subcategory && (
+                          <Badge variant="outline" className="text-xs bg-muted">
+                            {item.subcategory}
+                          </Badge>
+                        )}
                         <span className="text-sm font-medium">{item.item}</span>
                         {item.required && (
                           <Badge variant="outline" className="text-xs">Required</Badge>
                         )}
                       </div>
-                      {getStatusIcon(checkedItems[item.id])}
+                      {item.type === 'checkbox' && getStatusIcon(checkedItems[item.id])}
                     </div>
                     
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleItemCheck(item.id, 'pass')}
-                        className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                          checkedItems[item.id] === 'pass'
-                            ? 'bg-emerald-600 text-white'
-                            : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                        }`}
-                      >
-                        Pass
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleItemCheck(item.id, 'fail')}
-                        className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                          checkedItems[item.id] === 'fail'
-                            ? 'bg-red-600 text-white'
-                            : 'bg-red-100 text-red-700 hover:bg-red-200'
-                        }`}
-                      >
-                        Fail
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleItemCheck(item.id, 'na')}
-                        className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                          checkedItems[item.id] === 'na'
-                            ? 'bg-amber-600 text-white'
-                            : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                        }`}
-                      >
-                        N/A
-                      </button>
-                    </div>
+                    {renderItemContent(item)}
 
-                    {checkedItems[item.id] && (
-                      <Textarea
-                        placeholder={`Notes for ${item.item.toLowerCase()}...`}
-                        value={notes[item.id] || ''}
-                        onChange={(e) => handleNoteChange(item.id, e.target.value)}
-                        rows={2}
-                        className="text-sm"
-                      />
-                    )}
+                    {/* Notes section for all types */}
+                    <Textarea
+                      placeholder={`Notes for ${item.item.toLowerCase()}...`}
+                      value={notes[item.id] || ''}
+                      onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                      rows={2}
+                      className="text-sm"
+                    />
                   </div>
                 ))}
             </div>
