@@ -669,7 +669,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'foundation-inspection-method',
     category: 'Foundation Basement & Crawlspace',
-    subcategory: 'General',
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
