@@ -1571,6 +1571,25 @@ const inspectionChecklist: ChecklistItem[] = [
     item: "Door Doesn't Latch",
     required: false,
     type: 'checkbox'
+  },
+  // Interior Doors
+  {
+    id: 'interior-door-type',
+    category: 'Doors & Windows',
+    subcategory: 'Interior Doors',
+    item: 'Interior Door Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Hollow Core', 'Solid Core', 'Panel', 'Flush', 'Pocket', 'Sliding', 'Bi-fold', 'French']
+  },
+  {
+    id: 'interior-door-inspector-rating',
+    category: 'Doors & Windows',
+    subcategory: 'Interior Doors',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
