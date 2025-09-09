@@ -227,59 +227,59 @@ Proper flashing around the skylight is critical.`,
 
   // Interior Doors defects
   'interior-door-water-staining': "Door shows noticeable water staining, which could lead to further deterioration. Monitor for future repair or replacement.",
-  'interior-door-poor-weatherstripping': "<p>At the time of the inspection, weather-stripping at interior doors was generally damaged or deteriorated. The Inspector recommends replacement/installation of effective weather-stripping components as necessary by a qualified contractor.</p>",
+  'interior-door-poor-weatherstripping': "At the time of the inspection, weather-stripping at interior doors was generally damaged or deteriorated. The Inspector recommends replacement/installation of effective weather-stripping components as necessary by a qualified contractor.",
   'interior-door-noticeable-gap': "One or more gaps could result in energy loss. Recommend handyman or door contractor evaluate.",
   'interior-door-hinges-missing': "One or more hinges missing. This does not affect operation of the door, however having all hignes is recommended to prevent potential safety hazard.",
-  'interior-door-hinges-loose': '<p>Loose hinges can cause door to stick or eventually fall out of place. Recommend handyman tighten hinges.</p>\n\n<p><a href="https://www.thisoldhouse.com/more/sure-cure-loose-hinges" target="_blank">Here is a DIY article</a> on fixing loose hinges. </p>',
-  'interior-door-sticks': '<p>Door sticks and is tough to open. Recommend sanding down offending sides.</p>\n\n<p><a href="http://www.familyhandyman.com/doors/repair/fix-sagging-or-sticking-doors/view-all">Here is a helpful DIY article</a> on how to fix a sticking door. </p>',
-  'interior-door-latch-alignment': "<p>Door latch and/or strike plate is out of alignment. Recommend a handyman repair.</p>",
+  'interior-door-hinges-loose': 'Loose hinges can cause door to stick or eventually fall out of place. Recommend handyman tighten hinges.\n\n<a href="https://www.thisoldhouse.com/more/sure-cure-loose-hinges" target="_blank">Here is a DIY article</a> on fixing loose hinges.',
+  'interior-door-sticks': 'Door sticks and is tough to open. Recommend sanding down offending sides.\n\n<a href="http://www.familyhandyman.com/doors/repair/fix-sagging-or-sticking-doors/view-all">Here is a helpful DIY article</a> on how to fix a sticking door.',
+  'interior-door-latch-alignment': "Door latch and/or strike plate is out of alignment. Recommend a handyman repair.",
   'interior-door-doesnt-latch': "Door doesn't latch properly. Recommend handyman repair latch and/or strike plate.",
 
   // Garage Door defects
-  'garage-door-loud-noises': '<p>Loud grinding or squaling observed when opening/closing garage door. This can be due to dirt or debris in the track or lack of lubrication. Recommend cleaning the track and lubricating. </p>\n\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all" target="_blank">Here are some troubleshooting tips</a> before calling a garage contractor. </p>',
-  'garage-door-improper-installation': "<p>Garage door was improperly installed and appears unstable when opening/closing. Recommend a qualified garage door contractor evaluate and repair. </p>",
-  'garage-door-broken-springs': "<p>Garage door springs were broken and in need of replacement. Recommend a qualified garage contractor replace. </p>",
-  'garage-door-auto-reverse-sensor': "<p>The auto reverse sensor was not responding at time of inspection. This is a safety hazard to children and pets. Recommend a qualified garage door contractor evaluate and repair/replace. </p>",
+  'garage-door-loud-noises': 'Loud grinding or squaling observed when opening/closing garage door. This can be due to dirt or debris in the track or lack of lubrication. Recommend cleaning the track and lubricating.\n\n<a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all" target="_blank">Here are some troubleshooting tips</a> before calling a garage contractor.',
+  'garage-door-improper-installation': "Garage door was improperly installed and appears unstable when opening/closing. Recommend a qualified garage door contractor evaluate and repair.",
+  'garage-door-broken-springs': "Garage door springs were broken and in need of replacement. Recommend a qualified garage contractor replace.",
+  'garage-door-auto-reverse-sensor': "The auto reverse sensor was not responding at time of inspection. This is a safety hazard to children and pets. Recommend a qualified garage door contractor evaluate and repair/replace.",
 
   // Garage Door Opener defects
-  'garage-door-opener-inoperable-wall-switch': '<p>Garage wall switch was inoperable at time of inspection. Recommend testing the wall switch and possible replacement. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step2" target="_blank">Here is a DIY link</a> that shows you how. </p>',
-  'garage-door-opener-inoperable-remote': '<p>Garage remote was inoperable at the time of inspection. When wall switch works but remote doesn\'t, this can be due to old batteries or needing a new receiver/remote. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step3" target="_blank">Here is a DIY resource</a> to help. </p>',
-  'garage-door-opener-delayed-wall-switch': '<p>Wall switch needed to be depressed until door was open/closed. Recommend a garage door contractor evaluate &amp; repair. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step4" target="_blank">Here is a DIY resource</a> to troubleshoot first. </p>',
+  'garage-door-opener-inoperable-wall-switch': 'Garage wall switch was inoperable at time of inspection. Recommend testing the wall switch and possible replacement.\n<a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step2" target="_blank">Here is a DIY link</a> that shows you how.',
+  'garage-door-opener-inoperable-remote': 'Garage remote was inoperable at the time of inspection. When wall switch works but remote doesn\'t, this can be due to old batteries or needing a new receiver/remote.\n<a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step3" target="_blank">Here is a DIY resource</a> to help.',
+  'garage-door-opener-delayed-wall-switch': 'Wall switch needed to be depressed until door was open/closed. Recommend a garage door contractor evaluate &amp; repair.\n<a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step4" target="_blank">Here is a DIY resource</a> to troubleshoot first.',
 
   // Built-in Appliances defects - Range/Oven/Cooktop
-  'range-oven-cooktop-missing-control-knobs': '<p>Range/Oven was missing control knobs. Recommend contacting manufacturer for replacement parts.</p>',
-  'range-oven-cooktop-exhaust-system-missing': '<p>No exhaust system present to prevent moisture and grease in kitchen area. Recommend qualified contractor install range hood or exhaust system.</p>\n\n<p><a href="http://www.kitchensource.com/range-hoods/how-to-choose-a-range-hood.html" target="_blank">Here is a resource on choosing a range hood</a>.</p>',
-  'range-oven-cooktop-exhaust-fan-inoperable': '<p>Exhaust fan was inoperable. Recommend a qualified contractor repair.</p>',
-  'range-oven-cooktop-range-not-fastened': '<p>Range was not fastened to the floor. This poses a safety hazard to children. Recommend a qualified contractor secure range so it can\'t tip.</p>',
-  'range-oven-cooktop-cracked-glasstop': '<p>Glass cooktop was cracked. Recommend noting model and serial number so manufacturer can give a replacement quote.</p>',
-  'range-oven-cooktop-burner-not-lighting': '<p>One or more heating elements did not heat up when turned on. Recommend qualified professional evaluate &amp; repair.</p>\n\n<p><a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all" target="_blank">Here is a DIY resource</a> on possible solutions.</p>',
-  'range-oven-cooktop-exhaust-duct-terminates-attic': '<p>Exhaust from range hood terminates into the attic. This can result in moisture damage and mold in the attic. Recommend a qualified contractor re-route this duct to terminate to the exterior.</p>',
-  'range-oven-cooktop-oven-not-heating-up': '<p>Gas oven wasn\'t heating up at time of inspection. Recommend a qualified appliance contractor evaluate and repair.</p>\n\n<p><a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all#step1" target="_blank">Here is a DIY troubleshooting tip</a>.</p>',
-  'range-oven-cooktop-no-gas-shutoff-valve': '<p>No gas shut-off valve was observed at the supply pipe. Recommend a qualified plumber evaluate and remedy.</p>',
+  'range-oven-cooktop-missing-control-knobs': 'Range/Oven was missing control knobs. Recommend contacting manufacturer for replacement parts.',
+  'range-oven-cooktop-exhaust-system-missing': 'No exhaust system present to prevent moisture and grease in kitchen area. Recommend qualified contractor install range hood or exhaust system.\n\n<a href="http://www.kitchensource.com/range-hoods/how-to-choose-a-range-hood.html" target="_blank">Here is a resource on choosing a range hood</a>.',
+  'range-oven-cooktop-exhaust-fan-inoperable': 'Exhaust fan was inoperable. Recommend a qualified contractor repair.',
+  'range-oven-cooktop-range-not-fastened': 'Range was not fastened to the floor. This poses a safety hazard to children. Recommend a qualified contractor secure range so it can\'t tip.',
+  'range-oven-cooktop-cracked-glasstop': 'Glass cooktop was cracked. Recommend noting model and serial number so manufacturer can give a replacement quote.',
+  'range-oven-cooktop-burner-not-lighting': 'One or more heating elements did not heat up when turned on. Recommend qualified professional evaluate &amp; repair.\n\n<a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all" target="_blank">Here is a DIY resource</a> on possible solutions.',
+  'range-oven-cooktop-exhaust-duct-terminates-attic': 'Exhaust from range hood terminates into the attic. This can result in moisture damage and mold in the attic. Recommend a qualified contractor re-route this duct to terminate to the exterior.',
+  'range-oven-cooktop-oven-not-heating-up': 'Gas oven wasn\'t heating up at time of inspection. Recommend a qualified appliance contractor evaluate and repair.\n\n<a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all#step1" target="_blank">Here is a DIY troubleshooting tip</a>.',
+  'range-oven-cooktop-no-gas-shutoff-valve': 'No gas shut-off valve was observed at the supply pipe. Recommend a qualified plumber evaluate and remedy.',
   
   // Built-in Appliances defects - Garbage Disposal
-  'garbage-disposal-inoperable': '<p>Garbage disposal was inoperable at the time of inspection. Recommend qualified handyman repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=EfUaIsNk6Qw" target="_blank">Here is a DIY resource for troubleshooting</a>.</p>',
-  'garbage-disposal-excessive-noise': '<p>Garbage disposal was excessively noisy. Recommend a qualified plumber evaluate and repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=tgFOszWWHmg" target="_blank">Here is a helpful DIY troubleshooting video.</a></p>',
+  'garbage-disposal-inoperable': 'Garbage disposal was inoperable at the time of inspection. Recommend qualified handyman repair.\n\n<a href="https://www.youtube.com/watch?v=EfUaIsNk6Qw" target="_blank">Here is a DIY resource for troubleshooting</a>.',
+  'garbage-disposal-excessive-noise': 'Garbage disposal was excessively noisy. Recommend a qualified plumber evaluate and repair.\n\n<a href="https://www.youtube.com/watch?v=tgFOszWWHmg" target="_blank">Here is a helpful DIY troubleshooting video.</a>',
   
   // Built-in Appliances defects - Refrigerator
-  'refrigerator-not-cooling-properly': '<p>Refrigerator was not cooling properly at the time of inspection. This could indicate compressor, coolant, or thermostat issues. Recommend qualified appliance contractor evaluate and repair.</p>',
-  'refrigerator-excessive-noise': '<p>Refrigerator was making excessive noise during operation. This could indicate mechanical issues that need attention. Recommend qualified appliance contractor evaluate and repair.</p>',
-  'refrigerator-door-seal-damaged': '<p>Refrigerator door seal was damaged, allowing cold air to escape and compromising efficiency. Recommend replacing door seal or gasket.</p>',
-  'refrigerator-ice-maker-inoperable': '<p>Ice maker was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair ice maker mechanism.</p>',
+  'refrigerator-not-cooling-properly': 'Refrigerator was not cooling properly at the time of inspection. This could indicate compressor, coolant, or thermostat issues. Recommend qualified appliance contractor evaluate and repair.',
+  'refrigerator-excessive-noise': 'Refrigerator was making excessive noise during operation. This could indicate mechanical issues that need attention. Recommend qualified appliance contractor evaluate and repair.',
+  'refrigerator-door-seal-damaged': 'Refrigerator door seal was damaged, allowing cold air to escape and compromising efficiency. Recommend replacing door seal or gasket.',
+  'refrigerator-ice-maker-inoperable': 'Ice maker was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair ice maker mechanism.',
   
   // Built-in Appliances defects - Dishwasher
-  'dishwasher-not-cleaning-properly': '<p>Dishwasher was not cleaning dishes properly. This could indicate clogged spray arms, filter issues, or pump problems. Recommend qualified appliance contractor evaluate and repair.</p>',
-  'dishwasher-water-leakage': '<p>Water leakage observed from dishwasher during operation. This could damage flooring and cabinetry. Recommend immediate evaluation and repair by qualified appliance contractor.</p>',
-  'dishwasher-door-latch-problems': '<p>Dishwasher door latch was not functioning properly, preventing proper seal during operation. Recommend qualified appliance contractor evaluate and repair latch mechanism.</p>',
-  'dishwasher-excessive-noise': '<p>Dishwasher was making excessive noise during operation. This could indicate pump, motor, or mechanical issues. Recommend qualified appliance contractor evaluate and repair.</p>',
+  'dishwasher-not-cleaning-properly': 'Dishwasher was not cleaning dishes properly. This could indicate clogged spray arms, filter issues, or pump problems. Recommend qualified appliance contractor evaluate and repair.',
+  'dishwasher-water-leakage': 'Water leakage observed from dishwasher during operation. This could damage flooring and cabinetry. Recommend immediate evaluation and repair by qualified appliance contractor.',
+  'dishwasher-door-latch-problems': 'Dishwasher door latch was not functioning properly, preventing proper seal during operation. Recommend qualified appliance contractor evaluate and repair latch mechanism.',
+  'dishwasher-excessive-noise': 'Dishwasher was making excessive noise during operation. This could indicate pump, motor, or mechanical issues. Recommend qualified appliance contractor evaluate and repair.',
   
   // Built-in Appliances defects - Cooking Exhaust
-  'cooking-exhaust-fan-inoperable': '<p>Cooking exhaust fan was inoperable at the time of inspection. This prevents proper ventilation of cooking fumes and moisture. Recommend qualified contractor evaluate and repair.</p>',
-  'cooking-exhaust-excessive-noise': '<p>Cooking exhaust fan was making excessive noise during operation. This could indicate motor or fan blade issues. Recommend qualified contractor evaluate and repair.</p>',
-  'cooking-exhaust-inadequate-ventilation': '<p>Cooking exhaust system was providing inadequate ventilation. This can result in moisture and grease buildup in kitchen area. Recommend qualified contractor evaluate and improve ventilation capacity.</p>',
-  'cooking-exhaust-light-inoperable': '<p>Cooking exhaust hood light was inoperable at the time of inspection. Recommend replacing bulb or evaluating electrical connections by qualified contractor.</p>',
+  'cooking-exhaust-fan-inoperable': 'Cooking exhaust fan was inoperable at the time of inspection. This prevents proper ventilation of cooking fumes and moisture. Recommend qualified contractor evaluate and repair.',
+  'cooking-exhaust-excessive-noise': 'Cooking exhaust fan was making excessive noise during operation. This could indicate motor or fan blade issues. Recommend qualified contractor evaluate and repair.',
+  'cooking-exhaust-inadequate-ventilation': 'Cooking exhaust system was providing inadequate ventilation. This can result in moisture and grease buildup in kitchen area. Recommend qualified contractor evaluate and improve ventilation capacity.',
+  'cooking-exhaust-light-inoperable': 'Cooking exhaust hood light was inoperable at the time of inspection. Recommend replacing bulb or evaluating electrical connections by qualified contractor.',
   
   // Built-in Appliances defects - Built-in Microwave
-  'builtin-microwave-inoperable': '<p>Built-in microwave was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair.</p>',
-  'builtin-microwave-improper-mounting': '<p>Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.</p>'
+  'builtin-microwave-inoperable': 'Built-in microwave was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair.',
+  'builtin-microwave-improper-mounting': 'Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.'
 };
