@@ -556,6 +556,25 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Wood Decks and Balconies
+  {
+    id: 'wood-decks-appurtenance',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Deck and Balconies',
+    item: 'Appurtenance',
+    required: false,
+    type: 'multiselect',
+    options: ['Balcony', 'Covered Porch', 'Deck with Steps', 'Shed', 'Deck', 'Sidewalk', 'Front Porch', 'Pool', 'Sunroom', 'Hot Tub', 'Patio', 'Retaining Wall']
+  },
+  {
+    id: 'wood-decks-material',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Deck and Balconies',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Composite', 'Concrete', 'Wood']
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
