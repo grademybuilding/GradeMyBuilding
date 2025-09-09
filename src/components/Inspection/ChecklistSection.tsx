@@ -1099,6 +1099,300 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Splitting',
     required: false,
     type: 'checkbox'
+  },
+  // Heating & Cooling - Heating Equipment
+  {
+    id: 'heating-equipment-type',
+    category: 'Heating & Cooling',
+    subcategory: 'Heating Equipment',
+    item: 'Heating Equipment Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Forced Air', 'Hot Water/Steam', 'Heat Pump', 'Electric Baseboard', 'Radiant Floor', 'Geothermal', 'Solar']
+  },
+  {
+    id: 'heating-equipment-fuel-type',
+    category: 'Heating & Cooling',
+    subcategory: 'Heating Equipment',
+    item: 'Fuel Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Natural Gas', 'Propane', 'Electric', 'Oil', 'Wood', 'Coal', 'Solar']
+  },
+  {
+    id: 'heating-equipment-age',
+    category: 'Heating & Cooling',
+    subcategory: 'Heating Equipment',
+    item: 'Age - Year Installed',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'heating-equipment-inspector-rating',
+    category: 'Heating & Cooling',
+    subcategory: 'Heating Equipment',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Heating Equipment Defects
+  {
+    id: 'heating-equipment-inadequate-ventilation',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Heating Equipment', 
+    item: 'Inadequate Ventilation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'heating-equipment-filter-dirty',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Heating Equipment',
+    item: 'Filter Dirty/Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'heating-equipment-gas-leak',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Heating Equipment',
+    item: 'Gas Leak Detected',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'heating-equipment-heat-exchanger-cracked',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Heating Equipment',
+    item: 'Heat Exchanger Cracked',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'heating-equipment-improper-installation',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Heating Equipment',
+    item: 'Improper Installation',
+    required: false,
+    type: 'checkbox'
+  },
+  // Cooling Equipment
+  {
+    id: 'cooling-equipment-type',
+    category: 'Heating & Cooling',
+    subcategory: 'Cooling Equipment',
+    item: 'Cooling Equipment Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Central Air', 'Heat Pump', 'Window Units', 'Ductless Mini-Split', 'Evaporative Cooler', 'Geothermal']
+  },
+  {
+    id: 'cooling-equipment-age',
+    category: 'Heating & Cooling',
+    subcategory: 'Cooling Equipment',
+    item: 'Age - Year Installed',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'cooling-equipment-inspector-rating',
+    category: 'Heating & Cooling',
+    subcategory: 'Cooling Equipment',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Cooling Equipment Defects
+  {
+    id: 'cooling-equipment-refrigerant-leak',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Cooling Equipment',
+    item: 'Refrigerant Leak',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooling-equipment-condenser-dirty',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Cooling Equipment',
+    item: 'Condenser Coils Dirty',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooling-equipment-inadequate-cooling',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Cooling Equipment',
+    item: 'Inadequate Cooling Capacity',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooling-equipment-electrical-issues',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Cooling Equipment',
+    item: 'Electrical Connection Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  // Operating Controls
+  {
+    id: 'operating-controls-thermostat-type',
+    category: 'Heating & Cooling',
+    subcategory: 'Operating Controls',
+    item: 'Thermostat Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Manual', 'Programmable', 'Smart/WiFi', 'Zone Control', 'Heat Pump Control']
+  },
+  {
+    id: 'operating-controls-inspector-rating',
+    category: 'Heating & Cooling',
+    subcategory: 'Operating Controls',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Operating Controls Defects
+  {
+    id: 'operating-controls-thermostat-malfunction',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Operating Controls',
+    item: 'Thermostat Malfunction',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'operating-controls-wiring-issues',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Operating Controls',
+    item: 'Control Wiring Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'operating-controls-improper-calibration',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Operating Controls',
+    item: 'Improper Calibration',
+    required: false,
+    type: 'checkbox'
+  },
+  // Distribution Systems
+  {
+    id: 'distribution-systems-ductwork-material',
+    category: 'Heating & Cooling',
+    subcategory: 'Distribution Systems',
+    item: 'Ductwork Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Sheet Metal', 'Flexible Duct', 'Ductboard', 'PVC', 'Cast Iron', 'Copper']
+  },
+  {
+    id: 'distribution-systems-insulation-type',
+    category: 'Heating & Cooling',
+    subcategory: 'Distribution Systems',
+    item: 'Insulation Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Fiberglass', 'Foam Board', 'Spray Foam', 'Cellulose', 'Mineral Wool', 'None']
+  },
+  {
+    id: 'distribution-systems-inspector-rating',
+    category: 'Heating & Cooling',
+    subcategory: 'Distribution Systems',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Distribution Systems Defects
+  {
+    id: 'distribution-systems-duct-leakage',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Distribution Systems',
+    item: 'Duct Leakage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'distribution-systems-inadequate-insulation',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Distribution Systems',
+    item: 'Inadequate Insulation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'distribution-systems-blocked-returns',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Distribution Systems',
+    item: 'Blocked Return Air Vents',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'distribution-systems-improper-sizing',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Distribution Systems',
+    item: 'Improper Duct Sizing',
+    required: false,
+    type: 'checkbox'
+  },
+  // Vents & Flues
+  {
+    id: 'vents-flues-material',
+    category: 'Heating & Cooling',
+    subcategory: 'Vents & Flues',
+    item: 'Vent/Flue Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Metal', 'PVC', 'Clay Tile', 'Masonry', 'Stainless Steel', 'Aluminum']
+  },
+  {
+    id: 'vents-flues-inspector-rating',
+    category: 'Heating & Cooling',
+    subcategory: 'Vents & Flues',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Vents & Flues Defects
+  {
+    id: 'vents-flues-blockage',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Vents & Flues',
+    item: 'Vent/Flue Blockage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'vents-flues-improper-clearance',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Vents & Flues',
+    item: 'Improper Clearance',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'vents-flues-damaged-components',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Vents & Flues',
+    item: 'Damaged Vent/Flue Components',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'vents-flues-carbon-monoxide-risk',
+    category: 'Heating & Cooling',
+    subcategory: 'Defects - Vents & Flues',
+    item: 'Carbon Monoxide Risk',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
@@ -1117,6 +1411,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>({});
   const [selectedRoofSubcategory, setSelectedRoofSubcategory] = useState<string>('all');
   const [selectedFoundationSubcategory, setSelectedFoundationSubcategory] = useState<string>('all');
+  const [selectedHeatingSubcategory, setSelectedHeatingSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -1428,6 +1723,36 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
+              {category === 'Heating & Cooling' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      {selectedHeatingSubcategory === 'all' ? 'All Heating & Cooling Items' : selectedHeatingSubcategory}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-background border border-border">
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('all')}>
+                      All Heating & Cooling Items
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('Heating Equipment')}>
+                      Heating Equipment
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('Cooling Equipment')}>
+                      Cooling Equipment
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('Operating Controls')}>
+                      Operating Controls
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('Distribution Systems')}>
+                      Distribution Systems
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedHeatingSubcategory('Vents & Flues')}>
+                      Vents & Flues
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             <div className="space-y-4">
               {inspectionChecklist
@@ -1459,6 +1784,21 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     };
                     
                     const allowedSubcategories = foundationSubcategoryMap[selectedFoundationSubcategory] || [];
+                    return allowedSubcategories.some(sub => 
+                      item.subcategory?.includes(sub) || item.subcategory === sub
+                    );
+                  }
+                  if (category === 'Heating & Cooling' && selectedHeatingSubcategory !== 'all') {
+                    // Map the dropdown selections to actual subcategories
+                    const heatingSubcategoryMap: Record<string, string[]> = {
+                      'Heating Equipment': ['Heating Equipment', 'Defects - Heating Equipment'],
+                      'Cooling Equipment': ['Cooling Equipment', 'Defects - Cooling Equipment'],
+                      'Operating Controls': ['Operating Controls', 'Defects - Operating Controls'],
+                      'Distribution Systems': ['Distribution Systems', 'Defects - Distribution Systems'],
+                      'Vents & Flues': ['Vents & Flues', 'Defects - Vents & Flues']
+                    };
+                    
+                    const allowedSubcategories = heatingSubcategoryMap[selectedHeatingSubcategory] || [];
                     return allowedSubcategories.some(sub => 
                       item.subcategory?.includes(sub) || item.subcategory === sub
                     );
