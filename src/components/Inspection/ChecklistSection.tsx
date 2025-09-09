@@ -24,6 +24,7 @@ interface ChecklistItem {
 const inspectionCategories = [
   'Roof',
   'Exterior Cladding',
+  'Walkways, Patios & Driveways',
   'Wood Decks & Balconies',
   'Foundation Basement & Crawlspace',
   'Heating & Cooling',
