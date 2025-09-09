@@ -336,6 +336,21 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         
       case 'checkbox':
       default:
+        // For defect items, show editable comment area
+        if (item.subcategory?.includes('Defects')) {
+          return (
+            <div className="space-y-2">
+              <Textarea
+                placeholder="Add inspection comments..."
+                value={notes[item.id] || defectDescriptions[item.id] || ''}
+                onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                className="min-h-[120px] text-sm"
+              />
+            </div>
+          );
+        }
+        
+        // For non-defect items, keep the Pass/Fail/N/A buttons
         return (
           <div className="flex gap-2">
             <button
@@ -433,23 +448,13 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                           <Badge variant="outline" className="text-xs">Required</Badge>
                         )}
                       </div>
-                      {item.type === 'checkbox' && getStatusIcon(checkedItems[item.id])}
+                      {/* Show status icon only for non-defect checkbox items */}
+                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && getStatusIcon(checkedItems[item.id])}
                     </div>
                     
                     {renderItemContent(item)}
 
-                    {/* Show defect description for defect items when checked as fail */}
-                    {item.subcategory?.includes('Defects') && checkedItems[item.id] === 'fail' && (
-                      <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-                        <p className="text-xs text-red-800 font-medium mb-1">Standard Defect Description:</p>
-                        <div 
-                          className="text-xs text-red-700"
-                          dangerouslySetInnerHTML={{ 
-                            __html: defectDescriptions[item.id] || 'No description available.' 
-                          }} 
-                        />
-                      </div>
-                    )}
+                    {/* Remove the old defect description display since it's now in the textarea */}
                   </div>
                 ))}
             </div>
