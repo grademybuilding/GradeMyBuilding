@@ -143,5 +143,24 @@ Proper flashing around the skylight is critical.`,
   
   'wood-decks-unstable-support': `One of more areas of the deck support appears unstable. This could cause a safety hazard and further deterioration of the deck. Recommend qualified deck contractor evaluate and repair.`,
   
-  'wood-decks-railing-unsafe': `There is an unsafe opening in the railing. The spacing on the rail should not exceed 4". An opening greater than 4" is a serious safety hazard especially for children as their head or other body part can become trapped.`
+  'wood-decks-railing-unsafe': `There is an unsafe opening in the railing. The spacing on the rail should not exceed 4". An opening greater than 4" is a serious safety hazard especially for children as their head or other body part can become trapped.`,
+
+  // Foundation defects
+  'foundation-walls-bowing-leaning': `Foundation wall is bowing and/or leaning.  Repair of wall is required.`,
+  
+  'foundation-poor-ventilation': `The foundation is poorly ventilated. Increased ventilation (introduction and movement of fresh air) is recommended. This can be accomplished by partially opening basement windows, doors and/or vents on opposite sides of the foundation on a regular basis (when weather is suitable).  And by installing a dehumidifier to decrease moisture.`,
+  
+  'foundation-improper-construction': `Improper or sub-standard construction practices were noted at the foundation wall or slabs/piers. Recommend a structural engineer evaluate and advise on how to bring the construction up to standards.`,
+  
+  'foundation-water-intrusion': `Water intrusion was evident on the surface of the floor slab or in the basement/crawlspace. This can compromise the soil's ability to stabilize the structure and could cause damage. Recommend a qualified contractor identify the source of moisture and remedy.`,
+  
+  'foundation-cracks-minor': `Minor cracking was noted at the foundation. This is common as concrete ages and shrinkage surface cracks are normal. Recommend monitoring for more serious shifting/displacement.\n\nHere is an informational article on foundation cracks: https://www.houselogic.com/organize-maintain/home-maintenance-tips/understanding-foundation-problems/`,
+  
+  'foundation-cracks-major': `Severe cracking noted at the foundation. This is typically consistent with soil movement and could lead to serious damage to structural components, foundation and/or slabs. Recommend a structural engineer evaluate and provide a report on course of action and remedy.\n\nHere is an informational article on foundation cracks: https://www.houselogic.com/organize-maintain/home-maintenance-tips/understanding-foundation-problems/`,
+  
+  'foundation-heaving-settling': `The floor slab shows movement/settling due to soil movement. This can compromise the structural integrity of the home. Recommend a qualified structural engineer evaluate and advise on how to remedy.`,
+  
+  'basements-high-moisture-levels': `High levels of moisture were noted in areas of the basement. Recommend monitoring and finding source of moisture intrusion to prevent damage to structure.`,
+  
+  'basements-efflorescence': `Efflorescence noted on the crawlspace surface. This a white, powdery deposit that is consistent with moisture intrusion. This can compromise the soil's ability to support the home structure and/or lead to mold growth. Recommend a qualified contractor identify source or moisture and correct.`
 };

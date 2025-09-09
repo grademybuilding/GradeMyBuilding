@@ -692,6 +692,80 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   },
+  // Foundation Defects
+  {
+    id: 'foundation-walls-bowing-leaning',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Wall(s) Bowing/Leaning',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-poor-ventilation',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Poor Ventilation of Foundation Area',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-improper-construction',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Improper Construction Practices',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-water-intrusion',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Water Intrusion',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-cracks-minor',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Foundation Cracks - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-cracks-major',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Foundation Cracks - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-heaving-settling',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Foundation',
+    item: 'Heaving/Settling',
+    required: false,
+    type: 'checkbox'
+  },
+  // Basements & Crawlspaces Defects
+  {
+    id: 'basements-high-moisture-levels',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Basements & Crawlspaces',
+    item: 'High Moisture Levels',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'basements-efflorescence',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Basements & Crawlspaces',
+    item: 'Efflorescence',
+    required: false,
+    type: 'checkbox'
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
