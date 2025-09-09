@@ -195,5 +195,16 @@ Proper flashing around the skylight is critical.`,
   
   'foundation-ceiling-structure-poor-ventilation': `Poor ventilation observed in ceiling area, which can lead to moisture buildup, mold growth, and energy efficiency issues. Recommend improving ventilation system.`,
   
-  'foundation-ceiling-structure-insulation-problems': `Insulation in ceiling area is inadequate, damaged, or missing. This can affect energy efficiency and temperature control. Recommend proper insulation installation by qualified contractor.`
+  'foundation-ceiling-structure-insulation-problems': `Insulation in ceiling area is inadequate, damaged, or missing. This can affect energy efficiency and temperature control. Recommend proper insulation installation by qualified contractor.`,
+
+  // Windows defects
+  'windows-improper-installation': `Windows appear to not be operating properly due to poor installation. Recommend window specialist evaluate.`,
+  
+  'windows-painted-shut': `One or more windows are painted shut. Recommend windows be restored to functional use.`,
+  
+  'windows-damaged': `One or more windows appears to have general damage, but are operational. Recommend a window professional clean, lubricate & adjust as necessary.`,
+  
+  'windows-failed-seal': `Observed condensation between the window panes, which indicates a failed seal. Recommend qualified window contractor evaluate & replace.`,
+  
+  'windows-missing-screen': `Window missing screen. Recommend replacement.`
 };
