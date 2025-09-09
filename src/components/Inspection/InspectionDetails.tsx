@@ -105,7 +105,7 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
 
         {/* Inspection Categories */}
         <div className="space-y-3">
-          <Label className="text-base font-semibold">Inspection Categories</Label>
+          <Label className="text-base font-semibold">Inspection Level</Label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {inspectionCategories.map((category) => (
               <div key={category} className="flex items-center space-x-2">
