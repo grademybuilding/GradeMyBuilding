@@ -178,6 +178,15 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'multiselect',
     options: ['Aluminum', 'Seamless Aluminum', 'Vinyl', 'Copper', 'Steel']
   },
+  {
+    id: 'roof-drainage-inspector-rating',
+    category: 'Roof',
+    subcategory: 'Roof Drainage Systems',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
   // Roof Drainage Systems - Defects
   {
     id: 'roof-gutters-missing',
@@ -411,7 +420,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {item.options?.map((rating) => {
                 // Color coding for Inspector Overall Rating
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating') {
+                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating') {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
