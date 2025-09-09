@@ -2352,8 +2352,7 @@ const inspectionChecklist: ChecklistItem[] = [
     subcategory: 'General',
     item: 'Capacity',
     required: false,
-    type: 'multiselect',
-    options: ['30 Gallon', '40 Gallon', '50 Gallon', '75 Gallon', '80 Gallon', 'Tankless', 'Other', 'Unknown']
+    type: 'year'
   },
   {
     id: 'plumbing-hot-water-location',
