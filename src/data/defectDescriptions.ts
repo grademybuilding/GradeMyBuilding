@@ -261,6 +261,24 @@ Proper flashing around the skylight is critical.`,
   'garbage-disposal-inoperable': '<p>Garbage disposal was inoperable at the time of inspection. Recommend qualified handyman repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=EfUaIsNk6Qw" target="_blank">Here is a DIY resource for troubleshooting</a>.</p>',
   'garbage-disposal-excessive-noise': '<p>Garbage disposal was excessively noisy. Recommend a qualified plumber evaluate and repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=tgFOszWWHmg" target="_blank">Here is a helpful DIY troubleshooting video.</a></p>',
   
+  // Built-in Appliances defects - Refrigerator
+  'refrigerator-not-cooling-properly': '<p>Refrigerator was not cooling properly at the time of inspection. This could indicate compressor, coolant, or thermostat issues. Recommend qualified appliance contractor evaluate and repair.</p>',
+  'refrigerator-excessive-noise': '<p>Refrigerator was making excessive noise during operation. This could indicate mechanical issues that need attention. Recommend qualified appliance contractor evaluate and repair.</p>',
+  'refrigerator-door-seal-damaged': '<p>Refrigerator door seal was damaged, allowing cold air to escape and compromising efficiency. Recommend replacing door seal or gasket.</p>',
+  'refrigerator-ice-maker-inoperable': '<p>Ice maker was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair ice maker mechanism.</p>',
+  
+  // Built-in Appliances defects - Dishwasher
+  'dishwasher-not-cleaning-properly': '<p>Dishwasher was not cleaning dishes properly. This could indicate clogged spray arms, filter issues, or pump problems. Recommend qualified appliance contractor evaluate and repair.</p>',
+  'dishwasher-water-leakage': '<p>Water leakage observed from dishwasher during operation. This could damage flooring and cabinetry. Recommend immediate evaluation and repair by qualified appliance contractor.</p>',
+  'dishwasher-door-latch-problems': '<p>Dishwasher door latch was not functioning properly, preventing proper seal during operation. Recommend qualified appliance contractor evaluate and repair latch mechanism.</p>',
+  'dishwasher-excessive-noise': '<p>Dishwasher was making excessive noise during operation. This could indicate pump, motor, or mechanical issues. Recommend qualified appliance contractor evaluate and repair.</p>',
+  
+  // Built-in Appliances defects - Cooking Exhaust
+  'cooking-exhaust-fan-inoperable': '<p>Cooking exhaust fan was inoperable at the time of inspection. This prevents proper ventilation of cooking fumes and moisture. Recommend qualified contractor evaluate and repair.</p>',
+  'cooking-exhaust-excessive-noise': '<p>Cooking exhaust fan was making excessive noise during operation. This could indicate motor or fan blade issues. Recommend qualified contractor evaluate and repair.</p>',
+  'cooking-exhaust-inadequate-ventilation': '<p>Cooking exhaust system was providing inadequate ventilation. This can result in moisture and grease buildup in kitchen area. Recommend qualified contractor evaluate and improve ventilation capacity.</p>',
+  'cooking-exhaust-light-inoperable': '<p>Cooking exhaust hood light was inoperable at the time of inspection. Recommend replacing bulb or evaluating electrical connections by qualified contractor.</p>',
+  
   // Built-in Appliances defects - Built-in Microwave
   'builtin-microwave-inoperable': '<p>Built-in microwave was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair.</p>',
   'builtin-microwave-improper-mounting': '<p>Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.</p>'

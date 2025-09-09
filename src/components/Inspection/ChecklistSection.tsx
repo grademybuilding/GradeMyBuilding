@@ -1995,6 +1995,108 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'checkbox'
   },
   
+  // Built-in Appliances Defects - Refrigerator
+  {
+    id: 'refrigerator-not-cooling-properly',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Refrigerator',
+    item: 'Not Cooling Properly',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'refrigerator-excessive-noise',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Refrigerator',
+    item: 'Excessive Noise',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'refrigerator-door-seal-damaged',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Refrigerator',
+    item: 'Door Seal Damaged',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'refrigerator-ice-maker-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Refrigerator',
+    item: 'Ice Maker Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  
+  // Built-in Appliances Defects - Dishwasher
+  {
+    id: 'dishwasher-not-cleaning-properly',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Dishwasher',
+    item: 'Not Cleaning Properly',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'dishwasher-water-leakage',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Dishwasher',
+    item: 'Water Leakage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'dishwasher-door-latch-problems',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Dishwasher',
+    item: 'Door Latch Problems',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'dishwasher-excessive-noise',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Dishwasher',
+    item: 'Excessive Noise',
+    required: false,
+    type: 'checkbox'
+  },
+  
+  // Built-in Appliances Defects - Cooking Exhaust
+  {
+    id: 'cooking-exhaust-fan-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Cooking Exhaust',
+    item: 'Fan Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooking-exhaust-excessive-noise',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Cooking Exhaust',
+    item: 'Excessive Noise',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooking-exhaust-inadequate-ventilation',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Cooking Exhaust',
+    item: 'Inadequate Ventilation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'cooking-exhaust-light-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Cooking Exhaust',
+    item: 'Light Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  
   // Built-in Appliances Defects - Built-in Microwave
   {
     id: 'builtin-microwave-inoperable',
@@ -2500,12 +2602,12 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   if (category === 'Built-in Appliances' && selectedBuiltinAppliancesSubcategory !== 'all') {
                     // Map the dropdown selections to actual subcategories including defects
                     const builtinAppliancesSubcategoryMap: Record<string, string[]> = {
-                      'Refrigerator': ['Refrigerator'],
+                      'Refrigerator': ['Refrigerator', 'Defects - Refrigerator'],
                       'Range/Oven/Cooktop': ['Range/Oven/Cooktop', 'Defects - Range/Oven/Cooktop'],
-                      'Dishwasher': ['Dishwasher'],
+                      'Dishwasher': ['Dishwasher', 'Defects - Dishwasher'],
                       'Built-in Microwave': ['Built-in Microwave', 'Defects - Built-in Microwave'],
                       'Garbage Disposal': ['Garbage Disposal', 'Defects - Garbage Disposal'],
-                      'Cooking Exhaust': ['Cooking Exhaust']
+                      'Cooking Exhaust': ['Cooking Exhaust', 'Defects - Cooking Exhaust']
                     };
                     
                     const allowedSubcategories = builtinAppliancesSubcategoryMap[selectedBuiltinAppliancesSubcategory] || [];
