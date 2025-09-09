@@ -1685,6 +1685,55 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Delayed Wall Switch',
     required: false,
     type: 'checkbox'
+  },
+  // Built-in Appliances
+  {
+    id: 'builtin-appliances-refrigerator',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Refrigerator',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-appliances-range-oven-cooktop',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Range/Oven/Cooktop',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-appliances-dishwasher',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Dishwasher',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-appliances-microwave',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Built-in Microwave',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-appliances-garbage-disposal',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Garbage Disposal',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-appliances-cooking-exhaust',
+    category: 'Built-in Appliances',
+    subcategory: 'All Built-in Appliances Items',
+    item: 'Cooking Exhaust',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
