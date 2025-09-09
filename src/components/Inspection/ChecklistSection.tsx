@@ -2399,6 +2399,15 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['ABS', 'Copper', 'Iron', 'Lead', 'PVC', 'Unknown']
   },
   {
+    id: 'plumbing-water-supply-material',
+    category: 'Plumbing',
+    subcategory: 'Water Supply, Distribution Systems & Fixtures',
+    item: 'Water Supply Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Copper', 'Galvanized', 'Unknown', 'Hose', 'Pex', 'Poly', 'PVC']
+  },
+  {
     id: 'plumbing-water-source',
     category: 'Plumbing',
     subcategory: 'General',
