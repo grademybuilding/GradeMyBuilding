@@ -388,19 +388,10 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         
       case 'checkbox':
       default:
-        // For defect items, show checkbox and editable comment area
+        // For defect items, show editable comment area only
         if (item.subcategory?.includes('Defects')) {
           return (
             <div className="space-y-3">
-              {/* Checkbox for selecting the defect */}
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`defect-${item.id}`}
-                  checked={selectedDefects[item.id] || false}
-                  onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
-                />
-              </div>
-              
               {/* Comment area - always visible */}
               <Textarea
                 placeholder="Add inspection comments..."
@@ -492,6 +483,14 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   <div key={item.id} className="space-y-3 p-4 border border-border rounded-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
+                        {/* Checkbox for defect items - inline with title */}
+                        {item.subcategory?.includes('Defects') && (
+                          <Checkbox
+                            id={`defect-${item.id}`}
+                            checked={selectedDefects[item.id] || false}
+                            onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                          />
+                        )}
                         {item.subcategory && (
                           <Badge 
                             variant="outline" 
