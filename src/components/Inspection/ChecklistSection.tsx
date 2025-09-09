@@ -404,7 +404,7 @@ const inspectionChecklist: ChecklistItem[] = [
     id: 'exterior-siding-material',
     category: 'Exterior Cladding',
     subcategory: 'Siding, Flashing & Trim',
-    item: 'Siding Material',
+    item: 'Cladding Material',
     required: false,
     type: 'multiselect',
     options: ['Aluminum', 'Plastic', 'Logs', 'Asbestos', 'Asphalt', 'Brick', 'Concrete', 'Fiber Cement', 'Stucco', 'Brick Veneer', 'Engineered Wood', 'Masonry', 'Metal', 'Vinyl', 'Wood', 'Shingles', 'Stone', 'Stone Veneer']
