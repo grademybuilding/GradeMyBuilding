@@ -1690,15 +1690,13 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'builtin-appliances-refrigerator',
     category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
     item: 'Refrigerator',
     required: false,
     type: 'checkbox'
   },
   {
     id: 'builtin-appliances-range-oven-cooktop',
-    category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
+    category: 'Built-in Appliances', 
     item: 'Range/Oven/Cooktop',
     required: false,
     type: 'checkbox'
@@ -1706,7 +1704,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'builtin-appliances-dishwasher',
     category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
     item: 'Dishwasher',
     required: false,
     type: 'checkbox'
@@ -1714,7 +1711,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'builtin-appliances-microwave',
     category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
     item: 'Built-in Microwave',
     required: false,
     type: 'checkbox'
@@ -1722,7 +1718,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'builtin-appliances-garbage-disposal',
     category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
     item: 'Garbage Disposal',
     required: false,
     type: 'checkbox'
@@ -1730,7 +1725,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'builtin-appliances-cooking-exhaust',
     category: 'Built-in Appliances',
-    subcategory: 'All Built-in Appliances Items',
     item: 'Cooking Exhaust',
     required: false,
     type: 'checkbox'
