@@ -23,7 +23,7 @@ interface ChecklistItem {
 
 const inspectionCategories = [
   'Roof',
-  'Exterior',
+  'Exterior Cladding',
   'Wood Decks & Balconies',
   'Foundation Basement & Crawlspace',
   'Heating & Cooling',
@@ -389,20 +389,20 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
-  // Exterior General
+  // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
-    category: 'Exterior',
+    category: 'Exterior Cladding',
     subcategory: 'General',
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
     options: ['Crawlspace Access', 'Infrared', 'Visual', 'Attic Access']
   },
-  // Exterior Siding, Flashing & Trim
+  // Exterior Cladding Siding, Flashing & Trim
   {
     id: 'exterior-siding-material',
-    category: 'Exterior',
+    category: 'Exterior Cladding',
     subcategory: 'Siding, Flashing & Trim',
     item: 'Siding Material',
     required: false,
