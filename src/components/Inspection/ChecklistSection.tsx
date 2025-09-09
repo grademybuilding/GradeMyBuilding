@@ -30,7 +30,9 @@ const inspectionCategories = [
   'Heating & Cooling',
   'Doors & Windows',
   'Built-in Appliances',
-  'Green Features'
+  'Green Features',
+  'Plumbing',
+  'Electric'
 ];
 
 const inspectionChecklist: ChecklistItem[] = [
@@ -2323,6 +2325,213 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Can Build Up',
     required: false,
     type: 'checkbox'
+  },
+
+  // Plumbing
+  {
+    id: 'plumbing-water-pressure',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Water Pressure',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  {
+    id: 'plumbing-hot-water-system',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Hot Water System',
+    required: false,
+    type: 'multiselect',
+    options: ['Gas', 'Electric', 'Tankless', 'Solar', 'Heat Pump']
+  },
+  {
+    id: 'plumbing-water-heater-age',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Water Heater Age - Year Installed',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'plumbing-inspector-rating',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  
+  // Plumbing Defects
+  {
+    id: 'plumbing-leaky-faucets',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Leaky Faucets',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-running-toilet',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Running Toilet',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-clogged-drains',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Clogged Drains',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-low-water-pressure',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Low Water Pressure',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-pipe-leaks',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Pipe Leaks',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-water-heater-issues',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Water Heater Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-sewer-backup',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Sewer Backup',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-frozen-pipes',
+    category: 'Plumbing',
+    subcategory: 'Defects',
+    item: 'Frozen Pipes',
+    required: false,
+    type: 'checkbox'
+  },
+
+  // Electric
+  {
+    id: 'electric-main-panel-type',
+    category: 'Electric',
+    subcategory: 'General',
+    item: 'Main Panel Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Circuit Breaker', 'Fuse Box', 'Main Lug', 'Main Breaker']
+  },
+  {
+    id: 'electric-panel-amperage',
+    category: 'Electric',
+    subcategory: 'General',
+    item: 'Panel Amperage',
+    required: false,
+    type: 'multiselect',
+    options: ['100 Amp', '150 Amp', '200 Amp', '400 Amp', 'Other']
+  },
+  {
+    id: 'electric-wiring-type',
+    category: 'Electric',
+    subcategory: 'General',
+    item: 'Wiring Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Copper', 'Aluminum', 'Knob and Tube', 'Romex', 'Conduit']
+  },
+  {
+    id: 'electric-inspector-rating',
+    category: 'Electric',
+    subcategory: 'General',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  
+  // Electric Defects
+  {
+    id: 'electric-overloaded-circuits',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Overloaded Circuits',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-gfci-issues',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'GFCI Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-exposed-wiring',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Exposed Wiring',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-flickering-lights',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Flickering Lights',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-dead-outlets',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Dead Outlets',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-panel-issues',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Panel Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-improper-grounding',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Improper Grounding',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-outdated-wiring',
+    category: 'Electric',
+    subcategory: 'Defects',
+    item: 'Outdated Wiring',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
@@ -2344,6 +2553,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [selectedHeatingSubcategory, setSelectedHeatingSubcategory] = useState<string>('all');
   const [selectedDoorsWindowsSubcategory, setSelectedDoorsWindowsSubcategory] = useState<string>('all');
   const [selectedBuiltinAppliancesSubcategory, setSelectedBuiltinAppliancesSubcategory] = useState<string>('all');
+  const [selectedPlumbingSubcategory, setSelectedPlumbingSubcategory] = useState<string>('all');
+  const [selectedElectricSubcategory, setSelectedElectricSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
