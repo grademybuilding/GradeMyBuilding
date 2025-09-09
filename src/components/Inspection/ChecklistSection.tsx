@@ -584,6 +584,87 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   },
+  // Wood Decks and Balconies Defects
+  {
+    id: 'wood-decks-ledger-board-improperly-installed',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Ledger Board Improperly Installed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-joist-hangers',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Joist Hangers',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-improper-deck-construction',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Improper Deck Construction Practices',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-water-sealant-required',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Deck - Water Sealant Required',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-stairs-deteriorated',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Stairs - Deteriorated',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-rotted-boards',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Deck - Rotted Boards',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-nails-exposed',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Deck - Nails Exposed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-loose-boards',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Deck - Loose Boards',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-unstable-support',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Deck - Unstable Support',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'wood-decks-railing-unsafe',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Defects - Deck and Balconies',
+    item: 'Railing Unsafe',
+    required: false,
+    type: 'checkbox'
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',

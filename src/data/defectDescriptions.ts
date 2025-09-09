@@ -122,5 +122,26 @@ Proper flashing around the skylight is critical.`,
   
   'walkways-driveway-cracking-major': `Major cracks observed. Recommend concrete contractor evaluate and replace.`,
   
-  'walkways-driveway-trip-hazard': `Trip hazards observed. Patch or repair recommended.`
+  'walkways-driveway-trip-hazard': `Trip hazards observed. Patch or repair recommended.`,
+
+  // Wood Decks and Balconies defects
+  'wood-decks-ledger-board-improperly-installed': `The ledger board is not properly attached to the building. This can cause the deck to pull away from the building and possibly collapse. Recommend that the deck and/or ledger board be properly attached by qualified contractor.`,
+  
+  'wood-decks-joist-hangers': `Joist hanger(s) are missing or improperly installed. This could cause the deck structure to fail. Recommend that joist hangers be properly installed by qualified contractor.`,
+  
+  'wood-decks-improper-deck-construction': `Deck was observed to have general poor construction. Recommend qualified deck contractor evaluate.`,
+  
+  'wood-decks-water-sealant-required': `Deck is showing signs of weathering and/or water damage. Recommend water sealant/weatherproofing be applied.\n\nHere is a helpful article on staining & sealing your deck: http://www.lowes.com/projects/porch-deck-and-patio/clean-seal-stain-deck/project`,
+  
+  'wood-decks-stairs-deteriorated': `One or more sections of the exterior stairs are deteriorated. Recommend qualified concrete contractor evaluate & repair.`,
+  
+  'wood-decks-rotted-boards': `One or more deck boards are showing signs of rot. Recommend a qualified deck contractor replace.`,
+  
+  'wood-decks-nails-exposed': `One or more nails were observed to be exposed. Recommend nails be reset.`,
+  
+  'wood-decks-loose-boards': `One or more deck boards were observed to be loose. Recommend they be refastened.\n\nHere is a helpful article for minor DIY deck repair: http://www.homedepot.com/c/simple_steps_to_repair_your_deck_and_joists_HT_PG_LC`,
+  
+  'wood-decks-unstable-support': `One of more areas of the deck support appears unstable. This could cause a safety hazard and further deterioration of the deck. Recommend qualified deck contractor evaluate and repair.`,
+  
+  'wood-decks-railing-unsafe': `There is an unsafe opening in the railing. The spacing on the rail should not exceed 4". An opening greater than 4" is a serious safety hazard especially for children as their head or other body part can become trapped.`
 };
