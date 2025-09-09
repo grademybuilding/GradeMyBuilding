@@ -1393,6 +1393,33 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Carbon Monoxide Risk',
     required: false,
     type: 'checkbox'
+  },
+  // Windows
+  {
+    id: 'windows-type',
+    category: 'Doors & Windows',
+    subcategory: 'Windows',
+    item: 'Window Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Casement', 'Double-hung', 'Drop-down', 'Single Pane', 'Single-hung', 'Sliders', 'Storm', 'Thermal']
+  },
+  {
+    id: 'windows-manufacturer',
+    category: 'Doors & Windows',
+    subcategory: 'Windows',
+    item: 'Window Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Andersen', 'JELD-WEN', 'Marvin', 'Milgard', 'Pella', 'WeatherShield']
+  },
+  {
+    id: 'windows-age',
+    category: 'Doors & Windows',
+    subcategory: 'Windows',
+    item: 'Window Age',
+    required: false,
+    type: 'year'
   }
 ];
 
