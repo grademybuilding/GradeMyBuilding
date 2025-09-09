@@ -399,9 +399,6 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   checked={selectedDefects[item.id] || false}
                   onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
                 />
-                <Label htmlFor={`defect-${item.id}`} className="text-sm font-medium">
-                  Report this defect
-                </Label>
               </div>
               
               {/* Comment area - always visible */}
