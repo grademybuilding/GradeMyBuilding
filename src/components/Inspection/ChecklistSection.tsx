@@ -1926,44 +1926,49 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           );
         }
         
-        // For non-defect items, keep the Pass/Fail/N/A buttons
-        return (
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => handleItemCheck(item.id, 'pass')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                checkedItems[item.id] === 'pass'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-              }`}
-            >
-              Pass
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemCheck(item.id, 'fail')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                checkedItems[item.id] === 'fail'
-                  ? 'bg-red-600 text-white'
-                  : 'bg-red-100 text-red-700 hover:bg-red-200'
-              }`}
-            >
-              Fail
-            </button>
-            <button
-              type="button"
-              onClick={() => handleItemCheck(item.id, 'na')}
-              className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                checkedItems[item.id] === 'na'
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-              }`}
-            >
-              N/A
-            </button>
-          </div>
-        );
+        // For non-defect items and non-Built-in Appliances, keep the Pass/Fail/N/A buttons
+        if (item.category !== 'Built-in Appliances') {
+          return (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => handleItemCheck(item.id, 'pass')}
+                className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                  checkedItems[item.id] === 'pass'
+                    ? 'bg-emerald-600 text-white'
+                    : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                }`}
+              >
+                Pass
+              </button>
+              <button
+                type="button"
+                onClick={() => handleItemCheck(item.id, 'fail')}
+                className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                  checkedItems[item.id] === 'fail'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-red-100 text-red-700 hover:bg-red-200'
+                }`}
+              >
+                Fail
+              </button>
+              <button
+                type="button"
+                onClick={() => handleItemCheck(item.id, 'na')}
+                className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                  checkedItems[item.id] === 'na'
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                }`}
+              >
+                N/A
+              </button>
+            </div>
+          );
+        }
+        
+        // For Built-in Appliances, just return null (no Pass/Fail/N/A buttons)
+        return null;
     }
   };
 
@@ -2250,8 +2255,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                           <Badge variant="outline" className="text-xs">Required</Badge>
                         )}
                       </div>
-                      {/* Show status icon only for non-defect checkbox items */}
-                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && getStatusIcon(checkedItems[item.id])}
+                      {/* Show status icon only for non-defect checkbox items and exclude Built-in Appliances */}
+                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && item.category !== 'Built-in Appliances' && getStatusIcon(checkedItems[item.id])}
                     </div>
                     
                     {renderItemContent(item)}
