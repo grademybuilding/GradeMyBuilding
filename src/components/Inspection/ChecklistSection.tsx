@@ -1590,6 +1590,43 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Garage Door
+  {
+    id: 'garage-door-type',
+    category: 'Doors & Windows',
+    subcategory: 'Garage Door',
+    item: 'Garage Door Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Sliding', 'Folding', 'Up-and-Over', 'Roll-Up', 'Automatic', 'Sectional']
+  },
+  {
+    id: 'garage-door-material',
+    category: 'Doors & Windows',
+    subcategory: 'Garage Door',
+    item: 'Garage Door Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Metal', 'Insulated', 'Non-insulated', 'Steel', 'Aluminum', 'Wood', 'Wood Composite', 'Fiberglass', 'Vinyl', 'Glass']
+  },
+  {
+    id: 'garage-door-mechanism',
+    category: 'Doors & Windows',
+    subcategory: 'Garage Door',
+    item: 'Garage Door Mechanism',
+    required: false,
+    type: 'multiselect',
+    options: ['Manual', 'Electric Opener', 'Chain Drive', 'Belt Drive', 'Screw Drive', 'Direct Drive', 'Remote Control', 'Wall Switch']
+  },
+  {
+    id: 'garage-door-inspector-rating',
+    category: 'Doors & Windows',
+    subcategory: 'Garage Door',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
