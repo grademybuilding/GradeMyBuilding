@@ -17,5 +17,25 @@ export const defectDescriptions: Record<string, string> = {
   
   'roof-damaged-general': `Roof coverings showed moderate damage. Recommend a qualified roofing professional evaluate and repair.`,
   
-  'roof-ponding': `Observed ponding in one or more areas of roof. Ponding can lead to accelerated erosion and deterioration. Recommend a qualified roofing contractor evaluate and repair.`
+  'roof-ponding': `Observed ponding in one or more areas of roof. Ponding can lead to accelerated erosion and deterioration. Recommend a qualified roofing contractor evaluate and repair.`,
+  
+  'roof-gutters-missing': `<p>There are no gutters present on the structure.  Gutters are recommended because they collect rain water from the roof and direct it away form the building.</p>`,
+  
+  'roof-gutter-loose': `<p>The gutter(s) is loose and needs to be re-fastened to fascia and pitched properly.</p>`,
+  
+  'roof-gutter-leakage': `<p>Gutters were observed to be leaking in one or more areas. This can result in excessive moisture in the soil at the foundation, which can lead to foundation/structural movement. Recommend a qualified contractor evaluate and repair gutters to proper functionality.</p>`,
+  
+  'roof-gutter-improperly-sloped': `<p>Gutter are improperly sloped in areas, which could result in runoff drainage around the foundation and possible structural shifting. Recommend qualified roofing or gutters contractor repair.</p>`,
+  
+  'roof-gutter-damaged': `<p>Gutters were damaged. This can result in excessive moisture in the soil at the foundation, which can lead to foundation/structural movement. Recommend a qualified contractor evaluate and repair.</p>`,
+  
+  'roof-downspouts-missing': `<p>Home was missing downspouts in one or more areas. This can result in excessive moisture in the soil at the foundation, which can lead to foundation/structural movement. Recommend a qualified contractor install downspout extensions that drain at least 6 feet from the foundation.</p>`,
+  
+  'roof-downspouts-drain-near-house': `<p>One or more downspouts drain too close to the home's foundation. This can result in excessive moisture in the soil at the foundation, which can lead to foundation/structural movement. Recommend a qualified contractor adjust downspout extensions to drain at least 6 feet from the foundation.</p>
+
+<p><a href="https://www.thisoldhouse.com/how-to/how-to-drain-downspout-water-flow-away-house" target="_blank">Here is a helpful DIY link</a> and video on draining water flow away from your house.</p>`,
+  
+  'roof-debris': `<p>Debris has accumulated in the gutters. Recommend cleaning to facilitate water flow.</p>
+
+<p><a href="http://www.lowes.com/projects/repair-and-maintain/gutter-cleaning-and-repair/project">Here is a DIY resource</a> for cleaning your gutters.</p>`
 };

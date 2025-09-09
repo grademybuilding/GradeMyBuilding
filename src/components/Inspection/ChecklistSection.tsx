@@ -177,6 +177,71 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'multiselect',
     options: ['Aluminum', 'Seamless Aluminum', 'Vinyl', 'Copper', 'Steel']
+  },
+  // Roof Drainage Systems - Defects
+  {
+    id: 'roof-gutters-missing',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Gutters Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-gutter-loose',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Gutter Loose',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-gutter-leakage',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Gutter Leakage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-gutter-improperly-sloped',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Gutter Improperly Sloped',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-gutter-damaged',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Gutter Damaged',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-downspouts-missing',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Downspouts Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-downspouts-drain-near-house',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Downspouts Drain Near House',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-debris',
+    category: 'Roof',
+    subcategory: 'Defects - Roof Drainage Systems',
+    item: 'Debris',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
