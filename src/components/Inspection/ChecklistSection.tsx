@@ -1470,6 +1470,42 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Missing Screen',
     required: false,
     type: 'checkbox'
+  },
+  // Entry Doors
+  {
+    id: 'entry-door-type',
+    category: 'Doors & Windows',
+    subcategory: 'Entry Doors',
+    item: 'Entry Door Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Single', 'Double', 'French', 'Sliding', 'Storm', 'Screen', 'Security']
+  },
+  {
+    id: 'entry-door-manufacturer',
+    category: 'Doors & Windows',
+    subcategory: 'Entry Doors',
+    item: 'Entry Door Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Andersen', 'JELD-WEN', 'Therma-Tru', 'Pella', 'Masonite', 'ProVia', 'Fiberglass', 'Steel', 'Wood']
+  },
+  {
+    id: 'entry-door-age',
+    category: 'Doors & Windows',
+    subcategory: 'Entry Doors',
+    item: 'Entry Door Age',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'entry-door-inspector-rating',
+    category: 'Doors & Windows',
+    subcategory: 'Entry Doors',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
