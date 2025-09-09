@@ -2329,15 +2329,6 @@ const inspectionChecklist: ChecklistItem[] = [
 
   // Plumbing
   {
-    id: 'plumbing-water-pressure',
-    category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Water Pressure',
-    required: false,
-    type: 'rating',
-    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
-  },
-  {
     id: 'plumbing-hot-water-system',
     category: 'Plumbing',
     subcategory: 'General',
