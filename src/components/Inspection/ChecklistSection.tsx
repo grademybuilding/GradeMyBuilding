@@ -420,7 +420,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {item.options?.map((rating) => {
                 // Color coding for Inspector Overall Grading
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating') {
+                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition') {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
