@@ -665,6 +665,25 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Foundation Basement & Crawlspace
+  {
+    id: 'foundation-inspection-method',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'General',
+    item: 'Inspection Method',
+    required: false,
+    type: 'multiselect',
+    options: ['Attic Access', 'Crawlspace Access', 'Infrared', 'Visual']
+  },
+  {
+    id: 'foundation-material',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Foundation',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Brick', 'Concrete', 'Masonry Block', 'Stone', 'Rock', 'Slab on Grade']
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
