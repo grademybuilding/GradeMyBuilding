@@ -73,7 +73,7 @@ const inspectionChecklist: ChecklistItem[] = [
     id: 'roof-inspector-rating',
     category: 'Roof',
     subcategory: 'Coverings',
-    item: 'Inspector Overall Rating',
+    item: 'Inspector Overall Grading',
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
@@ -182,7 +182,7 @@ const inspectionChecklist: ChecklistItem[] = [
     id: 'roof-drainage-inspector-rating',
     category: 'Roof',
     subcategory: 'Roof Drainage Systems',
-    item: 'Inspector Overall Rating',
+    item: 'Inspector Overall Grading',
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
@@ -266,7 +266,7 @@ const inspectionChecklist: ChecklistItem[] = [
     id: 'roof-flashing-condition',
     category: 'Roof',
     subcategory: 'Flashing',
-    item: 'Flashing Condition',
+    item: 'Inspector Overall Grading',
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
@@ -418,7 +418,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           <div className="space-y-2">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {item.options?.map((rating) => {
-                // Color coding for Inspector Overall Rating
+                // Color coding for Inspector Overall Grading
                 let colorClasses = '';
                 if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating') {
                   switch (rating) {
