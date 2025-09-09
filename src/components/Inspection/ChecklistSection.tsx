@@ -1627,6 +1627,64 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Garage Door Defects
+  {
+    id: 'garage-door-loud-noises',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Doors',
+    item: 'Loud Noises',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garage-door-improper-installation',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Doors',
+    item: 'Improper Installation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garage-door-broken-springs',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Doors',
+    item: 'Broken Springs',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garage-door-auto-reverse-sensor',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Doors',
+    item: 'Auto Reverse Sensor Not Working',
+    required: false,
+    type: 'checkbox'
+  },
+  // Garage Door Opener Defects
+  {
+    id: 'garage-door-opener-inoperable-wall-switch',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Door Opener',
+    item: 'Inoperable Wall Switch',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garage-door-opener-inoperable-remote',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Door Opener',
+    item: 'Inoperable Remote',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garage-door-opener-delayed-wall-switch',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Garage Door Opener',
+    item: 'Delayed Wall Switch',
+    required: false,
+    type: 'checkbox'
   }
 ];
 

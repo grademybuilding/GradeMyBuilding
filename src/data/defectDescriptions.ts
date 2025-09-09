@@ -223,5 +223,26 @@ Proper flashing around the skylight is critical.`,
   
   'entry-door-latch-alignment': `Door latch and/or strike plate is out of alignment. Recommend a handyman repair.`,
   
-  'entry-door-doesnt-latch': `Door doesn't latch properly. Recommend handyman repair latch and/or strike plate.`
+  'entry-door-doesnt-latch': `Door doesn't latch properly. Recommend handyman repair latch and/or strike plate.`,
+
+  // Interior Doors defects
+  'interior-door-water-staining': "Door shows noticeable water staining, which could lead to further deterioration. Monitor for future repair or replacement.",
+  'interior-door-poor-weatherstripping': "<p>At the time of the inspection, weather-stripping at interior doors was generally damaged or deteriorated. The Inspector recommends replacement/installation of effective weather-stripping components as necessary by a qualified contractor.</p>",
+  'interior-door-noticeable-gap': "One or more gaps could result in energy loss. Recommend handyman or door contractor evaluate.",
+  'interior-door-hinges-missing': "One or more hinges missing. This does not affect operation of the door, however having all hignes is recommended to prevent potential safety hazard.",
+  'interior-door-hinges-loose': '<p>Loose hinges can cause door to stick or eventually fall out of place. Recommend handyman tighten hinges.</p>\n\n<p><a href="https://www.thisoldhouse.com/more/sure-cure-loose-hinges" target="_blank">Here is a DIY article</a> on fixing loose hinges. </p>',
+  'interior-door-sticks': '<p>Door sticks and is tough to open. Recommend sanding down offending sides.</p>\n\n<p><a href="http://www.familyhandyman.com/doors/repair/fix-sagging-or-sticking-doors/view-all">Here is a helpful DIY article</a> on how to fix a sticking door. </p>',
+  'interior-door-latch-alignment': "<p>Door latch and/or strike plate is out of alignment. Recommend a handyman repair.</p>",
+  'interior-door-doesnt-latch': "Door doesn't latch properly. Recommend handyman repair latch and/or strike plate.",
+
+  // Garage Door defects
+  'garage-door-loud-noises': '<p>Loud grinding or squaling observed when opening/closing garage door. This can be due to dirt or debris in the track or lack of lubrication. Recommend cleaning the track and lubricating. </p>\n\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all" target="_blank">Here are some troubleshooting tips</a> before calling a garage contractor. </p>',
+  'garage-door-improper-installation': "<p>Garage door was improperly installed and appears unstable when opening/closing. Recommend a qualified garage door contractor evaluate and repair. </p>",
+  'garage-door-broken-springs': "<p>Garage door springs were broken and in need of replacement. Recommend a qualified garage contractor replace. </p>",
+  'garage-door-auto-reverse-sensor': "<p>The auto reverse sensor was not responding at time of inspection. This is a safety hazard to children and pets. Recommend a qualified garage door contractor evaluate and repair/replace. </p>",
+
+  // Garage Door Opener defects
+  'garage-door-opener-inoperable-wall-switch': '<p>Garage wall switch was inoperable at time of inspection. Recommend testing the wall switch and possible replacement. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step2" target="_blank">Here is a DIY link</a> that shows you how. </p>',
+  'garage-door-opener-inoperable-remote': '<p>Garage remote was inoperable at the time of inspection. When wall switch works but remote doesn\'t, this can be due to old batteries or needing a new receiver/remote. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step3" target="_blank">Here is a DIY resource</a> to help. </p>',
+  'garage-door-opener-delayed-wall-switch': '<p>Wall switch needed to be depressed until door was open/closed. Recommend a garage door contractor evaluate &amp; repair. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step4" target="_blank">Here is a DIY resource</a> to troubleshoot first. </p>'
 };
