@@ -45,5 +45,23 @@ Here is a DIY resource for cleaning your gutters: http://www.lowes.com/projects/
   
   'roof-flashing-missing': `Flashing was missing in one or more areas where it should be present. Missing flashing can allow moisture intrusion and lead to structural damage. Recommend a qualified roofing contractor install proper flashing.`,
   
-  'roof-flashing-improper-installation': `Flashing was improperly installed in one or more areas. Improper flashing installation can allow moisture intrusion. Recommend a qualified roofing contractor evaluate and repair to proper standards.`
+  'roof-flashing-improper-installation': `Flashing was improperly installed in one or more areas. Improper flashing installation can allow moisture intrusion. Recommend a qualified roofing contractor evaluate and repair to proper standards.`,
+
+  'roof-skylight-water-penetration': `There are signs of possible water penetration at or near the skylight. Skylights, if not properly installed, are prone to leaking. Monitor the condition and if there is sign of leak then have the skylight repaired or replaced.
+
+Proper flashing around the skylight is critical.`,
+
+  'roof-skylight-cracked': `Skylight was cracked in one or more places. Recommend a qualified roofing contractor repair.`,
+
+  'roof-metal-chimney-rust': `The metal chimney shows evidence of rust and/or rusting. Recommend monitoring the chimney which may have to be replaced at some point.`,
+
+  'roof-chimney-unlined': `Chimney was unlined, which can deteriorate the chimney structure and allow harmful gasses to enter home. Recommend a qualified masonry or chimney contractor evaluate and remedy.`,
+
+  'roof-chimney-repoint-needed': `Joints in the masonry have deteriorated and should be repointed. (Repointing is the restoration of the mortar joints in the masonry).`,
+
+  'roof-chimney-flue-dirty': `Chimney flue was excessively dirty, which can pose a serious fire hazard. Recommend a qualified chimney contractor clean the build up in the flue.`,
+
+  'roof-chimney-flue-cracked': `The chimney flue had one or more cracks, which can lead to further damage to the chimney structure. Recommend a qualified contractor repair.`,
+
+  'roof-chimney-cap-missing': `No chimney cap was observed. This is important to protect from moisture intrusion and protect the chimney. Recommend a qualified roofer or chimney expert install.`
 };

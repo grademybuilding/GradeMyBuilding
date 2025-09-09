@@ -303,6 +303,90 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Flashing Improper Installation',
     required: false,
     type: 'checkbox'
+  },
+  // Skylights & Chimneys
+  {
+    id: 'roof-skylights-chimneys-material',
+    category: 'Roof',
+    subcategory: 'Skylights & Chimneys',
+    item: 'Skylight/Chimney Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Glass', 'Acrylic', 'Polycarbonate', 'Brick', 'Stone', 'Metal', 'Stucco']
+  },
+  {
+    id: 'roof-skylights-chimneys-inspector-rating',
+    category: 'Roof',
+    subcategory: 'Skylights & Chimneys',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Skylights & Chimneys Defects
+  {
+    id: 'roof-skylight-water-penetration',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Skylight Water Penetration',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-skylight-cracked',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Skylight Cracked',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-metal-chimney-rust',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Metal Chimney Rust',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-chimney-unlined',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Chimney Unlined',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-chimney-repoint-needed',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Chimney Repoint Needed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-chimney-flue-dirty',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Chimney Flue Dirty',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-chimney-flue-cracked',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Chimney Flue Cracked',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-chimney-cap-missing',
+    category: 'Roof',
+    subcategory: 'Defects - Skylights & Chimneys',
+    item: 'Chimney Cap Missing',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
@@ -420,7 +504,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {item.options?.map((rating) => {
                 // Color coding for Inspector Overall Grading
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition') {
+                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating') {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
