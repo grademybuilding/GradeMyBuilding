@@ -27,12 +27,12 @@ const inspectionCategories = [
   'Walkways, Patios & Driveways',
   'Wood Decks & Balconies',
   'Foundation & Structure',
+  'Plumbing',
+  'Electric',
   'Heating & Cooling',
   'Doors & Windows',
   'Built-in Appliances',
-  'Green Features',
-  'Plumbing',
-  'Electric'
+  'Green Features'
 ];
 
 const inspectionChecklist: ChecklistItem[] = [
