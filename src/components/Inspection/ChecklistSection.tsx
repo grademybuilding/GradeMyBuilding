@@ -1420,6 +1420,15 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Window Age',
     required: false,
     type: 'year'
+  },
+  {
+    id: 'windows-inspector-rating',
+    category: 'Doors & Windows',
+    subcategory: 'Windows',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
