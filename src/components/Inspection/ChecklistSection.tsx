@@ -389,6 +389,25 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Roof Eaves, Soffits & Fascia
+  {
+    id: 'roof-eaves-soffits-fascia-material',
+    category: 'Roof',
+    subcategory: 'Eaves, Soffits & Fascia',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Wood', 'Vinyl', 'Aluminum', 'Fiber Cement', 'Steel', 'Composite']
+  },
+  {
+    id: 'roof-eaves-soffits-fascia-inspector-rating',
+    category: 'Roof',
+    subcategory: 'Eaves, Soffits & Fascia',
+    item: 'Inspector Overall Grading',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
@@ -631,7 +650,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {item.options?.map((rating) => {
                 // Color coding for Inspector Overall Grading
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating' || item.id === 'exterior-siding-inspector-rating') {
+                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating' || item.id === 'roof-eaves-soffits-fascia-inspector-rating' || item.id === 'exterior-siding-inspector-rating') {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
