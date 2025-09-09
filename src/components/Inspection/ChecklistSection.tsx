@@ -1429,6 +1429,47 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Windows Defects
+  {
+    id: 'windows-improper-installation',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Windows',
+    item: 'Improper Installation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'windows-painted-shut',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Windows',
+    item: 'Painted Shut',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'windows-damaged',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Windows',
+    item: 'Damaged',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'windows-failed-seal',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Windows',
+    item: 'Failed Seal',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'windows-missing-screen',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Windows',
+    item: 'Missing Screen',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
