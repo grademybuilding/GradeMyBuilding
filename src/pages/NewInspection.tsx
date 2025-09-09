@@ -18,7 +18,16 @@ export function NewInspection({ onBack }: NewInspectionProps) {
   const steps = [
     { title: "Property Info", component: PropertyInfo },
     { title: "Inspection Details", component: InspectionDetails },
-    { title: "Checklist", component: ChecklistSection },
+    { title: "Roof", component: ChecklistSection },
+    { title: "Exterior", component: ChecklistSection },
+    { title: "Wood Decks & Balconies", component: ChecklistSection },
+    { title: "Foundation Basement & Crawlspace", component: ChecklistSection },
+    { title: "Heating & Cooling", component: ChecklistSection },
+    { title: "Electric", component: ChecklistSection },
+    { title: "Plumbing", component: ChecklistSection },
+    { title: "Door & Windows", component: ChecklistSection },
+    { title: "Cooking & Appliances", component: ChecklistSection },
+    { title: "Green Features", component: ChecklistSection },
   ];
 
   const handleFieldChange = (field: string, value: any) => {
