@@ -485,7 +485,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
 
         {categories.map((category) => (
           <div key={category} className="space-y-3">
-            <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">
+            <h3 className="font-semibold text-lg text-foreground pb-2">
               {category}
             </h3>
             <div className="space-y-4">
