@@ -1901,6 +1901,116 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  
+  // Built-in Appliances Defects - Range/Oven/Cooktop
+  {
+    id: 'range-oven-cooktop-missing-control-knobs',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Missing Control Knobs',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-exhaust-system-missing',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Exhaust System Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-exhaust-fan-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Exhaust Fan Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-range-not-fastened',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Range Not Fastened',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-cracked-glasstop',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Cracked Glasstop',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-burner-not-lighting',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Burner Not Lighting',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-exhaust-duct-terminates-attic',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Exhaust Duct Terminates in Attic',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-oven-not-heating-up',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'Oven Not Heating Up',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'range-oven-cooktop-no-gas-shutoff-valve',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Range/Oven/Cooktop',
+    item: 'No Gas Shut-off Valve',
+    required: false,
+    type: 'checkbox'
+  },
+  
+  // Built-in Appliances Defects - Garbage Disposal
+  {
+    id: 'garbage-disposal-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Garbage Disposal',
+    item: 'Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'garbage-disposal-excessive-noise',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Garbage Disposal',
+    item: 'Excessive Noise',
+    required: false,
+    type: 'checkbox'
+  },
+  
+  // Built-in Appliances Defects - Built-in Microwave
+  {
+    id: 'builtin-microwave-inoperable',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Built-in Microwave',
+    item: 'Inoperable',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'builtin-microwave-improper-mounting',
+    category: 'Built-in Appliances',
+    subcategory: 'Defects - Built-in Microwave',
+    item: 'Improper Mounting',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
@@ -2388,8 +2498,20 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     );
                   }
                   if (category === 'Built-in Appliances' && selectedBuiltinAppliancesSubcategory !== 'all') {
-                    // Filter by subcategory
-                    return item.subcategory === selectedBuiltinAppliancesSubcategory;
+                    // Map the dropdown selections to actual subcategories including defects
+                    const builtinAppliancesSubcategoryMap: Record<string, string[]> = {
+                      'Refrigerator': ['Refrigerator'],
+                      'Range/Oven/Cooktop': ['Range/Oven/Cooktop', 'Defects - Range/Oven/Cooktop'],
+                      'Dishwasher': ['Dishwasher'],
+                      'Built-in Microwave': ['Built-in Microwave', 'Defects - Built-in Microwave'],
+                      'Garbage Disposal': ['Garbage Disposal', 'Defects - Garbage Disposal'],
+                      'Cooking Exhaust': ['Cooking Exhaust']
+                    };
+                    
+                    const allowedSubcategories = builtinAppliancesSubcategoryMap[selectedBuiltinAppliancesSubcategory] || [];
+                    return allowedSubcategories.some(sub => 
+                      item.subcategory?.includes(sub) || item.subcategory === sub
+                    );
                   }
                   return true;
                 })

@@ -244,5 +244,24 @@ Proper flashing around the skylight is critical.`,
   // Garage Door Opener defects
   'garage-door-opener-inoperable-wall-switch': '<p>Garage wall switch was inoperable at time of inspection. Recommend testing the wall switch and possible replacement. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step2" target="_blank">Here is a DIY link</a> that shows you how. </p>',
   'garage-door-opener-inoperable-remote': '<p>Garage remote was inoperable at the time of inspection. When wall switch works but remote doesn\'t, this can be due to old batteries or needing a new receiver/remote. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step3" target="_blank">Here is a DIY resource</a> to help. </p>',
-  'garage-door-opener-delayed-wall-switch': '<p>Wall switch needed to be depressed until door was open/closed. Recommend a garage door contractor evaluate &amp; repair. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step4" target="_blank">Here is a DIY resource</a> to troubleshoot first. </p>'
+  'garage-door-opener-delayed-wall-switch': '<p>Wall switch needed to be depressed until door was open/closed. Recommend a garage door contractor evaluate &amp; repair. </p>\n<p><a href="http://www.familyhandyman.com/garage/troubleshooting-garage-door-openers/view-all#step4" target="_blank">Here is a DIY resource</a> to troubleshoot first. </p>',
+
+  // Built-in Appliances defects - Range/Oven/Cooktop
+  'range-oven-cooktop-missing-control-knobs': '<p>Range/Oven was missing control knobs. Recommend contacting manufacturer for replacement parts.</p>',
+  'range-oven-cooktop-exhaust-system-missing': '<p>No exhaust system present to prevent moisture and grease in kitchen area. Recommend qualified contractor install range hood or exhaust system.</p>\n\n<p><a href="http://www.kitchensource.com/range-hoods/how-to-choose-a-range-hood.html" target="_blank">Here is a resource on choosing a range hood</a>.</p>',
+  'range-oven-cooktop-exhaust-fan-inoperable': '<p>Exhaust fan was inoperable. Recommend a qualified contractor repair.</p>',
+  'range-oven-cooktop-range-not-fastened': '<p>Range was not fastened to the floor. This poses a safety hazard to children. Recommend a qualified contractor secure range so it can\'t tip.</p>',
+  'range-oven-cooktop-cracked-glasstop': '<p>Glass cooktop was cracked. Recommend noting model and serial number so manufacturer can give a replacement quote.</p>',
+  'range-oven-cooktop-burner-not-lighting': '<p>One or more heating elements did not heat up when turned on. Recommend qualified professional evaluate &amp; repair.</p>\n\n<p><a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all" target="_blank">Here is a DIY resource</a> on possible solutions.</p>',
+  'range-oven-cooktop-exhaust-duct-terminates-attic': '<p>Exhaust from range hood terminates into the attic. This can result in moisture damage and mold in the attic. Recommend a qualified contractor re-route this duct to terminate to the exterior.</p>',
+  'range-oven-cooktop-oven-not-heating-up': '<p>Gas oven wasn\'t heating up at time of inspection. Recommend a qualified appliance contractor evaluate and repair.</p>\n\n<p><a href="http://www.familyhandyman.com/appliance-repair/stove-repair/gas-range-burner-repair-tips/view-all#step1" target="_blank">Here is a DIY troubleshooting tip</a>.</p>',
+  'range-oven-cooktop-no-gas-shutoff-valve': '<p>No gas shut-off valve was observed at the supply pipe. Recommend a qualified plumber evaluate and remedy.</p>',
+  
+  // Built-in Appliances defects - Garbage Disposal
+  'garbage-disposal-inoperable': '<p>Garbage disposal was inoperable at the time of inspection. Recommend qualified handyman repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=EfUaIsNk6Qw" target="_blank">Here is a DIY resource for troubleshooting</a>.</p>',
+  'garbage-disposal-excessive-noise': '<p>Garbage disposal was excessively noisy. Recommend a qualified plumber evaluate and repair.</p>\n\n<p><a href="https://www.youtube.com/watch?v=tgFOszWWHmg" target="_blank">Here is a helpful DIY troubleshooting video.</a></p>',
+  
+  // Built-in Appliances defects - Built-in Microwave
+  'builtin-microwave-inoperable': '<p>Built-in microwave was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair.</p>',
+  'builtin-microwave-improper-mounting': '<p>Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.</p>'
 };
