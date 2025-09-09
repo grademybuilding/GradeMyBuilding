@@ -40,7 +40,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'roof-inspection-method',
     category: 'Roof',
-    subcategory: 'General',
+    subcategory: 'Inspection Details',
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
@@ -49,7 +49,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'roof-type-style',
     category: 'Roof',
-    subcategory: 'General', 
+    subcategory: 'Inspection Details', 
     item: 'Roof Type/Style',
     required: false,
     type: 'multiselect',
@@ -980,7 +980,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'exterior-inspection-method',
     category: 'Exterior Cladding',
-    subcategory: 'General',
+    subcategory: 'Inspection Details',
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
@@ -2331,7 +2331,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-hot-water-system',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Hot Water System',
     item: 'Hot Water System',
     required: false,
     type: 'multiselect',
@@ -2340,8 +2340,8 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-hot-water-manufacturer',
     category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Manufacturer',
+    subcategory: 'Hot Water System',
+    item: 'Hot Water System Manufacturer',
     required: false,
     type: 'multiselect',
     options: ['Rheem', 'AO Smith', 'Bradford White', 'Whirlpool', 'GE', 'Kenmore', 'State', 'American', 'Other', 'Unknown']
@@ -2349,8 +2349,8 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-hot-water-location',
     category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Location',
+    subcategory: 'Hot Water System',
+    item: 'Hot Water System Location',
     required: false,
     type: 'multiselect',
     options: ['Basement', 'Garage', 'Utility Room', 'Attic', 'Closet', 'Exterior', 'Crawl Space', 'Other']
@@ -2358,7 +2358,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-water-heater-age',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Hot Water System',
     item: 'Water Heater Age - Year Installed',
     required: false,
     type: 'year'
@@ -2366,7 +2366,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-hot-water-capacity',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Hot Water System',
     item: 'Capacity',
     required: false,
     type: 'gallons'
@@ -2374,7 +2374,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-main-water-shutoff-location',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Water Supply, Distribution Systems & Fixtures',
     item: 'Main Water Shut-off Device - Location',
     required: false,
     type: 'multiselect',
@@ -2383,8 +2383,8 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-backflow-prevention-location',
     category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Back-flow Prevention Device - Location',
+    subcategory: 'Back-flow Prevention Device',
+    item: 'Location',
     required: false,
     type: 'multiselect',
     options: ['North', 'South', 'East', 'West', 'Front of Building', 'Back of Building', 'Basement']
@@ -2392,8 +2392,8 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-drain-waste-vent-material',
     category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Drain, Waste Vent Systems - Material',
+    subcategory: 'Drain, Waste Vent Systems',
+    item: 'Material',
     required: false,
     type: 'multiselect',
     options: ['ABS', 'Copper', 'Iron', 'Lead', 'PVC', 'Unknown']
@@ -2419,7 +2419,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-water-source',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Water Supply, Distribution Systems & Fixtures',
     item: 'Water Source',
     required: false,
     type: 'multiselect',
@@ -2428,7 +2428,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-filters',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Water Supply, Distribution Systems & Fixtures',
     item: 'Filters',
     required: false,
     type: 'multiselect',
@@ -2437,7 +2437,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'plumbing-inspector-rating',
     category: 'Plumbing',
-    subcategory: 'General',
+    subcategory: 'Inspection Details',
     item: 'Inspector Overall Grading',
     required: false,
     type: 'rating',
@@ -2514,7 +2514,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'electric-main-panel-type',
     category: 'Electric',
-    subcategory: 'General',
+    subcategory: 'Electrical Systems',
     item: 'Main Panel Type',
     required: false,
     type: 'multiselect',
@@ -2523,7 +2523,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'electric-panel-amperage',
     category: 'Electric',
-    subcategory: 'General',
+    subcategory: 'Electrical Systems',
     item: 'Panel Amperage',
     required: false,
     type: 'multiselect',
@@ -2532,7 +2532,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'electric-wiring-type',
     category: 'Electric',
-    subcategory: 'General',
+    subcategory: 'Electrical Systems',
     item: 'Wiring Type',
     required: false,
     type: 'multiselect',
@@ -2541,7 +2541,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'electric-inspector-rating',
     category: 'Electric',
-    subcategory: 'General',
+    subcategory: 'Inspection Details',
     item: 'Inspector Overall Grading',
     required: false,
     type: 'rating',
