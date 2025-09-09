@@ -28,7 +28,7 @@ const inspectionCategories = [
   'Wood Decks & Balconies',
   'Foundation & Structure',
   'Heating & Cooling',
-  'Door & Windows',
+  'Doors & Windows',
   'Cooking & Appliances',
   'Green Features'
 ];
