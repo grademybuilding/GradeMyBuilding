@@ -1686,48 +1686,221 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
-  // Built-in Appliances
+  // Built-in Appliances - Refrigerator
   {
-    id: 'builtin-appliances-refrigerator',
+    id: 'refrigerator-type',
     category: 'Built-in Appliances',
-    item: 'Refrigerator',
+    subcategory: 'Refrigerator',
+    item: 'Refrigerator Type',
     required: false,
-    type: 'checkbox'
+    type: 'multiselect',
+    options: ['Side-by-side', 'Top Freezer', 'Bottom Freezer', 'French Door', 'Built-in', 'Counter-depth']
   },
   {
-    id: 'builtin-appliances-range-oven-cooktop',
-    category: 'Built-in Appliances', 
-    item: 'Range/Oven/Cooktop',
+    id: 'refrigerator-manufacturer',
+    category: 'Built-in Appliances',
+    subcategory: 'Refrigerator',
+    item: 'Refrigerator Manufacturer',
     required: false,
-    type: 'checkbox'
+    type: 'multiselect',
+    options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Sub-Zero']
   },
   {
-    id: 'builtin-appliances-dishwasher',
+    id: 'refrigerator-age',
     category: 'Built-in Appliances',
-    item: 'Dishwasher',
+    subcategory: 'Refrigerator',
+    item: 'Refrigerator Age',
     required: false,
-    type: 'checkbox'
+    type: 'year'
   },
   {
-    id: 'builtin-appliances-microwave',
+    id: 'refrigerator-inspector-rating',
     category: 'Built-in Appliances',
-    item: 'Built-in Microwave',
+    subcategory: 'Refrigerator',
+    item: 'Inspector Overall Rating',
     required: false,
-    type: 'checkbox'
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Built-in Appliances - Range/Oven/Cooktop
+  {
+    id: 'range-oven-cooktop-type',
+    category: 'Built-in Appliances',
+    subcategory: 'Range/Oven/Cooktop',
+    item: 'Range/Oven/Cooktop Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Electric Range', 'Gas Range', 'Induction Cooktop', 'Electric Cooktop', 'Gas Cooktop', 'Wall Oven', 'Double Oven']
   },
   {
-    id: 'builtin-appliances-garbage-disposal',
+    id: 'range-oven-cooktop-manufacturer',
     category: 'Built-in Appliances',
-    item: 'Garbage Disposal',
+    subcategory: 'Range/Oven/Cooktop',
+    item: 'Range/Oven/Cooktop Manufacturer',
     required: false,
-    type: 'checkbox'
+    type: 'multiselect',
+    options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Viking', 'Wolf']
   },
   {
-    id: 'builtin-appliances-cooking-exhaust',
+    id: 'range-oven-cooktop-age',
     category: 'Built-in Appliances',
-    item: 'Cooking Exhaust',
+    subcategory: 'Range/Oven/Cooktop',
+    item: 'Range/Oven/Cooktop Age',
     required: false,
-    type: 'checkbox'
+    type: 'year'
+  },
+  {
+    id: 'range-oven-cooktop-inspector-rating',
+    category: 'Built-in Appliances',
+    subcategory: 'Range/Oven/Cooktop',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Built-in Appliances - Dishwasher
+  {
+    id: 'dishwasher-type',
+    category: 'Built-in Appliances',
+    subcategory: 'Dishwasher',
+    item: 'Dishwasher Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Built-in', 'Portable', 'Drawer', 'Countertop', 'Panel Ready']
+  },
+  {
+    id: 'dishwasher-manufacturer',
+    category: 'Built-in Appliances',
+    subcategory: 'Dishwasher',
+    item: 'Dishwasher Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Miele']
+  },
+  {
+    id: 'dishwasher-age',
+    category: 'Built-in Appliances',
+    subcategory: 'Dishwasher',
+    item: 'Dishwasher Age',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'dishwasher-inspector-rating',
+    category: 'Built-in Appliances',
+    subcategory: 'Dishwasher',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Built-in Appliances - Built-in Microwave
+  {
+    id: 'builtin-microwave-type',
+    category: 'Built-in Appliances',
+    subcategory: 'Built-in Microwave',
+    item: 'Built-in Microwave Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Over-the-range', 'Built-in Wall', 'Drawer', 'Countertop']
+  },
+  {
+    id: 'builtin-microwave-manufacturer',
+    category: 'Built-in Appliances',
+    subcategory: 'Built-in Microwave',
+    item: 'Built-in Microwave Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Sharp']
+  },
+  {
+    id: 'builtin-microwave-age',
+    category: 'Built-in Appliances',
+    subcategory: 'Built-in Microwave',
+    item: 'Built-in Microwave Age',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'builtin-microwave-inspector-rating',
+    category: 'Built-in Appliances',
+    subcategory: 'Built-in Microwave',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Built-in Appliances - Garbage Disposal
+  {
+    id: 'garbage-disposal-type',
+    category: 'Built-in Appliances',
+    subcategory: 'Garbage Disposal',
+    item: 'Garbage Disposal Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Continuous Feed', 'Batch Feed', '1/2 HP', '3/4 HP', '1 HP']
+  },
+  {
+    id: 'garbage-disposal-manufacturer',
+    category: 'Built-in Appliances',
+    subcategory: 'Garbage Disposal',
+    item: 'Garbage Disposal Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['InSinkErator', 'Waste King', 'KitchenAid', 'Moen', 'GE', 'Whirlaway']
+  },
+  {
+    id: 'garbage-disposal-age',
+    category: 'Built-in Appliances',
+    subcategory: 'Garbage Disposal',
+    item: 'Garbage Disposal Age',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'garbage-disposal-inspector-rating',
+    category: 'Built-in Appliances',
+    subcategory: 'Garbage Disposal',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Built-in Appliances - Cooking Exhaust
+  {
+    id: 'cooking-exhaust-type',
+    category: 'Built-in Appliances',
+    subcategory: 'Cooking Exhaust',
+    item: 'Cooking Exhaust Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Range Hood', 'Island Hood', 'Downdraft', 'Over-the-range Microwave', 'Wall Mount', 'Under Cabinet']
+  },
+  {
+    id: 'cooking-exhaust-manufacturer',
+    category: 'Built-in Appliances',
+    subcategory: 'Cooking Exhaust',
+    item: 'Cooking Exhaust Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Broan', 'Zephyr', 'KitchenAid', 'GE', 'Whirlpool', 'Bosch', 'Viking', 'Best']
+  },
+  {
+    id: 'cooking-exhaust-age',
+    category: 'Built-in Appliances',
+    subcategory: 'Cooking Exhaust',
+    item: 'Cooking Exhaust Age',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'cooking-exhaust-inspector-rating',
+    category: 'Built-in Appliances',
+    subcategory: 'Cooking Exhaust',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
@@ -1926,49 +2099,44 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           );
         }
         
-        // For non-defect items and non-Built-in Appliances, keep the Pass/Fail/N/A buttons
-        if (item.category !== 'Built-in Appliances') {
-          return (
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => handleItemCheck(item.id, 'pass')}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                  checkedItems[item.id] === 'pass'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
-                }`}
-              >
-                Pass
-              </button>
-              <button
-                type="button"
-                onClick={() => handleItemCheck(item.id, 'fail')}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                  checkedItems[item.id] === 'fail'
-                    ? 'bg-red-600 text-white'
-                    : 'bg-red-100 text-red-700 hover:bg-red-200'
-                }`}
-              >
-                Fail
-              </button>
-              <button
-                type="button"
-                onClick={() => handleItemCheck(item.id, 'na')}
-                className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                  checkedItems[item.id] === 'na'
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                }`}
-              >
-                N/A
-              </button>
-            </div>
-          );
-        }
-        
-        // For Built-in Appliances, just return null (no Pass/Fail/N/A buttons)
-        return null;
+        // For non-defect items, keep the Pass/Fail/N/A buttons
+        return (
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'pass')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'pass'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+              }`}
+            >
+              Pass
+            </button>
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'fail')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'fail'
+                  ? 'bg-red-600 text-white'
+                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+              }`}
+            >
+              Fail
+            </button>
+            <button
+              type="button"
+              onClick={() => handleItemCheck(item.id, 'na')}
+              className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                checkedItems[item.id] === 'na'
+                  ? 'bg-amber-600 text-white'
+                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+              }`}
+            >
+              N/A
+            </button>
+          </div>
+        );
     }
   };
 
@@ -2220,8 +2388,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     );
                   }
                   if (category === 'Built-in Appliances' && selectedBuiltinAppliancesSubcategory !== 'all') {
-                    // Filter by specific appliance
-                    return item.item === selectedBuiltinAppliancesSubcategory;
+                    // Filter by subcategory
+                    return item.subcategory === selectedBuiltinAppliancesSubcategory;
                   }
                   return true;
                 })
@@ -2255,8 +2423,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                           <Badge variant="outline" className="text-xs">Required</Badge>
                         )}
                       </div>
-                      {/* Show status icon only for non-defect checkbox items and exclude Built-in Appliances */}
-                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && item.category !== 'Built-in Appliances' && getStatusIcon(checkedItems[item.id])}
+                      {/* Show status icon only for non-defect checkbox items */}
+                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && getStatusIcon(checkedItems[item.id])}
                     </div>
                     
                     {renderItemContent(item)}
