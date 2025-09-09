@@ -1748,6 +1748,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [selectedFoundationSubcategory, setSelectedFoundationSubcategory] = useState<string>('all');
   const [selectedHeatingSubcategory, setSelectedHeatingSubcategory] = useState<string>('all');
   const [selectedDoorsWindowsSubcategory, setSelectedDoorsWindowsSubcategory] = useState<string>('all');
+  const [selectedBuiltinAppliancesSubcategory, setSelectedBuiltinAppliancesSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -2115,6 +2116,39 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
+               )}
+              {category === 'Built-in Appliances' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      {selectedBuiltinAppliancesSubcategory === 'all' ? 'All Built-in Appliances Items' : selectedBuiltinAppliancesSubcategory}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-background border border-border">
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('all')}>
+                      All Built-in Appliances Items
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Refrigerator')}>
+                      Refrigerator
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Range/Oven/Cooktop')}>
+                      Range/Oven/Cooktop
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Dishwasher')}>
+                      Dishwasher
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Built-in Microwave')}>
+                      Built-in Microwave
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Garbage Disposal')}>
+                      Garbage Disposal
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedBuiltinAppliancesSubcategory('Cooking Exhaust')}>
+                      Cooking Exhaust
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
             </div>
             <div className="space-y-4">
@@ -2179,6 +2213,10 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     return allowedSubcategories.some(sub => 
                       item.subcategory?.includes(sub) || item.subcategory === sub
                     );
+                  }
+                  if (category === 'Built-in Appliances' && selectedBuiltinAppliancesSubcategory !== 'all') {
+                    // Filter by specific appliance
+                    return item.item === selectedBuiltinAppliancesSubcategory;
                   }
                   return true;
                 })
