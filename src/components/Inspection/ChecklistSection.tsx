@@ -2372,6 +2372,15 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'gallons'
   },
   {
+    id: 'plumbing-main-water-shutoff-location',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Main Water Shut-off Device - Location',
+    required: false,
+    type: 'multiselect',
+    options: ['Basement', 'Crawlspace', 'North', 'South', 'East', 'West']
+  },
+  {
     id: 'plumbing-water-source',
     category: 'Plumbing',
     subcategory: 'General',
