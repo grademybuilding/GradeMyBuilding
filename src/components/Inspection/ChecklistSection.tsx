@@ -23,6 +23,7 @@ interface ChecklistItem {
 
 const inspectionCategories = [
   'Roof',
+  'Exterior',
   'Wood Decks & Balconies',
   'Foundation Basement & Crawlspace',
   'Heating & Cooling',
