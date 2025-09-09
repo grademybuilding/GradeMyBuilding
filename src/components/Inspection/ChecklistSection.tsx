@@ -2338,6 +2338,33 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['Gas', 'Electric', 'Tankless', 'Solar', 'Heat Pump']
   },
   {
+    id: 'plumbing-hot-water-manufacturer',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Manufacturer',
+    required: false,
+    type: 'multiselect',
+    options: ['Rheem', 'AO Smith', 'Bradford White', 'Whirlpool', 'GE', 'Kenmore', 'State', 'American', 'Other', 'Unknown']
+  },
+  {
+    id: 'plumbing-hot-water-capacity',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Capacity',
+    required: false,
+    type: 'multiselect',
+    options: ['30 Gallon', '40 Gallon', '50 Gallon', '75 Gallon', '80 Gallon', 'Tankless', 'Other', 'Unknown']
+  },
+  {
+    id: 'plumbing-hot-water-location',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Location',
+    required: false,
+    type: 'multiselect',
+    options: ['Basement', 'Garage', 'Utility Room', 'Attic', 'Closet', 'Exterior', 'Crawl Space', 'Other']
+  },
+  {
     id: 'plumbing-water-heater-age',
     category: 'Plumbing',
     subcategory: 'General',
