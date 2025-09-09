@@ -2363,6 +2363,24 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   },
+  {
+    id: 'plumbing-water-source',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Water Source',
+    required: false,
+    type: 'multiselect',
+    options: ['Public', 'Spring', 'Unknown', 'Well']
+  },
+  {
+    id: 'plumbing-filters',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Filters',
+    required: false,
+    type: 'multiselect',
+    options: ['None', 'Sediment Filter', 'System flush', 'Unknown', 'Whole house conditioner']
+  },
   
   // Plumbing Defects
   {
