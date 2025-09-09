@@ -575,6 +575,15 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'multiselect',
     options: ['Composite', 'Concrete', 'Wood']
   },
+  {
+    id: 'wood-decks-inspector-rating',
+    category: 'Wood Decks & Balconies',
+    subcategory: 'Deck and Balconies',
+    item: 'Overall Inspection Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
@@ -817,7 +826,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               {item.options?.map((rating) => {
                 // Color coding for Inspector Overall Grading
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating' || item.id === 'roof-eaves-soffits-fascia-inspector-rating' || item.id === 'exterior-siding-inspector-rating' || item.id === 'walkways-inspector-rating') {
+                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating' || item.id === 'roof-eaves-soffits-fascia-inspector-rating' || item.id === 'exterior-siding-inspector-rating' || item.id === 'walkways-inspector-rating' || item.id === 'wood-decks-inspector-rating') {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
