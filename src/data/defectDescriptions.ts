@@ -63,5 +63,30 @@ Proper flashing around the skylight is critical.`,
 
   'roof-chimney-flue-cracked': `The chimney flue had one or more cracks, which can lead to further damage to the chimney structure. Recommend a qualified contractor repair.`,
 
-  'roof-chimney-cap-missing': `No chimney cap was observed. This is important to protect from moisture intrusion and protect the chimney. Recommend a qualified roofer or chimney expert install.`
+  'roof-chimney-cap-missing': `No chimney cap was observed. This is important to protect from moisture intrusion and protect the chimney. Recommend a qualified roofer or chimney expert install.`,
+
+  // Exterior Cladding defects
+  'exterior-multiple-layers-siding': `There appears to be multiple layers of siding present.  This condition can lead to premature deterioration of the siding and add excess weight to the structure.`,
+  
+  'exterior-mildew-algae': `There are signs of algae and/or mildew on the siding. This is a cosmetic issue and is not uncommon especially on shaded portions of the home.  Recommend that said areas be washed or cleaned or a regular basis.`,
+  
+  'exterior-loose-boards': `One or more siding boards were loose, which could result in moisture intrusion. Recommend a qualified siding contractor secure and fasten.`,
+  
+  'exterior-hail-damage-minor': `Siding showed signs consistent with hail damage. Recommend monitoring for any areas that being to allow moisture intrusion.`,
+  
+  'exterior-hail-damage-major': `Siding showed signs of major hail damage. This could allow moisture in, resulting in structural damage. Recommend a qualified siding contractor evaluate and repair.`,
+  
+  'exterior-warping-buckling': `Vinyl siding was warping or buckling in areas. This is often as a result of nailing siding boards to tight to the home, preventing expansion/contraction. Recommend a qualified siding contractor evaluate and repair.`,
+  
+  'exterior-flashing-trim-improperly-installed': `Flashing & trim pieces were improperly installed, which could result in moisture intrusion and damaging leaks. Recommend a qualified siding contractor evaluate and repair.`,
+  
+  'exterior-evidence-water-intrusion': `Siding showed signs of water intrusion. This could lead to further siding deterioration and/or mold. Recommend a qualified siding contractor evaluate and repair.`,
+  
+  'exterior-cracking-minor': `Siding showed cracking in one or more places. This is a result of temperature changes, and typical as homes with stucco age. Recommend monitoring.`,
+  
+  'exterior-cracking-major': `Moderate to major cracking was observed at one or more points on the exterior. This can be the result of poor original compaction of soil at the time of construction or excess moisture in the underlying soil. Recommend consulting with a structural engineer and/or soil expert.`,
+  
+  'exterior-ground-clearance': `Inadequate clearance between siding and ground.   Recommend a minimum ground clearance between bottom of siding and ground of 4". Siding in contact with the ground or soil is a serious concern because that condition can provide direct access for wood destroying insects.`,
+  
+  'exterior-splitting': `Siding shingles was splitting in one or more areas, which can lead to moisture intrusion and/or mold. Recommend monitoring for excessive splitting, in which case a qualified siding contractor should evaluate and repair/replace.`
 };

@@ -417,6 +417,103 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Exterior Cladding Defects - Siding, Flashing & Trim
+  {
+    id: 'exterior-multiple-layers-siding',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Multiple Layers of Siding',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-mildew-algae',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Mildew/Algae',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-loose-boards',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Loose Boards',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-hail-damage-minor',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Hail Damage - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-hail-damage-major',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Hail Damage - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-warping-buckling',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Warping/Buckling',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-flashing-trim-improperly-installed',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Flashing/Trim Improperly Installed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-evidence-water-intrusion',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Evidence of Water Intrusion',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-cracking-minor',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Cracking - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-cracking-major',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Cracking - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-ground-clearance',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Ground Clearance',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-splitting',
+    category: 'Exterior Cladding',
+    subcategory: 'Defects - Siding, Flashing & Trim',
+    item: 'Splitting',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
