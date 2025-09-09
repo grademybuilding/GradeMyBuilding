@@ -281,5 +281,33 @@ Proper flashing around the skylight is critical.`,
   
   // Built-in Appliances defects - Built-in Microwave
   'builtin-microwave-inoperable': 'Built-in microwave was inoperable at the time of inspection. Recommend qualified appliance contractor evaluate and repair.',
-  'builtin-microwave-improper-mounting': 'Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.'
+  'builtin-microwave-improper-mounting': 'Microwave was improperly mounted above range. Recommend qualified contractor properly secure microwave to prevent damage or injury.',
+
+  // Green Features descriptions
+  'green-well-sealed': 'The building envelope appears to be well-sealed from potential air infiltration.',
+  'green-well-insulated': 'The building appears to be well-insulated.',
+  'green-waterless-urinals': 'The building has waterless urinals.',
+  'green-trees-provide-shade': 'Deciduous trees are providing sun in the winter and shade in the summer.',
+  'green-storm-water-systems': 'The property appears to have systems that control erosion and manage storm water.',
+  'green-south-facing': 'The building, if in a cold climate, is oriented so that the side with the most glass faces south (within 30 degrees).',
+  'green-reduces-heat-island-effects': 'The property appears to reduce heat-island effects through light-colored, shaded, and/or reduced-paved areas.',
+  'green-recycled-renewable-materials': 'The building appears to utilize materials that are easily returned to the earth, can be recycled, or are renewable.',
+  'green-properly-installed-flashing': 'The flashing above windows and exterior doors appears to be installed properly.',
+  'green-permeable-material-driveways': 'Driveways and walkways are mostly of permeable material, such as gravel.',
+  'green-motion-sensors': 'Some exterior lighting is controlled by motion sensors.',
+  'green-low-voc': 'The building appears to have some low VOC (volatile organic compound)-emitting materials.',
+  'green-low-consumption-fixtures': 'The building has low-consumption toilets, faucets and showerheads.',
+  'green-limited-water-usage-design': 'The property appears to have a landscape design which limits water usage.',
+  'green-light-colored-carpet': 'Most of the carpeting is light-colored.',
+  'green-high-performance-hvac-filters': 'High-performance HVAC air filters exist.',
+  'green-high-efficiency-cooling': 'High-efficiency cooling equipment exists.',
+  'green-gutters-downspouts-clean': 'The downspouts and gutters are clean and in working order.',
+  'green-good-weatherstripping': 'The exterior doors appear to have intact weatherstripping and close tightly.',
+  'green-geothermal-heating-cooling': 'A geothermal heating or cooling system exists.',
+  'green-filters-clean': 'Filters are clean.',
+  'green-energy-efficient-windows': 'The building\'s windows appear to be mostly high-performance or double-glazed.',
+  'green-ductwork-sealed': 'Ductwork is sealed.',
+  'green-dimmers': 'Some light fixtures have dimmers.',
+  'green-close-to-public-transportation': 'The property appears to be in close proximity to public or alternative transportation.',
+  'green-can-build-up': 'The building\'s structure appears to permit expansion by building up versus out.'
 };

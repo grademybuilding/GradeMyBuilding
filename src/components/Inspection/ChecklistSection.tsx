@@ -2113,6 +2113,190 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Improper Mounting',
     required: false,
     type: 'checkbox'
+  },
+  
+  // Green Features
+  {
+    id: 'green-well-sealed',
+    category: 'Green Features',
+    item: 'Well Sealed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-well-insulated',
+    category: 'Green Features',
+    item: 'Well Insulated',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-waterless-urinals',
+    category: 'Green Features',
+    item: 'Waterless Urinals',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-trees-provide-shade',
+    category: 'Green Features',
+    item: 'Trees Provide Shade',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-storm-water-systems',
+    category: 'Green Features',
+    item: 'Storm Water Systems',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-south-facing',
+    category: 'Green Features',
+    item: 'South Facing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-reduces-heat-island-effects',
+    category: 'Green Features',
+    item: 'Reduces Heat-Island Effects',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-recycled-renewable-materials',
+    category: 'Green Features',
+    item: 'Recycled or Renewable Materials',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-properly-installed-flashing',
+    category: 'Green Features',
+    item: 'Properly Installed Flashing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-permeable-material-driveways',
+    category: 'Green Features',
+    item: 'Permeable Material on Driveways/Walkways',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-motion-sensors',
+    category: 'Green Features',
+    item: 'Motion Sensors',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-low-voc',
+    category: 'Green Features',
+    item: 'Low VOC',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-low-consumption-fixtures',
+    category: 'Green Features',
+    item: 'Low Consumption Fixtures',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-limited-water-usage-design',
+    category: 'Green Features',
+    item: 'Limited Water Usage Design',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-light-colored-carpet',
+    category: 'Green Features',
+    item: 'Light-colored Carpet',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-high-performance-hvac-filters',
+    category: 'Green Features',
+    item: 'High Performance HVAC Filters',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-high-efficiency-cooling',
+    category: 'Green Features',
+    item: 'High-efficiency Cooling',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-gutters-downspouts-clean',
+    category: 'Green Features',
+    item: 'Gutters/Downspouts Clean',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-good-weatherstripping',
+    category: 'Green Features',
+    item: 'Good Weatherstripping',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-geothermal-heating-cooling',
+    category: 'Green Features',
+    item: 'Geothermal Heating/Cooling System',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-filters-clean',
+    category: 'Green Features',
+    item: 'Filters Clean',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-energy-efficient-windows',
+    category: 'Green Features',
+    item: 'Energy Efficient Windows',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-ductwork-sealed',
+    category: 'Green Features',
+    item: 'Ductwork Sealed',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-dimmers',
+    category: 'Green Features',
+    item: 'Dimmers',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-close-to-public-transportation',
+    category: 'Green Features',
+    item: 'Close to Public Transportation',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'green-can-build-up',
+    category: 'Green Features',
+    item: 'Can Build Up',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
