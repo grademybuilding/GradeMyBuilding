@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import { CheckCircle, AlertTriangle, X } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -16,6 +18,19 @@ interface ChecklistItem {
   type: 'checkbox' | 'rating' | 'year' | 'multiselect';
   options?: string[];
 }
+
+const inspectionCategories = [
+  'Roof',
+  'Exterior', 
+  'Wood Decks & Balconies',
+  'Foundation Basement & Crawlspace',
+  'Heating & Cooling',
+  'Electric',
+  'Plumbing',
+  'Door & Windows',
+  'Cooking & Appliances',
+  'Green Features'
+];
 
 const inspectionChecklist: ChecklistItem[] = [
   // Roof Defects - Coverings
@@ -98,6 +113,57 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Ponding',
     required: false,
     type: 'checkbox'
+  },
+  // Exterior items
+  {
+    id: 'exterior-siding-damage',
+    category: 'Exterior',
+    subcategory: 'Defects - Siding',
+    item: 'Siding Damage',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'exterior-paint-peeling',
+    category: 'Exterior',
+    subcategory: 'Defects - Paint',
+    item: 'Paint Peeling',
+    required: false,
+    type: 'checkbox'
+  },
+  // Electric items
+  {
+    id: 'electric-panel-issues',
+    category: 'Electric',
+    subcategory: 'Panel',
+    item: 'Panel Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'electric-wiring-exposed',
+    category: 'Electric',
+    subcategory: 'Wiring',
+    item: 'Exposed Wiring',
+    required: false,
+    type: 'checkbox'
+  },
+  // Plumbing items
+  {
+    id: 'plumbing-leaks',
+    category: 'Plumbing',
+    subcategory: 'Leaks',
+    item: 'Water Leaks',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'plumbing-pressure',
+    category: 'Plumbing',
+    subcategory: 'Water Pressure',
+    item: 'Low Water Pressure',
+    required: false,
+    type: 'checkbox'
   }
 ];
 
@@ -112,6 +178,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [yearValues, setYearValues] = useState<Record<string, string>>({});
   const [ratingValues, setRatingValues] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -148,7 +215,9 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     onChange('checklistNotes', updated);
   };
 
-  const categories = Array.from(new Set(inspectionChecklist.map(item => item.category)));
+  const categories = selectedCategory === 'all' 
+    ? Array.from(new Set(inspectionChecklist.map(item => item.category)))
+    : [selectedCategory];
 
   const getStatusIcon = (status: 'pass' | 'fail' | 'na' | undefined) => {
     switch (status) {
@@ -270,6 +339,24 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Category Filter Dropdown */}
+        <div className="space-y-2">
+          <Label htmlFor="category-filter">Select Inspection Category</Label>
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {inspectionCategories.map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
         {categories.map((category) => (
           <div key={category} className="space-y-3">
             <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">
