@@ -242,6 +242,58 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Debris',
     required: false,
     type: 'checkbox'
+  },
+  // Flashing
+  {
+    id: 'roof-flashing-material',
+    category: 'Roof',
+    subcategory: 'Flashing',
+    item: 'Flashing Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Aluminum', 'Copper', 'Galvanized Steel', 'Lead', 'Rubber', 'Plastic']
+  },
+  {
+    id: 'roof-flashing-condition',
+    category: 'Roof',
+    subcategory: 'Flashing',
+    item: 'Flashing Condition',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Flashing Defects
+  {
+    id: 'roof-flashing-damaged',
+    category: 'Roof',
+    subcategory: 'Defects - Flashing',
+    item: 'Flashing Damaged',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-flashing-loose',
+    category: 'Roof',
+    subcategory: 'Defects - Flashing',
+    item: 'Flashing Loose',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-flashing-missing',
+    category: 'Roof',
+    subcategory: 'Defects - Flashing',
+    item: 'Flashing Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-flashing-improper-installation',
+    category: 'Roof',
+    subcategory: 'Defects - Flashing',
+    item: 'Flashing Improper Installation',
+    required: false,
+    type: 'checkbox'
   }
 ];
 

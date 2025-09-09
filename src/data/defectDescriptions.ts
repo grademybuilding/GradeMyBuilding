@@ -37,5 +37,13 @@ Here is a helpful DIY link and video on draining water flow away from your house
   
   'roof-debris': `Debris has accumulated in the gutters. Recommend cleaning to facilitate water flow.
 
-Here is a DIY resource for cleaning your gutters: http://www.lowes.com/projects/repair-and-maintain/gutter-cleaning-and-repair/project`
+Here is a DIY resource for cleaning your gutters: http://www.lowes.com/projects/repair-and-maintain/gutter-cleaning-and-repair/project`,
+
+  'roof-flashing-damaged': `Flashing was observed to be damaged in one or more areas. Damaged flashing can allow moisture intrusion and lead to structural damage. Recommend a qualified roofing contractor evaluate and repair.`,
+  
+  'roof-flashing-loose': `Flashing was observed to be loose in one or more areas. Loose flashing can allow moisture intrusion. Recommend a qualified roofing contractor evaluate and repair.`,
+  
+  'roof-flashing-missing': `Flashing was missing in one or more areas where it should be present. Missing flashing can allow moisture intrusion and lead to structural damage. Recommend a qualified roofing contractor install proper flashing.`,
+  
+  'roof-flashing-improper-installation': `Flashing was improperly installed in one or more areas. Improper flashing installation can allow moisture intrusion. Recommend a qualified roofing contractor evaluate and repair to proper standards.`
 };
