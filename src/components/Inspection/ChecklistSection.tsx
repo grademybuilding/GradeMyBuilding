@@ -749,6 +749,34 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Basement & Crawlspace
+  {
+    id: 'foundation-basement-crawlspace-type',
+    category: 'Foundation & Structure',
+    subcategory: 'Basement & Crawlspace',
+    item: 'Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Full Basement', 'Partial Basement', 'Crawlspace', 'Slab on Grade', 'Walk-out Basement', 'Daylight Basement']
+  },
+  {
+    id: 'foundation-basement-crawlspace-material',
+    category: 'Foundation & Structure',
+    subcategory: 'Basement & Crawlspace',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Concrete Block', 'Poured Concrete', 'Stone', 'Brick', 'Wood Frame', 'Steel Frame']
+  },
+  {
+    id: 'foundation-basement-crawlspace-inspector-rating',
+    category: 'Foundation & Structure',
+    subcategory: 'Basement & Crawlspace',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
   // Basements & Crawlspaces Defects
   {
     id: 'basements-high-moisture-levels',
