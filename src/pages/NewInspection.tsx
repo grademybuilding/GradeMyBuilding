@@ -69,26 +69,37 @@ export function NewInspection({ onBack }: NewInspectionProps) {
         </div>
       </div>
 
-      {/* Progress Steps */}
+      {/* Navigation Steps - Clickable Buttons */}
       <div className="flex items-center justify-between bg-card p-4 rounded-lg shadow-card">
         {steps.map((step, index) => (
           <div key={index} className="flex items-center">
-            <div className={`
-              w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
-              ${index <= currentStep 
-                ? 'bg-primary text-primary-foreground' 
-                : 'bg-muted text-muted-foreground'
-              }
-            `}>
-              {index + 1}
-            </div>
-            <span className={`ml-2 text-sm font-medium hidden sm:block ${
-              index <= currentStep ? 'text-foreground' : 'text-muted-foreground'
-            }`}>
-              {step.title}
-            </span>
+            <Button
+              variant={index === currentStep ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setCurrentStep(index)}
+              className={`
+                flex items-center gap-2 transition-all duration-200
+                ${index === currentStep 
+                  ? 'bg-primary text-primary-foreground shadow-sm' 
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                }
+              `}
+            >
+              <div className={`
+                w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium
+                ${index === currentStep 
+                  ? 'bg-primary-foreground text-primary' 
+                  : 'bg-muted text-muted-foreground'
+                }
+              `}>
+                {index + 1}
+              </div>
+              <span className="text-sm font-medium hidden sm:block">
+                {step.title}
+              </span>
+            </Button>
             {index < steps.length - 1 && (
-              <div className={`w-8 sm:w-16 h-0.5 mx-2 sm:mx-4 ${
+              <div className={`w-4 sm:w-8 h-0.5 mx-2 sm:mx-4 transition-colors duration-200 ${
                 index < currentStep ? 'bg-primary' : 'bg-muted'
               }`} />
             )}
