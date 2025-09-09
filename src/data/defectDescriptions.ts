@@ -105,5 +105,22 @@ Proper flashing around the skylight is critical.`,
   
   'roof-eaves-water-stains': `Water stains were observed under the roof eaves. This may indicate an active leak. Recommend qualified roofer evaluate & repair.`,
   
-  'roof-eaves-damaged': `One or more sections of the eaves are damaged. Recommend qualified roofer evaluate & repair.`
+  'roof-eaves-damaged': `One or more sections of the eaves are damaged. Recommend qualified roofer evaluate & repair.`,
+
+  // Walkways, Patios & Driveways defects
+  'walkways-walkway-cracking-major': `Major cracks observed. Recommend concrete contractor evaluate and correct to prevent trip hazard & preserve appearance.`,
+  
+  'walkways-patio-cracking-minor': `Normal settling & cracking observed. Recommend monitor and/or patch/seal.`,
+  
+  'walkways-patio-cracking-major': `Significant settling & cracking observed. Further deterioration could result. Recommend concrete contractor evaluate & repair.`,
+  
+  'walkways-walkway-cracking-minor': `Minor cosmetic cracks observed. Recommend monitor and/or patch/seal.`,
+  
+  'walkways-driveway-draining-towards-home': `The driveway has a negative slope and drains towards the structure. Recommend a driveway contractor evaluate and repair.`,
+  
+  'walkways-driveway-cracking-minor': `Minor cosmetic cracks observed, which may indicate movement in the soil. Recommend monitor and/or have concrete contractor patch/seal.`,
+  
+  'walkways-driveway-cracking-major': `Major cracks observed. Recommend concrete contractor evaluate and replace.`,
+  
+  'walkways-driveway-trip-hazard': `Trip hazards observed. Patch or repair recommended.`
 };

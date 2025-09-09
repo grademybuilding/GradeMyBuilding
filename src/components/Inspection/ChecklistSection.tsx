@@ -492,6 +492,71 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   },
+  // Walkways, Patios & Driveways Defects
+  {
+    id: 'walkways-walkway-cracking-major',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Walkway Cracking - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-patio-cracking-minor',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Patio Cracking - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-patio-cracking-major',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Patio Cracking - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-walkway-cracking-minor',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Walkway Cracking - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-driveway-draining-towards-home',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Driveway Draining Towards Home',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-driveway-cracking-minor',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Driveway Cracking - Minor',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-driveway-cracking-major',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Driveway Cracking - Major',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'walkways-driveway-trip-hazard',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'Defects',
+    item: 'Driveway Trip Hazard',
+    required: false,
+    type: 'checkbox'
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
