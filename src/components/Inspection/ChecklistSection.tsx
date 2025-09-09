@@ -2381,6 +2381,15 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['Basement', 'Crawlspace', 'North', 'South', 'East', 'West']
   },
   {
+    id: 'plumbing-backflow-prevention-location',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Back-flow Prevention Device - Location',
+    required: false,
+    type: 'multiselect',
+    options: ['North', 'South', 'East', 'West', 'Front of Building', 'Back of Building', 'Basement']
+  },
+  {
     id: 'plumbing-water-source',
     category: 'Plumbing',
     subcategory: 'General',
