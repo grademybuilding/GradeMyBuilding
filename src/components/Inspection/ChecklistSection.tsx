@@ -17,7 +17,7 @@ interface ChecklistItem {
   subcategory?: string;
   item: string;
   required: boolean;
-  type: 'checkbox' | 'rating' | 'year' | 'multiselect';
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons';
   options?: string[];
 }
 
@@ -2347,14 +2347,6 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['Rheem', 'AO Smith', 'Bradford White', 'Whirlpool', 'GE', 'Kenmore', 'State', 'American', 'Other', 'Unknown']
   },
   {
-    id: 'plumbing-hot-water-capacity',
-    category: 'Plumbing',
-    subcategory: 'General',
-    item: 'Capacity',
-    required: false,
-    type: 'year'
-  },
-  {
     id: 'plumbing-hot-water-location',
     category: 'Plumbing',
     subcategory: 'General',
@@ -2370,6 +2362,14 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Water Heater Age - Year Installed',
     required: false,
     type: 'year'
+  },
+  {
+    id: 'plumbing-hot-water-capacity',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Capacity',
+    required: false,
+    type: 'gallons'
   },
   {
     id: 'plumbing-water-source',
@@ -2579,6 +2579,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [checkedItems, setCheckedItems] = useState<Record<string, 'pass' | 'fail' | 'na'>>({});
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
   const [yearValues, setYearValues] = useState<Record<string, string>>({});
+  const [gallonsValues, setGallonsValues] = useState<Record<string, string>>({});
   const [ratingValues, setRatingValues] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -2612,6 +2613,12 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     const updated = { ...yearValues, [itemId]: year };
     setYearValues(updated);
     onChange('checklistYears', updated);
+  };
+
+  const handleGallonsChange = (itemId: string, gallons: string) => {
+    const updated = { ...gallonsValues, [itemId]: gallons };
+    setGallonsValues(updated);
+    onChange('checklistGallons', updated);
   };
 
   const handleRatingChange = (itemId: string, rating: string) => {
@@ -2680,6 +2687,26 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               min="1900"
               max={new Date().getFullYear()}
             />
+          </div>
+        );
+
+      case 'gallons':
+        return (
+          <div className="space-y-2">
+            <div className="relative">
+              <input
+                type="number"
+                placeholder="Enter capacity"
+                value={gallonsValues[item.id] || ''}
+                onChange={(e) => handleGallonsChange(item.id, e.target.value)}
+                className="w-full px-3 py-2 pr-16 border border-input rounded-md text-sm"
+                min="1"
+                max="500"
+              />
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
+                gallons
+              </span>
+            </div>
           </div>
         );
         
