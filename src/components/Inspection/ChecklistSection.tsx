@@ -672,7 +672,7 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
-    options: ['Attic Access', 'Crawlspace Access', 'Infrared', 'Visual']
+    options: ['Attic Access', 'Basement Access', 'Crawlspace Access', 'Infrared', 'Visual']
   },
   {
     id: 'foundation-material',
