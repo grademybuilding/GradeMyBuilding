@@ -4,7 +4,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { CheckCircle, AlertTriangle, X } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { CheckCircle, AlertTriangle, X, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { defectDescriptions } from "@/data/defectDescriptions";
@@ -226,6 +228,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>({});
+  const [selectedRoofSubcategory, setSelectedRoofSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -473,12 +476,62 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
 
         {categories.map((category) => (
           <div key={category} className="space-y-3">
-            <h3 className="font-semibold text-lg text-foreground pb-2">
-              {category}
-            </h3>
+            <div className="flex items-center justify-between pb-2">
+              <h3 className="font-semibold text-lg text-foreground">
+                {category}
+              </h3>
+              {category === 'Roof' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      {selectedRoofSubcategory === 'all' ? 'All Roof Items' : selectedRoofSubcategory}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-background border border-border">
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('all')}>
+                      All Roof Items
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Covering')}>
+                      Covering
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Roof Drainage Systems')}>
+                      Roof Drainage Systems
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Flashing')}>
+                      Flashing
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Skylights & Chimneys')}>
+                      Skylights & Chimneys
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Other Roof Penetrations')}>
+                      Other Roof Penetrations
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
             <div className="space-y-4">
               {inspectionChecklist
-                .filter(item => item.category === category)
+                .filter(item => {
+                  if (item.category !== category) return false;
+                  if (category === 'Roof' && selectedRoofSubcategory !== 'all') {
+                    // Map the dropdown selections to actual subcategories
+                    const subcategoryMap: Record<string, string[]> = {
+                      'Covering': ['Coverings', 'Defects - Coverings'],
+                      'Roof Drainage Systems': ['Roof Drainage Systems', 'Defects - Roof Drainage Systems'],
+                      'Flashing': ['Flashing', 'Defects - Flashing'],
+                      'Skylights & Chimneys': ['Skylights & Chimneys', 'Defects - Skylights & Chimneys'],
+                      'Other Roof Penetrations': ['Other Roof Penetrations', 'Defects - Other Roof Penetrations']
+                    };
+                    
+                    const allowedSubcategories = subcategoryMap[selectedRoofSubcategory] || [];
+                    return allowedSubcategories.some(sub => 
+                      item.subcategory?.includes(sub) || item.subcategory === sub
+                    );
+                  }
+                  return true;
+                })
                 .map((item) => (
                   <div key={item.id} className="space-y-3 p-4 border border-border rounded-lg">
                     <div className="flex items-center justify-between">
