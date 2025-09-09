@@ -2390,6 +2390,15 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['North', 'South', 'East', 'West', 'Front of Building', 'Back of Building', 'Basement']
   },
   {
+    id: 'plumbing-drain-waste-vent-material',
+    category: 'Plumbing',
+    subcategory: 'General',
+    item: 'Drain, Waste Vent Systems - Material',
+    required: false,
+    type: 'multiselect',
+    options: ['ABS', 'Copper', 'Iron', 'Lead', 'PVC', 'Unknown']
+  },
+  {
     id: 'plumbing-water-source',
     category: 'Plumbing',
     subcategory: 'General',
