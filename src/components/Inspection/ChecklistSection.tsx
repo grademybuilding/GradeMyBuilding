@@ -478,7 +478,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'walkways-driveway-material',
     category: 'Walkways, Patios & Driveways',
-    subcategory: 'General',
     item: 'Driveway Material',
     required: false,
     type: 'multiselect',
