@@ -1116,6 +1116,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>({});
   const [selectedRoofSubcategory, setSelectedRoofSubcategory] = useState<string>('all');
+  const [selectedFoundationSubcategory, setSelectedFoundationSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -1397,6 +1398,36 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
+              {category === 'Foundation & Structure' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      {selectedFoundationSubcategory === 'all' ? 'All Foundation & Structure Items' : selectedFoundationSubcategory}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-background border border-border">
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('all')}>
+                      All Foundation & Structure Items
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('Foundation')}>
+                      Foundation
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('Basement & Crawlspace')}>
+                      Basement & Crawlspace
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('Floor Structure')}>
+                      Floor Structure
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('Wall Structure')}>
+                      Wall Structure
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedFoundationSubcategory('Ceiling Structure')}>
+                      Ceiling Structure
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             <div className="space-y-4">
               {inspectionChecklist
@@ -1413,6 +1444,21 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     };
                     
                     const allowedSubcategories = subcategoryMap[selectedRoofSubcategory] || [];
+                    return allowedSubcategories.some(sub => 
+                      item.subcategory?.includes(sub) || item.subcategory === sub
+                    );
+                  }
+                  if (category === 'Foundation & Structure' && selectedFoundationSubcategory !== 'all') {
+                    // Map the dropdown selections to actual subcategories
+                    const foundationSubcategoryMap: Record<string, string[]> = {
+                      'Foundation': ['Foundation', 'Defects - Foundation'],
+                      'Basement & Crawlspace': ['Basement & Crawlspace', 'Defects - Basements & Crawlspaces'],
+                      'Floor Structure': ['Floor Structure', 'Defects - Floor Structure'],
+                      'Wall Structure': ['Wall Structure', 'Defects - Wall Structure'],
+                      'Ceiling Structure': ['Ceiling Structure', 'Defects - Ceiling Structure']
+                    };
+                    
+                    const allowedSubcategories = foundationSubcategoryMap[selectedFoundationSubcategory] || [];
                     return allowedSubcategories.some(sub => 
                       item.subcategory?.includes(sub) || item.subcategory === sub
                     );
