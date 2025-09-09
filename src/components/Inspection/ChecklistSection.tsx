@@ -29,7 +29,7 @@ const inspectionCategories = [
   'Foundation & Structure',
   'Heating & Cooling',
   'Doors & Windows',
-  'Cooking & Appliances',
+  'Built-in Appliances',
   'Green Features'
 ];
 
