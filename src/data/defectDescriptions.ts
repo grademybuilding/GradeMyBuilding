@@ -88,5 +88,22 @@ Proper flashing around the skylight is critical.`,
   
   'exterior-ground-clearance': `Inadequate clearance between siding and ground.   Recommend a minimum ground clearance between bottom of siding and ground of 4". Siding in contact with the ground or soil is a serious concern because that condition can provide direct access for wood destroying insects.`,
   
-  'exterior-splitting': `Siding shingles was splitting in one or more areas, which can lead to moisture intrusion and/or mold. Recommend monitoring for excessive splitting, in which case a qualified siding contractor should evaluate and repair/replace.`
+  'exterior-splitting': `Siding shingles was splitting in one or more areas, which can lead to moisture intrusion and/or mold. Recommend monitoring for excessive splitting, in which case a qualified siding contractor should evaluate and repair/replace.`,
+
+  // Roof Eaves, Soffits & Fascia defects
+  'roof-wasps-nest': `Wasp nests were visible under the soffits. Recommend a qualified exterminator evaluate and remove.`,
+  
+  'roof-paint-finish-failing': `The paint or finish is failing. This can lead to deterioration and rot of the material. Recommend that the araes be properly prepared and painted / finished.`,
+  
+  'roof-gap': `There is opening, gap or hole in fascia / soffit which should be repaired. This can allow water intrusion and rodent infestation as well as deterioration of the surrounding material.`,
+  
+  'roof-fascia-rotted': `One or more sections of the fascia are rotted. Recommend qualified roofer evaluate & repair.`,
+  
+  'roof-fascia-loose': `One or more sections of the fascia are loose. Recommend qualified roofer evaluate & repair.`,
+  
+  'roof-fascia-damaged': `One or more sections of the fascia are damaged. Recommend qualified roofer evaluate & repair.`,
+  
+  'roof-eaves-water-stains': `Water stains were observed under the roof eaves. This may indicate an active leak. Recommend qualified roofer evaluate & repair.`,
+  
+  'roof-eaves-damaged': `One or more sections of the eaves are damaged. Recommend qualified roofer evaluate & repair.`
 };

@@ -408,6 +408,71 @@ const inspectionChecklist: ChecklistItem[] = [
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   },
+  // Roof Eaves, Soffits & Fascia Defects
+  {
+    id: 'roof-wasps-nest',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Wasps Nest',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-paint-finish-failing',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Paint/Finish Failing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-gap',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Gap',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-fascia-rotted',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Fascia - Rotted',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-fascia-loose',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Fascia - Loose',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-fascia-damaged',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Fascia - Damaged',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-eaves-water-stains',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Eaves - Water Stains',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'roof-eaves-damaged',
+    category: 'Roof',
+    subcategory: 'Defects - Eaves, Soffits & Fascia',
+    item: 'Eaves - Damaged',
+    required: false,
+    type: 'checkbox'
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
