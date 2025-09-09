@@ -158,6 +158,25 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Ponding',
     required: false,
     type: 'checkbox'
+  },
+  // Roof Drainage Systems
+  {
+    id: 'roof-drainage-system-type',
+    category: 'Roof',
+    subcategory: 'Roof Drainage Systems',
+    item: 'Drainage System Type',
+    required: false,
+    type: 'multiselect',
+    options: ['Internal Drains', 'Gutters', 'Scupper Drains']
+  },
+  {
+    id: 'roof-gutter-material',
+    category: 'Roof',
+    subcategory: 'Roof Drainage Systems',
+    item: 'Gutter Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Aluminum', 'Seamless Aluminum', 'Vinyl', 'Copper', 'Steel']
   }
 ];
 
