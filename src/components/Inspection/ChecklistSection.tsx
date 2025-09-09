@@ -474,6 +474,16 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Walkways, Patios & Driveways
+  {
+    id: 'walkways-driveway-material',
+    category: 'Walkways, Patios & Driveways',
+    subcategory: 'General',
+    item: 'Driveway Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Asphalt', 'Brick', 'Cobblestone', 'Concrete', 'Dirt', 'Gravel', 'Pavers', 'Street Parking']
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',
