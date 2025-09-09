@@ -1412,6 +1412,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [selectedRoofSubcategory, setSelectedRoofSubcategory] = useState<string>('all');
   const [selectedFoundationSubcategory, setSelectedFoundationSubcategory] = useState<string>('all');
   const [selectedHeatingSubcategory, setSelectedHeatingSubcategory] = useState<string>('all');
+  const [selectedDoorsWindowsSubcategory, setSelectedDoorsWindowsSubcategory] = useState<string>('all');
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -1753,6 +1754,33 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
+              {category === 'Doors & Windows' && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      {selectedDoorsWindowsSubcategory === 'all' ? 'All Doors & Windows Items' : selectedDoorsWindowsSubcategory}
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="bg-background border border-border">
+                    <DropdownMenuItem onClick={() => setSelectedDoorsWindowsSubcategory('all')}>
+                      All Doors & Windows Items
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedDoorsWindowsSubcategory('Windows')}>
+                      Windows
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedDoorsWindowsSubcategory('Entry Doors')}>
+                      Entry Doors
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedDoorsWindowsSubcategory('Interior Doors')}>
+                      Interior Doors
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setSelectedDoorsWindowsSubcategory('Garage Doors')}>
+                      Garage Doors
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             <div className="space-y-4">
               {inspectionChecklist
@@ -1799,6 +1827,20 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     };
                     
                     const allowedSubcategories = heatingSubcategoryMap[selectedHeatingSubcategory] || [];
+                    return allowedSubcategories.some(sub => 
+                      item.subcategory?.includes(sub) || item.subcategory === sub
+                    );
+                  }
+                  if (category === 'Doors & Windows' && selectedDoorsWindowsSubcategory !== 'all') {
+                    // Map the dropdown selections to actual subcategories
+                    const doorsWindowsSubcategoryMap: Record<string, string[]> = {
+                      'Windows': ['Windows', 'Defects - Windows'],
+                      'Entry Doors': ['Entry Doors', 'Defects - Entry Doors'],
+                      'Interior Doors': ['Interior Doors', 'Defects - Interior Doors'],
+                      'Garage Doors': ['Garage Doors', 'Defects - Garage Doors']
+                    };
+                    
+                    const allowedSubcategories = doorsWindowsSubcategoryMap[selectedDoorsWindowsSubcategory] || [];
                     return allowedSubcategories.some(sub => 
                       item.subcategory?.includes(sub) || item.subcategory === sub
                     );
