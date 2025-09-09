@@ -2408,6 +2408,15 @@ const inspectionChecklist: ChecklistItem[] = [
     options: ['Copper', 'Galvanized', 'Unknown', 'Hose', 'Pex', 'Poly', 'PVC']
   },
   {
+    id: 'plumbing-sump-pump-location',
+    category: 'Plumbing',
+    subcategory: 'Sump Pump',
+    item: 'Location',
+    required: false,
+    type: 'multiselect',
+    options: ['Basement', 'Under Stairs', 'Bedroom Closet']
+  },
+  {
     id: 'plumbing-water-source',
     category: 'Plumbing',
     subcategory: 'General',
