@@ -408,6 +408,15 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'multiselect',
     options: ['Aluminum', 'Plastic', 'Logs', 'Asbestos', 'Asphalt', 'Brick', 'Concrete', 'Fiber Cement', 'Stucco', 'Brick Veneer', 'Engineered Wood', 'Masonry', 'Metal', 'Vinyl', 'Wood', 'Shingles', 'Stone', 'Stone Veneer']
+  },
+  {
+    id: 'exterior-siding-inspector-rating',
+    category: 'Exterior Cladding',
+    subcategory: 'Siding, Flashing & Trim',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
   }
 ];
 
