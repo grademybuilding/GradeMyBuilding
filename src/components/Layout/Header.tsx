@@ -1,27 +1,22 @@
-import { Menu, Bell, User } from "lucide-react";
+import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Navigation } from "./Navigation";
 import logo from "@/assets/logo.png";
 
 interface HeaderProps {
-  onMenuClick?: () => void;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
-export function Header({ onMenuClick }: HeaderProps) {
+export function Header({ activeTab, onTabChange }: HeaderProps) {
   return (
     <header className="flex items-center justify-between p-4 bg-card border-b border-border shadow-card">
-      <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onMenuClick}
-          className="lg:hidden"
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+      <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
-          <img src={logo} alt="GradeMyBuilding" className="h-20 w-auto" />
+          <img src={logo} alt="GradeMyBuilding" className="h-16 w-auto" />
         </div>
+        <Navigation activeTab={activeTab} onTabChange={onTabChange} />
       </div>
       
       <div className="flex items-center gap-2">

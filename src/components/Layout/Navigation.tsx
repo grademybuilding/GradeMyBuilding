@@ -17,29 +17,27 @@ const navItems = [
 
 export function Navigation({ activeTab, onTabChange }: NavigationProps) {
   return (
-    <nav className="bg-card border-r border-border h-full">
-      <div className="p-4 space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          
-          return (
-            <button
-              key={item.id}
-              onClick={() => onTabChange(item.id)}
-              className={cn(
-                "w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-all duration-200",
-                isActive
-                  ? "bg-primary text-primary-foreground shadow-card"
-                  : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
-              )}
-            >
-              <Icon className="h-5 w-5" />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          );
-        })}
-      </div>
+    <nav className="flex items-center gap-1">
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        const isActive = activeTab === item.id;
+        
+        return (
+          <button
+            key={item.id}
+            onClick={() => onTabChange(item.id)}
+            className={cn(
+              "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+              isActive
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
+            )}
+          >
+            <Icon className="h-4 w-4" />
+            <span className="hidden sm:block">{item.label}</span>
+          </button>
+        );
+      })}
     </nav>
   );
 }
