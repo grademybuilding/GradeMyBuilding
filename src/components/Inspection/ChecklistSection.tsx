@@ -766,6 +766,186 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
+  // Floor Structure
+  {
+    id: 'foundation-floor-structure-material',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Floor Structure',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Concrete Slab', 'Wood Joists', 'Steel Joists', 'Engineered Lumber', 'Composite Deck']
+  },
+  {
+    id: 'foundation-floor-structure-inspector-rating',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Floor Structure',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Floor Structure Defects
+  {
+    id: 'foundation-floor-structure-sagging',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Floor Structure',
+    item: 'Floor Sagging',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-floor-structure-bouncy',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Floor Structure',
+    item: 'Floor Bouncy/Springy',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-floor-structure-damaged-joists',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Floor Structure',
+    item: 'Damaged/Cracked Joists',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-floor-structure-inadequate-support',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Floor Structure',
+    item: 'Inadequate Support',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-floor-structure-rot-damage',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Floor Structure',
+    item: 'Rot/Moisture Damage',
+    required: false,
+    type: 'checkbox'
+  },
+  // Wall Structure
+  {
+    id: 'foundation-wall-structure-material',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Wall Structure',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Wood Frame', 'Steel Frame', 'Masonry', 'Concrete Block', 'Poured Concrete', 'Stone']
+  },
+  {
+    id: 'foundation-wall-structure-inspector-rating',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Wall Structure',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Wall Structure Defects
+  {
+    id: 'foundation-wall-structure-bowing',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Wall Structure',
+    item: 'Wall Bowing/Bulging',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-wall-structure-cracks',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Wall Structure',
+    item: 'Structural Cracks',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-wall-structure-water-damage',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Wall Structure',
+    item: 'Water Damage/Stains',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-wall-structure-insulation-issues',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Wall Structure',
+    item: 'Insulation Issues',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-wall-structure-mold-growth',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Wall Structure',
+    item: 'Mold/Mildew Growth',
+    required: false,
+    type: 'checkbox'
+  },
+  // Ceiling Structure
+  {
+    id: 'foundation-ceiling-structure-material',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Ceiling Structure',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Exposed Joists', 'Drywall', 'Plaster', 'Drop Ceiling', 'Concrete', 'Unfinished']
+  },
+  {
+    id: 'foundation-ceiling-structure-inspector-rating',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Ceiling Structure',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Ceiling Structure Defects
+  {
+    id: 'foundation-ceiling-structure-sagging',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Ceiling Structure',
+    item: 'Ceiling Sagging',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-ceiling-structure-water-stains',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Ceiling Structure',
+    item: 'Water Stains/Leaks',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-ceiling-structure-damaged-joists',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Ceiling Structure',
+    item: 'Damaged Ceiling Joists',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-ceiling-structure-poor-ventilation',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Ceiling Structure',
+    item: 'Poor Ventilation/Air Flow',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'foundation-ceiling-structure-insulation-problems',
+    category: 'Foundation Basement & Crawlspace',
+    subcategory: 'Defects - Ceiling Structure',
+    item: 'Insulation Problems',
+    required: false,
+    type: 'checkbox'
+  },
   // Exterior Cladding General
   {
     id: 'exterior-inspection-method',

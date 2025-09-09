@@ -162,5 +162,38 @@ Proper flashing around the skylight is critical.`,
   
   'basements-high-moisture-levels': `High levels of moisture were noted in areas of the basement. Recommend monitoring and finding source of moisture intrusion to prevent damage to structure.`,
   
-  'basements-efflorescence': `Efflorescence noted on the crawlspace surface. This a white, powdery deposit that is consistent with moisture intrusion. This can compromise the soil's ability to support the home structure and/or lead to mold growth. Recommend a qualified contractor identify source or moisture and correct.`
+  'basements-efflorescence': `Efflorescence noted on the crawlspace surface. This a white, powdery deposit that is consistent with moisture intrusion. This can compromise the soil's ability to support the home structure and/or lead to mold growth. Recommend a qualified contractor identify source or moisture and correct.`,
+
+  // Floor Structure defects
+  'foundation-floor-structure-sagging': `Floor structure shows signs of sagging, which may indicate inadequate support or structural issues. This can affect the integrity of the flooring above and should be evaluated by a qualified structural engineer.`,
+  
+  'foundation-floor-structure-bouncy': `Floor exhibits excessive bounce or springiness when walked on, indicating potential structural issues with joists or inadequate support. Recommend evaluation by a qualified structural professional.`,
+  
+  'foundation-floor-structure-damaged-joists': `One or more floor joists show signs of damage or cracking. This can compromise the structural integrity of the floor system. Recommend evaluation and repair by a qualified contractor.`,
+  
+  'foundation-floor-structure-inadequate-support': `Floor structure appears to have inadequate support, which can lead to sagging, bouncing, or other structural issues. Recommend evaluation by a structural engineer to determine proper support requirements.`,
+  
+  'foundation-floor-structure-rot-damage': `Floor structure shows signs of rot or moisture damage, which can compromise structural integrity. This condition should be addressed promptly to prevent further deterioration. Recommend qualified contractor evaluation and repair.`,
+
+  // Wall Structure defects
+  'foundation-wall-structure-bowing': `Wall structure shows signs of bowing or bulging, which may indicate structural stress or foundation issues. This condition should be evaluated by a qualified structural engineer to determine the cause and appropriate remediation.`,
+  
+  'foundation-wall-structure-cracks': `Structural cracks observed in wall system. These may indicate settlement, structural stress, or other foundation issues. Recommend evaluation by a qualified structural engineer.`,
+  
+  'foundation-wall-structure-water-damage': `Wall structure shows evidence of water damage or staining, which can lead to structural deterioration and mold growth. Recommend identifying and addressing the moisture source and repairing damaged areas.`,
+  
+  'foundation-wall-structure-insulation-issues': `Insulation in wall system is inadequate, damaged, or improperly installed. This can affect energy efficiency and moisture control. Recommend proper insulation installation by qualified contractor.`,
+  
+  'foundation-wall-structure-mold-growth': `Mold or mildew growth observed on wall structure, indicating moisture issues. This can pose health risks and structural concerns. Recommend addressing moisture source and professional mold remediation.`,
+
+  // Ceiling Structure defects
+  'foundation-ceiling-structure-sagging': `Ceiling structure shows signs of sagging, which may indicate structural issues with ceiling joists or inadequate support. Recommend evaluation by a qualified structural professional.`,
+  
+  'foundation-ceiling-structure-water-stains': `Water stains or evidence of leaks observed on ceiling structure. This may indicate plumbing leaks, roof issues, or other moisture intrusion. Recommend identifying and repairing the source of moisture.`,
+  
+  'foundation-ceiling-structure-damaged-joists': `Ceiling joists show signs of damage, which can compromise the structural integrity of the ceiling system. Recommend evaluation and repair by a qualified contractor.`,
+  
+  'foundation-ceiling-structure-poor-ventilation': `Poor ventilation observed in ceiling area, which can lead to moisture buildup, mold growth, and energy efficiency issues. Recommend improving ventilation system.`,
+  
+  'foundation-ceiling-structure-insulation-problems': `Insulation in ceiling area is inadequate, damaged, or missing. This can affect energy efficiency and temperature control. Recommend proper insulation installation by qualified contractor.`
 };
