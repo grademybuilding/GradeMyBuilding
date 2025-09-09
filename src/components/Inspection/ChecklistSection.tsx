@@ -2119,6 +2119,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-well-sealed',
     category: 'Green Features',
+    subcategory: 'Green Features - Well Sealed',
     item: 'Well Sealed',
     required: false,
     type: 'checkbox'
@@ -2126,6 +2127,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-well-insulated',
     category: 'Green Features',
+    subcategory: 'Green Features - Well Insulated',
     item: 'Well Insulated',
     required: false,
     type: 'checkbox'
@@ -2133,6 +2135,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-waterless-urinals',
     category: 'Green Features',
+    subcategory: 'Green Features - Waterless Urinals',
     item: 'Waterless Urinals',
     required: false,
     type: 'checkbox'
@@ -2140,6 +2143,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-trees-provide-shade',
     category: 'Green Features',
+    subcategory: 'Green Features - Trees Provide Shade',
     item: 'Trees Provide Shade',
     required: false,
     type: 'checkbox'
@@ -2147,6 +2151,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-storm-water-systems',
     category: 'Green Features',
+    subcategory: 'Green Features - Storm Water Systems',
     item: 'Storm Water Systems',
     required: false,
     type: 'checkbox'
@@ -2154,6 +2159,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-south-facing',
     category: 'Green Features',
+    subcategory: 'Green Features - South Facing',
     item: 'South Facing',
     required: false,
     type: 'checkbox'
@@ -2161,6 +2167,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-reduces-heat-island-effects',
     category: 'Green Features',
+    subcategory: 'Green Features - Reduces Heat-Island Effects',
     item: 'Reduces Heat-Island Effects',
     required: false,
     type: 'checkbox'
@@ -2168,6 +2175,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-recycled-renewable-materials',
     category: 'Green Features',
+    subcategory: 'Green Features - Recycled or Renewable Materials',
     item: 'Recycled or Renewable Materials',
     required: false,
     type: 'checkbox'
@@ -2175,6 +2183,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-properly-installed-flashing',
     category: 'Green Features',
+    subcategory: 'Green Features - Properly Installed Flashing',
     item: 'Properly Installed Flashing',
     required: false,
     type: 'checkbox'
@@ -2182,6 +2191,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-permeable-material-driveways',
     category: 'Green Features',
+    subcategory: 'Green Features - Permeable Material on Driveways/Walkways',
     item: 'Permeable Material on Driveways/Walkways',
     required: false,
     type: 'checkbox'
@@ -2189,6 +2199,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-motion-sensors',
     category: 'Green Features',
+    subcategory: 'Green Features - Motion Sensors',
     item: 'Motion Sensors',
     required: false,
     type: 'checkbox'
@@ -2196,6 +2207,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-low-voc',
     category: 'Green Features',
+    subcategory: 'Green Features - Low VOC',
     item: 'Low VOC',
     required: false,
     type: 'checkbox'
@@ -2203,6 +2215,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-low-consumption-fixtures',
     category: 'Green Features',
+    subcategory: 'Green Features - Low Consumption Fixtures',
     item: 'Low Consumption Fixtures',
     required: false,
     type: 'checkbox'
@@ -2210,6 +2223,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-limited-water-usage-design',
     category: 'Green Features',
+    subcategory: 'Green Features - Limited Water Usage Design',
     item: 'Limited Water Usage Design',
     required: false,
     type: 'checkbox'
@@ -2217,6 +2231,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-light-colored-carpet',
     category: 'Green Features',
+    subcategory: 'Green Features - Light-colored Carpet',
     item: 'Light-colored Carpet',
     required: false,
     type: 'checkbox'
@@ -2224,6 +2239,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-high-performance-hvac-filters',
     category: 'Green Features',
+    subcategory: 'Green Features - High Performance HVAC Filters',
     item: 'High Performance HVAC Filters',
     required: false,
     type: 'checkbox'
@@ -2231,6 +2247,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-high-efficiency-cooling',
     category: 'Green Features',
+    subcategory: 'Green Features - High-efficiency Cooling',
     item: 'High-efficiency Cooling',
     required: false,
     type: 'checkbox'
@@ -2238,6 +2255,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-gutters-downspouts-clean',
     category: 'Green Features',
+    subcategory: 'Green Features - Gutters/Downspouts Clean',
     item: 'Gutters/Downspouts Clean',
     required: false,
     type: 'checkbox'
@@ -2245,6 +2263,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-good-weatherstripping',
     category: 'Green Features',
+    subcategory: 'Green Features - Good Weatherstripping',
     item: 'Good Weatherstripping',
     required: false,
     type: 'checkbox'
@@ -2252,6 +2271,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-geothermal-heating-cooling',
     category: 'Green Features',
+    subcategory: 'Green Features - Geothermal Heating/Cooling System',
     item: 'Geothermal Heating/Cooling System',
     required: false,
     type: 'checkbox'
@@ -2259,6 +2279,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-filters-clean',
     category: 'Green Features',
+    subcategory: 'Green Features - Filters Clean',
     item: 'Filters Clean',
     required: false,
     type: 'checkbox'
@@ -2266,6 +2287,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-energy-efficient-windows',
     category: 'Green Features',
+    subcategory: 'Green Features - Energy Efficient Windows',
     item: 'Energy Efficient Windows',
     required: false,
     type: 'checkbox'
@@ -2273,6 +2295,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-ductwork-sealed',
     category: 'Green Features',
+    subcategory: 'Green Features - Ductwork Sealed',
     item: 'Ductwork Sealed',
     required: false,
     type: 'checkbox'
@@ -2280,6 +2303,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-dimmers',
     category: 'Green Features',
+    subcategory: 'Green Features - Dimmers',
     item: 'Dimmers',
     required: false,
     type: 'checkbox'
@@ -2287,6 +2311,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-close-to-public-transportation',
     category: 'Green Features',
+    subcategory: 'Green Features - Close to Public Transportation',
     item: 'Close to Public Transportation',
     required: false,
     type: 'checkbox'
@@ -2294,6 +2319,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'green-can-build-up',
     category: 'Green Features',
+    subcategory: 'Green Features - Can Build Up',
     item: 'Can Build Up',
     required: false,
     type: 'checkbox'
@@ -2480,8 +2506,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         
       case 'checkbox':
       default:
-        // For defect items, show editable comment area only
-        if (item.subcategory?.includes('Defects')) {
+        // For defect and green feature items, show editable comment area only
+        if (item.subcategory?.includes('Defects') || item.subcategory?.includes('Green Features')) {
           return (
             <div className="space-y-3">
               {/* Comment area - always visible */}
@@ -2495,7 +2521,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           );
         }
         
-        // For non-defect items, keep the Pass/Fail/N/A buttons
+        // For non-defect/non-green feature items, keep the Pass/Fail/N/A buttons
         return (
           <div className="flex gap-2">
             <button
@@ -2805,34 +2831,36 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   <div key={item.id} className="space-y-3 p-4 border border-border rounded-lg">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        {/* Checkbox for defect items - inline with title */}
-                        {item.subcategory?.includes('Defects') && (
-                          <Checkbox
-                            id={`defect-${item.id}`}
-                            checked={selectedDefects[item.id] || false}
-                            onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
-                          />
-                        )}
-                        {item.subcategory && (
-                          <Badge 
-                            variant="outline" 
-                            className={cn(
-                              "text-xs",
-                              item.subcategory.includes('Defects') 
-                                ? "bg-red-50 text-red-700 border-red-200" 
-                                : "bg-muted"
-                            )}
-                          >
-                            {item.subcategory}
-                          </Badge>
-                        )}
-                        <span className="text-sm font-medium">{item.item}</span>
-                        {item.required && (
-                          <Badge variant="outline" className="text-xs">Required</Badge>
-                        )}
-                      </div>
-                      {/* Show status icon only for non-defect checkbox items */}
-                      {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && getStatusIcon(checkedItems[item.id])}
+                         {/* Checkbox for defect and green feature items - inline with title */}
+                         {(item.subcategory?.includes('Defects') || item.subcategory?.includes('Green Features')) && (
+                           <Checkbox
+                             id={`defect-${item.id}`}
+                             checked={selectedDefects[item.id] || false}
+                             onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                           />
+                         )}
+                         {item.subcategory && (
+                           <Badge 
+                             variant="outline" 
+                             className={cn(
+                               "text-xs",
+                               item.subcategory.includes('Defects') 
+                                 ? "bg-red-50 text-red-700 border-red-200"
+                                 : item.subcategory.includes('Green Features')
+                                 ? "bg-green-50 text-green-700 border-green-200"
+                                 : "bg-muted"
+                             )}
+                           >
+                             {item.subcategory}
+                           </Badge>
+                         )}
+                         <span className="text-sm font-medium">{item.item}</span>
+                         {item.required && (
+                           <Badge variant="outline" className="text-xs">Required</Badge>
+                         )}
+                       </div>
+                       {/* Show status icon only for checkbox items that are not defects or green features */}
+                       {item.type === 'checkbox' && !item.subcategory?.includes('Defects') && !item.subcategory?.includes('Green Features') && getStatusIcon(checkedItems[item.id])}
                     </div>
                     
                     {renderItemContent(item)}
