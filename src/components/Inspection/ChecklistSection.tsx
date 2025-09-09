@@ -26,7 +26,7 @@ const inspectionCategories = [
   'Exterior Cladding',
   'Walkways, Patios & Driveways',
   'Wood Decks & Balconies',
-  'Foundation Basement & Crawlspace',
+  'Foundation & Structure',
   'Heating & Cooling',
   'Door & Windows',
   'Cooking & Appliances',
@@ -665,10 +665,10 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'checkbox'
   },
-  // Foundation Basement & Crawlspace
+  // Foundation & Structure
   {
     id: 'foundation-inspection-method',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     item: 'Inspection Method',
     required: false,
     type: 'multiselect',
@@ -676,7 +676,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-material',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Foundation',
     item: 'Material',
     required: false,
@@ -685,7 +685,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-inspector-rating',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Foundation',
     item: 'Inspector Overall Rating',
     required: false,
@@ -695,7 +695,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Foundation Defects
   {
     id: 'foundation-walls-bowing-leaning',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Wall(s) Bowing/Leaning',
     required: false,
@@ -703,7 +703,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-poor-ventilation',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Poor Ventilation of Foundation Area',
     required: false,
@@ -711,7 +711,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-improper-construction',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Improper Construction Practices',
     required: false,
@@ -719,7 +719,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-water-intrusion',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Water Intrusion',
     required: false,
@@ -727,7 +727,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-cracks-minor',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Foundation Cracks - Minor',
     required: false,
@@ -735,7 +735,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-cracks-major',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Foundation Cracks - Major',
     required: false,
@@ -743,7 +743,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-heaving-settling',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Foundation',
     item: 'Heaving/Settling',
     required: false,
@@ -752,7 +752,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Basements & Crawlspaces Defects
   {
     id: 'basements-high-moisture-levels',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Basements & Crawlspaces',
     item: 'High Moisture Levels',
     required: false,
@@ -760,7 +760,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'basements-efflorescence',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Basements & Crawlspaces',
     item: 'Efflorescence',
     required: false,
@@ -769,7 +769,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Floor Structure
   {
     id: 'foundation-floor-structure-material',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Floor Structure',
     item: 'Material',
     required: false,
@@ -778,7 +778,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-floor-structure-inspector-rating',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Floor Structure',
     item: 'Inspector Overall Rating',
     required: false,
@@ -788,7 +788,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Floor Structure Defects
   {
     id: 'foundation-floor-structure-sagging',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Floor Structure',
     item: 'Floor Sagging',
     required: false,
@@ -796,7 +796,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-floor-structure-bouncy',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Floor Structure',
     item: 'Floor Bouncy/Springy',
     required: false,
@@ -804,7 +804,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-floor-structure-damaged-joists',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Floor Structure',
     item: 'Damaged/Cracked Joists',
     required: false,
@@ -812,7 +812,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-floor-structure-inadequate-support',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Floor Structure',
     item: 'Inadequate Support',
     required: false,
@@ -820,7 +820,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-floor-structure-rot-damage',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Floor Structure',
     item: 'Rot/Moisture Damage',
     required: false,
@@ -829,7 +829,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Wall Structure
   {
     id: 'foundation-wall-structure-material',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Wall Structure',
     item: 'Material',
     required: false,
@@ -838,7 +838,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-wall-structure-inspector-rating',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Wall Structure',
     item: 'Inspector Overall Rating',
     required: false,
@@ -848,7 +848,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Wall Structure Defects
   {
     id: 'foundation-wall-structure-bowing',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Wall Structure',
     item: 'Wall Bowing/Bulging',
     required: false,
@@ -856,7 +856,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-wall-structure-cracks',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Wall Structure',
     item: 'Structural Cracks',
     required: false,
@@ -864,7 +864,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-wall-structure-water-damage',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Wall Structure',
     item: 'Water Damage/Stains',
     required: false,
@@ -872,7 +872,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-wall-structure-insulation-issues',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Wall Structure',
     item: 'Insulation Issues',
     required: false,
@@ -880,7 +880,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-wall-structure-mold-growth',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Wall Structure',
     item: 'Mold/Mildew Growth',
     required: false,
@@ -889,7 +889,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Ceiling Structure
   {
     id: 'foundation-ceiling-structure-material',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Ceiling Structure',
     item: 'Material',
     required: false,
@@ -898,7 +898,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-ceiling-structure-inspector-rating',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Ceiling Structure',
     item: 'Inspector Overall Rating',
     required: false,
@@ -908,7 +908,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Ceiling Structure Defects
   {
     id: 'foundation-ceiling-structure-sagging',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Ceiling Structure',
     item: 'Ceiling Sagging',
     required: false,
@@ -916,7 +916,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-ceiling-structure-water-stains',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Ceiling Structure',
     item: 'Water Stains/Leaks',
     required: false,
@@ -924,7 +924,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-ceiling-structure-damaged-joists',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Ceiling Structure',
     item: 'Damaged Ceiling Joists',
     required: false,
@@ -932,7 +932,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-ceiling-structure-poor-ventilation',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Ceiling Structure',
     item: 'Poor Ventilation/Air Flow',
     required: false,
@@ -940,7 +940,7 @@ const inspectionChecklist: ChecklistItem[] = [
   },
   {
     id: 'foundation-ceiling-structure-insulation-problems',
-    category: 'Foundation Basement & Crawlspace',
+    category: 'Foundation & Structure',
     subcategory: 'Defects - Ceiling Structure',
     item: 'Insulation Problems',
     required: false,
