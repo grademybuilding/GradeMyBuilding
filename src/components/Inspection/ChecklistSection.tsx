@@ -23,12 +23,9 @@ interface ChecklistItem {
 
 const inspectionCategories = [
   'Roof',
-  'Exterior', 
   'Wood Decks & Balconies',
   'Foundation Basement & Crawlspace',
   'Heating & Cooling',
-  'Electric',
-  'Plumbing',
   'Door & Windows',
   'Cooking & Appliances',
   'Green Features'
@@ -159,57 +156,6 @@ const inspectionChecklist: ChecklistItem[] = [
     category: 'Roof',
     subcategory: 'Defects - Coverings',
     item: 'Ponding',
-    required: false,
-    type: 'checkbox'
-  },
-  // Exterior items
-  {
-    id: 'exterior-siding-damage',
-    category: 'Exterior',
-    subcategory: 'Defects - Siding',
-    item: 'Siding Damage',
-    required: false,
-    type: 'checkbox'
-  },
-  {
-    id: 'exterior-paint-peeling',
-    category: 'Exterior',
-    subcategory: 'Defects - Paint',
-    item: 'Paint Peeling',
-    required: false,
-    type: 'checkbox'
-  },
-  // Electric items
-  {
-    id: 'electric-panel-issues',
-    category: 'Electric',
-    subcategory: 'Panel',
-    item: 'Panel Issues',
-    required: false,
-    type: 'checkbox'
-  },
-  {
-    id: 'electric-wiring-exposed',
-    category: 'Electric',
-    subcategory: 'Wiring',
-    item: 'Exposed Wiring',
-    required: false,
-    type: 'checkbox'
-  },
-  // Plumbing items
-  {
-    id: 'plumbing-leaks',
-    category: 'Plumbing',
-    subcategory: 'Leaks',
-    item: 'Water Leaks',
-    required: false,
-    type: 'checkbox'
-  },
-  {
-    id: 'plumbing-pressure',
-    category: 'Plumbing',
-    subcategory: 'Water Pressure',
-    item: 'Low Water Pressure',
     required: false,
     type: 'checkbox'
   }
