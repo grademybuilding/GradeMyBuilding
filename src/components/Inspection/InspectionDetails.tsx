@@ -93,12 +93,34 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
           </div>
           
           <div className="space-y-2">
+            <Label htmlFor="startTime">Start Time</Label>
+            <Input
+              id="startTime"
+              type="time"
+              value={formData.startTime || ''}
+              onChange={(e) => onChange('startTime', e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
             <Label htmlFor="inspectorName">Inspector Name *</Label>
             <Input
               id="inspectorName"
               placeholder="John Doe"
               value={formData.inspectorName || ''}
               onChange={(e) => onChange('inspectorName', e.target.value)}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="license">License Number</Label>
+            <Input
+              id="license"
+              placeholder="INS123456"
+              value={formData.license || ''}
+              onChange={(e) => onChange('license', e.target.value)}
             />
           </div>
         </div>
@@ -243,27 +265,6 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
           </div>
         </div>
 
-        {/* Additional Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="license">License Number</Label>
-            <Input
-              id="license"
-              placeholder="INS123456"
-              value={formData.license || ''}
-              onChange={(e) => onChange('license', e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="startTime">Start Time</Label>
-            <Input
-              id="startTime"
-              type="time"
-              value={formData.startTime || ''}
-              onChange={(e) => onChange('startTime', e.target.value)}
-            />
-          </div>
-        </div>
       </CardContent>
     </Card>
   );
