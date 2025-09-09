@@ -33,6 +33,52 @@ const inspectionCategories = [
 ];
 
 const inspectionChecklist: ChecklistItem[] = [
+  // Roof General
+  {
+    id: 'roof-inspection-method',
+    category: 'Roof',
+    subcategory: 'General',
+    item: 'Inspection Method',
+    required: false,
+    type: 'multiselect',
+    options: ['Binoculars', 'Ground', 'Ladder', 'Roof', 'Drone', 'Moisture meter']
+  },
+  {
+    id: 'roof-type-style',
+    category: 'Roof',
+    subcategory: 'General', 
+    item: 'Roof Type/Style',
+    required: false,
+    type: 'multiselect',
+    options: ['Gable', 'Shed', 'Mansard', 'Combination', 'Gambrel', 'Flat', 'Hip']
+  },
+  // Roof Coverings
+  {
+    id: 'roof-age',
+    category: 'Roof',
+    subcategory: 'Coverings',
+    item: 'Age - Year Installed',
+    required: false,
+    type: 'year'
+  },
+  {
+    id: 'roof-material',
+    category: 'Roof',
+    subcategory: 'Coverings',
+    item: 'Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Asbestos', 'Ceramic', 'Wood', 'Asphalt', 'Fiberglass', 'Metal', 'Tile', 'Concrete', 'Slate', 'Solar', 'EPDM']
+  },
+  {
+    id: 'roof-inspector-rating',
+    category: 'Roof',
+    subcategory: 'Coverings',
+    item: 'Inspector Overall Rating',
+    required: false,
+    type: 'rating',
+    options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
   // Roof Defects - Coverings
   {
     id: 'roof-under-driven-nails',
