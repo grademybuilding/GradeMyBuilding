@@ -1595,7 +1595,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'garage-door-type',
     category: 'Doors & Windows',
-    subcategory: 'Garage Door',
+    subcategory: 'Garage Doors',
     item: 'Garage Door Type',
     required: false,
     type: 'multiselect',
@@ -1604,7 +1604,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'garage-door-material',
     category: 'Doors & Windows',
-    subcategory: 'Garage Door',
+    subcategory: 'Garage Doors',
     item: 'Garage Door Material',
     required: false,
     type: 'multiselect',
@@ -1613,7 +1613,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'garage-door-mechanism',
     category: 'Doors & Windows',
-    subcategory: 'Garage Door',
+    subcategory: 'Garage Doors',
     item: 'Garage Door Mechanism',
     required: false,
     type: 'multiselect',
@@ -1622,7 +1622,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'garage-door-inspector-rating',
     category: 'Doors & Windows',
-    subcategory: 'Garage Door',
+    subcategory: 'Garage Doors',
     item: 'Inspector Overall Rating',
     required: false,
     type: 'rating',
