@@ -388,6 +388,26 @@ const inspectionChecklist: ChecklistItem[] = [
     item: 'Chimney Cap Missing',
     required: false,
     type: 'checkbox'
+  },
+  // Exterior General
+  {
+    id: 'exterior-inspection-method',
+    category: 'Exterior',
+    subcategory: 'General',
+    item: 'Inspection Method',
+    required: false,
+    type: 'multiselect',
+    options: ['Crawlspace Access', 'Infrared', 'Visual', 'Attic Access']
+  },
+  // Exterior Siding, Flashing & Trim
+  {
+    id: 'exterior-siding-material',
+    category: 'Exterior',
+    subcategory: 'Siding, Flashing & Trim',
+    item: 'Siding Material',
+    required: false,
+    type: 'multiselect',
+    options: ['Aluminum', 'Plastic', 'Logs', 'Asbestos', 'Asphalt', 'Brick', 'Concrete', 'Fiber Cement', 'Stucco', 'Brick Veneer', 'Engineered Wood', 'Masonry', 'Metal', 'Vinyl', 'Wood', 'Shingles', 'Stone', 'Stone Veneer']
   }
 ];
 
