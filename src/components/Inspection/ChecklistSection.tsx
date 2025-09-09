@@ -1215,9 +1215,9 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           <div className="space-y-2">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {item.options?.map((rating) => {
-                // Color coding for Inspector Overall Grading
+                // Color coding for Inspector Overall Grading/Rating
                 let colorClasses = '';
-                if (item.id === 'roof-inspector-rating' || item.id === 'roof-drainage-inspector-rating' || item.id === 'roof-flashing-condition' || item.id === 'roof-skylights-chimneys-inspector-rating' || item.id === 'roof-eaves-soffits-fascia-inspector-rating' || item.id === 'exterior-siding-inspector-rating' || item.id === 'walkways-inspector-rating' || item.id === 'wood-decks-inspector-rating' || item.id === 'foundation-inspector-rating') {
+                if (item.item.includes('Inspector Overall')) {
                   switch (rating) {
                     case 'Excellent':
                       colorClasses = ratingValues[item.id] === rating
