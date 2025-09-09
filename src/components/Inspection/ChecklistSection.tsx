@@ -316,20 +316,65 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         return (
           <div className="space-y-2">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              {item.options?.map((rating) => (
-                <button
-                  key={rating}
-                  type="button"
-                  onClick={() => handleRatingChange(item.id, rating)}
-                  className={`px-3 py-1 text-xs rounded-md transition-colors ${
-                    ratingValues[item.id] === rating
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                  }`}
-                >
-                  {rating}
-                </button>
-              ))}
+              {item.options?.map((rating) => {
+                // Color coding for Inspector Overall Rating
+                let colorClasses = '';
+                if (item.id === 'roof-inspector-rating') {
+                  switch (rating) {
+                    case 'Excellent':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border-emerald-300';
+                      break;
+                    case 'Very Good':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-green-600 text-white'
+                        : 'bg-green-100 text-green-700 hover:bg-green-200 border-green-300';
+                      break;
+                    case 'Good':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-yellow-600 text-white'
+                        : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200 border-yellow-300';
+                      break;
+                    case 'Poor':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-orange-600 text-white'
+                        : 'bg-orange-100 text-orange-700 hover:bg-orange-200 border-orange-300';
+                      break;
+                    case 'Replace':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-red-600 text-white'
+                        : 'bg-red-100 text-red-700 hover:bg-red-200 border-red-300';
+                      break;
+                    case 'Not Inspected':
+                    case 'Partial Inspected':
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-gray-600 text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border-gray-300';
+                      break;
+                    default:
+                      colorClasses = ratingValues[item.id] === rating
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-secondary text-secondary-foreground hover:bg-secondary/80';
+                  }
+                } else {
+                  // Default styling for other rating items
+                  colorClasses = ratingValues[item.id] === rating
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80';
+                }
+
+                return (
+                  <button
+                    key={rating}
+                    type="button"
+                    onClick={() => handleRatingChange(item.id, rating)}
+                    className={`px-3 py-1 text-xs rounded-md transition-colors border ${colorClasses}`}
+                  >
+                    {rating}
+                  </button>
+                );
+              })}
             </div>
           </div>
         );
