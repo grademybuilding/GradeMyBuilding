@@ -487,7 +487,6 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: 'walkways-inspector-rating',
     category: 'Walkways, Patios & Driveways',
-    subcategory: 'General',
     item: 'Inspector Overall Rating',
     required: false,
     type: 'rating',
