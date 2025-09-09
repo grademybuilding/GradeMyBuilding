@@ -16,8 +16,7 @@ interface InspectionDetailsProps {
 }
 
 const inspectionCategories = [
-  'Roof', 'Exterior', 'Wood Decks & Balconies', 'Foundation Basement & Crawlspace', 
-  'Heating & Cooling', 'Electric', 'Plumbing', 'Door & Windows', 'Cooking & Appliances', 'Green Features'
+  'Residential', 'Commercial', 'Sewer', 'Spa/Swimming Pool', 'Radon', 'Well', 'Water Testing', 'Green Features'
 ];
 
 const weatherConditions = [
@@ -104,21 +103,23 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
           </div>
         </div>
 
-        {/* Inspection Category */}
-        <div className="space-y-2">
-          <Label className="text-base font-semibold">Inspection Category</Label>
-          <Select value={formData.inspectionCategory || ''} onValueChange={(value) => onChange('inspectionCategory', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select inspection category" />
-            </SelectTrigger>
-            <SelectContent>
-              {inspectionCategories.map((category) => (
-                <SelectItem key={category} value={category}>
+        {/* Inspection Categories */}
+        <div className="space-y-3">
+          <Label className="text-base font-semibold">Inspection Categories</Label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {inspectionCategories.map((category) => (
+              <div key={category} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`category-${category}`}
+                  checked={isSelected('inspectionCategories', category)}
+                  onCheckedChange={() => handleMultiSelect('inspectionCategories', category)}
+                />
+                <Label htmlFor={`category-${category}`} className="text-sm">
                   {category}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+                </Label>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Weather Conditions */}
