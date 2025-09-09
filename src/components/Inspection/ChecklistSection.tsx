@@ -825,8 +825,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Skylights & Chimneys')}>
                       Skylights & Chimneys
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Other Roof Penetrations')}>
-                      Other Roof Penetrations
+                    <DropdownMenuItem onClick={() => setSelectedRoofSubcategory('Eaves, Soffits & Fascia')}>
+                      Eaves, Soffits & Fascia
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -843,7 +843,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                       'Roof Drainage Systems': ['Roof Drainage Systems', 'Defects - Roof Drainage Systems'],
                       'Flashing': ['Flashing', 'Defects - Flashing'],
                       'Skylights & Chimneys': ['Skylights & Chimneys', 'Defects - Skylights & Chimneys'],
-                      'Other Roof Penetrations': ['Other Roof Penetrations', 'Defects - Other Roof Penetrations']
+                      'Eaves, Soffits & Fascia': ['Eaves, Soffits & Fascia', 'Defects - Eaves, Soffits & Fascia']
                     };
                     
                     const allowedSubcategories = subcategoryMap[selectedRoofSubcategory] || [];
