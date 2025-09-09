@@ -225,6 +225,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const [ratingValues, setRatingValues] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>({});
 
   const handleItemCheck = (itemId: string, status: 'pass' | 'fail' | 'na') => {
     const updated = { ...checkedItems, [itemId]: status };
@@ -259,6 +260,12 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     const updated = { ...notes, [itemId]: note };
     setNotes(updated);
     onChange('checklistNotes', updated);
+  };
+
+  const handleDefectCheck = (itemId: string, checked: boolean) => {
+    const updated = { ...selectedDefects, [itemId]: checked };
+    setSelectedDefects(updated);
+    onChange('selectedDefects', updated);
   };
 
   const categories = selectedCategory === 'all' 
@@ -381,10 +388,23 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         
       case 'checkbox':
       default:
-        // For defect items, show editable comment area
+        // For defect items, show checkbox and editable comment area
         if (item.subcategory?.includes('Defects')) {
           return (
-            <div className="space-y-2">
+            <div className="space-y-3">
+              {/* Checkbox for selecting the defect */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={`defect-${item.id}`}
+                  checked={selectedDefects[item.id] || false}
+                  onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                />
+                <Label htmlFor={`defect-${item.id}`} className="text-sm font-medium">
+                  Report this defect
+                </Label>
+              </div>
+              
+              {/* Comment area - always visible */}
               <Textarea
                 placeholder="Add inspection comments..."
                 value={notes[item.id] || defectDescriptions[item.id] || ''}
