@@ -1506,6 +1506,71 @@ const inspectionChecklist: ChecklistItem[] = [
     required: false,
     type: 'rating',
     options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected']
+  },
+  // Entry Door Defects
+  {
+    id: 'entry-door-water-staining',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Water Staining',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-poor-weather-stripping',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Poor Weather-stripping',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-noticeable-gap',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Noticeable Gap',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-hinges-missing',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Hinges Missing',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-hinges-loose',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Hinges Loose',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-door-sticks',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Door Sticks',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-latch-alignment',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: 'Door Latch Alignment',
+    required: false,
+    type: 'checkbox'
+  },
+  {
+    id: 'entry-door-doesnt-latch',
+    category: 'Doors & Windows',
+    subcategory: 'Defects - Entry Doors',
+    item: "Door Doesn't Latch",
+    required: false,
+    type: 'checkbox'
   }
 ];
 

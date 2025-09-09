@@ -206,5 +206,22 @@ Proper flashing around the skylight is critical.`,
   
   'windows-failed-seal': `Observed condensation between the window panes, which indicates a failed seal. Recommend qualified window contractor evaluate & replace.`,
   
-  'windows-missing-screen': `Window missing screen. Recommend replacement.`
+  'windows-missing-screen': `Window missing screen. Recommend replacement.`,
+
+  // Entry Door defects
+  'entry-door-water-staining': `Door shows noticeable water staining, which could lead to further deterioration. Monitor for future repair or replacement.`,
+  
+  'entry-door-poor-weather-stripping': `At the time of the inspection, weather-stripping at interior doors was generally damaged or deteriorated. The Inspector recommends replacement/installation of effective weather-stripping components as necessary by a qualified contractor.`,
+  
+  'entry-door-noticeable-gap': `One or more gaps could result in energy loss. Recommend handyman or door contractor evaluate.`,
+  
+  'entry-door-hinges-missing': `One or more hinges missing. This does not affect operation of the door, however having all hinges is recommended to prevent potential safety hazard.`,
+  
+  'entry-door-hinges-loose': `Loose hinges can cause door to stick or eventually fall out of place. Recommend handyman tighten hinges.\n\nHere is a DIY article on fixing loose hinges: https://www.thisoldhouse.com/more/sure-cure-loose-hinges`,
+  
+  'entry-door-door-sticks': `Door sticks and is tough to open. Recommend sanding down offending sides.\n\nHere is a helpful DIY article on how to fix a sticking door: http://www.familyhandyman.com/doors/repair/fix-sagging-or-sticking-doors/view-all`,
+  
+  'entry-door-latch-alignment': `Door latch and/or strike plate is out of alignment. Recommend a handyman repair.`,
+  
+  'entry-door-doesnt-latch': `Door doesn't latch properly. Recommend handyman repair latch and/or strike plate.`
 };
