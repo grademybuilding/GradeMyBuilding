@@ -7,7 +7,7 @@ export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void
   return (
     <div className="p-4 space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">BuildMyBuilding- dashboard</h1>
+        <h1 className="text-2xl font-bold text-foreground">GradeMyBuilding- Dashboard</h1>
         <p className="text-muted-foreground">Welcome back, Inspector</p>
       </div>
 
