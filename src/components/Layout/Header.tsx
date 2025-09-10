@@ -14,7 +14,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
     <header className="flex items-center justify-between p-4 bg-card border-b border-border shadow-card">
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
-          <img src={logo} alt="GradeMyBuilding" className="h-20 w-auto" />
+          <img src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" alt="GradeMyBuilding" className="h-20 w-auto" />
         </div>
         <Navigation activeTab={activeTab} onTabChange={onTabChange} />
       </div>
