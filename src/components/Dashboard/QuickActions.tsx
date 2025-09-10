@@ -59,9 +59,6 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
                 onClick={handleClick}
               >
                 <Icon className="h-6 w-6" />
-                <div>
-                  <p className="font-medium text-sm">{action.title}</p>
-                </div>
               </Button>
             );
           })}
