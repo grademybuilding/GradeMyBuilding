@@ -61,7 +61,6 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
                 <Icon className="h-6 w-6" />
                 <div>
                   <p className="font-medium text-sm">{action.title}</p>
-                  <p className="text-xs opacity-80">{action.description}</p>
                 </div>
               </Button>
             );
