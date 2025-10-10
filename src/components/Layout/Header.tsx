@@ -2,6 +2,7 @@ import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Navigation } from "./Navigation";
+import { ThemeToggle } from "./ThemeToggle";
 import logo from "@/assets/logo.png";
 
 interface HeaderProps {
@@ -20,6 +21,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
       </div>
       
       <div className="flex items-center gap-2">
+        <ThemeToggle />
         <Button variant="ghost" size="sm">
           <Bell className="h-5 w-5" />
         </Button>
