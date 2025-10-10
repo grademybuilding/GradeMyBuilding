@@ -25,7 +25,7 @@ export function StatsCard({
         </CardTitle>
         <Icon className={cn("h-5 w-5", variant === 'accent' && "text-accent", variant === 'success' && "text-emerald-600", variant === 'default' && "text-primary")} />
       </CardHeader>
-      <CardContent>
+      <CardContent className="bg-emerald-100">
         <div className="text-2xl font-bold">{value}</div>
         {trend && <p className="text-xs text-muted-foreground mt-1">
             <span className={cn("font-medium", trend.value > 0 ? "text-emerald-600" : "text-red-600")}>
