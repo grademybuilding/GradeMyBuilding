@@ -18,7 +18,7 @@ export function StatsCard({
   trend,
   variant = 'default'
 }: StatsCardProps) {
-  return <Card className={cn("relative overflow-hidden transition-all duration-300 hover:shadow-elevated", variant === 'accent' && "border-accent/20 bg-gradient-to-br from-accent/5 to-accent/10", variant === 'success' && "border-emerald-200 bg-gradient-to-br from-emerald-50 to-emerald-100")}>
+  return <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-elevated">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
