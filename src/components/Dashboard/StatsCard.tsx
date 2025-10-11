@@ -23,7 +23,7 @@ export function StatsCard({
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
-        <Icon className="h-5 w-5 text-primary" />
+        <Icon className={cn("h-5 w-5", variant === 'accent' && "text-accent", variant === 'success' && "text-emerald-600", variant === 'default' && "text-primary")} />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
