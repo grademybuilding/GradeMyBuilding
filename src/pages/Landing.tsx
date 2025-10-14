@@ -16,7 +16,7 @@ const Landing = () => {
       <div className="flex flex-col items-center justify-center space-y-8 px-4 animate-fade-in">
         {/* Logo */}
         <img 
-          src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" 
+          src="/lovable-uploads/logo-transparent.png" 
           alt="GradeMyBuilding" 
           className="h-32 w-auto md:h-40"
         />
