@@ -26,8 +26,8 @@ const Landing = () => {
           <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             Inspect. Grade. Trust.
           </h1>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-md">
-            Professional building inspection management made simple
+          <p className="text-muted-foreground text-lg md:text-xl whitespace-nowrap">
+            Building inspection management made simple
           </p>
         </div>
 
