@@ -18,7 +18,7 @@ const Landing = () => {
         <img 
           src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" 
           alt="GradeMyBuilding" 
-          className="h-32 w-auto md:h-40 drop-shadow-lg"
+          className="h-32 w-auto md:h-40"
         />
 
         {/* Tagline */}
