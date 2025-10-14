@@ -19,7 +19,7 @@ export function StatsCard({
   variant = 'default'
 }: StatsCardProps) {
   return <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-elevated">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-emerald-200">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
