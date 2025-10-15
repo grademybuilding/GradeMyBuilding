@@ -29,7 +29,7 @@ const Landing = () => {
             Inspect. Grade. Trust.
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl whitespace-nowrap">
-            Building inspection management made simple
+            Building Inspection And Grading System
           </p>
         </div>
 
