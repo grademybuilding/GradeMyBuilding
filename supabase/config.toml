@@ -1,5 +1,8 @@
 project_id = "fjzdbbbpqiibtiqfncwf"
 
+[functions.search-buildings]
+verify_jwt = false
+
 [functions.create-inspection]
 verify_jwt = true
 

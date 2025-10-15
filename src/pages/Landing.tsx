@@ -33,14 +33,24 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Sign In Button */}
-        <Button 
-          size="lg"
-          onClick={() => navigate("/auth")}
-          className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        >
-          Get Started
-        </Button>
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button 
+            size="lg"
+            onClick={() => navigate("/search")}
+            variant="outline"
+            className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            Search Building Grades
+          </Button>
+          <Button 
+            size="lg"
+            onClick={() => navigate("/auth")}
+            className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            Get Started
+          </Button>
+        </div>
       </div>
 
       {/* Decorative Elements */}
