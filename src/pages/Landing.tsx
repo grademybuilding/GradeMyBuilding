@@ -33,14 +33,24 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Sign In Button */}
-        <Button 
-          size="lg"
-          onClick={() => navigate("/dashboard")}
-          className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        >
-          Sign In
-        </Button>
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button 
+            size="lg"
+            onClick={() => navigate("/auth")}
+            className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            Get Started
+          </Button>
+          <Button 
+            size="lg"
+            variant="outline"
+            onClick={() => navigate("/auth")}
+            className="text-lg px-8 py-6 h-auto shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          >
+            Sign In
+          </Button>
+        </div>
       </div>
 
       {/* Decorative Elements */}
