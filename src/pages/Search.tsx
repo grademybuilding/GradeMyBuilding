@@ -102,8 +102,12 @@ const Search = () => {
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a href="/" className="text-xl font-bold text-foreground hover:text-primary transition-colors">
-              GradeMyBuilding
+            <a href="/" className="flex items-center hover:opacity-80 transition-opacity">
+              <img 
+                src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" 
+                alt="GradeMyBuilding" 
+                className="h-12 w-auto"
+              />
             </a>
             <Badge variant="outline">Public Search</Badge>
           </div>
@@ -117,10 +121,14 @@ const Search = () => {
       </header>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary/10 via-background to-muted/20 py-12 border-b">
-        <div className="container mx-auto px-4">
+      <div className="bg-gradient-to-br from-background via-background to-muted/20 py-12 border-b relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
               Search Building Grades
             </h1>
             <p className="text-lg text-muted-foreground">
