@@ -101,6 +101,59 @@ export type Database = {
         }
         Relationships: []
       }
+      checklist_items: {
+        Row: {
+          category: string
+          created_at: string | null
+          defect_description: string | null
+          id: string
+          inspection_id: string
+          item_name: string
+          item_type: string
+          notes: string | null
+          rating: string | null
+          selected_values: Json | null
+          subcategory: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          defect_description?: string | null
+          id?: string
+          inspection_id: string
+          item_name: string
+          item_type: string
+          notes?: string | null
+          rating?: string | null
+          selected_values?: Json | null
+          subcategory?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          defect_description?: string | null
+          id?: string
+          inspection_id?: string
+          item_name?: string
+          item_type?: string
+          notes?: string | null
+          rating?: string | null
+          selected_values?: Json | null
+          subcategory?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checklist_items_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inspection_assignments: {
         Row: {
           assigned_at: string | null
@@ -138,6 +191,54 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "inspection_assignments_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inspection_photos: {
+        Row: {
+          caption: string | null
+          category: string | null
+          checklist_item_id: string | null
+          created_at: string | null
+          id: string
+          inspection_id: string
+          photo_url: string
+          tag: string | null
+        }
+        Insert: {
+          caption?: string | null
+          category?: string | null
+          checklist_item_id?: string | null
+          created_at?: string | null
+          id?: string
+          inspection_id: string
+          photo_url: string
+          tag?: string | null
+        }
+        Update: {
+          caption?: string | null
+          category?: string | null
+          checklist_item_id?: string | null
+          created_at?: string | null
+          id?: string
+          inspection_id?: string
+          photo_url?: string
+          tag?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspection_photos_checklist_item_id_fkey"
+            columns: ["checklist_item_id"]
+            isOneToOne: false
+            referencedRelation: "checklist_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inspection_photos_inspection_id_fkey"
             columns: ["inspection_id"]
             isOneToOne: false
             referencedRelation: "inspections"
@@ -616,6 +717,13 @@ export type Database = {
           grade_numeric: number
         }[]
       }
+      calculate_inspection_grade_v2: {
+        Args: { _inspection_id: string }
+        Returns: {
+          grade_letter: string
+          grade_numeric: number
+        }[]
+      }
       get_inspector_stats: {
         Args: { _inspector_id: string }
         Returns: {
@@ -643,6 +751,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      migrate_checklist_data: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {

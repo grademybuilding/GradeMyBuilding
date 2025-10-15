@@ -1,1 +1,19 @@
 project_id = "fjzdbbbpqiibtiqfncwf"
+
+[functions.create-inspection]
+verify_jwt = true
+
+[functions.update-inspection]
+verify_jwt = true
+
+[functions.submit-inspection]
+verify_jwt = true
+
+[functions.calculate-grade]
+verify_jwt = true
+
+[functions.get-inspections]
+verify_jwt = true
+
+[functions.get-inspection-details]
+verify_jwt = true
