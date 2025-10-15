@@ -14,16 +14,645 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assessment_exports: {
+        Row: {
+          assessor_id: string
+          completed_at: string | null
+          created_at: string | null
+          date_range_end: string | null
+          date_range_start: string | null
+          error_message: string | null
+          export_type: string
+          file_url: string | null
+          grade_range: string[] | null
+          id: string
+          jurisdiction: string | null
+          property_types: string[] | null
+          status: string | null
+          total_records: number | null
+        }
+        Insert: {
+          assessor_id: string
+          completed_at?: string | null
+          created_at?: string | null
+          date_range_end?: string | null
+          date_range_start?: string | null
+          error_message?: string | null
+          export_type: string
+          file_url?: string | null
+          grade_range?: string[] | null
+          id?: string
+          jurisdiction?: string | null
+          property_types?: string[] | null
+          status?: string | null
+          total_records?: number | null
+        }
+        Update: {
+          assessor_id?: string
+          completed_at?: string | null
+          created_at?: string | null
+          date_range_end?: string | null
+          date_range_start?: string | null
+          error_message?: string | null
+          export_type?: string
+          file_url?: string | null
+          grade_range?: string[] | null
+          id?: string
+          jurisdiction?: string | null
+          property_types?: string[] | null
+          status?: string | null
+          total_records?: number | null
+        }
+        Relationships: []
+      }
+      audit_logs: {
+        Row: {
+          action: string
+          changes: Json | null
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          resource_id: string | null
+          resource_type: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          changes?: Json | null
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          changes?: Json | null
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          resource_id?: string | null
+          resource_type?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      inspection_assignments: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string
+          assigned_to: string
+          completed_at: string | null
+          id: string
+          inspection_id: string
+          notes: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status: string | null
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by: string
+          assigned_to: string
+          completed_at?: string | null
+          id?: string
+          inspection_id: string
+          notes?: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status?: string | null
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string
+          assigned_to?: string
+          completed_at?: string | null
+          id?: string
+          inspection_id?: string
+          notes?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspection_assignments_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inspection_shares: {
+        Row: {
+          access_count: number | null
+          created_at: string | null
+          expires_at: string | null
+          id: string
+          inspection_id: string
+          is_active: boolean | null
+          last_accessed_at: string | null
+          notes: string | null
+          recipient_email: string
+          recipient_name: string | null
+          share_token: string
+          shared_by: string
+        }
+        Insert: {
+          access_count?: number | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          inspection_id: string
+          is_active?: boolean | null
+          last_accessed_at?: string | null
+          notes?: string | null
+          recipient_email: string
+          recipient_name?: string | null
+          share_token?: string
+          shared_by: string
+        }
+        Update: {
+          access_count?: number | null
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string
+          inspection_id?: string
+          is_active?: boolean | null
+          last_accessed_at?: string | null
+          notes?: string | null
+          recipient_email?: string
+          recipient_name?: string | null
+          share_token?: string
+          shared_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspection_shares_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inspection_templates: {
+        Row: {
+          building_type: string
+          created_at: string | null
+          created_by: string
+          description: string | null
+          id: string
+          is_public: boolean | null
+          name: string
+          template_data: Json
+          updated_at: string | null
+        }
+        Insert: {
+          building_type: string
+          created_at?: string | null
+          created_by: string
+          description?: string | null
+          id?: string
+          is_public?: boolean | null
+          name: string
+          template_data: Json
+          updated_at?: string | null
+        }
+        Update: {
+          building_type?: string
+          created_at?: string | null
+          created_by?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean | null
+          name?: string
+          template_data?: Json
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      inspections: {
+        Row: {
+          attendance: string[] | null
+          building_types: string[] | null
+          category_scores: Json | null
+          checklist_data: Json | null
+          checklist_notes: Json | null
+          checklist_ratings: Json | null
+          created_at: string | null
+          excellent_count: number | null
+          final_grade_letter: string | null
+          final_grade_numeric: number | null
+          good_count: number | null
+          grade_calculated_at: string | null
+          id: string
+          inspection_date: string
+          inspection_time: string | null
+          inspector_id: string
+          not_inspected_count: number | null
+          notes: string | null
+          occupancy: string | null
+          partial_inspected_count: number | null
+          photos: string[] | null
+          poor_count: number | null
+          property_id: string
+          replace_count: number | null
+          selected_defects: Json | null
+          status: string | null
+          temperature: number | null
+          total_items_rated: number | null
+          total_points_earned: number | null
+          total_points_possible: number | null
+          updated_at: string | null
+          very_good_count: number | null
+          weather_conditions: string[] | null
+        }
+        Insert: {
+          attendance?: string[] | null
+          building_types?: string[] | null
+          category_scores?: Json | null
+          checklist_data?: Json | null
+          checklist_notes?: Json | null
+          checklist_ratings?: Json | null
+          created_at?: string | null
+          excellent_count?: number | null
+          final_grade_letter?: string | null
+          final_grade_numeric?: number | null
+          good_count?: number | null
+          grade_calculated_at?: string | null
+          id?: string
+          inspection_date: string
+          inspection_time?: string | null
+          inspector_id: string
+          not_inspected_count?: number | null
+          notes?: string | null
+          occupancy?: string | null
+          partial_inspected_count?: number | null
+          photos?: string[] | null
+          poor_count?: number | null
+          property_id: string
+          replace_count?: number | null
+          selected_defects?: Json | null
+          status?: string | null
+          temperature?: number | null
+          total_items_rated?: number | null
+          total_points_earned?: number | null
+          total_points_possible?: number | null
+          updated_at?: string | null
+          very_good_count?: number | null
+          weather_conditions?: string[] | null
+        }
+        Update: {
+          attendance?: string[] | null
+          building_types?: string[] | null
+          category_scores?: Json | null
+          checklist_data?: Json | null
+          checklist_notes?: Json | null
+          checklist_ratings?: Json | null
+          created_at?: string | null
+          excellent_count?: number | null
+          final_grade_letter?: string | null
+          final_grade_numeric?: number | null
+          good_count?: number | null
+          grade_calculated_at?: string | null
+          id?: string
+          inspection_date?: string
+          inspection_time?: string | null
+          inspector_id?: string
+          not_inspected_count?: number | null
+          notes?: string | null
+          occupancy?: string | null
+          partial_inspected_count?: number | null
+          photos?: string[] | null
+          poor_count?: number | null
+          property_id?: string
+          replace_count?: number | null
+          selected_defects?: Json | null
+          status?: string | null
+          temperature?: number | null
+          total_items_rated?: number | null
+          total_points_earned?: number | null
+          total_points_possible?: number | null
+          updated_at?: string | null
+          very_good_count?: number | null
+          weather_conditions?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspections_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          company_email: string | null
+          company_name: string | null
+          created_at: string | null
+          credentials_verified: boolean | null
+          email: string
+          full_name: string
+          id: string
+          license_number: string | null
+          license_state: string | null
+          phone: string | null
+          updated_at: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          company_email?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          credentials_verified?: boolean | null
+          email: string
+          full_name: string
+          id: string
+          license_number?: string | null
+          license_state?: string | null
+          phone?: string | null
+          updated_at?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          company_email?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          credentials_verified?: boolean | null
+          email?: string
+          full_name?: string
+          id?: string
+          license_number?: string | null
+          license_state?: string | null
+          phone?: string | null
+          updated_at?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          address: string
+          city: string
+          created_at: string | null
+          created_by: string
+          id: string
+          is_public: boolean | null
+          lot_size: string | null
+          owner_email: string | null
+          owner_name: string | null
+          owner_phone: string | null
+          property_type: string
+          square_footage: number | null
+          state: string
+          updated_at: string | null
+          year_built: number | null
+          zip_code: string
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string | null
+          created_by: string
+          id?: string
+          is_public?: boolean | null
+          lot_size?: string | null
+          owner_email?: string | null
+          owner_name?: string | null
+          owner_phone?: string | null
+          property_type: string
+          square_footage?: number | null
+          state: string
+          updated_at?: string | null
+          year_built?: number | null
+          zip_code: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string | null
+          created_by?: string
+          id?: string
+          is_public?: boolean | null
+          lot_size?: string | null
+          owner_email?: string | null
+          owner_name?: string | null
+          owner_phone?: string | null
+          property_type?: string
+          square_footage?: number | null
+          state?: string
+          updated_at?: string | null
+          year_built?: number | null
+          zip_code?: string
+        }
+        Relationships: []
+      }
+      risk_analyses: {
+        Row: {
+          created_at: string | null
+          decided_at: string | null
+          decision: string | null
+          decision_notes: string | null
+          defects_risk_factor: number | null
+          flagged_categories: string[] | null
+          grade_risk_factor: number | null
+          id: string
+          inspection_id: string
+          requires_additional_inspection: boolean | null
+          risk_level: string | null
+          risk_score: number | null
+          underwriter_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          decided_at?: string | null
+          decision?: string | null
+          decision_notes?: string | null
+          defects_risk_factor?: number | null
+          flagged_categories?: string[] | null
+          grade_risk_factor?: number | null
+          id?: string
+          inspection_id: string
+          requires_additional_inspection?: boolean | null
+          risk_level?: string | null
+          risk_score?: number | null
+          underwriter_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          decided_at?: string | null
+          decision?: string | null
+          decision_notes?: string | null
+          defects_risk_factor?: number | null
+          flagged_categories?: string[] | null
+          grade_risk_factor?: number | null
+          id?: string
+          inspection_id?: string
+          requires_additional_inspection?: boolean | null
+          risk_level?: string | null
+          risk_score?: number | null
+          underwriter_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risk_analyses_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      valuations: {
+        Row: {
+          appraiser_id: string
+          comparable_properties: Json | null
+          created_at: string | null
+          estimated_value: number
+          grade_adjustment_factor: number | null
+          id: string
+          inspection_id: string
+          market_value: number | null
+          notes: string | null
+          property_id: string
+          status: string | null
+          updated_at: string | null
+          valuation_report_url: string | null
+        }
+        Insert: {
+          appraiser_id: string
+          comparable_properties?: Json | null
+          created_at?: string | null
+          estimated_value: number
+          grade_adjustment_factor?: number | null
+          id?: string
+          inspection_id: string
+          market_value?: number | null
+          notes?: string | null
+          property_id: string
+          status?: string | null
+          updated_at?: string | null
+          valuation_report_url?: string | null
+        }
+        Update: {
+          appraiser_id?: string
+          comparable_properties?: Json | null
+          created_at?: string | null
+          estimated_value?: number
+          grade_adjustment_factor?: number | null
+          id?: string
+          inspection_id?: string
+          market_value?: number | null
+          notes?: string | null
+          property_id?: string
+          status?: string | null
+          updated_at?: string | null
+          valuation_report_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "valuations_inspection_id_fkey"
+            columns: ["inspection_id"]
+            isOneToOne: false
+            referencedRelation: "inspections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "valuations_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_inspection_grade: {
+        Args: { _inspection_id: string }
+        Returns: {
+          grade_letter: string
+          grade_numeric: number
+        }[]
+      }
+      get_inspector_stats: {
+        Args: { _inspector_id: string }
+        Returns: {
+          average_grade: number
+          completed_this_month: number
+          grade_distribution: Json
+          pending_submissions: number
+          total_inspections: number
+        }[]
+      }
+      get_user_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_any_role: {
+        Args: {
+          _roles: Database["public"]["Enums"]["app_role"][]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role:
+        | "admin"
+        | "inspector"
+        | "appraiser"
+        | "real_estate_agent"
+        | "assessor"
+        | "underwriter"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +779,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: [
+        "admin",
+        "inspector",
+        "appraiser",
+        "real_estate_agent",
+        "assessor",
+        "underwriter",
+      ],
+    },
   },
 } as const
