@@ -7,8 +7,16 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-background via-background to-muted/20 relative overflow-hidden">
-      {/* Theme Toggle - Top Right */}
-      <div className="absolute top-6 right-6">
+      {/* Top Right Actions */}
+      <div className="absolute top-6 right-6 flex items-center gap-3">
+        <Button 
+          size="sm"
+          onClick={() => navigate("/search")}
+          variant="outline"
+          className="shadow-md hover:shadow-lg transition-all duration-300"
+        >
+          Search Building Grades
+        </Button>
         <ThemeToggle />
       </div>
 
@@ -33,24 +41,14 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Button 
-            size="lg"
-            onClick={() => navigate("/search")}
-            variant="outline"
-            className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            Search Building Grades
-          </Button>
-          <Button 
-            size="lg"
-            onClick={() => navigate("/auth")}
-            className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-          >
-            Get Started
-          </Button>
-        </div>
+        {/* Sign In Button */}
+        <Button 
+          size="lg"
+          onClick={() => navigate("/auth")}
+          className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+        >
+          Get Started
+        </Button>
       </div>
 
       {/* Decorative Elements */}
