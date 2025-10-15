@@ -36,10 +36,10 @@ const Landing = () => {
         {/* Sign In Button */}
         <Button 
           size="lg"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/auth")}
           className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         >
-          Sign In
+          Get Started
         </Button>
       </div>
 

@@ -1,54 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Layout/Header";
-import { Dashboard } from "@/pages/Dashboard";
-import { NewInspection } from "@/pages/NewInspection";
+import { useAuth } from "@/hooks/useAuth";
+import InspectorDashboard from "@/pages/roles/InspectorDashboard";
+import AppraiserDashboard from "@/pages/roles/AppraiserDashboard";
+import AgentDashboard from "@/pages/roles/AgentDashboard";
+import AssessorDashboard from "@/pages/roles/AssessorDashboard";
+import UnderwriterDashboard from "@/pages/roles/UnderwriterDashboard";
+import AdminDashboard from "@/pages/roles/AdminDashboard";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const { user, profile, loading, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      navigate('/auth');
+    }
+  }, [loading, isAuthenticated, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-background">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || !profile) {
+    return null;
+  }
 
   const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        return <Dashboard onTabChange={setActiveTab} />;
-      case 'new-inspection':
-        return <NewInspection onBack={() => setActiveTab('dashboard')} />;
-      case 'inspections':
-        return (
-          <div className="p-4">
-            <h1 className="text-2xl font-bold">Inspections</h1>
-            <p className="text-muted-foreground">Manage your building inspections</p>
-          </div>
-        );
-      case 'properties':
-        return (
-          <div className="p-4">
-            <h1 className="text-2xl font-bold">Properties</h1>
-            <p className="text-muted-foreground">Property database and records</p>
-          </div>
-        );
-      case 'photos':
-        return (
-          <div className="p-4">
-            <h1 className="text-2xl font-bold">Photos</h1>
-            <p className="text-muted-foreground">Inspection photos and documentation</p>
-          </div>
-        );
-      case 'reports':
-        return (
-          <div className="p-4">
-            <h1 className="text-2xl font-bold">Reports</h1>
-            <p className="text-muted-foreground">Generated inspection reports</p>
-          </div>
-        );
-      case 'settings':
-        return (
-          <div className="p-4">
-            <h1 className="text-2xl font-bold">Settings</h1>
-            <p className="text-muted-foreground">App preferences and configuration</p>
-          </div>
-        );
+    switch (profile.role) {
+      case 'inspector':
+        return <InspectorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+      case 'appraiser':
+        return <AppraiserDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+      case 'real_estate_agent':
+        return <AgentDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+      case 'assessor':
+        return <AssessorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+      case 'underwriter':
+        return <UnderwriterDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+      case 'admin':
+        return <AdminDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
       default:
-        return <Dashboard />;
+        return <InspectorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
     }
   };
 
