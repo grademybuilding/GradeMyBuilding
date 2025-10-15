@@ -26,10 +26,10 @@ const Landing = () => {
         {/* Tagline */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            Inspect. Grade. Trust.
+            Building Inspection and Grading System
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl whitespace-nowrap">
-            Building inspection management made simple
+            Professional property assessment platform
           </p>
         </div>
 
