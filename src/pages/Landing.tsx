@@ -41,14 +41,6 @@ const Landing = () => {
           </p>
         </div>
 
-        {/* Sign In Button */}
-        <Button 
-          size="lg"
-          onClick={() => navigate("/dashboard")}
-          className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        >
-          Get Started
-        </Button>
       </div>
 
       {/* Decorative Elements */}
