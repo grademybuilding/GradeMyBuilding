@@ -1,4 +1,4 @@
-import { Home, ClipboardCheck, Building, Camera, FileText, Settings } from "lucide-react";
+import { Home, ClipboardCheck, Building, Camera, FileText, Settings, Receipt } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavigationProps {
@@ -11,6 +11,7 @@ const navItems = [
   { id: 'inspections', label: 'Inspections', icon: ClipboardCheck },
   { id: 'properties', label: 'Properties', icon: Building },
   { id: 'photos', label: 'Photos', icon: Camera },
+  { id: 'invoices', label: 'Invoices', icon: Receipt },
   { id: 'reports', label: 'Reports', icon: FileText },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];

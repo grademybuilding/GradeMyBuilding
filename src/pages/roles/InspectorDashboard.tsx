@@ -4,6 +4,7 @@ import { Dashboard } from "@/pages/Dashboard";
 import InspectionsList from "@/components/Inspector/InspectionsList";
 import TemplatesManager from "@/components/Inspector/TemplatesManager";
 import PhotoGallery from "@/components/Inspector/PhotoGallery";
+import InvoiceManager from "@/components/Inspector/InvoiceManager";
 import { StatsCard } from "@/components/Dashboard/StatsCard";
 import { Building, CheckCircle, Clock, TrendingUp } from "lucide-react";
 
@@ -25,6 +26,8 @@ export default function InspectorDashboard({ activeTab, onTabChange }: Inspector
         return <TemplatesManager />;
       case 'photos':
         return <PhotoGallery />;
+      case 'invoices':
+        return <InvoiceManager />;
       case 'reports':
         return (
           <div className="p-4 space-y-6">
