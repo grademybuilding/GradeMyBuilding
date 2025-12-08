@@ -904,10 +904,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      migrate_checklist_data: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      migrate_checklist_data: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role:
