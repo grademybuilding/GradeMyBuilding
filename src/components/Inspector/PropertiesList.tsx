@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Building, MapPin, Calendar, FileText, Eye, Plus, Search, Home } from "lucide-react";
-import { QuickActions } from "@/components/Dashboard/QuickActions";
 
 const mockProperties = [
   {
@@ -102,8 +101,6 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
 
   return (
     <div className="p-4 space-y-6 animate-fade-in">
-      <QuickActions onTabChange={onTabChange || (() => {})} />
-
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Properties Grade & History</h1>
