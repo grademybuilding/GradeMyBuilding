@@ -6,6 +6,8 @@ import { Building, CheckCircle, Clock, AlertTriangle } from "lucide-react";
 export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   return (
     <div className="p-4 space-y-6 animate-fade-in">
+      <QuickActions onTabChange={onTabChange || (() => {})} />
+      
       <div>
         <h1 className="text-2xl font-bold text-foreground">GradeMyBuilding- Dashboard</h1>
         <p className="text-muted-foreground">Welcome back, Inspector</p>
@@ -39,15 +41,8 @@ export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void
         />
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <RecentInspections />
-        </div>
-        <div>
-          <QuickActions onTabChange={onTabChange || (() => {})} />
-        </div>
-      </div>
+      {/* Recent Inspections */}
+      <RecentInspections />
     </div>
   );
 }
