@@ -22,17 +22,17 @@ const quickActions = [
     variant: 'secondary' as const
   },
   {
-    id: 'take-photo',
-    title: 'Take Photo',
-    description: 'Capture inspection photos',
-    icon: Camera,
-    variant: 'secondary' as const
-  },
-  {
     id: 'generate-report',
     title: 'Generate Report',
     description: 'Create inspection report',
     icon: FileText,
+    variant: 'secondary' as const
+  },
+  {
+    id: 'take-photo',
+    title: 'Take Photo',
+    description: 'Capture inspection photos',
+    icon: Camera,
     variant: 'secondary' as const
   },
 ];
