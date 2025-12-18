@@ -17,6 +17,7 @@ const mockProperties = [
     squareFootage: 12500,
     inspectionCount: 3,
     lastInspection: "2024-01-15",
+    lastGrade: "A",
   },
   {
     id: "2",
@@ -29,6 +30,7 @@ const mockProperties = [
     squareFootage: 2800,
     inspectionCount: 1,
     lastInspection: "2024-01-10",
+    lastGrade: "B",
   },
   {
     id: "3",
@@ -41,6 +43,7 @@ const mockProperties = [
     squareFootage: 45000,
     inspectionCount: 5,
     lastInspection: "2024-01-08",
+    lastGrade: "C",
   },
   {
     id: "4",
@@ -53,6 +56,33 @@ const mockProperties = [
     squareFootage: 8200,
     inspectionCount: 2,
     lastInspection: "2024-01-05",
+    lastGrade: "A",
+  },
+  {
+    id: "5",
+    address: "555 Cedar Lane",
+    city: "Fresno",
+    state: "CA",
+    zipCode: "93701",
+    propertyType: "Residential",
+    yearBuilt: 1998,
+    squareFootage: 3200,
+    inspectionCount: 4,
+    lastInspection: "2024-01-02",
+    lastGrade: "D",
+  },
+  {
+    id: "6",
+    address: "777 Tech Park",
+    city: "Palo Alto",
+    state: "CA",
+    zipCode: "94301",
+    propertyType: "Commercial",
+    yearBuilt: 2018,
+    squareFootage: 25000,
+    inspectionCount: 2,
+    lastInspection: "2023-12-28",
+    lastGrade: "A",
   },
 ];
 
@@ -126,7 +156,13 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
+                  <Badge 
+                    variant="default" 
+                    className="text-lg font-bold px-3 py-1"
+                  >
+                    Grade {property.lastGrade}
+                  </Badge>
                   <Button variant="outline" size="sm" className="gap-1">
                     <Eye className="h-4 w-4" />
                     View
