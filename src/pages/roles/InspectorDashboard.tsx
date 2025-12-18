@@ -21,7 +21,7 @@ export default function InspectorDashboard({ activeTab, onTabChange }: Inspector
       case 'new-inspection':
         return <NewInspection onBack={() => onTabChange('dashboard')} />;
       case 'inspections':
-        return <InspectionsList />;
+        return <InspectionsList onTabChange={onTabChange} />;
       case 'templates':
         return <TemplatesManager />;
       case 'photos':
