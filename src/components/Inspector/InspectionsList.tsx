@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Building, Calendar, MapPin, FileText, Eye } from "lucide-react";
+import { QuickActions } from "@/components/Dashboard/QuickActions";
 
 const mockInspections = [
   {
@@ -33,9 +34,15 @@ const mockInspections = [
   },
 ];
 
-export default function InspectionsList() {
+interface InspectionsListProps {
+  onTabChange?: (tab: string) => void;
+}
+
+export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   return (
     <div className="p-4 space-y-6 animate-fade-in">
+      <QuickActions onTabChange={onTabChange || (() => {})} />
+      
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">My Inspections</h1>
