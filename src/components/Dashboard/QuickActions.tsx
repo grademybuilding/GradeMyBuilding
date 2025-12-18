@@ -7,6 +7,7 @@ interface QuickActionsProps {
 }
 
 const quickActions = [
+  // Row 1
   {
     id: 'new-inspection',
     title: 'New Inspection',
@@ -21,6 +22,7 @@ const quickActions = [
     icon: Search,
     variant: 'secondary' as const
   },
+  // Row 2
   {
     id: 'generate-report',
     title: 'Generate Report',
@@ -44,7 +46,7 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
         <CardTitle>Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
           {quickActions.map((action) => {
             const Icon = action.icon;
             const handleClick = action.id === 'new-inspection' 
