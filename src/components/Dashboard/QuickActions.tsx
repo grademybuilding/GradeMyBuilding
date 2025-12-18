@@ -47,11 +47,24 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
       </CardHeader>
       <CardContent className="pt-0">
         <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2">
-          {quickActions.map((action) => {
+        {quickActions.map((action) => {
             const Icon = action.icon;
-            const handleClick = action.id === 'new-inspection' 
-              ? () => onTabChange('new-inspection')
-              : () => console.log(`Clicked ${action.id}`);
+            const handleClick = () => {
+              switch (action.id) {
+                case 'new-inspection':
+                  onTabChange('new-inspection');
+                  break;
+                case 'search-property':
+                  onTabChange('properties');
+                  break;
+                case 'generate-report':
+                  onTabChange('reports');
+                  break;
+                case 'take-photo':
+                  onTabChange('photos');
+                  break;
+              }
+            };
               
             return (
               <Button
