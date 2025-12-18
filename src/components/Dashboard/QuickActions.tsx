@@ -40,7 +40,10 @@ const quickActions = [
 export function QuickActions({ onTabChange }: QuickActionsProps) {
   return (
     <Card className="shadow-card">
-      <CardContent className="pt-6">
+      <CardHeader className="pb-3">
+        <CardTitle>Quick Actions</CardTitle>
+      </CardHeader>
+      <CardContent className="pt-0">
         <div className="grid grid-cols-2 gap-3">
           {quickActions.map((action) => {
             const Icon = action.icon;
@@ -64,9 +67,6 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
           })}
         </div>
       </CardContent>
-      <CardHeader className="pt-0">
-        <CardTitle>Quick Actions</CardTitle>
-      </CardHeader>
     </Card>
   );
 }
