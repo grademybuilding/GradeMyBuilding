@@ -44,7 +44,7 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
         <CardTitle>Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="flex flex-wrap gap-2">
           {quickActions.map((action) => {
             const Icon = action.icon;
             const handleClick = action.id === 'new-inspection' 
@@ -55,13 +55,12 @@ export function QuickActions({ onTabChange }: QuickActionsProps) {
               <Button
                 key={action.id}
                 variant={action.variant}
-                className="h-auto p-4 flex flex-col items-center gap-2 text-center"
+                size="sm"
+                className="h-8 px-3 gap-1.5 text-xs font-medium"
                 onClick={handleClick}
               >
-                <Icon className="h-6 w-6" />
-                <div>
-                  <p className="font-medium text-sm">{action.title}</p>
-                </div>
+                <Icon className="h-3.5 w-3.5" />
+                {action.title}
               </Button>
             );
           })}
