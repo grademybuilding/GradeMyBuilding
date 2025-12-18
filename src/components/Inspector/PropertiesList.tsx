@@ -106,7 +106,7 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">My Properties</h1>
+          <h1 className="text-2xl font-bold">Properties Grade & History</h1>
           <p className="text-muted-foreground">Manage your property portfolio</p>
         </div>
         <Button className="gap-2">
