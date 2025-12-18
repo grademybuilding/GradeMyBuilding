@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { NewInspection } from "@/pages/NewInspection";
 import { Dashboard } from "@/pages/Dashboard";
 import InspectionsList from "@/components/Inspector/InspectionsList";
+import PropertiesList from "@/components/Inspector/PropertiesList";
 import TemplatesManager from "@/components/Inspector/TemplatesManager";
 import PhotoGallery from "@/components/Inspector/PhotoGallery";
 import InvoiceManager from "@/components/Inspector/InvoiceManager";
@@ -22,6 +22,8 @@ export default function InspectorDashboard({ activeTab, onTabChange }: Inspector
         return <NewInspection onBack={() => onTabChange('dashboard')} />;
       case 'inspections':
         return <InspectionsList onTabChange={onTabChange} />;
+      case 'properties':
+        return <PropertiesList onTabChange={onTabChange} />;
       case 'templates':
         return <TemplatesManager />;
       case 'photos':
