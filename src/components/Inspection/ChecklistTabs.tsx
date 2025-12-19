@@ -39,9 +39,9 @@ export function ChecklistTabs({
 
   return (
     <div className="w-full">
-      {/* Desktop/Tablet Horizontal Tabs */}
-      <ScrollArea className="w-full">
-        <div className="flex items-center gap-1 p-1 bg-muted/50 rounded-lg border border-border">
+      {/* Horizontal Scrollable Pill Tabs */}
+      <div className="overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-muted/30 rounded-lg min-w-max">
           {tabs.map((tab, index) => {
             const isCompleted = completedTabs.includes(tab.id);
             const isCurrent = tab.id === activeTab;
@@ -55,53 +55,39 @@ export function ChecklistTabs({
                 disabled={isLocked}
                 onClick={() => handleTabClick(tab.id, index)}
                 className={cn(
-                  "relative flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap min-w-fit",
+                  "relative flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap",
                   isCurrent && "bg-background text-foreground shadow-sm",
-                  isCompleted && !isCurrent && "text-foreground hover:bg-background/50",
-                  isLocked && "text-muted-foreground/50 cursor-not-allowed",
-                  !isLocked && !isCurrent && "hover:text-foreground",
+                  isCompleted && !isCurrent && "text-primary hover:bg-background/50",
+                  isLocked && "text-muted-foreground/40 cursor-not-allowed",
+                  !isLocked && !isCurrent && "hover:text-foreground hover:bg-background/30",
                   isClickable && !isCurrent && "cursor-pointer"
                 )}
               >
                 {/* Status Icon */}
                 <span
                   className={cn(
-                    "flex items-center justify-center w-5 h-5 rounded-full text-xs font-semibold shrink-0",
+                    "flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full text-[10px] sm:text-xs font-semibold shrink-0",
                     isCompleted && "bg-primary text-primary-foreground",
                     isCurrent && !isCompleted && "bg-primary/20 text-primary border border-primary",
                     isLocked && "bg-muted text-muted-foreground"
                   )}
                 >
                   {isCompleted ? (
-                    <Check className="h-3 w-3" />
+                    <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   ) : isLocked ? (
-                    <Lock className="h-3 w-3" />
+                    <Lock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                   ) : (
                     index + 1
                   )}
                 </span>
 
-                {/* Tab Label */}
-                <span className="hidden md:inline">{tab.label}</span>
-                <span className="md:hidden">{tab.label.length > 12 ? tab.label.slice(0, 10) + '...' : tab.label}</span>
-
-                {/* Active Indicator */}
-                {isCurrent && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full" />
-                )}
+                {/* Tab Label - Full text, no truncation */}
+                <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
-        <ScrollBar orientation="horizontal" className="h-2" />
-      </ScrollArea>
-
-      {/* Mobile: Vertical Stack Option (for many tabs) */}
-      {tabs.length > 4 && (
-        <div className="sm:hidden mt-2 text-xs text-muted-foreground text-center">
-          Scroll horizontally to see all sections →
-        </div>
-      )}
+      </div>
     </div>
   );
 }

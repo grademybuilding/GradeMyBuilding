@@ -4,7 +4,7 @@ import { PropertyInfo } from "@/components/Inspection/PropertyInfo";
 import { InspectionDetails } from "@/components/Inspection/InspectionDetails";
 import { ChecklistSection } from "@/components/Inspection/ChecklistSectionNew";
 import { StepProgress } from "@/components/Inspection/StepProgress";
-import { ArrowLeft, Save, Camera, FileText } from "lucide-react";
+import { ArrowLeft, Save, Camera, FileText, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface NewInspectionProps {
@@ -81,66 +81,81 @@ export function NewInspection({ onBack }: NewInspectionProps) {
   };
 
   return (
-    <div className="p-4 space-y-6 animate-fade-in max-w-5xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" onClick={onBack} className="p-2">
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">New Inspection</h1>
-          <p className="text-muted-foreground">Create a comprehensive building inspection</p>
+    <div className="min-h-screen flex flex-col animate-fade-in">
+      {/* Mobile Compact Header - Sticky */}
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Button variant="ghost" onClick={onBack} size="sm" className="p-1.5 sm:p-2 h-8 w-8 sm:h-9 sm:w-9">
+              <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Button>
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-xl font-semibold text-foreground truncate">
+                New Inspection
+              </h1>
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Create a comprehensive building inspection
+              </p>
+            </div>
+          </div>
+          
+          {/* Mobile quick actions */}
+          <div className="flex items-center gap-1">
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <Camera className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" onClick={handleSave} className="h-8 w-8 p-0">
+              <Save className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Compact Step Progress - Sticky below header */}
+        <div className="px-3 py-2 sm:px-4 sm:py-3 bg-card/50 border-t border-border/50">
+          <StepProgress
+            steps={steps}
+            currentStep={currentStep}
+            completedSteps={completedSteps}
+            onStepClick={handleStepClick}
+            allowNavigation={true}
+          />
         </div>
       </div>
 
-      {/* Step Progress - Horizontal Stepper */}
-      <div className="bg-card p-4 sm:p-6 rounded-lg shadow-card border border-border">
-        <StepProgress
-          steps={steps}
-          currentStep={currentStep}
-          completedSteps={completedSteps}
-          onStepClick={handleStepClick}
-          allowNavigation={true}
-        />
-      </div>
-
-      {/* Current Step Content */}
-      <div className="min-h-[400px]">
-        {renderStepContent()}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-border sticky bottom-0 bg-background pb-4">
-        <div className="flex gap-2 flex-1">
-          {currentStep > 0 && (
-            <Button variant="outline" onClick={handlePrev} className="flex-1 sm:flex-none">
-              Previous
-            </Button>
-          )}
-          {currentStep < steps.length - 1 ? (
-            <Button onClick={handleNext} className="flex-1">
-              Next Step
-            </Button>
-          ) : null}
+      {/* Main Content - Flexible height with proper spacing */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-5xl mx-auto px-3 py-3 sm:px-4 sm:py-4 pb-32 sm:pb-24">
+          {renderStepContent()}
         </div>
-        
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleSave} className="flex-1 sm:flex-none">
-            <Save className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Save Draft</span>
-            <span className="sm:hidden">Save</span>
+      </div>
+
+      {/* Floating Action Bar - Fixed at bottom, respects safe areas */}
+      <div className="fixed bottom-16 sm:bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-sm border-t border-border p-3 sm:p-4 safe-area-bottom">
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-2">
+          <Button
+            variant="outline"
+            onClick={handlePrev}
+            disabled={currentStep === 0}
+            size="sm"
+            className="h-9 px-3 sm:px-4"
+          >
+            <ArrowLeft className="h-4 w-4 sm:mr-2" />
+            <span className="hidden sm:inline">Previous</span>
           </Button>
-          <Button variant="secondary" className="flex-1 sm:flex-none">
-            <Camera className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Add Photos</span>
-            <span className="sm:hidden">Photos</span>
-          </Button>
-          {currentStep === steps.length - 1 && (
-            <Button onClick={handleSubmit} className="flex-1 sm:flex-none">
-              <FileText className="h-4 w-4 mr-2" />
-              Submit
-            </Button>
-          )}
+
+          <div className="flex items-center gap-2">
+            {currentStep < steps.length - 1 ? (
+              <Button onClick={handleNext} size="sm" className="h-9 px-4 sm:px-6">
+                Next
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit} size="sm" className="h-9 px-4 sm:px-6">
+                <FileText className="h-4 w-4 mr-2" />
+                Submit
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
