@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChecklistTabs } from "./ChecklistTabs";
@@ -35,6 +35,11 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;
+
+  // Auto scroll to top when category or subcategory changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeMainCategory, activeSubcategory]);
 
   // Generate tabs for current category
   const currentTabs = useMemo(() => {
@@ -114,10 +119,10 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      {/* Main Category Navigation - Scrollable horizontal tabs */}
-      <div className="py-2 sm:py-3">
-        <div className="overflow-x-auto scrollbar-none -mx-3 px-3 sm:-mx-4 sm:px-4">
+    <div className="space-y-4 sm:space-y-6">
+      {/* Main Category Navigation - Scrollable horizontal tabs with clear separation */}
+      <div className="bg-muted/30 rounded-lg p-2 sm:p-3 border border-border/50">
+        <div className="overflow-x-auto scrollbar-none -mx-1 px-1">
           <div className="flex items-center gap-2 sm:gap-2.5 min-w-max">
             {inspectionCategories.map((category, index) => {
               const isCompleted = completedCategories.includes(index);
@@ -131,11 +136,11 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   disabled={!isAccessible}
                   onClick={() => handleCategoryChange(index)}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all",
+                    "flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all",
                     isCurrent && "bg-primary text-primary-foreground shadow-md",
                     isCompleted && !isCurrent && "bg-primary/15 text-primary hover:bg-primary/25",
-                    !isCompleted && !isCurrent && isAccessible && "bg-muted text-muted-foreground hover:bg-muted/80",
-                    !isAccessible && "bg-muted/50 text-muted-foreground/40 cursor-not-allowed"
+                    !isCompleted && !isCurrent && isAccessible && "bg-background text-muted-foreground hover:bg-background/80",
+                    !isAccessible && "bg-background/50 text-muted-foreground/40 cursor-not-allowed"
                   )}
                 >
                   {isCompleted && (
@@ -145,7 +150,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   {!isCompleted && (
                     <span className={cn(
                       "w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0",
-                      isCurrent ? "bg-primary-foreground/20" : "bg-background"
+                      isCurrent ? "bg-primary-foreground/20" : "bg-muted"
                     )}>
                       {index + 1}
                     </span>
@@ -159,9 +164,9 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </div>
       </div>
 
-      {/* Sub-category Tabs (if applicable) - Scrollable */}
+      {/* Sub-category Tabs (if applicable) - Clear visual hierarchy */}
       {hasSubcategories && (
-        <div className="pb-3 sm:pb-4">
+        <div className="pt-1">
           <ChecklistTabs
             tabs={currentTabs}
             activeTab={currentTabs[activeSubcategory]?.id || ''}
@@ -173,21 +178,21 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
       )}
 
       {/* Content Area - Maximum vertical space */}
-      <Card className="shadow-sm border-border/50">
-        <CardHeader className="p-2 sm:p-4 pb-1.5 sm:pb-3">
-          <CardTitle className="flex items-center gap-1.5 text-xs sm:text-base font-medium">
-            <CheckCircle className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary shrink-0" />
+      <Card className="shadow-sm border-border">
+        <CardHeader className="p-3 sm:p-4 pb-2 sm:pb-3 border-b border-border/50">
+          <CardTitle className="flex items-center gap-2 text-sm sm:text-base font-medium">
+            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
             <span className="truncate">
               {currentCategory.label}
               {hasSubcategories && currentTabs[activeSubcategory] && (
-                <span className="text-muted-foreground font-normal text-[10px] sm:text-sm">
-                  {' → '}{currentTabs[activeSubcategory].label}
+                <span className="text-muted-foreground font-normal text-xs sm:text-sm ml-1">
+                  → {currentTabs[activeSubcategory].label}
                 </span>
               )}
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2 sm:p-4 pt-0">
+        <CardContent className="p-3 sm:p-4">
           <ChecklistCategoryContent
             categoryId={currentCategory.id}
             subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
@@ -197,8 +202,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </CardContent>
       </Card>
 
-      {/* Navigation Buttons - Inside scroll area */}
-      <div className="flex items-center justify-between py-4 sm:py-6 mt-4 border-t border-border/50">
+      {/* Navigation Buttons - Inside scroll area with clear separation */}
+      <div className="flex items-center justify-between py-4 sm:py-5 mt-2 border-t border-border">
         <Button
           type="button"
           variant="outline"
@@ -211,7 +216,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           <span>Previous</span>
         </Button>
 
-        <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full">
+        <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
           <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
           {hasSubcategories && (
             <>
