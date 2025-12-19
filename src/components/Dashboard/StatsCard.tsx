@@ -19,20 +19,20 @@ export function StatsCard({
   variant = 'default'
 }: StatsCardProps) {
   return <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-elevated">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-emerald-200">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 sm:pb-2 px-3 sm:px-6 pt-3 sm:pt-6 bg-emerald-200">
+        <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
-        <Icon className={cn("h-5 w-5", variant === 'accent' && "text-accent", variant === 'success' && "text-emerald-600", variant === 'default' && "text-primary")} />
+        <Icon className={cn("h-4 w-4 sm:h-5 sm:w-5", variant === 'accent' && "text-accent", variant === 'success' && "text-emerald-600", variant === 'default' && "text-primary")} />
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">{value}</div>
+      <CardContent className="px-3 sm:px-6 pb-3 sm:pb-6">
+        <div className="text-lg sm:text-2xl font-bold">{value}</div>
         {trend && <p className="text-xs text-muted-foreground mt-1">
             <span className={cn("font-medium", trend.value > 0 ? "text-emerald-600" : "text-red-600")}>
               {trend.value > 0 ? '+' : ''}{trend.value}%
             </span>
             {' '}
-            {trend.label}
+            <span className="hidden sm:inline">{trend.label}</span>
           </p>}
       </CardContent>
     </Card>;

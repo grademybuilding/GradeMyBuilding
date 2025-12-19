@@ -54,28 +54,28 @@ export function RecentInspections() {
 
   return (
     <Card className="shadow-card">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-primary" />
+      <CardHeader className="pb-3 sm:pb-4">
+        <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+          <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
           Recent Inspections
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="pt-0">
+        <div className="space-y-3 sm:space-y-4">
           {mockInspections.map((inspection) => (
             <div
               key={inspection.id}
-              className="flex items-center justify-between p-4 border border-border rounded-lg hover:shadow-card transition-shadow"
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 p-3 sm:p-4 border border-border rounded-lg hover:shadow-card transition-shadow"
             >
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                  <p className="font-medium text-sm truncate">
+                <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                  <p className="font-medium text-xs sm:text-sm truncate">
                     {inspection.propertyAddress}
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className={getStatusColor(inspection.status)}>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <Badge variant="outline" className={`${getStatusColor(inspection.status)} text-xs`}>
                     {inspection.status.replace('-', ' ')}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
@@ -88,8 +88,8 @@ export function RecentInspections() {
                   )}
                 </div>
               </div>
-              <Button variant="ghost" size="sm">
-                <Eye className="h-4 w-4" />
+              <Button variant="ghost" size="sm" className="self-end sm:self-auto">
+                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
               </Button>
             </div>
           ))}
