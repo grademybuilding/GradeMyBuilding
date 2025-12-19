@@ -93,40 +93,44 @@ export function StepProgress({
         })}
       </div>
 
-      {/* Mobile Compact Stepper - Minimal height pill style */}
+      {/* Mobile Horizontal Scrollable Stepper */}
       <div className="sm:hidden">
-        <div className="flex items-center gap-1">
-          {steps.map((step, index) => {
-            const isCompleted = completedSteps.includes(index);
-            const isCurrent = index === currentStep;
-            const isClickable = allowNavigation && (isCompleted || isCurrent);
+        <div className="overflow-x-auto scrollbar-none -mx-1">
+          <div className="flex items-center gap-2 px-1 min-w-max">
+            {steps.map((step, index) => {
+              const isCompleted = completedSteps.includes(index);
+              const isCurrent = index === currentStep;
+              const isClickable = allowNavigation && (isCompleted || isCurrent);
 
-            return (
-              <button
-                key={step.id}
-                type="button"
-                disabled={!isClickable}
-                onClick={() => handleStepClick(index)}
-                className={cn(
-                  "flex-1 flex items-center justify-center gap-1 py-1 px-1.5 rounded-md text-[11px] font-medium transition-all",
-                  isCurrent && "bg-primary text-primary-foreground",
-                  isCompleted && !isCurrent && "bg-primary/20 text-primary",
-                  !isCompleted && !isCurrent && "bg-muted/60 text-muted-foreground/60",
-                  isClickable && "cursor-pointer"
-                )}
-              >
-                {/* Checkmark or number - compact */}
-                {isCompleted && !isCurrent ? (
-                  <Check className="h-3 w-3 shrink-0" />
-                ) : (
-                  <span className="w-3.5 h-3.5 rounded-full bg-background/20 flex items-center justify-center text-[9px] font-bold shrink-0">
-                    {index + 1}
-                  </span>
-                )}
-                <span className="truncate">{step.shortTitle || step.title}</span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={step.id}
+                  type="button"
+                  disabled={!isClickable}
+                  onClick={() => handleStepClick(index)}
+                  className={cn(
+                    "flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium transition-all whitespace-nowrap",
+                    isCurrent && "bg-primary text-primary-foreground shadow-sm",
+                    isCompleted && !isCurrent && "bg-primary/15 text-primary",
+                    !isCompleted && !isCurrent && "bg-muted text-muted-foreground/60",
+                    isClickable && "cursor-pointer"
+                  )}
+                >
+                  {isCompleted && !isCurrent ? (
+                    <Check className="h-3.5 w-3.5 shrink-0" />
+                  ) : (
+                    <span className={cn(
+                      "w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0",
+                      isCurrent ? "bg-primary-foreground/20" : "bg-background/60"
+                    )}>
+                      {index + 1}
+                    </span>
+                  )}
+                  <span>{step.title}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
