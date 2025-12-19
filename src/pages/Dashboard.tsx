@@ -5,16 +5,16 @@ import { Building, CheckCircle, Clock, AlertTriangle } from "lucide-react";
 
 export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void }) {
   return (
-    <div className="p-4 space-y-6 animate-fade-in">
+    <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">GradeMyBuilding- Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back, Inspector</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">GradeMyBuilding - Dashboard</h1>
+        <p className="text-sm text-muted-foreground">Welcome back, Inspector</p>
       </div>
 
       <QuickActions onTabChange={onTabChange || (() => {})} />
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <StatsCard
           title="Total Inspections"
           value="127"

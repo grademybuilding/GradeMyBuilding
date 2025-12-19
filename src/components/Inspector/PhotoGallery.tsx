@@ -104,25 +104,25 @@ const mockPhotos = [
 
 export default function PhotoGallery() {
   return (
-    <div className="p-4 space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Photo Gallery</h1>
-          <p className="text-muted-foreground">Inspection photos with auto-tagging</p>
+          <h1 className="text-xl sm:text-2xl font-bold">Photo Gallery</h1>
+          <p className="text-sm text-muted-foreground">Inspection photos with auto-tagging</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <Upload className="h-4 w-4 mr-2" />
-            Upload Photos
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="flex-1 sm:flex-initial text-xs sm:text-sm">
+            <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            Upload
           </Button>
-          <Button>
-            <Camera className="h-4 w-4 mr-2" />
-            Take Photo
+          <Button className="flex-1 sm:flex-initial text-xs sm:text-sm">
+            <Camera className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            Photo
           </Button>
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {mockPhotos.map((photo) => (
           <Card key={photo.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <div className="aspect-video relative">
@@ -132,10 +132,10 @@ export default function PhotoGallery() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <CardContent className="p-4 space-y-3">
+            <CardContent className="p-3 sm:p-4 space-y-2 sm:space-y-3">
               <div>
-                <h3 className="font-semibold">{photo.inspection}</h3>
-                <p className="text-sm text-muted-foreground">{photo.category}</p>
+                <h3 className="font-semibold text-sm sm:text-base truncate">{photo.inspection}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">{photo.category}</p>
               </div>
               <div className="flex flex-wrap gap-1">
                 {photo.tags.map((tag) => (
@@ -144,14 +144,14 @@ export default function PhotoGallery() {
                   </Badge>
                 ))}
               </div>
-              <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground">
                 <span>{new Date(photo.date).toLocaleDateString()}</span>
                 <div className="flex gap-1">
-                  <Button variant="ghost" size="sm">
-                    <Download className="h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0 sm:h-8 sm:w-8">
+                    <Download className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
-                  <Button variant="ghost" size="sm">
-                    <Trash2 className="h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0 sm:h-8 sm:w-8">
+                    <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
                 </div>
               </div>

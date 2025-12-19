@@ -100,19 +100,19 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
   };
 
   return (
-    <div className="p-4 space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+    <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Properties Grade & History</h1>
-          <p className="text-muted-foreground">Available for public search</p>
+          <h1 className="text-xl sm:text-2xl font-bold">Properties Grade & History</h1>
+          <p className="text-sm text-muted-foreground">Available for public search</p>
         </div>
-        <Button className="gap-2">
+        <Button className="gap-2 w-full sm:w-auto">
           <Plus className="h-4 w-4" />
           Add Property
         </Button>
       </div>
 
-      <div className="relative max-w-md">
+      <div className="relative w-full sm:max-w-md">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input placeholder="Search properties..." className="pl-10" />
       </div>
@@ -121,57 +121,59 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
         {mockProperties.map((property) => (
           <Card key={property.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
-              <div className="flex items-start justify-between">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Home className="h-6 w-6 text-primary" />
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="p-2 sm:p-3 rounded-lg bg-primary/10 flex-shrink-0">
+                    <Home className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-lg">{property.address}</h3>
-                      <Badge variant={getPropertyTypeBadge(property.propertyType)}>
+                  <div className="space-y-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="font-semibold text-base sm:text-lg truncate">{property.address}</h3>
+                      <Badge variant={getPropertyTypeBadge(property.propertyType)} className="text-xs">
                         {property.propertyType}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-1 text-muted-foreground">
-                      <MapPin className="h-4 w-4" />
-                      <span>{property.city}, {property.state} {property.zipCode}</span>
+                    <div className="flex items-center gap-1 text-muted-foreground text-sm">
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span className="truncate">{property.city}, {property.state} {property.zipCode}</span>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2">
+                    <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground pt-1 sm:pt-2">
                       <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                         <span>Built {property.yearBuilt}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Building className="h-4 w-4" />
+                        <Building className="h-3 w-3 sm:h-4 sm:w-4" />
                         <span>{property.squareFootage.toLocaleString()} sq ft</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <FileText className="h-4 w-4" />
+                        <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
                         <span>{property.inspectionCount} inspections</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                   <Badge 
                     variant="default" 
-                    className="text-lg font-bold px-3 py-1"
+                    className="text-base sm:text-lg font-bold px-3 py-1 text-center"
                   >
                     Grade {property.lastGrade}
                   </Badge>
-                  <Button variant="outline" size="sm" className="gap-1">
-                    <Eye className="h-4 w-4" />
-                    View
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    className="gap-1"
-                    onClick={() => onTabChange?.('new-inspection')}
-                  >
-                    <FileText className="h-4 w-4" />
-                    New Inspection
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm" className="flex-1 sm:flex-initial gap-1 text-xs sm:text-sm">
+                      <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
+                      View
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      className="flex-1 sm:flex-initial gap-1 text-xs sm:text-sm"
+                      onClick={() => onTabChange?.('new-inspection')}
+                    >
+                      <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
+                      New Inspection
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CardContent>
