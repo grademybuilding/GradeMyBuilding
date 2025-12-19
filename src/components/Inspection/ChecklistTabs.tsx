@@ -39,9 +39,9 @@ export function ChecklistTabs({
 
   return (
     <div className="w-full">
-      {/* Horizontal Scrollable Pill Tabs */}
+      {/* Compact Horizontal Scrollable Tabs */}
       <div className="overflow-x-auto scrollbar-none">
-        <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-muted/30 rounded-lg min-w-max">
+        <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-muted/40 rounded-md min-w-max">
           {tabs.map((tab, index) => {
             const isCompleted = completedTabs.includes(tab.id);
             const isCurrent = tab.id === activeTab;
@@ -55,33 +55,33 @@ export function ChecklistTabs({
                 disabled={isLocked}
                 onClick={() => handleTabClick(tab.id, index)}
                 className={cn(
-                  "relative flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded-md transition-all duration-200 whitespace-nowrap",
+                  "relative flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-medium rounded transition-all whitespace-nowrap",
                   isCurrent && "bg-background text-foreground shadow-sm",
                   isCompleted && !isCurrent && "text-primary hover:bg-background/50",
                   isLocked && "text-muted-foreground/40 cursor-not-allowed",
-                  !isLocked && !isCurrent && "hover:text-foreground hover:bg-background/30",
+                  !isLocked && !isCurrent && "hover:bg-background/30",
                   isClickable && !isCurrent && "cursor-pointer"
                 )}
               >
-                {/* Status Icon */}
+                {/* Compact Status Icon */}
                 <span
                   className={cn(
-                    "flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 rounded-full text-[10px] sm:text-xs font-semibold shrink-0",
+                    "flex items-center justify-center w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full text-[9px] sm:text-[10px] font-semibold shrink-0",
                     isCompleted && "bg-primary text-primary-foreground",
                     isCurrent && !isCompleted && "bg-primary/20 text-primary border border-primary",
                     isLocked && "bg-muted text-muted-foreground"
                   )}
                 >
                   {isCompleted ? (
-                    <Check className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                    <Check className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
                   ) : isLocked ? (
-                    <Lock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                    <Lock className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
                   ) : (
                     index + 1
                   )}
                 </span>
 
-                {/* Tab Label - Full text, no truncation */}
+                {/* Tab Label */}
                 <span>{tab.label}</span>
               </button>
             );

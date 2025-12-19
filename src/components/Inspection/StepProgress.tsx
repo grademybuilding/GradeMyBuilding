@@ -93,9 +93,9 @@ export function StepProgress({
         })}
       </div>
 
-      {/* Mobile Compact Stepper - Chip/Pill Style */}
+      {/* Mobile Compact Stepper - Minimal height pill style */}
       <div className="sm:hidden">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-1">
           {steps.map((step, index) => {
             const isCompleted = completedSteps.includes(index);
             const isCurrent = index === currentStep;
@@ -108,26 +108,21 @@ export function StepProgress({
                 disabled={!isClickable}
                 onClick={() => handleStepClick(index)}
                 className={cn(
-                  "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-full text-xs font-medium transition-all",
-                  isCurrent && "bg-primary text-primary-foreground shadow-md",
-                  isCompleted && !isCurrent && "bg-primary/15 text-primary",
-                  !isCompleted && !isCurrent && "bg-muted text-muted-foreground",
+                  "flex-1 flex items-center justify-center gap-1 py-1 px-1.5 rounded-md text-[11px] font-medium transition-all",
+                  isCurrent && "bg-primary text-primary-foreground",
+                  isCompleted && !isCurrent && "bg-primary/20 text-primary",
+                  !isCompleted && !isCurrent && "bg-muted/60 text-muted-foreground/60",
                   isClickable && "cursor-pointer"
                 )}
               >
-                {/* Checkmark for completed */}
-                {isCompleted && !isCurrent && (
+                {/* Checkmark or number - compact */}
+                {isCompleted && !isCurrent ? (
                   <Check className="h-3 w-3 shrink-0" />
-                )}
-                
-                {/* Step number for current/upcoming */}
-                {!isCompleted && (
-                  <span className="w-4 h-4 rounded-full bg-background/20 flex items-center justify-center text-[10px] font-bold shrink-0">
+                ) : (
+                  <span className="w-3.5 h-3.5 rounded-full bg-background/20 flex items-center justify-center text-[9px] font-bold shrink-0">
                     {index + 1}
                   </span>
                 )}
-                
-                {/* Step name - always visible */}
                 <span className="truncate">{step.shortTitle || step.title}</span>
               </button>
             );

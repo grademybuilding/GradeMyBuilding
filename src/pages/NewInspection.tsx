@@ -82,36 +82,32 @@ export function NewInspection({ onBack }: NewInspectionProps) {
 
   return (
     <div className="min-h-screen flex flex-col animate-fade-in">
-      {/* Mobile Compact Header - Sticky */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <Button variant="ghost" onClick={onBack} size="sm" className="p-1.5 sm:p-2 h-8 w-8 sm:h-9 sm:w-9">
-              <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+      {/* Ultra-Compact Header - Minimal height on mobile */}
+      <div className="sticky top-0 z-40 bg-background border-b border-border">
+        {/* Mobile: Single-line header */}
+        <div className="flex items-center justify-between px-2 py-1.5 sm:px-4 sm:py-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
+            <Button variant="ghost" onClick={onBack} size="sm" className="p-1 h-7 w-7 sm:h-9 sm:w-9 shrink-0">
+              <ArrowLeft className="h-4 w-4" />
             </Button>
-            <div className="min-w-0">
-              <h1 className="text-base sm:text-xl font-semibold text-foreground truncate">
-                New Inspection
-              </h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">
-                Create a comprehensive building inspection
-              </p>
-            </div>
+            <h1 className="text-sm sm:text-xl font-semibold text-foreground truncate">
+              New Inspection
+            </h1>
           </div>
           
-          {/* Mobile quick actions */}
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-              <Camera className="h-4 w-4" />
+          {/* Mobile quick actions - smaller */}
+          <div className="flex items-center gap-0.5 shrink-0">
+            <Button variant="ghost" size="sm" className="h-7 w-7 p-0 sm:h-8 sm:w-8">
+              <Camera className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Button>
-            <Button variant="ghost" size="sm" onClick={handleSave} className="h-8 w-8 p-0">
-              <Save className="h-4 w-4" />
+            <Button variant="ghost" size="sm" onClick={handleSave} className="h-7 w-7 p-0 sm:h-8 sm:w-8">
+              <Save className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </div>
 
-        {/* Compact Step Progress - Sticky below header */}
-        <div className="px-3 py-2 sm:px-4 sm:py-3 bg-card/50 border-t border-border/50">
+        {/* Compact Step Progress - Integrated with header */}
+        <div className="px-2 py-1.5 sm:px-4 sm:py-2 bg-muted/30">
           <StepProgress
             steps={steps}
             currentStep={currentStep}
@@ -122,9 +118,9 @@ export function NewInspection({ onBack }: NewInspectionProps) {
         </div>
       </div>
 
-      {/* Main Content - Flexible height with proper spacing */}
+      {/* Main Content - Maximize vertical space */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-5xl mx-auto px-3 py-3 sm:px-4 sm:py-4 pb-32 sm:pb-24">
+        <div className="max-w-5xl mx-auto px-2 py-2 sm:px-4 sm:py-4 pb-28 sm:pb-24">
           {renderStepContent()}
         </div>
       </div>
