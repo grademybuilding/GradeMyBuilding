@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
+import { useState, useEffect, useRef, useCallback, createContext } from "react";
 import { Button } from "@/components/ui/button";
 import { PropertyInfo } from "@/components/Inspection/PropertyInfo";
 import { InspectionDetails } from "@/components/Inspection/InspectionDetails";
@@ -27,19 +27,30 @@ export function NewInspection({ onBack }: NewInspectionProps) {
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
 
-  // Unified scroll-to-top function
+  const getScrollParent = useCallback((node: HTMLElement | null) => {
+    let current: HTMLElement | null = node;
+    while (current) {
+      const style = window.getComputedStyle(current);
+      const overflowY = style.overflowY;
+      const isScrollable = (overflowY === "auto" || overflowY === "scroll") && current.scrollHeight > current.clientHeight;
+      if (isScrollable) return current;
+      current = current.parentElement;
+    }
+    return null;
+  }, []);
+
+  // Unified scroll-to-top function (works with nested scroll containers)
   const scrollToTop = useCallback(() => {
     requestAnimationFrame(() => {
-      // Scroll the content container (main scrollable area)
-      if (contentRef.current) {
-        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      // Also scroll window in case it's the main scroller
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
+      const scrollParent = getScrollParent(contentRef.current);
+      // 1) Scroll the actual scroll container (often the <main> in Index.tsx)
+      scrollParent?.scrollTo({ top: 0, behavior: "smooth" });
+      // 2) Also scroll our local container if it is the scroller
+      contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      // 3) Fallback to window
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-  }, []);
+  }, [getScrollParent]);
 
   // Auto scroll to top when main step changes
   useEffect(() => {
