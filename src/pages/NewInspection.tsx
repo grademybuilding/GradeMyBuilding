@@ -108,7 +108,7 @@ export function NewInspection({ onBack }: NewInspectionProps) {
       case 2:
         return (
           <ScrollContext.Provider value={scrollToTop}>
-            <ChecklistSection formData={formData} onChange={handleFieldChange} />
+            <ChecklistSection formData={formData} onChange={handleFieldChange} onSubmit={handleSubmit} />
           </ScrollContext.Provider>
         );
       default:
@@ -164,62 +164,52 @@ export function NewInspection({ onBack }: NewInspectionProps) {
           {renderStepContent()}
 
           {/* Navigation Buttons - Inside scroll area for mobile */}
-          <div className="sm:hidden mt-6 flex items-center justify-between gap-3 pt-4 border-t border-border/50">
+          {currentStep !== 2 && (
+            <div className="sm:hidden mt-6 flex items-center justify-between gap-3 pt-4 border-t border-border/50">
+              <Button
+                variant="outline"
+                onClick={handlePrev}
+                disabled={currentStep === 0}
+                size="sm"
+                className="h-10 px-4 flex-1"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                Previous
+              </Button>
+
+              <Button onClick={handleNext} size="sm" className="h-10 px-4 flex-1">
+                Next
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Desktop/Tablet Fixed Action Bar */}
+      {currentStep !== 2 && (
+        <div className="hidden sm:block fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-sm border-t border-border">
+          <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
             <Button
               variant="outline"
               onClick={handlePrev}
               disabled={currentStep === 0}
               size="sm"
-              className="h-10 px-4 flex-1"
+              className="h-9 px-4"
             >
-              <ArrowLeft className="h-4 w-4 mr-1" />
+              <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
 
-            {currentStep < steps.length - 1 ? (
-              <Button onClick={handleNext} size="sm" className="h-10 px-4 flex-1">
-                Next
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            ) : (
-              <Button onClick={handleSubmit} size="sm" className="h-10 px-4 flex-1">
-                <FileText className="h-4 w-4 mr-1" />
-                Submit
-              </Button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop/Tablet Fixed Action Bar */}
-      <div className="hidden sm:block fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-sm border-t border-border">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
-          <Button
-            variant="outline"
-            onClick={handlePrev}
-            disabled={currentStep === 0}
-            size="sm"
-            className="h-9 px-4"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Previous
-          </Button>
-
-          <div className="flex items-center gap-2">
-            {currentStep < steps.length - 1 ? (
+            <div className="flex items-center gap-2">
               <Button onClick={handleNext} size="sm" className="h-9 px-6">
                 Next
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Button>
-            ) : (
-              <Button onClick={handleSubmit} size="sm" className="h-9 px-6">
-                <FileText className="h-4 w-4 mr-2" />
-                Submit
-              </Button>
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

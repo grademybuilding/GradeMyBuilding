@@ -25,9 +25,10 @@ const inspectionCategories = [
 interface ChecklistSectionProps {
   formData: any;
   onChange: (field: string, value: any) => void;
+  onSubmit?: () => void;
 }
 
-export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) {
+export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSectionProps) {
   // Get scroll function from context
   const scrollToTop = useContext(ScrollContext);
   
@@ -331,7 +332,9 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           {/* Primary action: Next or Submit (never both) */}
           {isFinalScreen ? (
             <Button
-              type="submit"
+              type="button"
+              onClick={onSubmit}
+              disabled={!onSubmit}
               size="sm"
               className="h-10 px-4 sm:h-11 sm:px-6 bg-primary hover:bg-primary/90"
             >
