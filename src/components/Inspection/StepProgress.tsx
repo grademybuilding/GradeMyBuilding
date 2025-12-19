@@ -93,49 +93,42 @@ export function StepProgress({
         })}
       </div>
 
-      {/* Mobile Compact Stepper */}
+      {/* Mobile Compact Stepper - Chip/Pill Style */}
       <div className="sm:hidden">
-        {/* Current Step Indicator */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-foreground">
-            Step {currentStep + 1} of {steps.length}
-          </span>
-          <span className="text-sm text-primary font-semibold">
-            {steps[currentStep]?.title}
-          </span>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary transition-all duration-500 rounded-full"
-            style={{ 
-              width: `${((currentStep + 1) / steps.length) * 100}%` 
-            }}
-          />
-        </div>
-
-        {/* Step Dots */}
-        <div className="flex justify-between mt-2 px-1">
+        <div className="flex items-center justify-between gap-2">
           {steps.map((step, index) => {
             const isCompleted = completedSteps.includes(index);
             const isCurrent = index === currentStep;
+            const isClickable = allowNavigation && (isCompleted || isCurrent);
 
             return (
               <button
                 key={step.id}
                 type="button"
-                disabled={!allowNavigation || (!isCompleted && !isCurrent)}
+                disabled={!isClickable}
                 onClick={() => handleStepClick(index)}
                 className={cn(
-                  "w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-all",
-                  isCompleted && "bg-primary text-primary-foreground",
-                  isCurrent && "bg-primary text-primary-foreground ring-2 ring-primary/30",
+                  "flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-full text-xs font-medium transition-all",
+                  isCurrent && "bg-primary text-primary-foreground shadow-md",
+                  isCompleted && !isCurrent && "bg-primary/15 text-primary",
                   !isCompleted && !isCurrent && "bg-muted text-muted-foreground",
-                  allowNavigation && (isCompleted || isCurrent) && "cursor-pointer hover:scale-110"
+                  isClickable && "cursor-pointer"
                 )}
               >
-                {isCompleted ? <Check className="h-3 w-3" /> : index + 1}
+                {/* Checkmark for completed */}
+                {isCompleted && !isCurrent && (
+                  <Check className="h-3 w-3 shrink-0" />
+                )}
+                
+                {/* Step number for current/upcoming */}
+                {!isCompleted && (
+                  <span className="w-4 h-4 rounded-full bg-background/20 flex items-center justify-center text-[10px] font-bold shrink-0">
+                    {index + 1}
+                  </span>
+                )}
+                
+                {/* Step name - always visible */}
+                <span className="truncate">{step.shortTitle || step.title}</span>
               </button>
             );
           })}
