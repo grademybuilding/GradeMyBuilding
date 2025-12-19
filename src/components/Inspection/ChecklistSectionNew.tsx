@@ -61,7 +61,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     return completedSubcategories[activeMainCategory] || [];
   }, [completedSubcategories, activeMainCategory]);
 
-  // Handle tab completion and auto-advance
+  // Handle tab completion and auto-advance (Next button)
   const handleCompleteSubcategory = useCallback(() => {
     const currentTabId = currentTabs[activeSubcategory]?.id;
     
@@ -78,6 +78,20 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
     } else {
       // All tabs completed, mark category as complete and move to next
       setCompletedCategories(prev => [...prev, activeMainCategory]);
+      if (activeMainCategory < inspectionCategories.length - 1) {
+        setActiveMainCategory(activeMainCategory + 1);
+        setActiveSubcategory(0);
+      }
+    }
+  }, [activeSubcategory, activeMainCategory, currentTabs]);
+
+  // Handle skip (moves to next without marking complete)
+  const handleSkipSubcategory = useCallback(() => {
+    if (activeSubcategory < currentTabs.length - 1) {
+      // Move to next tab without marking complete
+      setActiveSubcategory(activeSubcategory + 1);
+    } else {
+      // Move to next category without marking complete
       if (activeMainCategory < inspectionCategories.length - 1) {
         setActiveMainCategory(activeMainCategory + 1);
         setActiveSubcategory(0);
@@ -121,6 +135,8 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const canGoPrevious = activeMainCategory > 0 || activeSubcategory > 0;
   const isLastTab = activeSubcategory === currentTabs.length - 1;
   const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
+  const isFinalScreen = isLastTab && isLastCategory;
+  const canSkip = !isFinalScreen; // Can skip unless on final screen
 
   return (
     <div className="space-y-4 sm:space-y-6 lg:space-y-8">
@@ -286,25 +302,53 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
             <span>Previous</span>
           </Button>
 
-          <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
-            <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
-            {hasSubcategories && (
-              <>
-                <span className="text-muted-foreground/50">•</span>
-                <span>{activeSubcategory + 1}/{currentTabs.length}</span>
-              </>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Progress indicator */}
+            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+              <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
+              {hasSubcategories && (
+                <>
+                  <span className="text-muted-foreground/50">•</span>
+                  <span>{activeSubcategory + 1}/{currentTabs.length}</span>
+                </>
+              )}
+            </div>
+
+            {/* Skip button - only show when not on final screen */}
+            {canSkip && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={handleSkipSubcategory}
+                size="sm"
+                className="h-10 px-3 sm:px-4 text-muted-foreground hover:text-foreground"
+              >
+                <span>Skip</span>
+              </Button>
             )}
           </div>
 
-          <Button
-            type="button"
-            onClick={handleCompleteSubcategory}
-            size="sm"
-            className="h-10 px-4 sm:h-11 sm:px-6"
-          >
-            <span>{isLastTab && isLastCategory ? 'Complete' : 'Next'}</span>
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
+          {/* Primary action: Next or Submit (never both) */}
+          {isFinalScreen ? (
+            <Button
+              type="submit"
+              size="sm"
+              className="h-10 px-4 sm:h-11 sm:px-6 bg-primary hover:bg-primary/90"
+            >
+              <span>Submit</span>
+              <CheckCircle className="h-4 w-4 ml-1" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              onClick={handleCompleteSubcategory}
+              size="sm"
+              className="h-10 px-4 sm:h-11 sm:px-6"
+            >
+              <span>Next</span>
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          )}
         </div>
       </div>
     </div>
