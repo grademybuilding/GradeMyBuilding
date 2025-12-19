@@ -1,6 +1,6 @@
+import { useEffect, useMemo, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Check, Lock, MinusCircle } from "lucide-react";
-
 interface Tab {
   id: string;
   label: string;
@@ -26,6 +26,18 @@ export function ChecklistTabs({
   const doneTabsSet = new Set([...completedTabs, ...skippedTabs]);
   const doneCount = tabs.filter((t) => doneTabsSet.has(t.id)).length;
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const orderedTabIds = useMemo(() => tabs.map((t) => t.id), [tabs]);
+
+  // Keep the active tab fully visible on scrollable layouts
+  useEffect(() => {
+    const el = buttonRefs.current[activeTab];
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [activeTab, orderedTabIds]);
+
   const handleTabClick = (tabId: string, index: number) => {
     if (!allowNavigation) return;
 
@@ -41,9 +53,12 @@ export function ChecklistTabs({
 
   return (
     <div className="w-full">
-      {/* Responsive Tabs: Wrap on desktop, scroll on mobile */}
-      <div className="overflow-x-auto scrollbar-none md:overflow-x-visible -mx-3 px-3 sm:-mx-4 sm:px-4">
-        <div className="flex items-center gap-2 min-w-max md:min-w-0 md:flex-wrap">
+      {/* Responsive Tabs: wrap on desktop, scroll on smaller screens */}
+      <div
+        ref={containerRef}
+        className="overflow-x-auto scrollbar-none md:overflow-x-visible -mx-3 px-3 sm:-mx-4 sm:px-4 md:mx-0 md:px-0 scroll-smooth"
+      >
+        <div className="flex items-center gap-2 min-w-max md:min-w-0 md:flex-wrap py-0.5">
           {tabs.map((tab, index) => {
             const isCompleted = completedTabs.includes(tab.id);
             const isSkipped = skippedTabs.includes(tab.id);
@@ -54,6 +69,9 @@ export function ChecklistTabs({
 
             return (
               <button
+                ref={(el) => {
+                  buttonRefs.current[tab.id] = el;
+                }}
                 key={tab.id}
                 type="button"
                 disabled={isLocked}
