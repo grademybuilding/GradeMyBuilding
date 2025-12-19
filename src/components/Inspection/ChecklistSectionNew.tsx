@@ -35,16 +35,18 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   // State for navigation
   const [activeMainCategory, setActiveMainCategory] = useState(0);
   const [activeSubcategory, setActiveSubcategory] = useState(0);
+  const [atSubmitScreen, setAtSubmitScreen] = useState(false);
   const [completedCategories, setCompletedCategories] = useState<number[]>([]);
   const [completedSubcategories, setCompletedSubcategories] = useState<Record<number, string[]>>({});
+  const [skippedSubcategories, setSkippedSubcategories] = useState<Record<number, string[]>>({});
 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;
 
-  // Auto scroll to top when category or subcategory changes
+  // Auto scroll to top when category/subcategory changes OR when entering submit screen
   useEffect(() => {
     scrollToTop();
-  }, [activeMainCategory, activeSubcategory, scrollToTop]);
+  }, [activeMainCategory, activeSubcategory, atSubmitScreen, scrollToTop]);
 
   // Generate tabs for current category
   const currentTabs = useMemo(() => {
@@ -57,53 +59,96 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     }));
   }, [currentCategory, hasSubcategories]);
 
-  // Get completed tabs for current category
+  // Get completed/skipped tabs for current category
   const currentCompletedTabs = useMemo(() => {
     return completedSubcategories[activeMainCategory] || [];
   }, [completedSubcategories, activeMainCategory]);
 
+  const currentSkippedTabs = useMemo(() => {
+    return skippedSubcategories[activeMainCategory] || [];
+  }, [skippedSubcategories, activeMainCategory]);
+
   // Handle tab completion and auto-advance (Next button)
   const handleCompleteSubcategory = useCallback(() => {
     const currentTabId = currentTabs[activeSubcategory]?.id;
-    
-    // Mark current tab as completed
-    setCompletedSubcategories(prev => ({
-      ...prev,
-      [activeMainCategory]: [...(prev[activeMainCategory] || []), currentTabId],
-    }));
+    const isLastTab = activeSubcategory === currentTabs.length - 1;
+    const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
+
+    // Mark current tab as completed (unique)
+    setCompletedSubcategories((prev) => {
+      const existing = prev[activeMainCategory] || [];
+      if (existing.includes(currentTabId)) return prev;
+      return {
+        ...prev,
+        [activeMainCategory]: [...existing, currentTabId],
+      };
+    });
+
+    // Final: move to submit screen (Submit must ONLY exist here)
+    if (isLastTab && isLastCategory) {
+      setAtSubmitScreen(true);
+      return;
+    }
+
+    // Leaving submit screen if any
+    setAtSubmitScreen(false);
 
     // Auto-advance to next tab or next category
-    if (activeSubcategory < currentTabs.length - 1) {
-      // Move to next tab
+    if (!isLastTab) {
       setActiveSubcategory(activeSubcategory + 1);
-    } else {
-      // All tabs completed, mark category as complete and move to next
-      setCompletedCategories(prev => [...prev, activeMainCategory]);
-      if (activeMainCategory < inspectionCategories.length - 1) {
-        setActiveMainCategory(activeMainCategory + 1);
-        setActiveSubcategory(0);
-      }
+      return;
+    }
+
+    // Category done → mark category as complete and move to next
+    setCompletedCategories((prev) => (prev.includes(activeMainCategory) ? prev : [...prev, activeMainCategory]));
+    if (activeMainCategory < inspectionCategories.length - 1) {
+      setActiveMainCategory(activeMainCategory + 1);
+      setActiveSubcategory(0);
     }
   }, [activeSubcategory, activeMainCategory, currentTabs]);
 
   // Handle skip (moves to next without marking complete)
   const handleSkipSubcategory = useCallback(() => {
-    if (activeSubcategory < currentTabs.length - 1) {
-      // Move to next tab without marking complete
+    const currentTabId = currentTabs[activeSubcategory]?.id;
+    const isLastTab = activeSubcategory === currentTabs.length - 1;
+    const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
+
+    // Mark current tab as skipped (unique)
+    setSkippedSubcategories((prev) => {
+      const existing = prev[activeMainCategory] || [];
+      if (existing.includes(currentTabId)) return prev;
+      return {
+        ...prev,
+        [activeMainCategory]: [...existing, currentTabId],
+      };
+    });
+
+    // Final: move to submit screen (skip never submits)
+    if (isLastTab && isLastCategory) {
+      setAtSubmitScreen(true);
+      return;
+    }
+
+    setAtSubmitScreen(false);
+
+    if (!isLastTab) {
       setActiveSubcategory(activeSubcategory + 1);
-    } else {
-      // Move to next category without marking complete
-      if (activeMainCategory < inspectionCategories.length - 1) {
-        setActiveMainCategory(activeMainCategory + 1);
-        setActiveSubcategory(0);
-      }
+      return;
+    }
+
+    // Leaving category → allow progress forward even when skipped
+    setCompletedCategories((prev) => (prev.includes(activeMainCategory) ? prev : [...prev, activeMainCategory]));
+    if (activeMainCategory < inspectionCategories.length - 1) {
+      setActiveMainCategory(activeMainCategory + 1);
+      setActiveSubcategory(0);
     }
   }, [activeSubcategory, activeMainCategory, currentTabs]);
 
   // Handle tab change
   const handleTabChange = useCallback((tabId: string) => {
-    const tabIndex = currentTabs.findIndex(t => t.id === tabId);
+    const tabIndex = currentTabs.findIndex((t) => t.id === tabId);
     if (tabIndex !== -1) {
+      setAtSubmitScreen(false);
       setActiveSubcategory(tabIndex);
     }
   }, [currentTabs]);
@@ -112,6 +157,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   const handleCategoryChange = useCallback((categoryIndex: number) => {
     // Can only navigate to completed categories or the next available one
     if (completedCategories.includes(categoryIndex) || categoryIndex <= completedCategories.length) {
+      setAtSubmitScreen(false);
       setActiveMainCategory(categoryIndex);
       setActiveSubcategory(0);
     }
@@ -119,25 +165,27 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
 
   // Navigation buttons
   const handlePrevious = useCallback(() => {
+    // If we're on the submit screen, go back to the last checklist screen first
+    if (atSubmitScreen) {
+      setAtSubmitScreen(false);
+      return;
+    }
+
     if (activeSubcategory > 0) {
       setActiveSubcategory(activeSubcategory - 1);
     } else if (activeMainCategory > 0) {
       const prevCategoryIndex = activeMainCategory - 1;
       const prevCategory = inspectionCategories[prevCategoryIndex];
       setActiveMainCategory(prevCategoryIndex);
-      setActiveSubcategory(
-        prevCategory.subcategories.length > 0 
-          ? prevCategory.subcategories.length - 1 
-          : 0
-      );
+      setActiveSubcategory(prevCategory.subcategories.length > 0 ? prevCategory.subcategories.length - 1 : 0);
     }
-  }, [activeSubcategory, activeMainCategory]);
+  }, [activeSubcategory, activeMainCategory, atSubmitScreen]);
 
-  const canGoPrevious = activeMainCategory > 0 || activeSubcategory > 0;
+  const canGoPrevious = activeMainCategory > 0 || activeSubcategory > 0 || atSubmitScreen;
   const isLastTab = activeSubcategory === currentTabs.length - 1;
   const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
-  const isFinalScreen = isLastTab && isLastCategory;
-  const canSkip = !isFinalScreen; // Can skip unless on final screen
+  const isFinalChecklistScreen = isLastTab && isLastCategory;
+  const canSkip = hasSubcategories && !atSubmitScreen;
 
   return (
     <div className="space-y-4 sm:space-y-6 lg:space-y-8">
@@ -253,8 +301,9 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
         <div className="max-w-4xl mx-auto">
           <ChecklistTabs
             tabs={currentTabs}
-            activeTab={currentTabs[activeSubcategory]?.id || ''}
+            activeTab={currentTabs[activeSubcategory]?.id || ""}
             completedTabs={currentCompletedTabs}
+            skippedTabs={currentSkippedTabs}
             onTabChange={handleTabChange}
             allowNavigation={true}
           />
@@ -274,16 +323,28 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                     → {currentTabs[activeSubcategory].label}
                   </span>
                 )}
+                {atSubmitScreen && (
+                  <span className="text-muted-foreground font-normal text-xs sm:text-sm lg:text-base ml-1 sm:ml-2">
+                    → Review & Submit
+                  </span>
+                )}
               </span>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-3 sm:p-4 lg:p-6">
-            <ChecklistCategoryContent
-              categoryId={currentCategory.id}
-              subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
-              formData={formData}
-              onChange={onChange}
-            />
+            {atSubmitScreen ? (
+              <div className="space-y-2">
+                <p className="text-sm text-foreground font-medium">Ready to submit your inspection.</p>
+                <p className="text-sm text-muted-foreground">You can still go back to review any sections before submitting.</p>
+              </div>
+            ) : (
+              <ChecklistCategoryContent
+                categoryId={currentCategory.id}
+                subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
+                formData={formData}
+                onChange={onChange}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
@@ -315,7 +376,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
               )}
             </div>
 
-            {/* Skip button - only show when not on final screen */}
+            {/* Skip button - only at sub-category level; never with Submit */}
             {canSkip && (
               <Button
                 type="button"
@@ -330,7 +391,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
           </div>
 
           {/* Primary action: Next or Submit (never both) */}
-          {isFinalScreen ? (
+          {atSubmitScreen ? (
             <Button
               type="button"
               onClick={onSubmit}
@@ -338,7 +399,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
               size="sm"
               className="h-10 px-4 sm:h-11 sm:px-6 bg-primary hover:bg-primary/90"
             >
-              <span>Submit</span>
+              <span>Submit Inspection</span>
               <CheckCircle className="h-4 w-4 ml-1" />
             </Button>
           ) : (
