@@ -39,9 +39,9 @@ export function ChecklistTabs({
 
   return (
     <div className="w-full">
-      {/* Compact Horizontal Scrollable Tabs */}
-      <div className="overflow-x-auto scrollbar-none">
-        <div className="flex items-center gap-1 p-0.5 sm:p-1 bg-muted/40 rounded-md min-w-max">
+      {/* Horizontal Scrollable Tabs */}
+      <div className="overflow-x-auto scrollbar-none -mx-3 px-3 sm:-mx-4 sm:px-4">
+        <div className="flex items-center gap-2 min-w-max">
           {tabs.map((tab, index) => {
             const isCompleted = completedTabs.includes(tab.id);
             const isCurrent = tab.id === activeTab;
@@ -55,33 +55,33 @@ export function ChecklistTabs({
                 disabled={isLocked}
                 onClick={() => handleTabClick(tab.id, index)}
                 className={cn(
-                  "relative flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 text-[11px] sm:text-xs font-medium rounded transition-all whitespace-nowrap",
-                  isCurrent && "bg-background text-foreground shadow-sm",
-                  isCompleted && !isCurrent && "text-primary hover:bg-background/50",
-                  isLocked && "text-muted-foreground/40 cursor-not-allowed",
-                  !isLocked && !isCurrent && "hover:bg-background/30",
+                  "relative flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all whitespace-nowrap border",
+                  isCurrent && "bg-background text-foreground shadow-sm border-border",
+                  isCompleted && !isCurrent && "bg-primary/10 text-primary border-primary/20 hover:bg-primary/15",
+                  isLocked && "bg-muted/30 text-muted-foreground/40 border-transparent cursor-not-allowed",
+                  !isLocked && !isCurrent && !isCompleted && "bg-muted/50 text-muted-foreground border-transparent hover:bg-muted",
                   isClickable && !isCurrent && "cursor-pointer"
                 )}
               >
-                {/* Compact Status Icon */}
+                {/* Status Icon */}
                 <span
                   className={cn(
-                    "flex items-center justify-center w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full text-[9px] sm:text-[10px] font-semibold shrink-0",
+                    "flex items-center justify-center w-5 h-5 sm:w-5 sm:h-5 rounded-full text-[10px] sm:text-xs font-semibold shrink-0",
                     isCompleted && "bg-primary text-primary-foreground",
-                    isCurrent && !isCompleted && "bg-primary/20 text-primary border border-primary",
-                    isLocked && "bg-muted text-muted-foreground"
+                    isCurrent && !isCompleted && "bg-primary/20 text-primary",
+                    isLocked && "bg-muted text-muted-foreground/50"
                   )}
                 >
                   {isCompleted ? (
-                    <Check className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
+                    <Check className="h-3 w-3" />
                   ) : isLocked ? (
-                    <Lock className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
+                    <Lock className="h-3 w-3" />
                   ) : (
                     index + 1
                   )}
                 </span>
 
-                {/* Tab Label */}
+                {/* Tab Label - Full text, no truncation */}
                 <span>{tab.label}</span>
               </button>
             );
