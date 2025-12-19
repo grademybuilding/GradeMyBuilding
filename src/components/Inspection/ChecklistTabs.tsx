@@ -41,9 +41,9 @@ export function ChecklistTabs({
 
   return (
     <div className="w-full">
-      {/* Horizontal Scrollable Tabs */}
-      <div className="overflow-x-auto scrollbar-none -mx-3 px-3 sm:-mx-4 sm:px-4">
-        <div className="flex items-center gap-2 min-w-max">
+      {/* Responsive Tabs: Wrap on desktop, scroll on mobile */}
+      <div className="overflow-x-auto scrollbar-none md:overflow-x-visible -mx-3 px-3 sm:-mx-4 sm:px-4">
+        <div className="flex items-center gap-2 min-w-max md:min-w-0 md:flex-wrap">
           {tabs.map((tab, index) => {
             const isCompleted = completedTabs.includes(tab.id);
             const isSkipped = skippedTabs.includes(tab.id);
