@@ -114,11 +114,11 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
 
   return (
-    <div className="space-y-3 sm:space-y-4">
-      {/* Main Category Navigation - Scrollable Chip Row */}
-      <div className="sticky top-0 z-20 -mx-3 px-3 sm:-mx-4 sm:px-4 py-2 bg-background/95 backdrop-blur-sm">
-        <div className="overflow-x-auto scrollbar-none -mx-3 px-3 sm:-mx-4 sm:px-4">
-          <div className="flex items-center gap-2 min-w-max pb-1">
+    <div className="space-y-2 sm:space-y-4">
+      {/* Main Category Navigation - Compact scrollable chips */}
+      <div className="sticky top-0 z-20 -mx-2 px-2 sm:-mx-4 sm:px-4 py-1.5 sm:py-2 bg-background border-b border-border/50">
+        <div className="overflow-x-auto scrollbar-none -mx-2 px-2 sm:-mx-4 sm:px-4">
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-max">
             {inspectionCategories.map((category, index) => {
               const isCompleted = completedCategories.includes(index);
               const isCurrent = index === activeMainCategory;
@@ -131,30 +131,30 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                   disabled={!isAccessible}
                   onClick={() => handleCategoryChange(index)}
                   className={cn(
-                    "flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all",
-                    isCurrent && "bg-primary text-primary-foreground shadow-md",
-                    isCompleted && !isCurrent && "bg-primary/15 text-primary hover:bg-primary/25",
-                    !isCompleted && !isCurrent && isAccessible && "bg-muted text-muted-foreground hover:bg-muted/80",
-                    !isAccessible && "bg-muted/50 text-muted-foreground/40 cursor-not-allowed"
+                    "flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-md text-[11px] sm:text-xs font-medium whitespace-nowrap transition-all",
+                    isCurrent && "bg-primary text-primary-foreground",
+                    isCompleted && !isCurrent && "bg-primary/20 text-primary",
+                    !isCompleted && !isCurrent && isAccessible && "bg-muted/80 text-muted-foreground",
+                    !isAccessible && "bg-muted/40 text-muted-foreground/40 cursor-not-allowed"
                   )}
                 >
                   {/* Checkmark for completed */}
                   {isCompleted && (
-                    <CheckCircle className="h-3.5 w-3.5 shrink-0" />
+                    <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5 shrink-0" />
                   )}
                   
                   {/* Step number for current/upcoming */}
                   {!isCompleted && (
                     <span className={cn(
-                      "w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0",
+                      "w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center text-[9px] sm:text-[10px] font-bold shrink-0",
                       isCurrent && "bg-primary-foreground/20",
-                      !isCurrent && "bg-background"
+                      !isCurrent && "bg-background/80"
                     )}>
                       {index + 1}
                     </span>
                   )}
                   
-                  {/* Category name - always show full name */}
+                  {/* Category name */}
                   <span>{category.label}</span>
                 </button>
               );
@@ -163,9 +163,9 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </div>
       </div>
 
-      {/* Sub-category Tabs (if applicable) */}
+      {/* Sub-category Tabs (if applicable) - Compact */}
       {hasSubcategories && (
-        <div className="-mx-3 px-3 sm:-mx-4 sm:px-4">
+        <div className="-mx-2 px-2 sm:-mx-4 sm:px-4">
           <ChecklistTabs
             tabs={currentTabs}
             activeTab={currentTabs[activeSubcategory]?.id || ''}
@@ -176,22 +176,22 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </div>
       )}
 
-      {/* Content Area - Maximized for mobile */}
+      {/* Content Area - Maximum vertical space */}
       <Card className="shadow-sm border-border/50">
-        <CardHeader className="p-3 sm:p-4 pb-2 sm:pb-3">
-          <CardTitle className="flex items-center gap-2 text-sm sm:text-base font-medium">
-            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
+        <CardHeader className="p-2 sm:p-4 pb-1.5 sm:pb-3">
+          <CardTitle className="flex items-center gap-1.5 text-xs sm:text-base font-medium">
+            <CheckCircle className="h-3.5 w-3.5 sm:h-5 sm:w-5 text-primary shrink-0" />
             <span className="truncate">
               {currentCategory.label}
               {hasSubcategories && currentTabs[activeSubcategory] && (
-                <span className="text-muted-foreground font-normal text-xs sm:text-sm">
+                <span className="text-muted-foreground font-normal text-[10px] sm:text-sm">
                   {' → '}{currentTabs[activeSubcategory].label}
                 </span>
               )}
             </span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-3 sm:p-4 pt-0 sm:pt-0">
+        <CardContent className="p-2 sm:p-4 pt-0">
           <ChecklistCategoryContent
             categoryId={currentCategory.id}
             subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
@@ -201,21 +201,21 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </CardContent>
       </Card>
 
-      {/* Navigation Buttons - Mobile optimized */}
-      <div className="flex items-center justify-between py-2 sm:py-4">
+      {/* Navigation Buttons - Compact for mobile */}
+      <div className="flex items-center justify-between py-1.5 sm:py-4">
         <Button
           type="button"
           variant="outline"
           onClick={handlePrevious}
           disabled={!canGoPrevious}
           size="sm"
-          className="gap-1 h-9 px-3"
+          className="gap-0.5 h-8 px-2 sm:h-9 sm:px-3 text-xs"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Previous</span>
         </Button>
 
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <div className="flex items-center gap-1 text-[10px] sm:text-xs text-muted-foreground">
           <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
           {hasSubcategories && (
             <>
@@ -229,12 +229,12 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
           type="button"
           onClick={handleCompleteSubcategory}
           size="sm"
-          className="gap-1 h-9 px-3"
+          className="gap-0.5 h-8 px-2 sm:h-9 sm:px-3 text-xs"
         >
           <span>
             {isLastTab && isLastCategory ? 'Done' : 'Next'}
           </span>
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-3.5 w-3.5" />
         </Button>
       </div>
     </div>
