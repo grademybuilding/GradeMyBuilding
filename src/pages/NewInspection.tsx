@@ -24,10 +24,15 @@ export function NewInspection({ onBack }: NewInspectionProps) {
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
 
-  // Auto scroll to top when step changes
+  // Auto scroll to top when step changes - use requestAnimationFrame for reliable timing
   useEffect(() => {
-    contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      // Also scroll any parent scrollable elements
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
   }, [currentStep]);
 
   const handleFieldChange = (field: string, value: any) => {

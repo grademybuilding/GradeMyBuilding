@@ -36,9 +36,13 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;
 
-  // Auto scroll to top when category or subcategory changes
+  // Auto scroll to top when category or subcategory changes - use requestAnimationFrame for reliable timing
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
   }, [activeMainCategory, activeSubcategory]);
 
   // Generate tabs for current category
