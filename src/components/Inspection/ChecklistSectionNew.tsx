@@ -119,54 +119,117 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Main Category Navigation - Scrollable horizontal tabs with clear separation */}
-      <div className="bg-muted/30 rounded-lg p-2 sm:p-3 border border-border/50">
-        <div className="overflow-x-auto scrollbar-none -mx-1 px-1">
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-max">
-            {inspectionCategories.map((category, index) => {
-              const isCompleted = completedCategories.includes(index);
-              const isCurrent = index === activeMainCategory;
-              const isAccessible = isCompleted || index <= completedCategories.length;
-
-              return (
-                <button
-                  key={category.id}
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
+      {/* Main Category Navigation - Centered container with proper hierarchy */}
+      <div className="w-full">
+        <div className="max-w-4xl mx-auto">
+          {/* Category Stepper Container */}
+          <div className="bg-card rounded-xl border border-border shadow-sm">
+            {/* Header with navigation controls */}
+            <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 border-b border-border/50">
+              <div className="flex items-center gap-2">
+                <Button
                   type="button"
-                  disabled={!isAccessible}
-                  onClick={() => handleCategoryChange(index)}
-                  className={cn(
-                    "flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all",
-                    isCurrent && "bg-primary text-primary-foreground shadow-md",
-                    isCompleted && !isCurrent && "bg-primary/15 text-primary hover:bg-primary/25",
-                    !isCompleted && !isCurrent && isAccessible && "bg-background text-muted-foreground hover:bg-background/80",
-                    !isAccessible && "bg-background/50 text-muted-foreground/40 cursor-not-allowed"
-                  )}
+                  variant="ghost"
+                  size="sm"
+                  onClick={handlePrevious}
+                  disabled={activeMainCategory === 0}
+                  className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                 >
-                  {isCompleted && (
-                    <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
-                  )}
-                  
-                  {!isCompleted && (
-                    <span className={cn(
-                      "w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0",
-                      isCurrent ? "bg-primary-foreground/20" : "bg-muted"
-                    )}>
-                      {index + 1}
-                    </span>
-                  )}
-                  
-                  <span>{category.label}</span>
-                </button>
-              );
-            })}
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <span className="text-xs sm:text-sm text-muted-foreground font-medium">
+                  Step {activeMainCategory + 1} of {inspectionCategories.length}
+                </span>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  if (activeMainCategory < inspectionCategories.length - 1) {
+                    handleCategoryChange(activeMainCategory + 1);
+                  }
+                }}
+                disabled={activeMainCategory >= inspectionCategories.length - 1 || !completedCategories.includes(activeMainCategory)}
+                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {/* Scrollable Steps */}
+            <div className="overflow-x-auto scrollbar-none">
+              <div className="flex items-stretch min-w-max lg:justify-center">
+                {inspectionCategories.map((category, index) => {
+                  const isCompleted = completedCategories.includes(index);
+                  const isCurrent = index === activeMainCategory;
+                  const isAccessible = isCompleted || index <= completedCategories.length;
+                  const isFirst = index === 0;
+                  const isLast = index === inspectionCategories.length - 1;
+
+                  return (
+                    <div key={category.id} className="flex items-center">
+                      <button
+                        type="button"
+                        disabled={!isAccessible}
+                        onClick={() => handleCategoryChange(index)}
+                        className={cn(
+                          "relative flex flex-col items-center gap-1.5 px-3 py-3 sm:px-4 sm:py-4 lg:px-5 min-w-[100px] sm:min-w-[120px] lg:min-w-[140px] transition-all group",
+                          isCurrent && "bg-primary/5",
+                          !isAccessible && "cursor-not-allowed opacity-50"
+                        )}
+                      >
+                        {/* Step indicator */}
+                        <div className={cn(
+                          "w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition-all",
+                          isCurrent && "bg-primary text-primary-foreground shadow-lg ring-4 ring-primary/20",
+                          isCompleted && !isCurrent && "bg-primary/15 text-primary",
+                          !isCompleted && !isCurrent && isAccessible && "bg-muted text-muted-foreground group-hover:bg-muted/80",
+                          !isAccessible && "bg-muted/50 text-muted-foreground/40"
+                        )}>
+                          {isCompleted ? (
+                            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                          ) : (
+                            <span className="text-xs sm:text-sm font-semibold">{index + 1}</span>
+                          )}
+                        </div>
+                        
+                        {/* Step label */}
+                        <span className={cn(
+                          "text-[10px] sm:text-xs lg:text-sm font-medium text-center leading-tight max-w-[90px] sm:max-w-[110px] lg:max-w-[130px]",
+                          isCurrent && "text-primary",
+                          isCompleted && !isCurrent && "text-foreground",
+                          !isCompleted && !isCurrent && "text-muted-foreground"
+                        )}>
+                          {category.label}
+                        </span>
+                        
+                        {/* Active indicator line */}
+                        {isCurrent && (
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 bg-primary rounded-full" />
+                        )}
+                      </button>
+                      
+                      {/* Connector line between steps */}
+                      {!isLast && (
+                        <div className={cn(
+                          "w-4 sm:w-6 lg:w-8 h-0.5 -mx-0.5",
+                          index < activeMainCategory ? "bg-primary/50" : "bg-border"
+                        )} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Sub-category Tabs (if applicable) - Clear visual hierarchy */}
+      {/* Sub-category Tabs (if applicable) - Centered with clear visual hierarchy */}
       {hasSubcategories && (
-        <div className="pt-1">
+        <div className="max-w-4xl mx-auto">
           <ChecklistTabs
             tabs={currentTabs}
             activeTab={currentTabs[activeSubcategory]?.id || ''}
@@ -177,64 +240,68 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         </div>
       )}
 
-      {/* Content Area - Maximum vertical space */}
-      <Card className="shadow-sm border-border">
-        <CardHeader className="p-3 sm:p-4 pb-2 sm:pb-3 border-b border-border/50">
-          <CardTitle className="flex items-center gap-2 text-sm sm:text-base font-medium">
-            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
-            <span className="truncate">
-              {currentCategory.label}
-              {hasSubcategories && currentTabs[activeSubcategory] && (
-                <span className="text-muted-foreground font-normal text-xs sm:text-sm ml-1">
-                  → {currentTabs[activeSubcategory].label}
-                </span>
-              )}
-            </span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-3 sm:p-4">
-          <ChecklistCategoryContent
-            categoryId={currentCategory.id}
-            subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
-            formData={formData}
-            onChange={onChange}
-          />
-        </CardContent>
-      </Card>
+      {/* Content Area - Centered max-width container */}
+      <div className="max-w-4xl mx-auto">
+        <Card className="shadow-sm border-border">
+          <CardHeader className="p-3 sm:p-4 lg:p-5 pb-2 sm:pb-3 lg:pb-4 border-b border-border/50">
+            <CardTitle className="flex items-center gap-2 text-sm sm:text-base lg:text-lg font-medium">
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
+              <span className="truncate">
+                {currentCategory.label}
+                {hasSubcategories && currentTabs[activeSubcategory] && (
+                  <span className="text-muted-foreground font-normal text-xs sm:text-sm lg:text-base ml-1 sm:ml-2">
+                    → {currentTabs[activeSubcategory].label}
+                  </span>
+                )}
+              </span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-3 sm:p-4 lg:p-6">
+            <ChecklistCategoryContent
+              categoryId={currentCategory.id}
+              subcategory={hasSubcategories ? currentTabs[activeSubcategory]?.label : undefined}
+              formData={formData}
+              onChange={onChange}
+            />
+          </CardContent>
+        </Card>
+      </div>
 
-      {/* Navigation Buttons - Inside scroll area with clear separation */}
-      <div className="flex items-center justify-between py-4 sm:py-5 mt-2 border-t border-border">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={handlePrevious}
-          disabled={!canGoPrevious}
-          size="sm"
-          className="h-10 px-4 sm:h-10 sm:px-5"
-        >
-          <ChevronLeft className="h-4 w-4 mr-1" />
-          <span>Previous</span>
-        </Button>
+      {/* Navigation Buttons - Centered max-width with clear separation */}
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center justify-between py-4 sm:py-5 lg:py-6 border-t border-border">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handlePrevious}
+            disabled={!canGoPrevious}
+            size="sm"
+            className="h-10 px-4 sm:h-11 sm:px-6"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            <span>Previous</span>
+          </Button>
 
-        <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
-          <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
-          {hasSubcategories && (
-            <>
-              <span className="text-muted-foreground/50">•</span>
-              <span>{activeSubcategory + 1}/{currentTabs.length}</span>
-            </>
-          )}
+          <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground bg-muted px-3 py-1.5 rounded-full">
+            <span className="font-medium">{activeMainCategory + 1}/{inspectionCategories.length}</span>
+            {hasSubcategories && (
+              <>
+                <span className="text-muted-foreground/50">•</span>
+                <span>{activeSubcategory + 1}/{currentTabs.length}</span>
+              </>
+            )}
+          </div>
+
+          <Button
+            type="button"
+            onClick={handleCompleteSubcategory}
+            size="sm"
+            className="h-10 px-4 sm:h-11 sm:px-6"
+          >
+            <span>{isLastTab && isLastCategory ? 'Complete' : 'Next'}</span>
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
         </div>
-
-        <Button
-          type="button"
-          onClick={handleCompleteSubcategory}
-          size="sm"
-          className="h-10 px-4 sm:h-10 sm:px-5"
-        >
-          <span>{isLastTab && isLastCategory ? 'Complete' : 'Next'}</span>
-          <ChevronRight className="h-4 w-4 ml-1" />
-        </Button>
       </div>
     </div>
   );
