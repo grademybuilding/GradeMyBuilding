@@ -1,10 +1,11 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChecklistTabs } from "./ChecklistTabs";
 import { ChecklistCategoryContent } from "./ChecklistCategoryContent";
 import { CheckCircle, ChevronRight, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ScrollContext } from "@/pages/NewInspection";
 
 // Main inspection categories for the sidebar/menu navigation
 const inspectionCategories = [
@@ -27,6 +28,9 @@ interface ChecklistSectionProps {
 }
 
 export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) {
+  // Get scroll function from context
+  const scrollToTop = useContext(ScrollContext);
+  
   // State for navigation
   const [activeMainCategory, setActiveMainCategory] = useState(0);
   const [activeSubcategory, setActiveSubcategory] = useState(0);
@@ -36,14 +40,10 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;
 
-  // Auto scroll to top when category or subcategory changes - use requestAnimationFrame for reliable timing
+  // Auto scroll to top when category or subcategory changes
   useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
-  }, [activeMainCategory, activeSubcategory]);
+    scrollToTop();
+  }, [activeMainCategory, activeSubcategory, scrollToTop]);
 
   // Generate tabs for current category
   const currentTabs = useMemo(() => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, createContext, useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { PropertyInfo } from "@/components/Inspection/PropertyInfo";
 import { InspectionDetails } from "@/components/Inspection/InspectionDetails";
@@ -6,6 +6,9 @@ import { ChecklistSection } from "@/components/Inspection/ChecklistSectionNew";
 import { StepProgress } from "@/components/Inspection/StepProgress";
 import { ArrowLeft, Save, Camera, FileText, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+// Context for scroll-to-top function
+export const ScrollContext = createContext<() => void>(() => {});
 
 interface NewInspectionProps {
   onBack: () => void;
@@ -24,16 +27,24 @@ export function NewInspection({ onBack }: NewInspectionProps) {
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
 
-  // Auto scroll to top when step changes - use requestAnimationFrame for reliable timing
-  useEffect(() => {
+  // Unified scroll-to-top function
+  const scrollToTop = useCallback(() => {
     requestAnimationFrame(() => {
+      // Scroll the content container (main scrollable area)
+      if (contentRef.current) {
+        contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      // Also scroll window in case it's the main scroller
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-      // Also scroll any parent scrollable elements
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
     });
-  }, [currentStep]);
+  }, []);
+
+  // Auto scroll to top when main step changes
+  useEffect(() => {
+    scrollToTop();
+  }, [currentStep, scrollToTop]);
 
   const handleFieldChange = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -84,7 +95,11 @@ export function NewInspection({ onBack }: NewInspectionProps) {
       case 1:
         return <InspectionDetails formData={formData} onChange={handleFieldChange} />;
       case 2:
-        return <ChecklistSection formData={formData} onChange={handleFieldChange} />;
+        return (
+          <ScrollContext.Provider value={scrollToTop}>
+            <ChecklistSection formData={formData} onChange={handleFieldChange} />
+          </ScrollContext.Provider>
+        );
       default:
         return null;
     }
