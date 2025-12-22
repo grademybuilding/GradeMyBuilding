@@ -152,14 +152,106 @@ export function useInspection(options: UseInspectionOptions = {}) {
     });
   }, []);
 
-  // Load existing draft on mount (optional)
-  useEffect(() => {
-    if (!restoreDraftOnMount) {
-      setLoading(false);
-      return;
+  // Load specific inspection by ID (for Resume functionality)
+  const loadInspectionById = async (idToLoad: string) => {
+    const epoch = resetEpochRef.current;
+    
+    try {
+      setLoading(true);
+      log.load('Loading specific inspection by ID', { inspectionId: idToLoad });
+      
+      // Clear the just_submitted flag since user is resuming an inspection
+      localStorage.removeItem('inspection:just_submitted');
+      
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        log.load('No session found, skipping inspection load');
+        setLoading(false);
+        return;
+      }
+
+      if (isStale(epoch)) return;
+
+      const { data: inspection, error } = await supabase
+        .from('inspections')
+        .select('*')
+        .eq('id', idToLoad)
+        .eq('inspector_id', session.user.id)
+        .single();
+
+      if (isStale(epoch)) return;
+
+      if (error) {
+        log.error('Error loading inspection by ID', error);
+        toast({
+          title: "Error",
+          description: "Could not load inspection. It may have been deleted.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
+      if (!inspection) {
+        log.load('Inspection not found');
+        setLoading(false);
+        return;
+      }
+
+      log.load('Loaded inspection by ID', {
+        inspectionId: inspection.id,
+        propertyId: inspection.property_id,
+        status: inspection.status,
+        hasChecklistData: !!inspection.checklist_data,
+      });
+
+      // Restore form data from checklist_data JSONB
+      const savedData = (inspection.checklist_data as InspectionFormData) || {};
+
+      const restoredData: InspectionFormData = {
+        ...savedData,
+        inspectionDate: inspection.inspection_date || savedData.inspectionDate,
+        inspectionTime: inspection.inspection_time || savedData.inspectionTime,
+        weatherConditions: inspection.weather_conditions || savedData.weatherConditions,
+        temperature: inspection.temperature?.toString() || savedData.temperature,
+        occupancy: inspection.occupancy || savedData.occupancy,
+        attendance: inspection.attendance || savedData.attendance,
+        checklistRatings: (inspection.checklist_ratings as Record<string, string>) || savedData.checklistRatings || {},
+        checklistNotes: (inspection.checklist_notes as Record<string, string>) || savedData.checklistNotes || {},
+        selectedDefects: (inspection.selected_defects as Record<string, boolean>) || savedData.selectedDefects || {},
+      };
+
+      if (isStale(epoch)) return;
+
+      setInspectionId(inspection.id);
+      setPropertyId(inspection.property_id);
+      setStatus(inspection.status === 'completed' ? 'completed' : 'draft');
+      setFormData(restoredData);
+      setJustSubmitted(false);
+
+      toast({
+        title: 'Inspection Loaded',
+        description: 'Continuing from where you left off.',
+      });
+    } catch (error) {
+      log.error('Error loading inspection by ID', error);
+    } finally {
+      if (!isStale(epoch)) setLoading(false);
     }
-    loadDraft();
-  }, [restoreDraftOnMount]);
+  };
+
+  // Load existing draft on mount OR load specific inspection by ID
+  useEffect(() => {
+    if (initialInspectionId) {
+      // Load specific inspection when ID is provided (Resume functionality)
+      loadInspectionById(initialInspectionId);
+    } else if (restoreDraftOnMount) {
+      // Load most recent draft
+      loadDraft();
+    } else {
+      setLoading(false);
+    }
+  }, [initialInspectionId, restoreDraftOnMount]);
 
   // Cleanup auto-save timer on unmount
   useEffect(() => {
