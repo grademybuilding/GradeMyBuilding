@@ -31,55 +31,6 @@ const categoryMapping: Record<string, string> = {
   'green': 'Green Features',
 };
 
-// Subcategory mapping for filtering
-const subcategoryMapping: Record<string, Record<string, string[]>> = {
-  'roof': {
-    'Coverings': ['Coverings', 'Defects - Coverings'],
-    'Roof Drainage Systems': ['Roof Drainage Systems', 'Defects - Roof Drainage Systems'],
-    'Flashing': ['Flashing', 'Defects - Flashing'],
-    'Skylights & Chimneys': ['Skylights & Chimneys', 'Defects - Skylights & Chimneys'],
-    'Eaves, Soffits & Fascia': ['Eaves, Soffits & Fascia', 'Defects - Eaves, Soffits & Fascia'],
-  },
-  'foundation': {
-    'Foundation': ['Foundation', 'Defects - Foundation'],
-    'Basement & Crawlspace': ['Basement & Crawlspace', 'Defects - Basements & Crawlspaces'],
-    'Floor Structure': ['Floor Structure', 'Defects - Floor Structure'],
-    'Wall Structure': ['Wall Structure', 'Defects - Wall Structure'],
-    'Ceiling Structure': ['Ceiling Structure', 'Defects - Ceiling Structure'],
-  },
-  'hvac': {
-    'Heating Equipment': ['Heating Equipment', 'Defects - Heating Equipment'],
-    'Cooling Equipment': ['Cooling Equipment', 'Defects - Cooling Equipment'],
-    'Operating Controls': ['Operating Controls', 'Defects - Operating Controls'],
-    'Distribution Systems': ['Distribution Systems', 'Defects - Distribution Systems'],
-    'Vents & Flues': ['Vents & Flues', 'Defects - Vents & Flues'],
-  },
-  'doors-windows': {
-    'Windows': ['Windows', 'Defects - Windows'],
-    'Entry Doors': ['Entry Doors', 'Defects - Entry Doors'],
-    'Interior Doors': ['Interior Doors', 'Defects - Interior Doors'],
-    'Garage Doors': ['Garage Doors', 'Defects - Garage Doors'],
-  },
-  'appliances': {
-    'Refrigerator': ['Refrigerator', 'Defects - Refrigerator'],
-    'Range/Oven/Cooktop': ['Range/Oven/Cooktop', 'Defects - Range/Oven/Cooktop'],
-    'Dishwasher': ['Dishwasher', 'Defects - Dishwasher'],
-    'Built-in Microwave': ['Built-in Microwave', 'Defects - Built-in Microwave'],
-    'Garbage Disposal': ['Garbage Disposal', 'Defects - Garbage Disposal'],
-    'Cooking Exhaust': ['Cooking Exhaust', 'Defects - Cooking Exhaust'],
-  },
-  'plumbing': {
-    'Water Supply': ['Water Supply', 'Defects - Water Supply'],
-    'Drain Waste Vent': ['Drain Waste Vent', 'Defects - Drain Waste Vent'],
-    'Water Heater': ['Water Heater', 'Defects - Water Heater'],
-    'Fixtures': ['Fixtures', 'Defects - Fixtures'],
-  },
-  'electric': {
-    'Service Entrance': ['Service Entrance', 'Defects - Service Entrance'],
-    'Branch Circuits': ['Branch Circuits', 'Defects - Branch Circuits'],
-    'Connected Devices': ['Connected Devices', 'Defects - Connected Devices'],
-  },
-};
 
 // Checklist items for the current implementation
 // This is a simplified subset - the full checklist is in the original ChecklistSection
@@ -333,21 +284,19 @@ export function ChecklistCategoryContent({
   const [notes, setNotes] = useState<Record<string, string>>(formData.checklistNotes || {});
   const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>(formData.selectedDefects || {});
 
-  const categoryLabel = categoryMapping[categoryId];
+  // Support both category IDs ("foundation") and labels ("Foundation & Structure")
+  const categoryLabel = categoryMapping[categoryId] ?? categoryId;
 
-  // Filter items based on category and subcategory
+  // Filter items based on category and *exact* subcategory match.
+  // This is intentionally data-driven (no hardcoded subcategory mapping), so all
+  // existing "Defects - *" subcategories render correctly.
   const filteredItems = inspectionChecklist.filter((item) => {
     if (item.category !== categoryLabel) return false;
-    
-    if (subcategory) {
-      const mapping = subcategoryMapping[categoryId]?.[subcategory];
-      if (mapping) {
-        return mapping.some(sub => 
-          item.subcategory?.includes(sub) || item.subcategory === sub
-        );
-      }
-    }
-    
+
+    // When a subcategory is selected, only show items with that exact subcategory string.
+    // (If some items have no subcategory, they are only shown when no subcategory is selected.)
+    if (subcategory) return item.subcategory === subcategory;
+
     return true;
   });
 
