@@ -36,7 +36,11 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     handleSubmit,
     updateNavigationState,
     debugInfo,
-  } = useInspection({ inspectionId, autoSaveEnabled: false });
+  } = useInspection({
+    inspectionId,
+    autoSaveEnabled: false,
+    restoreDraftOnMount: false,
+  });
 
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
