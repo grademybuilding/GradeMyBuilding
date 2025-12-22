@@ -54,19 +54,14 @@ serve(async (req) => {
       });
     }
 
-    // Fetch inspection with related data
+    // Fetch inspection with related property (NOTE: no FK exists from inspections.inspector_id -> profiles.id)
+    // so we fetch inspector profile in a second query.
     const { data: inspection, error: inspectionError } = await supabase
       .from('inspections')
       .select(`
         *,
         properties:property_id (
           *
-        ),
-        profiles:inspector_id (
-          full_name,
-          email,
-          phone,
-          company_name
         )
       `)
       .eq('id', inspection_id)
@@ -80,6 +75,21 @@ serve(async (req) => {
       });
     }
 
+    // Fetch inspector profile (best-effort; can fail due to RLS depending on viewer)
+    let inspector_profile: any = null;
+    if (inspection?.inspector_id) {
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('full_name, email, phone, company_name, avatar_url')
+        .eq('id', inspection.inspector_id)
+        .maybeSingle();
+
+      if (profileError) {
+        console.warn('Could not fetch inspector profile (RLS likely):', profileError);
+      } else {
+        inspector_profile = profile;
+      }
+    }
     // Fetch checklist items
     const { data: checklistItems, error: checklistError } = await supabase
       .from('checklist_items')
@@ -102,8 +112,9 @@ serve(async (req) => {
       console.error('Error fetching photos:', photosError);
     }
 
-    return new Response(JSON.stringify({ 
+    return new Response(JSON.stringify({
       inspection,
+      inspector_profile,
       checklist_items: checklistItems || [],
       photos: photos || []
     }), {
