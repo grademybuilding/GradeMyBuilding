@@ -98,6 +98,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const formDataRef = useRef<InspectionFormData>(formData);
   const inspectionIdRef = useRef<string | null>(inspectionId);
   const skipNextUnmountSaveRef = useRef(false);
+  /** Bumps whenever we hard-reset the flow; used to ignore late async state updates */
+  const resetEpochRef = useRef(0);
+
+  const isStale = (epoch: number) => epoch !== resetEpochRef.current;
   
   // Keep refs in sync with state
   useEffect(() => {
@@ -111,6 +115,9 @@ export function useInspection(options: UseInspectionOptions = {}) {
   // Reset all inspection state for a fresh start
   const resetInspectionFlow = useCallback(() => {
     log.save('Resetting inspection flow for fresh start');
+
+    // Invalidate any in-flight async work (save/load) so it can't repopulate the form after reset
+    resetEpochRef.current += 1;
 
     // Prevent any "save on unmount" from writing a new draft right after submit
     skipNextUnmountSaveRef.current = true;
@@ -268,6 +275,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
   };
 
   const loadDraft = async () => {
+    const epoch = resetEpochRef.current;
+
     try {
       // Don't load draft right after a successful submission (even across navigation)
       // IMPORTANT: keep the flag until the user starts editing; React 18 StrictMode can run effects twice.
@@ -291,13 +300,15 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       setLoading(true);
       log.load('Starting draft load');
-      
+
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         log.load('No session found, skipping draft load');
         setLoading(false);
         return;
       }
+
+      if (isStale(epoch)) return;
 
       log.load('Session found', { userId: session.user.id });
 
@@ -311,6 +322,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
         .order('updated_at', { ascending: false })
         .limit(1);
 
+      if (isStale(epoch)) return;
+
       if (error) {
         log.error('Error loading draft', error);
         setLoading(false);
@@ -321,16 +334,16 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       if (inspections && inspections.length > 0) {
         const draft = inspections[0];
-        
+
         // Double-check status is draft (safety check)
         if (draft.status !== 'draft') {
           log.load('Skipping non-draft inspection', { status: draft.status });
           setLoading(false);
           return;
         }
-        
-        log.load('Loading draft', { 
-          inspectionId: draft.id, 
+
+        log.load('Loading draft', {
+          inspectionId: draft.id,
           propertyId: draft.property_id,
           status: draft.status,
           hasChecklistData: !!draft.checklist_data,
@@ -339,13 +352,9 @@ export function useInspection(options: UseInspectionOptions = {}) {
           checklistRatingsKeys: draft.checklist_ratings ? Object.keys(draft.checklist_ratings as object).length : 0,
         });
 
-        setInspectionId(draft.id);
-        setPropertyId(draft.property_id);
-        setStatus('draft');
-        
         // Restore form data from checklist_data JSONB
         const savedData = (draft.checklist_data as InspectionFormData) || {};
-        
+
         // Also restore individual fields
         const restoredData: InspectionFormData = {
           ...savedData,
@@ -359,18 +368,17 @@ export function useInspection(options: UseInspectionOptions = {}) {
           checklistNotes: (draft.checklist_notes as Record<string, string>) || savedData.checklistNotes || {},
           selectedDefects: (draft.selected_defects as Record<string, boolean>) || savedData.selectedDefects || {},
         };
-        
-        log.load('Restored form data', { 
-          keys: Object.keys(restoredData),
-          ratingsCount: Object.keys(restoredData.checklistRatings || {}).length,
-          notesCount: Object.keys(restoredData.checklistNotes || {}).length,
-        });
 
+        if (isStale(epoch)) return;
+
+        setInspectionId(draft.id);
+        setPropertyId(draft.property_id);
+        setStatus('draft');
         setFormData(restoredData);
-        
+
         toast({
-          title: "Draft Restored",
-          description: "Your previous inspection draft has been loaded.",
+          title: 'Draft Restored',
+          description: 'Your previous inspection draft has been loaded.',
         });
       } else {
         log.load('No existing draft found');
@@ -378,7 +386,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
     } catch (error) {
       log.error('Error loading draft', error);
     } finally {
-      setLoading(false);
+      // Only flip loading off if we didn't reset during this async run
+      if (!isStale(epoch)) setLoading(false);
     }
   };
 
@@ -412,6 +421,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
   const saveToSupabase = async (data: InspectionFormData, showToast: boolean = true) => {
     const startTime = Date.now();
+    const epoch = resetEpochRef.current;
     
     try {
       setSaving(true);
@@ -433,6 +443,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
         });
         return false;
       }
+
+      if (isStale(epoch)) return false;
 
       const payload = buildSupabasePayload(data);
       
@@ -560,6 +572,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
         log.create('Inspection created', { newInspectionId });
         
         if (newInspectionId) {
+          // keep ref in sync immediately (submit can depend on it)
+          inspectionIdRef.current = newInspectionId;
           setInspectionId(newInspectionId);
           
           // Now update with full form data
@@ -595,6 +609,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
         }));
       }
 
+      if (isStale(epoch)) return false;
+
       setLastSaved(new Date());
       log.save('Save completed successfully', { duration: Date.now() - startTime });
       
@@ -622,7 +638,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
       }
       return false;
     } finally {
-      setSaving(false);
+      if (!isStale(epoch)) setSaving(false);
     }
   };
 
@@ -716,8 +732,18 @@ export function useInspection(options: UseInspectionOptions = {}) {
         });
         return false;
       }
-      // Get the newly created inspection ID from state
-      currentInspectionId = inspectionId;
+
+      // Use the ref (set synchronously in saveToSupabase) to avoid React state timing issues
+      currentInspectionId = inspectionIdRef.current;
+
+      if (!currentInspectionId) {
+        toast({
+          title: "Submit Failed",
+          description: "Inspection ID was not created yet. Please try again.",
+          variant: "destructive",
+        });
+        return false;
+      }
     }
 
     try {
