@@ -32,13 +32,37 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   // Get scroll function from context
   const scrollToTop = useContext(ScrollContext);
   
-  // State for navigation
-  const [activeMainCategory, setActiveMainCategory] = useState(0);
-  const [activeSubcategory, setActiveSubcategory] = useState(0);
+  // State for navigation - restore from formData if available
+  const [activeMainCategory, setActiveMainCategory] = useState(
+    formData.currentMainCategory ?? 0
+  );
+  const [activeSubcategory, setActiveSubcategory] = useState(
+    formData.currentSubcategory ?? 0
+  );
   const [atSubmitScreen, setAtSubmitScreen] = useState(false);
-  const [completedCategories, setCompletedCategories] = useState<number[]>([]);
-  const [completedSubcategories, setCompletedSubcategories] = useState<Record<number, string[]>>({});
-  const [skippedSubcategories, setSkippedSubcategories] = useState<Record<number, string[]>>({});
+  const [completedCategories, setCompletedCategories] = useState<number[]>(
+    formData.completedCategories ?? []
+  );
+  const [completedSubcategories, setCompletedSubcategories] = useState<Record<number, string[]>>(
+    formData.completedSubcategories ?? {}
+  );
+  const [skippedSubcategories, setSkippedSubcategories] = useState<Record<number, string[]>>(
+    formData.skippedSubcategories ?? {}
+  );
+
+  // Save navigation state when it changes
+  useEffect(() => {
+    // Debounce to avoid too many updates
+    const timeoutId = setTimeout(() => {
+      onChange('currentMainCategory', activeMainCategory);
+      onChange('currentSubcategory', activeSubcategory);
+      onChange('completedCategories', completedCategories);
+      onChange('completedSubcategories', completedSubcategories);
+      onChange('skippedSubcategories', skippedSubcategories);
+    }, 300);
+    
+    return () => clearTimeout(timeoutId);
+  }, [activeMainCategory, activeSubcategory, completedCategories, completedSubcategories, skippedSubcategories]);
 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;

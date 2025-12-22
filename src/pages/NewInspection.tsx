@@ -4,21 +4,34 @@ import { PropertyInfo } from "@/components/Inspection/PropertyInfo";
 import { InspectionDetails } from "@/components/Inspection/InspectionDetails";
 import { ChecklistSection } from "@/components/Inspection/ChecklistSectionNew";
 import { StepProgress } from "@/components/Inspection/StepProgress";
-import { ArrowLeft, Save, Camera, FileText, ChevronRight } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft, Save, Camera, ChevronRight, Loader2, Cloud, CheckCircle } from "lucide-react";
+import { useInspection } from "@/hooks/useInspection";
+import { cn } from "@/lib/utils";
 
 // Context for scroll-to-top function
 export const ScrollContext = createContext<() => void>(() => {});
 
 interface NewInspectionProps {
   onBack: () => void;
+  inspectionId?: string;
 }
 
-export function NewInspection({ onBack }: NewInspectionProps) {
-  const [formData, setFormData] = useState({});
-  const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { toast } = useToast();
+export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
+  const {
+    formData,
+    loading,
+    saving,
+    lastSaved,
+    status,
+    isReadOnly,
+    handleFieldChange,
+    handleManualSave,
+    handleSubmit,
+    updateNavigationState,
+  } = useInspection({ inspectionId });
+
+  const [currentStep, setCurrentStep] = useState(formData.currentStep ?? 0);
+  const [completedSteps, setCompletedSteps] = useState<number[]>(formData.completedSteps ?? []);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const steps = [
@@ -26,6 +39,16 @@ export function NewInspection({ onBack }: NewInspectionProps) {
     { id: 2, title: "Inspection Details", shortTitle: "Details" },
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
+
+  // Restore navigation state when form data loads
+  useEffect(() => {
+    if (formData.currentStep !== undefined) {
+      setCurrentStep(formData.currentStep);
+    }
+    if (formData.completedSteps) {
+      setCompletedSteps(formData.completedSteps);
+    }
+  }, [formData.currentStep, formData.completedSteps]);
 
   const getScrollParent = useCallback((node: HTMLElement | null) => {
     let current: HTMLElement | null = node;
@@ -43,11 +66,8 @@ export function NewInspection({ onBack }: NewInspectionProps) {
   const scrollToTop = useCallback(() => {
     requestAnimationFrame(() => {
       const scrollParent = getScrollParent(contentRef.current);
-      // 1) Scroll the actual scroll container (often the <main> in Index.tsx)
       scrollParent?.scrollTo({ top: 0, behavior: "smooth" });
-      // 2) Also scroll our local container if it is the scroller
       contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-      // 3) Fallback to window
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }, [getScrollParent]);
@@ -57,47 +77,87 @@ export function NewInspection({ onBack }: NewInspectionProps) {
     scrollToTop();
   }, [currentStep, scrollToTop]);
 
-  const handleFieldChange = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  // Save navigation state when step changes
+  const handleStepChange = useCallback((newStep: number, newCompletedSteps?: number[]) => {
+    setCurrentStep(newStep);
+    if (newCompletedSteps) {
+      setCompletedSteps(newCompletedSteps);
+    }
+    
+    // Save navigation state for restoration
+    updateNavigationState({
+      currentStep: newStep,
+      completedSteps: newCompletedSteps ?? completedSteps,
+    });
+  }, [completedSteps, updateNavigationState]);
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
-      if (!completedSteps.includes(currentStep)) {
-        setCompletedSteps(prev => [...prev, currentStep]);
-      }
-      setCurrentStep(currentStep + 1);
+      const newCompletedSteps = completedSteps.includes(currentStep) 
+        ? completedSteps 
+        : [...completedSteps, currentStep];
+      handleStepChange(currentStep + 1, newCompletedSteps);
     }
   };
 
   const handlePrev = () => {
     if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+      handleStepChange(currentStep - 1);
     }
   };
 
   const handleStepClick = (stepIndex: number) => {
     if (completedSteps.includes(stepIndex) || stepIndex === currentStep) {
-      setCurrentStep(stepIndex);
+      handleStepChange(stepIndex);
     }
   };
 
-  const handleSave = () => {
-    toast({
-      title: "Inspection Saved",
-      description: "Your inspection has been saved successfully.",
-    });
-    console.log("Saving inspection:", formData);
+  const handleSave = async () => {
+    await handleManualSave();
   };
 
-  const handleSubmit = () => {
-    toast({
-      title: "Inspection Submitted",
-      description: "Your inspection has been submitted for review.",
-    });
-    console.log("Submitting inspection:", formData);
-    onBack();
+  const onSubmitInspection = async () => {
+    const success = await handleSubmit();
+    if (success) {
+      onBack();
+    }
   };
+
+  // Format last saved time
+  const formatLastSaved = (date: Date | null) => {
+    if (!date) return null;
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
+          <p className="text-muted-foreground">Loading inspection...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isReadOnly) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
+        <div className="text-center space-y-4 max-w-md">
+          <CheckCircle className="h-12 w-12 text-primary mx-auto" />
+          <h1 className="text-xl font-semibold">Inspection Submitted</h1>
+          <p className="text-muted-foreground">
+            This inspection has already been submitted and cannot be edited.
+          </p>
+          <Button onClick={onBack}>Return to Dashboard</Button>
+        </div>
+      </div>
+    );
+  }
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -108,7 +168,11 @@ export function NewInspection({ onBack }: NewInspectionProps) {
       case 2:
         return (
           <ScrollContext.Provider value={scrollToTop}>
-            <ChecklistSection formData={formData} onChange={handleFieldChange} onSubmit={handleSubmit} />
+            <ChecklistSection 
+              formData={formData} 
+              onChange={handleFieldChange} 
+              onSubmit={onSubmitInspection}
+            />
           </ScrollContext.Provider>
         );
       default:
@@ -132,15 +196,45 @@ export function NewInspection({ onBack }: NewInspectionProps) {
               </h1>
             </div>
             
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+              {/* Auto-save indicator */}
+              {lastSaved && (
+                <div className="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
+                  <Cloud className="h-3 w-3" />
+                  <span>Saved {formatLastSaved(lastSaved)}</span>
+                </div>
+              )}
+              
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                 <Camera className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={handleSave} className="h-8 w-8 p-0">
-                <Save className="h-4 w-4" />
+              
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={handleSave} 
+                disabled={saving}
+                className={cn(
+                  "h-8 w-8 p-0",
+                  saving && "opacity-50"
+                )}
+              >
+                {saving ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
+          
+          {/* Mobile auto-save indicator */}
+          {lastSaved && (
+            <div className="sm:hidden flex items-center justify-center gap-1.5 text-xs text-muted-foreground pb-2">
+              <Cloud className="h-3 w-3" />
+              <span>Saved {formatLastSaved(lastSaved)}</span>
+            </div>
+          )}
         </div>
 
         {/* Progress Bar - Directly below header, visually grouped */}
