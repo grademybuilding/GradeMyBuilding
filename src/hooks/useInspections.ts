@@ -127,7 +127,24 @@ export function useInspections(): UseInspectionsReturn {
       }
 
       console.log('[useInspections] Fetched inspections:', data?.inspections?.length || 0);
-      setInspections(data?.inspections || []);
+
+      const normalized: InspectionListItem[] = (data?.inspections || []).map((i: any) => {
+        let checklist_data: Record<string, unknown> | null = i?.checklist_data ?? null;
+        if (typeof checklist_data === 'string') {
+          try {
+            checklist_data = JSON.parse(checklist_data) as Record<string, unknown>;
+          } catch {
+            checklist_data = null;
+          }
+        }
+
+        return {
+          ...i,
+          checklist_data,
+        } as InspectionListItem;
+      });
+
+      setInspections(normalized);
     } catch (err) {
       console.error('[useInspections] Error fetching inspections:', err);
       setError(err instanceof Error ? err.message : 'Failed to load inspections');
