@@ -192,7 +192,23 @@ export function useInspectionDetails(inspectionId: string | null): UseInspection
         throw new Error(data.error);
       }
 
-      setInspection(data?.inspection || null);
+      // Normalize checklist_data (parse if string)
+      let inspectionData = data?.inspection || null;
+      if (inspectionData) {
+        let checklist_data = inspectionData.checklist_data;
+        if (typeof checklist_data === 'string') {
+          try {
+            checklist_data = JSON.parse(checklist_data);
+          } catch {
+            checklist_data = null;
+          }
+        }
+        inspectionData = { ...inspectionData, checklist_data };
+      }
+
+      console.log('[useInspectionDetails] Normalized inspection:', inspectionData);
+      
+      setInspection(inspectionData);
       setChecklistItems(data?.checklist_items || []);
       setPhotos(data?.photos || []);
     } catch (err) {

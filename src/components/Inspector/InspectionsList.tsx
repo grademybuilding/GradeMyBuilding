@@ -244,166 +244,210 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
       {/* Inspection Details Dialog */}
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh]">
-          <DialogHeader>
-            <DialogTitle>Inspection Details</DialogTitle>
-            <DialogDescription>
-              {selectedInspection?.properties?.address || 'Loading...'}
-            </DialogDescription>
-          </DialogHeader>
-          
-          <ScrollArea className="max-h-[70vh]">
-            {detailsLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              </div>
-            ) : detailsError ? (
-              <div className="flex flex-col items-center justify-center py-12">
-                <AlertCircle className="h-8 w-8 text-destructive mb-2" />
-                <p className="text-muted-foreground">{detailsError}</p>
-              </div>
-            ) : selectedInspection ? (
-              <div className="space-y-6 p-1">
-                {/* Property Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Property Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2 text-sm">
-                      <div><span className="text-muted-foreground">Address:</span> {selectedInspection.properties?.address}</div>
-                      <div><span className="text-muted-foreground">City:</span> {selectedInspection.properties?.city}, {selectedInspection.properties?.state} {selectedInspection.properties?.zip_code}</div>
-                      <div><span className="text-muted-foreground">Type:</span> {selectedInspection.properties?.property_type}</div>
-                      {selectedInspection.properties?.year_built && (
-                        <div><span className="text-muted-foreground">Year Built:</span> {selectedInspection.properties.year_built}</div>
-                      )}
-                      {selectedInspection.properties?.square_footage && (
-                        <div><span className="text-muted-foreground">Size:</span> {selectedInspection.properties.square_footage.toLocaleString()} sq ft</div>
-                      )}
-                    </CardContent>
-                  </Card>
+          {(() => {
+            // Debug logging
+            if (selectedInspection) {
+              console.log('[INSPECTION DETAILS]', selectedInspection);
+              console.log('[PROPERTY DETAILS]', selectedInspection.properties);
+              console.log('[CHECKLIST DATA]', selectedInspection.checklist_data);
+            }
 
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Inspection Summary</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2 text-sm">
-                      <div><span className="text-muted-foreground">Date:</span> {format(new Date(selectedInspection.inspection_date), 'MMMM d, yyyy')}</div>
-                      <div><span className="text-muted-foreground">Status:</span> {selectedInspection.status}</div>
-                      {selectedInspection.final_grade_letter && (
-                        <div className="flex items-center gap-2">
-                          <span className="text-muted-foreground">Grade:</span>
-                          <Badge className={getGradeColor(selectedInspection.final_grade_letter)}>
-                            {selectedInspection.final_grade_letter} ({selectedInspection.final_grade_numeric?.toFixed(1)}%)
-                          </Badge>
-                        </div>
-                      )}
-                      {selectedInspection.total_items_rated && (
-                        <div><span className="text-muted-foreground">Items Rated:</span> {selectedInspection.total_items_rated}</div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
+            // Compute display values with fallback logic
+            const checklistData = selectedInspection?.checklist_data as Record<string, unknown> | null;
+            const props = selectedInspection?.properties;
+            
+            // Check if properties has real data (not draft placeholders)
+            const hasRealPropertyData = props?.address && 
+              props.address !== 'Draft Property' && 
+              props.city !== 'Unknown';
 
-                {/* Rating Breakdown */}
-                {(selectedInspection.excellent_count || selectedInspection.good_count || selectedInspection.poor_count) && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Rating Breakdown</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-5 gap-4 text-center">
-                        <div>
-                          <div className="text-2xl font-bold text-emerald-600">{selectedInspection.excellent_count || 0}</div>
-                          <div className="text-xs text-muted-foreground">Excellent</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-blue-600">{selectedInspection.very_good_count || 0}</div>
-                          <div className="text-xs text-muted-foreground">Very Good</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-yellow-600">{selectedInspection.good_count || 0}</div>
-                          <div className="text-xs text-muted-foreground">Good</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-orange-600">{selectedInspection.poor_count || 0}</div>
-                          <div className="text-xs text-muted-foreground">Poor</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-red-600">{selectedInspection.replace_count || 0}</div>
-                          <div className="text-xs text-muted-foreground">Replace</div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
+            const displayAddress = hasRealPropertyData 
+              ? props?.address 
+              : (checklistData?.address as string) || '—';
+            const displayCity = hasRealPropertyData 
+              ? props?.city 
+              : (checklistData?.city as string) || '—';
+            const displayState = hasRealPropertyData 
+              ? props?.state 
+              : (checklistData?.state as string) || '—';
+            const displayZipCode = hasRealPropertyData 
+              ? props?.zip_code 
+              : (checklistData?.zipCode as string) || '—';
+            const displayPropertyType = hasRealPropertyData 
+              ? props?.property_type 
+              : (checklistData?.propertyType as string) || '—';
+            const displayYearBuilt = hasRealPropertyData 
+              ? props?.year_built 
+              : (checklistData?.yearBuilt as string | number) || null;
+            const displaySquareFootage = hasRealPropertyData 
+              ? props?.square_footage 
+              : (checklistData?.squareFootage as string | number) || null;
 
-                {/* Checklist Items */}
-                {checklistItems.length > 0 && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Checklist Items ({checklistItems.length})</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2 max-h-60 overflow-y-auto">
-                        {checklistItems.map((item) => (
-                          <div key={item.id} className="flex items-center justify-between py-2 border-b last:border-0">
-                            <div>
-                              <div className="text-sm font-medium">{item.item_name}</div>
-                              <div className="text-xs text-muted-foreground">{item.category}{item.subcategory ? ` > ${item.subcategory}` : ''}</div>
-                            </div>
-                            {item.rating && (
-                              <Badge variant="outline" className="text-xs">{item.rating}</Badge>
+            return (
+              <>
+                <DialogHeader>
+                  <DialogTitle>Inspection Details</DialogTitle>
+                  <DialogDescription>
+                    {detailsLoading ? 'Loading...' : displayAddress}
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <ScrollArea className="max-h-[70vh]">
+                  {detailsLoading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                    </div>
+                  ) : detailsError ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <AlertCircle className="h-8 w-8 text-destructive mb-2" />
+                      <p className="text-muted-foreground">{detailsError}</p>
+                    </div>
+                  ) : selectedInspection ? (
+                    <div className="space-y-6 p-1">
+                      {/* Property Info */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Property Information</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-2 text-sm">
+                            <div><span className="text-muted-foreground">Address:</span> {displayAddress}</div>
+                            <div><span className="text-muted-foreground">City:</span> {displayCity}{displayState !== '—' ? `, ${displayState}` : ''} {displayZipCode !== '—' ? displayZipCode : ''}</div>
+                            <div><span className="text-muted-foreground">Type:</span> <span className="capitalize">{displayPropertyType}</span></div>
+                            {displayYearBuilt && (
+                              <div><span className="text-muted-foreground">Year Built:</span> {displayYearBuilt}</div>
                             )}
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
+                            {displaySquareFootage && (
+                              <div><span className="text-muted-foreground">Size:</span> {Number(displaySquareFootage).toLocaleString()} sq ft</div>
+                            )}
+                          </CardContent>
+                        </Card>
 
-                {/* Photos */}
-                {photos.length > 0 && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Photos ({photos.length})</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-3 gap-2">
-                        {photos.slice(0, 6).map((photo) => (
-                          <div key={photo.id} className="aspect-square bg-muted rounded-lg overflow-hidden">
-                            <img 
-                              src={photo.photo_url} 
-                              alt={photo.caption || 'Inspection photo'} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        ))}
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Inspection Summary</CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-2 text-sm">
+                            <div><span className="text-muted-foreground">Date:</span> {format(new Date(selectedInspection.inspection_date), 'MMMM d, yyyy')}</div>
+                            <div><span className="text-muted-foreground">Status:</span> <span className="capitalize">{selectedInspection.status ?? '—'}</span></div>
+                            {selectedInspection.final_grade_letter && (
+                              <div className="flex items-center gap-2">
+                                <span className="text-muted-foreground">Grade:</span>
+                                <Badge className={getGradeColor(selectedInspection.final_grade_letter)}>
+                                  {selectedInspection.final_grade_letter} ({selectedInspection.final_grade_numeric?.toFixed(1)}%)
+                                </Badge>
+                              </div>
+                            )}
+                            {selectedInspection.total_items_rated ? (
+                              <div><span className="text-muted-foreground">Items Rated:</span> {selectedInspection.total_items_rated}</div>
+                            ) : null}
+                          </CardContent>
+                        </Card>
                       </div>
-                      {photos.length > 6 && (
-                        <p className="text-sm text-muted-foreground mt-2 text-center">
-                          +{photos.length - 6} more photos
-                        </p>
+
+                      {/* Rating Breakdown */}
+                      {(selectedInspection.excellent_count || selectedInspection.good_count || selectedInspection.poor_count) && (
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Rating Breakdown</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="grid grid-cols-5 gap-4 text-center">
+                              <div>
+                                <div className="text-2xl font-bold text-emerald-600">{selectedInspection.excellent_count || 0}</div>
+                                <div className="text-xs text-muted-foreground">Excellent</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-blue-600">{selectedInspection.very_good_count || 0}</div>
+                                <div className="text-xs text-muted-foreground">Very Good</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-yellow-600">{selectedInspection.good_count || 0}</div>
+                                <div className="text-xs text-muted-foreground">Good</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-orange-600">{selectedInspection.poor_count || 0}</div>
+                                <div className="text-xs text-muted-foreground">Poor</div>
+                              </div>
+                              <div>
+                                <div className="text-2xl font-bold text-red-600">{selectedInspection.replace_count || 0}</div>
+                                <div className="text-xs text-muted-foreground">Replace</div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
                       )}
-                    </CardContent>
-                  </Card>
-                )}
 
-                {/* Notes */}
-                {selectedInspection.notes && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Notes</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                        {selectedInspection.notes}
-                      </p>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            ) : null}
-          </ScrollArea>
+                      {/* Checklist Items */}
+                      {checklistItems.length > 0 && (
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Checklist Items ({checklistItems.length})</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="space-y-2 max-h-60 overflow-y-auto">
+                              {checklistItems.map((item) => (
+                                <div key={item.id} className="flex items-center justify-between py-2 border-b last:border-0">
+                                  <div>
+                                    <div className="text-sm font-medium">{item.item_name}</div>
+                                    <div className="text-xs text-muted-foreground">{item.category}{item.subcategory ? ` > ${item.subcategory}` : ''}</div>
+                                  </div>
+                                  {item.rating && (
+                                    <Badge variant="outline" className="text-xs">{item.rating}</Badge>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+
+                      {/* Photos */}
+                      {photos.length > 0 && (
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Photos ({photos.length})</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="grid grid-cols-3 gap-2">
+                              {photos.slice(0, 6).map((photo) => (
+                                <div key={photo.id} className="aspect-square bg-muted rounded-lg overflow-hidden">
+                                  <img 
+                                    src={photo.photo_url} 
+                                    alt={photo.caption || 'Inspection photo'} 
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                            {photos.length > 6 && (
+                              <p className="text-sm text-muted-foreground mt-2 text-center">
+                                +{photos.length - 6} more photos
+                              </p>
+                            )}
+                          </CardContent>
+                        </Card>
+                      )}
+
+                      {/* Notes */}
+                      {selectedInspection.notes && (
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Notes</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                              {selectedInspection.notes}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </div>
+                  ) : null}
+                </ScrollArea>
+              </>
+            );
+          })()}
         </DialogContent>
       </Dialog>
     </div>
