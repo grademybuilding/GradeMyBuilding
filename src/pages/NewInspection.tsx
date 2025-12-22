@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback, createContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { PropertyInfo } from "@/components/Inspection/PropertyInfo";
 import { InspectionDetails } from "@/components/Inspection/InspectionDetails";
 import { ChecklistSection } from "@/components/Inspection/ChecklistSectionNew";
 import { StepProgress } from "@/components/Inspection/StepProgress";
+import { DebugPanel } from "@/components/Inspection/DebugPanel";
 import { ArrowLeft, Save, Camera, ChevronRight, Loader2, Cloud, CheckCircle } from "lucide-react";
 import { useInspection } from "@/hooks/useInspection";
 import { cn } from "@/lib/utils";
@@ -17,7 +19,11 @@ interface NewInspectionProps {
 }
 
 export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
+  const [searchParams] = useSearchParams();
+  const showDebug = searchParams.get('debug') === 'true';
+
   const {
+    inspectionId: currentInspectionId,
     formData,
     loading,
     saving,
@@ -28,6 +34,7 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     handleManualSave,
     handleSubmit,
     updateNavigationState,
+    debugInfo,
   } = useInspection({ inspectionId });
 
   const [currentStep, setCurrentStep] = useState(formData.currentStep ?? 0);
@@ -303,6 +310,17 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Debug Panel - visible with ?debug=true */}
+      {showDebug && (
+        <DebugPanel
+          inspectionId={currentInspectionId}
+          status={status}
+          lastSaved={lastSaved}
+          saving={saving}
+          debugInfo={debugInfo}
+        />
       )}
     </div>
   );
