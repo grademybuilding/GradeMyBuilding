@@ -67,7 +67,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [status, setStatus] = useState<'draft' | 'completed'>('draft');
   const [propertyId, setPropertyId] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [justSubmitted, setJustSubmitted] = useState(false);
   const [debugInfo, setDebugInfo] = useState<{
     lastOperation: string;
     lastPayload: any;
@@ -95,23 +95,26 @@ export function useInspection(options: UseInspectionOptions = {}) {
   // Reset all inspection state for a fresh start
   const resetInspectionFlow = useCallback(() => {
     log.save('Resetting inspection flow for fresh start');
-    
+
+    // Mark submitted across navigations so draft restore is skipped once
+    localStorage.setItem('inspection:just_submitted', '1');
+
     // Clear any pending auto-save
     if (autoSaveTimerRef.current) {
       clearTimeout(autoSaveTimerRef.current);
       autoSaveTimerRef.current = null;
     }
-    
+
     // Reset all state
     setInspectionId(null);
     setPropertyId(null);
     setFormData({});
     setStatus('draft');
     setLastSaved(null);
-    setIsSubmitted(true); // Mark as submitted to prevent auto-save
+    setJustSubmitted(true);
     pendingChangesRef.current = false;
     formDataRef.current = {};
-    
+
     setDebugInfo({
       lastOperation: 'RESET',
       lastPayload: null,
@@ -232,13 +235,15 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
   const loadDraft = async () => {
     try {
-      // Don't load draft if we just submitted
-      if (isSubmitted) {
-        log.load('Skipping draft load - just submitted');
+      // Don't load draft right after a successful submission (even across navigation)
+      if (localStorage.getItem('inspection:just_submitted') === '1') {
+        log.load('Skipping draft load - just submitted (localStorage flag)');
+        localStorage.removeItem('inspection:just_submitted');
+        setJustSubmitted(false);
         setLoading(false);
         return;
       }
-      
+
       setLoading(true);
       log.load('Starting draft load');
       
@@ -577,52 +582,68 @@ export function useInspection(options: UseInspectionOptions = {}) {
   };
 
   const triggerAutoSave = useCallback(() => {
-    // Don't auto-save if already submitted or completed
-    if (isSubmitted || status === 'completed') {
-      log.save('Auto-save skipped - inspection is submitted/completed');
+    // Don't auto-save completed inspections
+    if (status === 'completed') {
+      log.save('Auto-save skipped - inspection is completed');
       return;
     }
-    
+
     pendingChangesRef.current = true;
-    
+
     // Clear existing timer
     if (autoSaveTimerRef.current) {
       clearTimeout(autoSaveTimerRef.current);
     }
-    
+
     // Set new timer for debounced auto-save
     autoSaveTimerRef.current = setTimeout(() => {
       log.save('Auto-save triggered');
       saveToSupabase(formDataRef.current, false);
     }, autoSaveDelay);
-  }, [autoSaveDelay, isSubmitted, status]);
+  }, [autoSaveDelay, status]);
+
+  const clearJustSubmittedFlag = useCallback(() => {
+    if (localStorage.getItem('inspection:just_submitted') === '1') {
+      localStorage.removeItem('inspection:just_submitted');
+    }
+    if (justSubmitted) setJustSubmitted(false);
+  }, [justSubmitted]);
 
   const handleFieldChange = useCallback((field: string, value: any) => {
-    // Don't update form data if submitted
-    if (isSubmitted || status === 'completed') {
-      log.save('Field change skipped - inspection is submitted/completed');
+    // If the user starts a new inspection right after submit, allow edits and re-enable autosave
+    clearJustSubmittedFlag();
+
+    // Don't update form data if completed
+    if (status === 'completed') {
+      log.save('Field change skipped - inspection is completed');
       return;
     }
-    
+
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
       return updated;
     });
-    
+
     // Trigger auto-save
     triggerAutoSave();
-  }, [triggerAutoSave, isSubmitted, status]);
+  }, [triggerAutoSave, status, clearJustSubmittedFlag]);
 
   const handleManualSave = useCallback(async () => {
     log.save('Manual save requested');
-    
+
+    // If user manually saves right after submit, treat it as a new inspection start
+    if (justSubmitted) {
+      localStorage.removeItem('inspection:just_submitted');
+      setJustSubmitted(false);
+    }
+
     // Clear any pending auto-save
     if (autoSaveTimerRef.current) {
       clearTimeout(autoSaveTimerRef.current);
     }
-    
+
     return saveToSupabase(formDataRef.current, true);
-  }, []);
+  }, [justSubmitted]);
 
   const handleSubmit = useCallback(async () => {
     log.submit('Submit requested', { inspectionId });
@@ -767,7 +788,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     lastSaved,
     status,
     isReadOnly: status === 'completed',
-    isSubmitted,
+    justSubmitted,
     handleFieldChange,
     handleManualSave,
     handleSubmit,
