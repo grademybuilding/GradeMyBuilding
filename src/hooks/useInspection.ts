@@ -242,13 +242,33 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
   // Load existing draft on mount OR load specific inspection by ID
   useEffect(() => {
+    // Reset state when inspectionId changes to ensure fresh load
     if (initialInspectionId) {
       // Load specific inspection when ID is provided (Resume functionality)
+      log.load('Resume requested for inspection', { inspectionId: initialInspectionId });
+      
+      // Clear any previous state before loading new inspection
+      setFormData({});
+      setInspectionId(null);
+      setPropertyId(null);
+      setStatus('draft');
+      setLastSaved(null);
+      setJustSubmitted(false);
+      pendingChangesRef.current = false;
+      
+      // Load the specific inspection
       loadInspectionById(initialInspectionId);
     } else if (restoreDraftOnMount) {
       // Load most recent draft
       loadDraft();
     } else {
+      // Starting fresh - ensure clean state
+      setFormData({});
+      setInspectionId(null);
+      setPropertyId(null);
+      setStatus('draft');
+      setLastSaved(null);
+      pendingChangesRef.current = false;
       setLoading(false);
     }
   }, [initialInspectionId, restoreDraftOnMount]);
