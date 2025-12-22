@@ -30,7 +30,7 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     lastSaved,
     status,
     isReadOnly,
-    isSubmitted,
+    justSubmitted,
     handleFieldChange,
     handleManualSave,
     handleSubmit,
@@ -48,22 +48,21 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
 
-  // Restore navigation state when form data loads (only if not just submitted)
+  // Restore navigation state when form data loads (skip immediately after submit)
   useEffect(() => {
-    if (isSubmitted) {
-      // Reset to initial state after submit
+    if (justSubmitted) {
       setCurrentStep(0);
       setCompletedSteps([]);
       return;
     }
-    
+
     if (formData.currentStep !== undefined) {
       setCurrentStep(formData.currentStep);
     }
     if (formData.completedSteps) {
       setCompletedSteps(formData.completedSteps);
     }
-  }, [formData.currentStep, formData.completedSteps, isSubmitted]);
+  }, [formData.currentStep, formData.completedSteps, justSubmitted]);
 
   const getScrollParent = useCallback((node: HTMLElement | null) => {
     let current: HTMLElement | null = node;
