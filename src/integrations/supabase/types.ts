@@ -904,7 +904,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      inspector_has_property_access: {
+        Args: { _property_id: string; _user_id: string }
+        Returns: boolean
+      }
       migrate_checklist_data: { Args: never; Returns: undefined }
+      user_owns_inspection_property: {
+        Args: { _inspection_id: string; _user_id: string }
+        Returns: boolean
+      }
+      user_owns_property: {
+        Args: { _property_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role:
