@@ -42,7 +42,10 @@ interface InspectionFormData {
 
 interface UseInspectionOptions {
   inspectionId?: string | null;
+  /** Debounce delay for auto-save (when enabled) */
   autoSaveDelay?: number;
+  /** If false, changes will NOT be saved automatically; user must click Save */
+  autoSaveEnabled?: boolean;
 }
 
 // Debug logging helper
@@ -58,8 +61,12 @@ const log = {
 };
 
 export function useInspection(options: UseInspectionOptions = {}) {
-  const { inspectionId: initialInspectionId, autoSaveDelay = 2000 } = options;
-  
+  const {
+    inspectionId: initialInspectionId,
+    autoSaveDelay = 2000,
+    autoSaveEnabled = true,
+  } = options;
+
   const [inspectionId, setInspectionId] = useState<string | null>(initialInspectionId ?? null);
   const [formData, setFormData] = useState<InspectionFormData>({});
   const [loading, setLoading] = useState(true);
@@ -105,8 +112,8 @@ export function useInspection(options: UseInspectionOptions = {}) {
     // Prevent any "save on unmount" from writing a new draft right after submit
     skipNextUnmountSaveRef.current = true;
 
-    // Mark submitted across navigations so draft restore is skipped once
-    localStorage.setItem('inspection:just_submitted', '1');
+    // Mark submitted across navigations so draft restore is skipped (keep flag until user starts editing)
+    localStorage.setItem('inspection:just_submitted', String(Date.now()));
 
     // Clear any pending auto-save
     if (autoSaveTimerRef.current) {
@@ -256,9 +263,9 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const loadDraft = async () => {
     try {
       // Don't load draft right after a successful submission (even across navigation)
-      if (localStorage.getItem('inspection:just_submitted') === '1') {
+      // IMPORTANT: keep the flag until the user starts editing; React 18 StrictMode can run effects twice.
+      if (localStorage.getItem('inspection:just_submitted')) {
         log.load('Skipping draft load - just submitted (localStorage flag)');
-        localStorage.removeItem('inspection:just_submitted');
 
         // Ensure this mount starts clean at Step 1 with empty data
         setInspectionId(null);
@@ -613,6 +620,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
   };
 
   const triggerAutoSave = useCallback(() => {
+    if (!autoSaveEnabled) {
+      return;
+    }
+
     // Don't auto-save completed inspections
     if (status === 'completed') {
       log.save('Auto-save skipped - inspection is completed');
@@ -637,10 +648,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
       log.save('Auto-save triggered');
       saveToSupabase(formDataRef.current, false);
     }, autoSaveDelay);
-  }, [autoSaveDelay, status, justSubmitted]);
+  }, [autoSaveDelay, status, justSubmitted, autoSaveEnabled]);
 
   const clearJustSubmittedFlag = useCallback(() => {
-    if (localStorage.getItem('inspection:just_submitted') === '1') {
+    if (localStorage.getItem('inspection:just_submitted')) {
       localStorage.removeItem('inspection:just_submitted');
     }
     if (justSubmitted) setJustSubmitted(false);
@@ -670,8 +681,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
     // If user manually saves right after submit, treat it as a new inspection start
     if (justSubmitted) {
-      localStorage.removeItem('inspection:just_submitted');
-      setJustSubmitted(false);
+      clearJustSubmittedFlag();
     }
 
     // Clear any pending auto-save
@@ -680,7 +690,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     }
 
     return saveToSupabase(formDataRef.current, true);
-  }, [justSubmitted]);
+  }, [justSubmitted, clearJustSubmittedFlag]);
 
   const handleSubmit = useCallback(async () => {
     log.submit('Submit requested', { inspectionId });
