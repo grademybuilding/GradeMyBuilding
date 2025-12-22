@@ -145,6 +145,25 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
         {inspections.map((inspection) => {
           const isDraft = inspection.status === 'draft' || inspection.status === 'in_progress';
           
+          // Use checklist_data for property info when properties has placeholder values
+          const checklistData = inspection.checklist_data as Record<string, unknown> | null;
+          const hasRealPropertyData = inspection.properties?.address && 
+            inspection.properties.address !== 'Draft Property' &&
+            inspection.properties.city !== 'Unknown';
+          
+          const displayAddress = hasRealPropertyData 
+            ? inspection.properties?.address 
+            : (checklistData?.address as string) || 'Unknown Address';
+          const displayCity = hasRealPropertyData 
+            ? inspection.properties?.city 
+            : (checklistData?.city as string) || 'Unknown';
+          const displayState = hasRealPropertyData 
+            ? inspection.properties?.state 
+            : (checklistData?.state as string) || '';
+          const displayPropertyType = hasRealPropertyData
+            ? inspection.properties?.property_type
+            : (checklistData?.propertyType as string) || 'Unknown';
+          
           return (
             <Card key={inspection.id} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
@@ -153,15 +172,13 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                     <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
                       <Building className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                       <span className="truncate">
-                        {inspection.properties?.address || 'Unknown Address'}
+                        {displayAddress}
                       </span>
                     </CardTitle>
                     <CardDescription className="flex items-center gap-2">
                       <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                       <span className="truncate">
-                        {inspection.properties 
-                          ? `${inspection.properties.city}, ${inspection.properties.state}`
-                          : 'Unknown Location'}
+                        {displayCity}{displayState ? `, ${displayState}` : ''}
                       </span>
                     </CardDescription>
                   </div>
@@ -183,8 +200,8 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                         {format(new Date(inspection.inspection_date), 'MMM d, yyyy')}
                       </span>
                     </div>
-                    <Badge variant="outline" className="text-xs">
-                      {inspection.properties?.property_type || 'Unknown'}
+                    <Badge variant="outline" className="text-xs capitalize">
+                      {displayPropertyType}
                     </Badge>
                     {getStatusBadge(inspection.status)}
                   </div>

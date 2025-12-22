@@ -9,6 +9,7 @@ export interface InspectionListItem {
   final_grade_numeric: number | null;
   notes: string | null;
   created_at: string | null;
+  checklist_data: Record<string, unknown> | null;
   properties: {
     address: string;
     city: string;

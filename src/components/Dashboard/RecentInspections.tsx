@@ -60,41 +60,59 @@ export function RecentInspections() {
           </div>
         ) : (
           <div className="space-y-3 sm:space-y-4">
-            {recentInspections.map((inspection) => (
-              <div
-                key={inspection.id}
-                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 p-3 sm:p-4 border border-border rounded-lg hover:shadow-card transition-shadow"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                    <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
-                    <p className="font-medium text-xs sm:text-sm truncate">
-                      {inspection.properties?.address || 'Unknown Address'}
-                      {inspection.properties?.city && `, ${inspection.properties.city}`}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <Badge variant="outline" className={`${getStatusColor(inspection.status)} text-xs`}>
-                      {inspection.status?.replace('_', ' ') || 'unknown'}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {inspection.properties?.property_type || 'Unknown Type'}
-                    </span>
-                    {inspection.final_grade_numeric && (
-                      <span className={`text-xs font-medium ${getGradeColor(inspection.final_grade_letter)}`}>
-                        Score: {inspection.final_grade_numeric.toFixed(0)}%
+            {recentInspections.map((inspection) => {
+              // Use checklist_data for property info when properties has placeholder values
+              const checklistData = inspection.checklist_data as Record<string, unknown> | null;
+              const hasRealPropertyData = inspection.properties?.address && 
+                inspection.properties.address !== 'Draft Property' &&
+                inspection.properties.city !== 'Unknown';
+              
+              const displayAddress = hasRealPropertyData 
+                ? inspection.properties?.address 
+                : (checklistData?.address as string) || 'Unknown Address';
+              const displayCity = hasRealPropertyData 
+                ? inspection.properties?.city 
+                : (checklistData?.city as string) || '';
+              const displayPropertyType = hasRealPropertyData
+                ? inspection.properties?.property_type
+                : (checklistData?.propertyType as string) || 'Unknown Type';
+
+              return (
+                <div
+                  key={inspection.id}
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 p-3 sm:p-4 border border-border rounded-lg hover:shadow-card transition-shadow"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                      <p className="font-medium text-xs sm:text-sm truncate">
+                        {displayAddress}
+                        {displayCity && `, ${displayCity}`}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                      <Badge variant="outline" className={`${getStatusColor(inspection.status)} text-xs`}>
+                        {inspection.status?.replace('_', ' ') || 'unknown'}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground capitalize">
+                        {displayPropertyType}
                       </span>
-                    )}
-                    <span className="text-xs text-muted-foreground">
-                      {format(new Date(inspection.inspection_date), 'MMM d, yyyy')}
-                    </span>
-                  </div>
+                      {inspection.final_grade_numeric !== null && inspection.final_grade_numeric !== undefined && (
+                        <span className={`text-xs font-medium ${getGradeColor(inspection.final_grade_letter)}`}>
+                          Score: {inspection.final_grade_numeric.toFixed(0)}%
+                        </span>
+                      )}
+                      <span className="text-xs text-muted-foreground">
+                        {format(new Date(inspection.inspection_date), 'MMM d, yyyy')}
+                      </span>
+                    </div>
                 </div>
                 <Button variant="ghost" size="sm" className="self-end sm:self-auto">
                   <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 </Button>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </CardContent>
