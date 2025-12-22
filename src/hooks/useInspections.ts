@@ -107,11 +107,15 @@ export function useInspections(): UseInspectionsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchInspections = useCallback(async () => {
+    console.log('[useInspections] Starting fetch...');
     setLoading(true);
     setError(null);
 
     try {
+      console.log('[useInspections] Invoking get-inspections edge function');
       const { data, error: fnError } = await supabase.functions.invoke('get-inspections');
+
+      console.log('[useInspections] Response:', { data, fnError });
 
       if (fnError) {
         throw new Error(fnError.message || 'Failed to fetch inspections');
@@ -121,9 +125,10 @@ export function useInspections(): UseInspectionsReturn {
         throw new Error(data.error);
       }
 
+      console.log('[useInspections] Fetched inspections:', data?.inspections?.length || 0);
       setInspections(data?.inspections || []);
     } catch (err) {
-      console.error('Error fetching inspections:', err);
+      console.error('[useInspections] Error fetching inspections:', err);
       setError(err instanceof Error ? err.message : 'Failed to load inspections');
       setInspections([]);
     } finally {
