@@ -223,11 +223,20 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       if (isStale(epoch)) return;
 
+      // Set inspection ID and update ref immediately for save operations
       setInspectionId(inspection.id);
+      inspectionIdRef.current = inspection.id;
       setPropertyId(inspection.property_id);
       setStatus(inspection.status === 'completed' ? 'completed' : 'draft');
       setFormData(restoredData);
+      formDataRef.current = restoredData;
       setJustSubmitted(false);
+      
+      log.load('State updated after resume', {
+        inspectionId: inspection.id,
+        propertyId: inspection.property_id,
+        formDataKeys: Object.keys(restoredData).length,
+      });
 
       toast({
         title: 'Inspection Loaded',
@@ -242,21 +251,15 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
   // Load existing draft on mount OR load specific inspection by ID
   useEffect(() => {
-    // Reset state when inspectionId changes to ensure fresh load
     if (initialInspectionId) {
       // Load specific inspection when ID is provided (Resume functionality)
       log.load('Resume requested for inspection', { inspectionId: initialInspectionId });
       
-      // Clear any previous state before loading new inspection
-      setFormData({});
-      setInspectionId(null);
-      setPropertyId(null);
-      setStatus('draft');
-      setLastSaved(null);
+      // Clear the just_submitted flag since user is resuming
+      localStorage.removeItem('inspection:just_submitted');
       setJustSubmitted(false);
-      pendingChangesRef.current = false;
       
-      // Load the specific inspection
+      // Load the specific inspection - it will set all the state correctly
       loadInspectionById(initialInspectionId);
     } else if (restoreDraftOnMount) {
       // Load most recent draft
