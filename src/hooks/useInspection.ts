@@ -46,6 +46,8 @@ interface UseInspectionOptions {
   autoSaveDelay?: number;
   /** If false, changes will NOT be saved automatically; user must click Save */
   autoSaveEnabled?: boolean;
+  /** If false, do not auto-restore an existing draft on mount */
+  restoreDraftOnMount?: boolean;
 }
 
 // Debug logging helper
@@ -65,6 +67,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     inspectionId: initialInspectionId,
     autoSaveDelay = 2000,
     autoSaveEnabled = true,
+    restoreDraftOnMount = true,
   } = options;
 
   const [inspectionId, setInspectionId] = useState<string | null>(initialInspectionId ?? null);
@@ -142,10 +145,14 @@ export function useInspection(options: UseInspectionOptions = {}) {
     });
   }, []);
 
-  // Load existing draft on mount
+  // Load existing draft on mount (optional)
   useEffect(() => {
+    if (!restoreDraftOnMount) {
+      setLoading(false);
+      return;
+    }
     loadDraft();
-  }, []);
+  }, [restoreDraftOnMount]);
 
   // Cleanup auto-save timer on unmount
   useEffect(() => {
