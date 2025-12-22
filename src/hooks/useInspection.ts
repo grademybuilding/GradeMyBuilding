@@ -86,15 +86,24 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
   const pendingChangesRef = useRef<boolean>(false);
   const formDataRef = useRef<InspectionFormData>(formData);
+  const inspectionIdRef = useRef<string | null>(inspectionId);
+  const skipNextUnmountSaveRef = useRef(false);
   
-  // Keep ref in sync with state
+  // Keep refs in sync with state
   useEffect(() => {
     formDataRef.current = formData;
   }, [formData]);
 
+  useEffect(() => {
+    inspectionIdRef.current = inspectionId;
+  }, [inspectionId]);
+
   // Reset all inspection state for a fresh start
   const resetInspectionFlow = useCallback(() => {
     log.save('Resetting inspection flow for fresh start');
+
+    // Prevent any "save on unmount" from writing a new draft right after submit
+    skipNextUnmountSaveRef.current = true;
 
     // Mark submitted across navigations so draft restore is skipped once
     localStorage.setItem('inspection:just_submitted', '1');
@@ -105,6 +114,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
       autoSaveTimerRef.current = null;
     }
 
+    pendingChangesRef.current = false;
+    formDataRef.current = {};
+    inspectionIdRef.current = null;
+
     // Reset all state
     setInspectionId(null);
     setPropertyId(null);
@@ -112,8 +125,6 @@ export function useInspection(options: UseInspectionOptions = {}) {
     setStatus('draft');
     setLastSaved(null);
     setJustSubmitted(true);
-    pendingChangesRef.current = false;
-    formDataRef.current = {};
 
     setDebugInfo({
       lastOperation: 'RESET',
@@ -135,12 +146,21 @@ export function useInspection(options: UseInspectionOptions = {}) {
       if (autoSaveTimerRef.current) {
         clearTimeout(autoSaveTimerRef.current);
       }
+
+      // If we just submitted & reset, NEVER write another draft on unmount
+      if (skipNextUnmountSaveRef.current) {
+        skipNextUnmountSaveRef.current = false;
+        pendingChangesRef.current = false;
+        return;
+      }
+
       // Save any pending changes before unmount
-      if (pendingChangesRef.current && inspectionId) {
+      const id = inspectionIdRef.current;
+      if (pendingChangesRef.current && id) {
         saveToSupabase(formDataRef.current, false);
       }
     };
-  }, [inspectionId]);
+  }, []);
 
   // Save before page unload
   useEffect(() => {
@@ -239,7 +259,18 @@ export function useInspection(options: UseInspectionOptions = {}) {
       if (localStorage.getItem('inspection:just_submitted') === '1') {
         log.load('Skipping draft load - just submitted (localStorage flag)');
         localStorage.removeItem('inspection:just_submitted');
-        setJustSubmitted(false);
+
+        // Ensure this mount starts clean at Step 1 with empty data
+        setInspectionId(null);
+        setPropertyId(null);
+        setFormData({});
+        setStatus('draft');
+        setLastSaved(null);
+        pendingChangesRef.current = false;
+        formDataRef.current = {};
+        inspectionIdRef.current = null;
+        setJustSubmitted(true);
+
         setLoading(false);
         return;
       }
@@ -588,6 +619,12 @@ export function useInspection(options: UseInspectionOptions = {}) {
       return;
     }
 
+    // Right after submit we reset the flow; don't auto-save the cleared form
+    if (justSubmitted) {
+      log.save('Auto-save skipped - just submitted/reset');
+      return;
+    }
+
     pendingChangesRef.current = true;
 
     // Clear existing timer
@@ -600,7 +637,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
       log.save('Auto-save triggered');
       saveToSupabase(formDataRef.current, false);
     }, autoSaveDelay);
-  }, [autoSaveDelay, status]);
+  }, [autoSaveDelay, status, justSubmitted]);
 
   const clearJustSubmittedFlag = useCallback(() => {
     if (localStorage.getItem('inspection:just_submitted') === '1') {
