@@ -30,6 +30,7 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     lastSaved,
     status,
     isReadOnly,
+    isSubmitted,
     handleFieldChange,
     handleManualSave,
     handleSubmit,
@@ -37,8 +38,8 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     debugInfo,
   } = useInspection({ inspectionId });
 
-  const [currentStep, setCurrentStep] = useState(formData.currentStep ?? 0);
-  const [completedSteps, setCompletedSteps] = useState<number[]>(formData.completedSteps ?? []);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const steps = [
@@ -47,15 +48,22 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     { id: 3, title: "Checklist", shortTitle: "Checklist" },
   ];
 
-  // Restore navigation state when form data loads
+  // Restore navigation state when form data loads (only if not just submitted)
   useEffect(() => {
+    if (isSubmitted) {
+      // Reset to initial state after submit
+      setCurrentStep(0);
+      setCompletedSteps([]);
+      return;
+    }
+    
     if (formData.currentStep !== undefined) {
       setCurrentStep(formData.currentStep);
     }
     if (formData.completedSteps) {
       setCompletedSteps(formData.completedSteps);
     }
-  }, [formData.currentStep, formData.completedSteps]);
+  }, [formData.currentStep, formData.completedSteps, isSubmitted]);
 
   const getScrollParent = useCallback((node: HTMLElement | null) => {
     let current: HTMLElement | null = node;
@@ -126,6 +134,10 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
   const onSubmitInspection = async () => {
     const success = await handleSubmit();
     if (success) {
+      // Reset local navigation state
+      setCurrentStep(0);
+      setCompletedSteps([]);
+      // Navigate back to dashboard
       onBack();
     }
   };

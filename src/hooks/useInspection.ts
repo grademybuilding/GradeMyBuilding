@@ -67,6 +67,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [status, setStatus] = useState<'draft' | 'completed'>('draft');
   const [propertyId, setPropertyId] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [debugInfo, setDebugInfo] = useState<{
     lastOperation: string;
     lastPayload: any;
@@ -90,6 +91,35 @@ export function useInspection(options: UseInspectionOptions = {}) {
   useEffect(() => {
     formDataRef.current = formData;
   }, [formData]);
+
+  // Reset all inspection state for a fresh start
+  const resetInspectionFlow = useCallback(() => {
+    log.save('Resetting inspection flow for fresh start');
+    
+    // Clear any pending auto-save
+    if (autoSaveTimerRef.current) {
+      clearTimeout(autoSaveTimerRef.current);
+      autoSaveTimerRef.current = null;
+    }
+    
+    // Reset all state
+    setInspectionId(null);
+    setPropertyId(null);
+    setFormData({});
+    setStatus('draft');
+    setLastSaved(null);
+    setIsSubmitted(true); // Mark as submitted to prevent auto-save
+    pendingChangesRef.current = false;
+    formDataRef.current = {};
+    
+    setDebugInfo({
+      lastOperation: 'RESET',
+      lastPayload: null,
+      lastResponse: null,
+      lastVerification: null,
+      errors: [],
+    });
+  }, []);
 
   // Load existing draft on mount
   useEffect(() => {
@@ -202,6 +232,13 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
   const loadDraft = async () => {
     try {
+      // Don't load draft if we just submitted
+      if (isSubmitted) {
+        log.load('Skipping draft load - just submitted');
+        setLoading(false);
+        return;
+      }
+      
       setLoading(true);
       log.load('Starting draft load');
       
@@ -215,6 +252,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
       log.load('Session found', { userId: session.user.id });
 
       // Check for existing draft inspection for this user
+      // ONLY load inspections with status 'draft' - never load completed/submitted
       const { data: inspections, error } = await supabase
         .from('inspections')
         .select('*')
@@ -233,6 +271,14 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       if (inspections && inspections.length > 0) {
         const draft = inspections[0];
+        
+        // Double-check status is draft (safety check)
+        if (draft.status !== 'draft') {
+          log.load('Skipping non-draft inspection', { status: draft.status });
+          setLoading(false);
+          return;
+        }
+        
         log.load('Loading draft', { 
           inspectionId: draft.id, 
           propertyId: draft.property_id,
@@ -245,7 +291,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
         setInspectionId(draft.id);
         setPropertyId(draft.property_id);
-        setStatus(draft.status as 'draft' | 'completed');
+        setStatus('draft');
         
         // Restore form data from checklist_data JSONB
         const savedData = (draft.checklist_data as InspectionFormData) || {};
@@ -531,6 +577,12 @@ export function useInspection(options: UseInspectionOptions = {}) {
   };
 
   const triggerAutoSave = useCallback(() => {
+    // Don't auto-save if already submitted or completed
+    if (isSubmitted || status === 'completed') {
+      log.save('Auto-save skipped - inspection is submitted/completed');
+      return;
+    }
+    
     pendingChangesRef.current = true;
     
     // Clear existing timer
@@ -543,9 +595,15 @@ export function useInspection(options: UseInspectionOptions = {}) {
       log.save('Auto-save triggered');
       saveToSupabase(formDataRef.current, false);
     }, autoSaveDelay);
-  }, [autoSaveDelay]);
+  }, [autoSaveDelay, isSubmitted, status]);
 
   const handleFieldChange = useCallback((field: string, value: any) => {
+    // Don't update form data if submitted
+    if (isSubmitted || status === 'completed') {
+      log.save('Field change skipped - inspection is submitted/completed');
+      return;
+    }
+    
     setFormData((prev) => {
       const updated = { ...prev, [field]: value };
       return updated;
@@ -553,7 +611,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     
     // Trigger auto-save
     triggerAutoSave();
-  }, [triggerAutoSave]);
+  }, [triggerAutoSave, isSubmitted, status]);
 
   const handleManualSave = useCallback(async () => {
     log.save('Manual save requested');
@@ -569,7 +627,9 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const handleSubmit = useCallback(async () => {
     log.submit('Submit requested', { inspectionId });
 
-    if (!inspectionId) {
+    let currentInspectionId = inspectionId;
+
+    if (!currentInspectionId) {
       log.submit('No inspection ID, saving first');
       // Save first to get an inspection ID
       const saved = await saveToSupabase(formDataRef.current, false);
@@ -581,18 +641,20 @@ export function useInspection(options: UseInspectionOptions = {}) {
         });
         return false;
       }
+      // Get the newly created inspection ID from state
+      currentInspectionId = inspectionId;
     }
 
     try {
       setSaving(true);
       
       // Pre-submit validation: fetch current state
-      log.submit('Pre-submit check - fetching current state', { inspectionId });
+      log.submit('Pre-submit check - fetching current state', { inspectionId: currentInspectionId });
       
       const { data: preCheck, error: preCheckError } = await supabase
         .from('inspections')
         .select('*')
-        .eq('id', inspectionId)
+        .eq('id', currentInspectionId)
         .single();
 
       if (preCheckError || !preCheck) {
@@ -628,12 +690,12 @@ export function useInspection(options: UseInspectionOptions = {}) {
         return false;
       }
 
-      log.submit('Calling submit-inspection', { inspectionId });
+      log.submit('Calling submit-inspection', { inspectionId: currentInspectionId });
 
       // Call submit endpoint
       const { data: result, error } = await supabase.functions.invoke('submit-inspection', {
         body: {
-          inspection_id: inspectionId,
+          inspection_id: currentInspectionId,
         },
       });
 
@@ -653,7 +715,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
       const { data: postCheck } = await supabase
         .from('inspections')
         .select('*')
-        .eq('id', inspectionId)
+        .eq('id', currentInspectionId)
         .single();
 
       log.submit('Post-submit state', {
@@ -663,7 +725,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
         finalGradeNumeric: postCheck?.final_grade_numeric,
       });
 
-      setStatus('completed');
+      log.submit('Submit successful - resetting inspection flow');
+      
+      // Reset the form state after successful submit
+      resetInspectionFlow();
       
       toast({
         title: "Inspection Submitted",
@@ -682,7 +747,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     } finally {
       setSaving(false);
     }
-  }, [inspectionId, toast]);
+  }, [inspectionId, toast, resetInspectionFlow]);
 
   // Update navigation state (for position restoration)
   const updateNavigationState = useCallback((state: Partial<InspectionFormData>) => {
@@ -702,11 +767,13 @@ export function useInspection(options: UseInspectionOptions = {}) {
     lastSaved,
     status,
     isReadOnly: status === 'completed',
+    isSubmitted,
     handleFieldChange,
     handleManualSave,
     handleSubmit,
     updateNavigationState,
     triggerAutoSave,
+    resetInspectionFlow,
     // Debug info for debug panel
     debugInfo,
   };
