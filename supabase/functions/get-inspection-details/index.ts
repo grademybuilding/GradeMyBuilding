@@ -33,8 +33,19 @@ serve(async (req) => {
       });
     }
 
+    // Support both query params and body
     const url = new URL(req.url);
-    const inspection_id = url.searchParams.get('inspection_id');
+    let inspection_id = url.searchParams.get('inspection_id');
+    
+    // Try to get from body if not in query params
+    if (!inspection_id && req.method === 'POST') {
+      try {
+        const body = await req.json();
+        inspection_id = body.inspection_id;
+      } catch {
+        // Body parsing failed, continue with null
+      }
+    }
 
     if (!inspection_id) {
       return new Response(JSON.stringify({ error: 'Inspection ID is required' }), {
