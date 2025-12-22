@@ -346,7 +346,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                       </div>
 
                       {/* Rating Breakdown */}
-                      {(selectedInspection.excellent_count || selectedInspection.good_count || selectedInspection.poor_count) && (
+                      {(selectedInspection.excellent_count !== null || selectedInspection.good_count !== null || selectedInspection.poor_count !== null) && (
                         <Card>
                           <CardHeader className="pb-2">
                             <CardTitle className="text-sm">Rating Breakdown</CardTitle>
