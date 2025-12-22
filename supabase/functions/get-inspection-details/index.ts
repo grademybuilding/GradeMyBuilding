@@ -75,6 +75,11 @@ serve(async (req) => {
       });
     }
 
+    // Debug logging
+    console.log('[get-inspection-details] Inspection ID:', inspection_id);
+    console.log('[get-inspection-details] Properties:', inspection?.properties);
+    console.log('[get-inspection-details] Checklist Data:', inspection?.checklist_data);
+
     // Fetch inspector profile (best-effort; can fail due to RLS depending on viewer)
     let inspector_profile: any = null;
     if (inspection?.inspector_id) {
