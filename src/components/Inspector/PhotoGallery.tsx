@@ -65,16 +65,20 @@ export default function PhotoGallery() {
         if (error) throw error;
 
         // Transform the data to match our interface
-        const transformedData = (data || []).map(item => ({
-          id: item.id,
-          inspection_date: item.inspection_date,
-          status: item.status || 'draft',
-          property: item.property ? {
-            address: (item.property as any).address,
-            city: (item.property as any).city,
-            state: (item.property as any).state
-          } : null
-        }));
+        const transformedData = (data || []).map(item => {
+          // Handle property - could be object or array depending on Supabase response
+          const prop = Array.isArray(item.property) ? item.property[0] : item.property;
+          return {
+            id: item.id,
+            inspection_date: item.inspection_date,
+            status: item.status || 'draft',
+            property: prop ? {
+              address: prop.address || 'Unknown Address',
+              city: prop.city || '',
+              state: prop.state || ''
+            } : null
+          };
+        });
 
         setInspections(transformedData);
         
