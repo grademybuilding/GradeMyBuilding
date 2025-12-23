@@ -213,8 +213,12 @@ export default function PhotoGallery() {
       <PhotoUploadModal
         open={isUploadModalOpen}
         onOpenChange={setIsUploadModalOpen}
-        onUpload={uploadPhotos}
+        onUpload={async (files, inspectionId, caption) => {
+          await uploadPhotos(files, 'General', caption);
+        }}
         isUploading={isUploading}
+        inspections={inspections}
+        selectedInspectionId={selectedInspectionId}
       />
 
       {/* Photo Carousel */}
