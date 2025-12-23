@@ -2621,14 +2621,28 @@ interface ChecklistSectionProps {
 }
 
 export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) {
-  const [checkedItems, setCheckedItems] = useState<Record<string, 'pass' | 'fail' | 'na'>>({});
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
-  const [yearValues, setYearValues] = useState<Record<string, string>>({});
-  const [gallonsValues, setGallonsValues] = useState<Record<string, string>>({});
-  const [ratingValues, setRatingValues] = useState<Record<string, string>>({});
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [checkedItems, setCheckedItems] = useState<Record<string, 'pass' | 'fail' | 'na'>>(
+    formData?.checklist || {}
+  );
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>(
+    formData?.checklistSelections || {}
+  );
+  const [yearValues, setYearValues] = useState<Record<string, string>>(
+    formData?.checklistYears || {}
+  );
+  const [gallonsValues, setGallonsValues] = useState<Record<string, string>>(
+    formData?.checklistGallons || {}
+  );
+  const [ratingValues, setRatingValues] = useState<Record<string, string>>(
+    formData?.checklistRatings || {}
+  );
+  const [notes, setNotes] = useState<Record<string, string>>(
+    formData?.checklistNotes || {}
+  );
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>({});
+  const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>(
+    formData?.selectedDefects || {}
+  );
   const [selectedRoofSubcategory, setSelectedRoofSubcategory] = useState<string>('all');
   const [selectedFoundationSubcategory, setSelectedFoundationSubcategory] = useState<string>('all');
   const [selectedHeatingSubcategory, setSelectedHeatingSubcategory] = useState<string>('all');
@@ -2824,22 +2838,76 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
         
       case 'checkbox':
       default:
-        // For defect and green feature items, show editable comment area only
-        if (item.subcategory?.includes('Defects') || item.subcategory?.includes('Green Features')) {
+        // For defect items, show checkbox + comment area when checked
+        if (item.subcategory?.includes('Defects')) {
+          const isDefectSelected = selectedDefects[item.id] || false;
           return (
             <div className="space-y-3">
-              {/* Comment area - always visible */}
-              <Textarea
-                placeholder="Add inspection comments..."
-                value={notes[item.id] || defectDescriptions[item.id] || ''}
-                onChange={(e) => handleNoteChange(item.id, e.target.value)}
-                className="min-h-[120px] text-sm"
-              />
+              {/* Defect checkbox */}
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <Checkbox
+                  checked={isDefectSelected}
+                  onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                  className="h-5 w-5"
+                />
+                <span className="text-sm font-medium text-foreground">
+                  {isDefectSelected ? 'Defect Found' : 'Mark as Defect'}
+                </span>
+                {isDefectSelected && (
+                  <Badge variant="destructive" className="ml-2">
+                    Defect
+                  </Badge>
+                )}
+              </label>
+              
+              {/* Comment area - shown when defect is selected */}
+              {isDefectSelected && (
+                <Textarea
+                  placeholder="Describe the defect in detail..."
+                  value={notes[item.id] || defectDescriptions[item.id] || ''}
+                  onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                  className="min-h-[100px] text-sm border-destructive/50"
+                />
+              )}
             </div>
           );
         }
         
-        // For non-defect/non-green feature items, keep the Pass/Fail/N/A buttons
+        // For green feature items, show checkbox for selection
+        if (item.subcategory?.includes('Green Features') || item.category === 'Green Features') {
+          const isGreenFeatureSelected = selectedDefects[item.id] || false;
+          return (
+            <div className="space-y-3">
+              <label className="flex items-center space-x-3 cursor-pointer">
+                <Checkbox
+                  checked={isGreenFeatureSelected}
+                  onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                  className="h-5 w-5"
+                />
+                <span className="text-sm font-medium text-foreground">
+                  {isGreenFeatureSelected ? 'Feature Present' : 'Select if Present'}
+                </span>
+                {isGreenFeatureSelected && (
+                  <Badge variant="default" className="ml-2 bg-emerald-600">
+                    Present
+                  </Badge>
+                )}
+              </label>
+              
+              {/* Comment area - shown when feature is selected */}
+              {isGreenFeatureSelected && (
+                <Textarea
+                  placeholder="Add notes about this green feature..."
+                  value={notes[item.id] || ''}
+                  onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                  className="min-h-[80px] text-sm"
+                />
+              )}
+            </div>
+          );
+        }
+        
+        // For other checkbox items, keep the Pass/Fail/N/A buttons
         return (
           <div className="flex gap-2">
             <button
@@ -2848,7 +2916,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               className={`px-3 py-1 text-xs rounded-md transition-colors ${
                 checkedItems[item.id] === 'pass'
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400'
               }`}
             >
               Pass
@@ -2859,7 +2927,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               className={`px-3 py-1 text-xs rounded-md transition-colors ${
                 checkedItems[item.id] === 'fail'
                   ? 'bg-red-600 text-white'
-                  : 'bg-red-100 text-red-700 hover:bg-red-200'
+                  : 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400'
               }`}
             >
               Fail
@@ -2870,7 +2938,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
               className={`px-3 py-1 text-xs rounded-md transition-colors ${
                 checkedItems[item.id] === 'na'
                   ? 'bg-amber-600 text-white'
-                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200 dark:bg-amber-900/30 dark:text-amber-400'
               }`}
             >
               N/A
