@@ -57,7 +57,7 @@ export default function PhotoGallery() {
             id,
             inspection_date,
             status,
-            property:properties(address, city, state)
+            checklist_data
           `)
           .eq('inspector_id', session.user.id)
           .order('inspection_date', { ascending: false });
@@ -66,17 +66,21 @@ export default function PhotoGallery() {
 
         // Transform the data to match our interface
         const transformedData = (data || []).map(item => {
-          // Handle property - could be object or array depending on Supabase response
-          const prop = Array.isArray(item.property) ? item.property[0] : item.property;
+          // Extract address from checklist_data JSON
+          const checklistData = item.checklist_data as Record<string, any> | null;
+          const address = checklistData?.address || 'Unknown Address';
+          const city = checklistData?.city || '';
+          const state = checklistData?.state || '';
+          
           return {
             id: item.id,
             inspection_date: item.inspection_date,
             status: item.status || 'draft',
-            property: prop ? {
-              address: prop.address || 'Unknown Address',
-              city: prop.city || '',
-              state: prop.state || ''
-            } : null
+            property: {
+              address,
+              city,
+              state
+            }
           };
         });
 
