@@ -212,28 +212,32 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   const canSkip = hasSubcategories && !atSubmitScreen;
 
   return (
-    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-      {/* Main Category Navigation - Centered container with proper hierarchy */}
+    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
+      {/* Main Category Navigation */}
       <div className="w-full">
         <div className="max-w-4xl mx-auto">
-          {/* Category Stepper Container */}
-          <div className="bg-card rounded-xl border border-border shadow-sm">
-            {/* Header with navigation controls */}
-            <div className="flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 border-b border-border/50">
-              <div className="flex items-center gap-2">
+          <div className="bg-gradient-to-r from-card via-card to-card rounded-2xl border border-border/60 shadow-md overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-3.5 bg-muted/30 border-b border-border/40">
+              <div className="flex items-center gap-3">
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
                   onClick={handlePrevious}
                   disabled={activeMainCategory === 0}
-                  className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+                  className="h-8 w-8 p-0 rounded-lg text-muted-foreground hover:text-foreground hover:bg-background/80"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium">
-                  Step {activeMainCategory + 1} of {inspectionCategories.length}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-foreground">
+                    {currentCategory.label}
+                  </span>
+                  <span className="text-xs text-muted-foreground bg-background/60 px-2 py-0.5 rounded-full">
+                    {activeMainCategory + 1} / {inspectionCategories.length}
+                  </span>
+                </div>
               </div>
               <Button
                 type="button"
@@ -245,73 +249,57 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                   }
                 }}
                 disabled={activeMainCategory >= inspectionCategories.length - 1 || !completedCategories.includes(activeMainCategory)}
-                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
+                className="h-8 w-8 p-0 rounded-lg text-muted-foreground hover:text-foreground hover:bg-background/80"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
             
-            {/* Scrollable Steps */}
-            <div className="overflow-x-auto scrollbar-none">
-              <div className="flex items-stretch min-w-max lg:justify-center">
+            {/* Category Pills */}
+            <div className="overflow-x-auto scrollbar-none px-3 py-3 sm:px-4 sm:py-4">
+              <div className="flex items-center gap-2 min-w-max lg:justify-center">
                 {inspectionCategories.map((category, index) => {
                   const isCompleted = completedCategories.includes(index);
                   const isCurrent = index === activeMainCategory;
                   const isAccessible = isCompleted || index <= completedCategories.length;
-                  const isFirst = index === 0;
-                  const isLast = index === inspectionCategories.length - 1;
 
                   return (
-                    <div key={category.id} className="flex items-center">
-                      <button
-                        type="button"
-                        disabled={!isAccessible}
-                        onClick={() => handleCategoryChange(index)}
-                        className={cn(
-                          "relative flex flex-col items-center gap-1.5 px-3 py-3 sm:px-4 sm:py-4 lg:px-5 min-w-[100px] sm:min-w-[120px] lg:min-w-[140px] transition-all group",
-                          isCurrent && "bg-primary/5",
-                          !isAccessible && "cursor-not-allowed opacity-50"
-                        )}
-                      >
-                        {/* Step indicator */}
-                        <div className={cn(
-                          "w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 rounded-full flex items-center justify-center transition-all",
-                          isCurrent && "bg-primary text-primary-foreground shadow-lg ring-4 ring-primary/20",
-                          isCompleted && !isCurrent && "bg-primary/15 text-primary",
-                          !isCompleted && !isCurrent && isAccessible && "bg-muted text-muted-foreground group-hover:bg-muted/80",
-                          !isAccessible && "bg-muted/50 text-muted-foreground/40"
-                        )}>
-                          {isCompleted ? (
-                            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-                          ) : (
-                            <span className="text-xs sm:text-sm font-semibold">{index + 1}</span>
-                          )}
-                        </div>
-                        
-                        {/* Step label */}
-                        <span className={cn(
-                          "text-[10px] sm:text-xs lg:text-sm font-medium text-center leading-tight max-w-[90px] sm:max-w-[110px] lg:max-w-[130px]",
-                          isCurrent && "text-primary",
-                          isCompleted && !isCurrent && "text-foreground",
-                          !isCompleted && !isCurrent && "text-muted-foreground"
-                        )}>
-                          {category.label}
-                        </span>
-                        
-                        {/* Active indicator line */}
-                        {isCurrent && (
-                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 sm:w-10 h-0.5 bg-primary rounded-full" />
-                        )}
-                      </button>
-                      
-                      {/* Connector line between steps */}
-                      {!isLast && (
-                        <div className={cn(
-                          "w-4 sm:w-6 lg:w-8 h-0.5 -mx-0.5",
-                          index < activeMainCategory ? "bg-primary/50" : "bg-border"
-                        )} />
+                    <button
+                      key={category.id}
+                      type="button"
+                      disabled={!isAccessible}
+                      onClick={() => handleCategoryChange(index)}
+                      className={cn(
+                        "relative flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl transition-all duration-200 whitespace-nowrap",
+                        isCurrent && "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-[1.02]",
+                        isCompleted && !isCurrent && "bg-accent/15 text-accent hover:bg-accent/20 border border-accent/30",
+                        !isCompleted && !isCurrent && isAccessible && "bg-muted/50 text-muted-foreground hover:bg-muted border border-transparent hover:border-border/50",
+                        !isAccessible && "bg-muted/20 text-muted-foreground/40 cursor-not-allowed border border-transparent"
                       )}
-                    </div>
+                    >
+                      {/* Step indicator */}
+                      <span className={cn(
+                        "flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full text-xs font-bold transition-all",
+                        isCurrent && "bg-primary-foreground/20 text-primary-foreground",
+                        isCompleted && !isCurrent && "bg-accent text-accent-foreground",
+                        !isCompleted && !isCurrent && isAccessible && "bg-background text-muted-foreground",
+                        !isAccessible && "bg-muted text-muted-foreground/40"
+                      )}>
+                        {isCompleted ? (
+                          <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        ) : (
+                          <span>{index + 1}</span>
+                        )}
+                      </span>
+                      
+                      {/* Label - shown on current and completed */}
+                      <span className={cn(
+                        "text-xs sm:text-sm font-medium hidden sm:inline",
+                        (isCurrent || isCompleted) && "inline"
+                      )}>
+                        {category.label}
+                      </span>
+                    </button>
                   );
                 })}
               </div>
@@ -320,7 +308,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
         </div>
       </div>
 
-      {/* Sub-category Tabs (if applicable) - Centered with clear visual hierarchy */}
+      {/* Subcategory Tabs */}
       {hasSubcategories && (
         <div className="max-w-4xl mx-auto">
           <ChecklistTabs
