@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChecklistTabs } from "./ChecklistTabs";
 import { ChecklistCategoryContent } from "./ChecklistCategoryContent";
-import { InspectionPhotosSection } from "./InspectionPhotosSection";
-import { CheckCircle, ChevronRight, ChevronLeft, Camera } from "lucide-react";
+import { CheckCircle, ChevronRight, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollContext } from "@/pages/NewInspection";
 
@@ -21,17 +20,15 @@ const inspectionCategories = [
   { id: 'doors-windows', label: 'Doors & Windows', subcategories: ['Windows', 'Entry Doors', 'Interior Doors', 'Garage Doors'] },
   { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
-  { id: 'photos', label: 'Photos', subcategories: [], isPhotoSection: true },
 ];
 
 interface ChecklistSectionProps {
   formData: any;
   onChange: (field: string, value: any) => void;
   onSubmit?: () => void;
-  inspectionId?: string | null;
 }
 
-export function ChecklistSection({ formData, onChange, onSubmit, inspectionId }: ChecklistSectionProps) {
+export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSectionProps) {
   // Get scroll function from context
   const scrollToTop = useContext(ScrollContext);
   
@@ -69,7 +66,6 @@ export function ChecklistSection({ formData, onChange, onSubmit, inspectionId }:
 
   const currentCategory = inspectionCategories[activeMainCategory];
   const hasSubcategories = currentCategory.subcategories.length > 0;
-  const isPhotoSection = (currentCategory as any).isPhotoSection === true;
 
   // Auto scroll to top when category/subcategory changes OR when entering submit screen
   useEffect(() => {
@@ -365,8 +361,6 @@ export function ChecklistSection({ formData, onChange, onSubmit, inspectionId }:
                 <p className="text-sm text-foreground font-medium">Ready to submit your inspection.</p>
                 <p className="text-sm text-muted-foreground">You can still go back to review any sections before submitting.</p>
               </div>
-            ) : isPhotoSection ? (
-              <InspectionPhotosSection inspectionId={inspectionId || null} />
             ) : (
               <ChecklistCategoryContent
                 categoryId={currentCategory.id}
