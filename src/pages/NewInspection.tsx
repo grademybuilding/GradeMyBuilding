@@ -194,6 +194,7 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
               formData={formData} 
               onChange={handleFieldChange} 
               onSubmit={onSubmitInspection}
+              inspectionId={currentInspectionId}
             />
           </ScrollContext.Provider>
         );
