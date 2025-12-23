@@ -389,11 +389,13 @@ export type Database = {
           checklist_notes: Json | null
           checklist_ratings: Json | null
           created_at: string | null
+          defect_severities: Json | null
           excellent_count: number | null
           final_grade_letter: string | null
           final_grade_numeric: number | null
           good_count: number | null
           grade_calculated_at: string | null
+          green_features: Json | null
           id: string
           inspection_date: string
           inspection_time: string | null
@@ -424,11 +426,13 @@ export type Database = {
           checklist_notes?: Json | null
           checklist_ratings?: Json | null
           created_at?: string | null
+          defect_severities?: Json | null
           excellent_count?: number | null
           final_grade_letter?: string | null
           final_grade_numeric?: number | null
           good_count?: number | null
           grade_calculated_at?: string | null
+          green_features?: Json | null
           id?: string
           inspection_date: string
           inspection_time?: string | null
@@ -459,11 +463,13 @@ export type Database = {
           checklist_notes?: Json | null
           checklist_ratings?: Json | null
           created_at?: string | null
+          defect_severities?: Json | null
           excellent_count?: number | null
           final_grade_letter?: string | null
           final_grade_numeric?: number | null
           good_count?: number | null
           grade_calculated_at?: string | null
+          green_features?: Json | null
           id?: string
           inspection_date?: string
           inspection_time?: string | null
