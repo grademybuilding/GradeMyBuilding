@@ -97,6 +97,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
   const pendingChangesRef = useRef<boolean>(false);
   const formDataRef = useRef<InspectionFormData>(formData);
   const inspectionIdRef = useRef<string | null>(inspectionId);
+  const propertyIdRef = useRef<string | null>(propertyId);
   const skipNextUnmountSaveRef = useRef(false);
   /** Bumps whenever we hard-reset the flow; used to ignore late async state updates */
   const resetEpochRef = useRef(0);
@@ -111,6 +112,10 @@ export function useInspection(options: UseInspectionOptions = {}) {
   useEffect(() => {
     inspectionIdRef.current = inspectionId;
   }, [inspectionId]);
+
+  useEffect(() => {
+    propertyIdRef.current = propertyId;
+  }, [propertyId]);
 
   // Reset all inspection state for a fresh start
   const resetInspectionFlow = useCallback(() => {
@@ -134,6 +139,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
     pendingChangesRef.current = false;
     formDataRef.current = {};
     inspectionIdRef.current = null;
+    propertyIdRef.current = null;
 
     // Reset all state
     setInspectionId(null);
@@ -223,10 +229,11 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       if (isStale(epoch)) return;
 
-      // Set inspection ID and update ref immediately for save operations
+      // Set inspection ID and property ID, update refs immediately for save operations
       setInspectionId(inspection.id);
       inspectionIdRef.current = inspection.id;
       setPropertyId(inspection.property_id);
+      propertyIdRef.current = inspection.property_id;
       setStatus(inspection.status === 'completed' ? 'completed' : 'draft');
       setFormData(restoredData);
       formDataRef.current = restoredData;
@@ -487,7 +494,9 @@ export function useInspection(options: UseInspectionOptions = {}) {
         if (isStale(epoch)) return;
 
         setInspectionId(draft.id);
+        inspectionIdRef.current = draft.id;
         setPropertyId(draft.property_id);
+        propertyIdRef.current = draft.property_id;
         setStatus('draft');
         setFormData(restoredData);
 
@@ -538,13 +547,19 @@ export function useInspection(options: UseInspectionOptions = {}) {
     const startTime = Date.now();
     const epoch = resetEpochRef.current;
     
+    // Use refs to get stable values (avoid React state closure issues)
+    let currentInspectionId = inspectionIdRef.current;
+    let currentPropertyId = propertyIdRef.current;
+    
     try {
       setSaving(true);
       pendingChangesRef.current = false;
       
       log.save('Starting save operation', { 
-        hasInspectionId: !!inspectionId, 
-        inspectionId,
+        inspectionIdFromRef: currentInspectionId,
+        inspectionIdFromState: inspectionId,
+        propertyIdFromRef: currentPropertyId,
+        propertyIdFromState: propertyId,
         showToast 
       });
       
@@ -563,23 +578,77 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       const payload = buildSupabasePayload(data);
       
+      // If we don't have an inspection ID but have a property ID, check for existing draft
+      if (!currentInspectionId && currentPropertyId) {
+        log.save('No inspection ID but have property ID - checking for existing draft', { 
+          propertyId: currentPropertyId 
+        });
+        
+        const { data: existingDraft } = await supabase
+          .from('inspections')
+          .select('id')
+          .eq('inspector_id', session.user.id)
+          .eq('property_id', currentPropertyId)
+          .in('status', ['draft', 'in_progress'])
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        
+        if (existingDraft) {
+          log.save('Found existing draft for property - reusing', { 
+            existingInspectionId: existingDraft.id,
+            propertyId: currentPropertyId 
+          });
+          currentInspectionId = existingDraft.id;
+          inspectionIdRef.current = existingDraft.id;
+          setInspectionId(existingDraft.id);
+        }
+      }
+      
       setDebugInfo(prev => ({
         ...prev,
-        lastOperation: inspectionId ? 'UPDATE' : 'CREATE',
+        lastOperation: currentInspectionId ? 'UPDATE' : 'CREATE',
         lastPayload: payload,
       }));
 
-      if (inspectionId) {
+      if (currentInspectionId) {
         // Update existing inspection
         log.update('Calling update-inspection', { 
-          inspectionId, 
+          inspectionId: currentInspectionId, 
           payloadKeys: Object.keys(payload),
           ratingsCount: Object.keys(payload.checklist_ratings).length,
         });
 
+        // Also update property if it exists
+        if (currentPropertyId) {
+          log.update('Updating existing property', { propertyId: currentPropertyId });
+          
+          const propertyPayload: Record<string, any> = {};
+          if (data.propertyAddress) propertyPayload.address = data.propertyAddress;
+          if (data.propertyCity) propertyPayload.city = data.propertyCity;
+          if (data.propertyState) propertyPayload.state = data.propertyState;
+          if (data.propertyZip) propertyPayload.zip_code = data.propertyZip;
+          if (data.propertyType) propertyPayload.property_type = data.propertyType;
+          if (data.yearBuilt) propertyPayload.year_built = parseInt(data.yearBuilt);
+          if (data.squareFootage) propertyPayload.square_footage = parseInt(data.squareFootage);
+          
+          if (Object.keys(propertyPayload).length > 0) {
+            const { error: propUpdateError } = await supabase
+              .from('properties')
+              .update(propertyPayload)
+              .eq('id', currentPropertyId);
+            
+            if (propUpdateError) {
+              log.error('Property update failed', propUpdateError);
+            } else {
+              log.update('Property updated successfully', { propertyId: currentPropertyId });
+            }
+          }
+        }
+
         const { data: result, error } = await supabase.functions.invoke('update-inspection', {
           body: {
-            inspection_id: inspectionId,
+            inspection_id: currentInspectionId,
             updates: payload,
           },
         });
@@ -610,14 +679,52 @@ export function useInspection(options: UseInspectionOptions = {}) {
         }));
 
         // Verify the save
-        await verifyData(inspectionId, payload);
+        await verifyData(currentInspectionId, payload);
         
       } else {
         // Create new inspection - need a property first
-        let currentPropertyId = propertyId;
         
         if (!currentPropertyId) {
-          log.create('Creating property first');
+          // Check if there's an existing property with same address for this user
+          if (data.propertyAddress && data.propertyCity && data.propertyState) {
+            log.create('Checking for existing property with same address');
+            
+            const { data: existingProperty } = await supabase
+              .from('properties')
+              .select('id')
+              .eq('created_by', session.user.id)
+              .eq('address', data.propertyAddress)
+              .eq('city', data.propertyCity)
+              .eq('state', data.propertyState)
+              .limit(1)
+              .maybeSingle();
+            
+            if (existingProperty) {
+              log.create('Found existing property with same address - reusing', { 
+                propertyId: existingProperty.id 
+              });
+              currentPropertyId = existingProperty.id;
+              propertyIdRef.current = existingProperty.id;
+              setPropertyId(existingProperty.id);
+              
+              // Update the existing property with latest data
+              const propertyPayload: Record<string, any> = {
+                zip_code: data.propertyZip || '00000',
+                property_type: data.propertyType || 'residential',
+              };
+              if (data.yearBuilt) propertyPayload.year_built = parseInt(data.yearBuilt);
+              if (data.squareFootage) propertyPayload.square_footage = parseInt(data.squareFootage);
+              
+              await supabase
+                .from('properties')
+                .update(propertyPayload)
+                .eq('id', existingProperty.id);
+            }
+          }
+        }
+        
+        if (!currentPropertyId) {
+          log.create('Creating new property');
           
           const { data: property, error: propertyError } = await supabase
             .from('properties')
@@ -648,80 +755,129 @@ export function useInspection(options: UseInspectionOptions = {}) {
           
           log.create('Property created', { propertyId: property.id });
           currentPropertyId = property.id;
-          setPropertyId(currentPropertyId);
+          propertyIdRef.current = property.id;
+          setPropertyId(property.id);
         }
 
-        // Create the inspection
-        const createBody = {
-          property_id: currentPropertyId,
-          inspection_date: payload.inspection_date,
-          inspection_time: payload.inspection_time,
-          weather_conditions: payload.weather_conditions,
-          temperature: payload.temperature,
-          occupancy: payload.occupancy,
-          attendance: payload.attendance,
-          building_types: payload.building_types,
-        };
-
-        log.create('Calling create-inspection', createBody);
-
-        const { data: result, error } = await supabase.functions.invoke('create-inspection', {
-          body: createBody,
-        });
-
-        log.create('Create response', { result, error, duration: Date.now() - startTime });
-
-        if (error) {
-          log.error('Create failed', error);
-          if (showToast) {
-            toast({
-              title: "Save Failed",
-              description: "Could not create inspection. Please try again.",
-              variant: "destructive",
-            });
-          }
-          return false;
-        }
-
-        const newInspectionId = result.inspection?.id;
-        log.create('Inspection created', { newInspectionId });
+        // Before creating inspection, check if draft already exists for this property
+        log.create('Checking for existing draft inspection for property', { propertyId: currentPropertyId });
         
-        if (newInspectionId) {
-          // keep ref in sync immediately (submit can depend on it)
-          inspectionIdRef.current = newInspectionId;
-          setInspectionId(newInspectionId);
+        const { data: existingInspection } = await supabase
+          .from('inspections')
+          .select('id')
+          .eq('inspector_id', session.user.id)
+          .eq('property_id', currentPropertyId)
+          .in('status', ['draft', 'in_progress'])
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        
+        if (existingInspection) {
+          log.create('Found existing draft inspection - updating instead of creating', { 
+            existingInspectionId: existingInspection.id 
+          });
           
-          // Now update with full form data
-          log.update('Updating new inspection with full data', { newInspectionId });
+          currentInspectionId = existingInspection.id;
+          inspectionIdRef.current = existingInspection.id;
+          setInspectionId(existingInspection.id);
           
-          const updatePayload = {
-            checklist_ratings: payload.checklist_ratings,
-            checklist_notes: payload.checklist_notes,
-            selected_defects: payload.selected_defects,
-            checklist_data: payload.checklist_data,
-          };
-
-          const { data: updateResult, error: updateError } = await supabase.functions.invoke('update-inspection', {
+          // Update the existing inspection
+          const { data: result, error } = await supabase.functions.invoke('update-inspection', {
             body: {
-              inspection_id: newInspectionId,
-              updates: updatePayload,
+              inspection_id: currentInspectionId,
+              updates: payload,
             },
           });
-
-          log.update('Post-create update response', { updateResult, updateError });
-
-          if (updateError) {
-            log.error('Post-create update failed', updateError);
-          } else {
-            // Verify the save
-            await verifyData(newInspectionId, updatePayload);
+          
+          log.update('Update existing draft response', { result, error });
+          
+          if (error) {
+            log.error('Update existing draft failed', error);
+            if (showToast) {
+              toast({
+                title: "Save Failed",
+                description: "Could not update inspection. Please try again.",
+                variant: "destructive",
+              });
+            }
+            return false;
           }
-        }
+          
+          await verifyData(currentInspectionId, payload);
+          
+        } else {
+          // Create new inspection
+          const createBody = {
+            property_id: currentPropertyId,
+            inspection_date: payload.inspection_date,
+            inspection_time: payload.inspection_time,
+            weather_conditions: payload.weather_conditions,
+            temperature: payload.temperature,
+            occupancy: payload.occupancy,
+            attendance: payload.attendance,
+            building_types: payload.building_types,
+          };
 
-        setDebugInfo(prev => ({
-          ...prev,
-          lastResponse: result,
-        }));
+          log.create('Calling create-inspection', createBody);
+
+          const { data: result, error } = await supabase.functions.invoke('create-inspection', {
+            body: createBody,
+          });
+
+          log.create('Create response', { result, error, duration: Date.now() - startTime });
+
+          if (error) {
+            log.error('Create failed', error);
+            if (showToast) {
+              toast({
+                title: "Save Failed",
+                description: "Could not create inspection. Please try again.",
+                variant: "destructive",
+              });
+            }
+            return false;
+          }
+
+          const newInspectionId = result.inspection?.id;
+          log.create('Inspection created', { newInspectionId });
+          
+          if (newInspectionId) {
+            // Keep ref in sync immediately (submit can depend on it)
+            inspectionIdRef.current = newInspectionId;
+            setInspectionId(newInspectionId);
+            
+            // Now update with full form data
+            log.update('Updating new inspection with full data', { newInspectionId });
+            
+            const updatePayload = {
+              checklist_ratings: payload.checklist_ratings,
+              checklist_notes: payload.checklist_notes,
+              selected_defects: payload.selected_defects,
+              checklist_data: payload.checklist_data,
+            };
+
+            const { data: updateResult, error: updateError } = await supabase.functions.invoke('update-inspection', {
+              body: {
+                inspection_id: newInspectionId,
+                updates: updatePayload,
+              },
+            });
+
+            log.update('Post-create update response', { updateResult, updateError });
+
+            if (updateError) {
+              log.error('Post-create update failed', updateError);
+            } else {
+              // Verify the save
+              await verifyData(newInspectionId, updatePayload);
+            }
+          }
+
+          setDebugInfo(prev => ({
+            ...prev,
+            lastResponse: result,
+          }));
+        }
       }
 
       if (isStale(epoch)) return false;
