@@ -7,7 +7,6 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -17,43 +16,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 import { Upload, X, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const inspectionCategories = [
-  'Roof',
-  'Exterior Cladding',
-  'Walkways, Patios & Driveways',
-  'Wood Decks & Balconies',
-  'Foundation & Structure',
-  'Plumbing',
-  'Electric',
-  'Heating & Cooling',
-  'Doors & Windows',
-  'Built-in Appliances',
-  'Green Features',
-  'General / Other'
-];
+interface Inspection {
+  id: string;
+  inspection_date: string;
+  status: string;
+  property: {
+    address: string;
+    city: string;
+    state: string;
+  } | null;
+}
 
 interface PhotoUploadModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onUpload: (files: File[], category: string, caption: string) => Promise<void>;
+  onUpload: (files: File[], inspectionId: string, caption: string) => Promise<void>;
   isUploading: boolean;
+  inspections?: Inspection[];
+  selectedInspectionId?: string | null;
 }
 
 export function PhotoUploadModal({
   open,
   onOpenChange,
   onUpload,
-  isUploading
+  isUploading,
+  inspections = [],
+  selectedInspectionId = null
 }: PhotoUploadModalProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
-  const [category, setCategory] = useState('');
+  const [inspectionId, setInspectionId] = useState(selectedInspectionId || '');
   const [caption, setCaption] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const formatInspectionLabel = (inspection: Inspection) => {
+    const address = inspection.property?.address || 'Unknown Address';
+    const date = new Date(inspection.inspection_date).toLocaleDateString();
+    return `${address} - ${date}`;
+  };
 
   const handleFileSelect = (files: FileList | null) => {
     if (!files) return;
@@ -95,15 +101,15 @@ export function PhotoUploadModal({
   };
 
   const handleSubmit = async () => {
-    if (selectedFiles.length === 0 || !category) return;
+    if (selectedFiles.length === 0 || !inspectionId) return;
 
-    await onUpload(selectedFiles, category, caption);
+    await onUpload(selectedFiles, inspectionId, caption);
     
     // Clean up
     previews.forEach(url => URL.revokeObjectURL(url));
     setSelectedFiles([]);
     setPreviews([]);
-    setCategory('');
+    setInspectionId(selectedInspectionId || '');
     setCaption('');
     onOpenChange(false);
   };
@@ -112,7 +118,7 @@ export function PhotoUploadModal({
     previews.forEach(url => URL.revokeObjectURL(url));
     setSelectedFiles([]);
     setPreviews([]);
-    setCategory('');
+    setInspectionId(selectedInspectionId || '');
     setCaption('');
     onOpenChange(false);
   };
@@ -128,17 +134,25 @@ export function PhotoUploadModal({
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          {/* Category Selection */}
+          {/* Inspection Selection */}
           <div className="space-y-2">
-            <Label htmlFor="category">Category *</Label>
-            <Select value={category} onValueChange={setCategory}>
-              <SelectTrigger id="category">
-                <SelectValue placeholder="Select inspection category" />
+            <Label htmlFor="inspection">Inspection *</Label>
+            <Select value={inspectionId} onValueChange={setInspectionId}>
+              <SelectTrigger id="inspection">
+                <SelectValue placeholder="Select an inspection" />
               </SelectTrigger>
               <SelectContent>
-                {inspectionCategories.map(cat => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat}
+                {inspections.map(inspection => (
+                  <SelectItem key={inspection.id} value={inspection.id}>
+                    <div className="flex items-center gap-2">
+                      <span>{formatInspectionLabel(inspection)}</span>
+                      <Badge 
+                        variant={inspection.status === 'completed' ? 'default' : 'secondary'}
+                        className="text-xs"
+                      >
+                        {inspection.status}
+                      </Badge>
+                    </div>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -222,7 +236,7 @@ export function PhotoUploadModal({
           </Button>
           <Button
             onClick={handleSubmit}
-            disabled={selectedFiles.length === 0 || !category || isUploading}
+            disabled={selectedFiles.length === 0 || !inspectionId || isUploading}
           >
             {isUploading ? (
               <>
