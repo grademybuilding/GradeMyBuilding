@@ -211,177 +211,130 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   const canSkip = hasSubcategories && !atSubmitScreen;
 
   return (
-    <div className="space-y-5 sm:space-y-6 lg:space-y-8">
-      {/* Unified Category & Subcategory Navigation */}
+    <div className="space-y-5 sm:space-y-6">
+      {/* Inspection Checklist Header & Stepper */}
       <div className="w-full">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-card rounded-2xl border border-border shadow-md overflow-hidden">
-            {/* Header with navigation */}
-            <div className="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-3.5 bg-gradient-to-r from-primary/5 via-primary/3 to-transparent border-b border-border/50">
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={handlePrevious}
-                  disabled={activeMainCategory === 0}
-                  className="h-8 w-8 p-0 rounded-lg text-muted-foreground hover:text-foreground hover:bg-background/80"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  Inspection Progress
-                </span>
+          <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center gap-3 px-4 py-3 sm:px-5 sm:py-4 border-b border-border/50">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/15 text-accent">
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground bg-muted px-2.5 py-1 rounded-full font-medium">
-                  {activeMainCategory + 1} of {inspectionCategories.length}
-                </span>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    if (activeMainCategory < inspectionCategories.length - 1) {
-                      handleCategoryChange(activeMainCategory + 1);
-                    }
-                  }}
-                  disabled={activeMainCategory >= inspectionCategories.length - 1 || !completedCategories.includes(activeMainCategory)}
-                  className="h-8 w-8 p-0 rounded-lg text-muted-foreground hover:text-foreground hover:bg-background/80"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
+              <h2 className="text-base sm:text-lg font-semibold text-foreground">
+                Inspection Checklist
+              </h2>
             </div>
-            
-            {/* Category Pills */}
-            <div className="overflow-x-auto scrollbar-none px-3 py-3 sm:px-4 border-b border-border/30">
-              <div className="flex items-center gap-1.5 sm:gap-2 min-w-max lg:justify-center">
+
+            {/* Horizontal Stepper with Connected Circles */}
+            <div className="px-4 py-4 sm:px-6 sm:py-5 overflow-x-auto scrollbar-none">
+              <div className="flex items-start min-w-max">
                 {inspectionCategories.map((category, index) => {
                   const isCompleted = completedCategories.includes(index);
                   const isCurrent = index === activeMainCategory;
                   const isAccessible = isCompleted || index <= completedCategories.length;
+                  const isLast = index === inspectionCategories.length - 1;
 
                   return (
-                    <button
-                      key={category.id}
-                      type="button"
-                      disabled={!isAccessible}
-                      onClick={() => handleCategoryChange(index)}
-                      className={cn(
-                        "relative flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg transition-all duration-200 whitespace-nowrap text-xs sm:text-sm",
-                        isCurrent && "bg-primary text-primary-foreground shadow-md shadow-primary/20 font-semibold",
-                        isCompleted && !isCurrent && "bg-accent/10 text-accent hover:bg-accent/15",
-                        !isCompleted && !isCurrent && isAccessible && "bg-muted/40 text-muted-foreground hover:bg-muted/60",
-                        !isAccessible && "bg-transparent text-muted-foreground/30 cursor-not-allowed"
+                    <div key={category.id} className="flex items-start">
+                      {/* Step item */}
+                      <button
+                        type="button"
+                        disabled={!isAccessible}
+                        onClick={() => handleCategoryChange(index)}
+                        className="flex flex-col items-center gap-2 group"
+                      >
+                        {/* Circle indicator */}
+                        <div className={cn(
+                          "relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-200",
+                          isCurrent && "bg-accent border-accent text-accent-foreground shadow-lg shadow-accent/30",
+                          isCompleted && !isCurrent && "bg-accent/20 border-accent text-accent",
+                          !isCompleted && !isCurrent && isAccessible && "bg-background border-border text-muted-foreground group-hover:border-accent/50",
+                          !isAccessible && "bg-muted/30 border-border/50 text-muted-foreground/40 cursor-not-allowed"
+                        )}>
+                          {isCompleted || isCurrent ? (
+                            <CheckCircle className={cn(
+                              "h-5 w-5 sm:h-6 sm:w-6",
+                              isCurrent && "text-accent-foreground",
+                              isCompleted && !isCurrent && "text-accent"
+                            )} />
+                          ) : (
+                            <span className="text-xs sm:text-sm font-semibold">{index + 1}</span>
+                          )}
+                        </div>
+                        
+                        {/* Label */}
+                        <span className={cn(
+                          "text-[10px] sm:text-xs font-medium text-center max-w-[70px] sm:max-w-[90px] leading-tight",
+                          isCurrent && "text-accent font-semibold",
+                          isCompleted && !isCurrent && "text-foreground",
+                          !isCompleted && !isCurrent && "text-muted-foreground"
+                        )}>
+                          {category.label}
+                        </span>
+                      </button>
+                      
+                      {/* Connector line */}
+                      {!isLast && (
+                        <div className="flex items-center h-10 sm:h-12 mx-1 sm:mx-2">
+                          <div className={cn(
+                            "w-6 sm:w-10 lg:w-14 h-0.5 rounded-full transition-colors",
+                            index < activeMainCategory ? "bg-accent" : "bg-border"
+                          )} />
+                        </div>
                       )}
-                    >
-                      <span className={cn(
-                        "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold",
-                        isCurrent && "bg-primary-foreground/20",
-                        isCompleted && !isCurrent && "bg-accent text-accent-foreground",
-                        !isCompleted && !isCurrent && isAccessible && "bg-background/80",
-                        !isAccessible && "bg-muted/50"
-                      )}>
-                        {isCompleted ? (
-                          <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                        ) : (
-                          <span>{index + 1}</span>
-                        )}
-                      </span>
-                      <span className={cn(
-                        "hidden sm:inline font-medium",
-                        isCurrent && "inline"
-                      )}>
-                        {category.label}
-                      </span>
-                    </button>
+                    </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Active Category Title + Subcategories (nested) */}
-            <div className="bg-muted/20">
-              {/* Active category indicator */}
-              <div className="px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-3 border-b border-border/20">
-                <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary text-primary-foreground shadow-sm">
-                  <span className="text-sm sm:text-base font-bold">{activeMainCategory + 1}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground truncate">
-                    {currentCategory.label}
-                  </h3>
-                  {hasSubcategories && (
-                    <p className="text-xs sm:text-sm text-muted-foreground">
-                      {currentCompletedTabs.length + currentSkippedTabs.length} of {currentTabs.length} subcategories completed
-                    </p>
-                  )}
-                </div>
+            {/* Current Category Title + Subcategory Pills */}
+            <div className="px-4 py-3 sm:px-5 sm:py-4 bg-muted/30 border-t border-border/50">
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Category name */}
+                <span className="text-sm sm:text-base font-semibold text-foreground mr-2">
+                  {currentCategory.label}
+                </span>
+                
+                {/* Subcategory pills or single category pill */}
+                {hasSubcategories ? (
+                  currentTabs.map((tab, index) => {
+                    const isCompleted = currentCompletedTabs.includes(tab.id);
+                    const isSkipped = currentSkippedTabs.includes(tab.id);
+                    const isDone = isCompleted || isSkipped;
+                    const isCurrent = tab.id === currentTabs[activeSubcategory]?.id;
+                    const doneCount = currentCompletedTabs.length + currentSkippedTabs.length;
+                    const isLocked = !isDone && !isCurrent && index > doneCount;
+                    const isClickable = isDone || isCurrent || index === doneCount;
+
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        disabled={isLocked}
+                        onClick={() => handleTabChange(tab.id)}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap border",
+                          isCurrent && "bg-primary text-primary-foreground border-primary shadow-sm",
+                          isCompleted && !isCurrent && "bg-accent/15 text-accent border-accent/30 hover:bg-accent/20",
+                          isSkipped && !isCurrent && "bg-muted text-muted-foreground border-border/50 hover:bg-muted/80",
+                          isLocked && "bg-muted/30 text-muted-foreground/40 border-transparent cursor-not-allowed",
+                          !isLocked && !isCurrent && !isDone && "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
+                          isClickable && !isCurrent && "cursor-pointer"
+                        )}
+                      >
+                        <span>{tab.label}</span>
+                        {isCompleted && <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
+                      </button>
+                    );
+                  })
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium bg-primary text-primary-foreground border border-primary">
+                    All Items
+                  </span>
+                )}
               </div>
-
-              {/* Subcategory tabs (visually nested) */}
-              {hasSubcategories && (
-                <div className="px-4 py-3 sm:px-5 sm:py-4">
-                  <div className="flex items-start gap-3">
-                    {/* Vertical connector line */}
-                    <div className="hidden sm:flex flex-col items-center pt-1">
-                      <div className="w-0.5 h-full min-h-[40px] bg-border/60 rounded-full" />
-                    </div>
-                    
-                    {/* Subcategory pills */}
-                    <div className="flex-1 overflow-x-auto scrollbar-none -mx-1 px-1">
-                      <div className="flex items-center gap-2 min-w-max flex-wrap">
-                        {currentTabs.map((tab, index) => {
-                          const isCompleted = currentCompletedTabs.includes(tab.id);
-                          const isSkipped = currentSkippedTabs.includes(tab.id);
-                          const isDone = isCompleted || isSkipped;
-                          const isCurrent = tab.id === currentTabs[activeSubcategory]?.id;
-                          const doneCount = currentCompletedTabs.length + currentSkippedTabs.length;
-                          const isLocked = !isDone && !isCurrent && index > doneCount;
-                          const isClickable = isDone || isCurrent || index === doneCount;
-
-                          return (
-                            <button
-                              key={tab.id}
-                              type="button"
-                              disabled={isLocked}
-                              onClick={() => handleTabChange(tab.id)}
-                              className={cn(
-                                "flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg transition-all duration-200 text-xs sm:text-sm font-medium whitespace-nowrap",
-                                isCurrent && "bg-background text-foreground shadow-sm border border-primary/30 ring-2 ring-primary/10",
-                                isCompleted && !isCurrent && "bg-accent/10 text-accent border border-accent/20 hover:bg-accent/15",
-                                isSkipped && !isCurrent && "bg-muted/50 text-muted-foreground border border-border/40 hover:bg-muted/70",
-                                isLocked && "bg-muted/20 text-muted-foreground/30 border border-transparent cursor-not-allowed",
-                                !isLocked && !isCurrent && !isDone && "bg-background/60 text-muted-foreground border border-border/30 hover:bg-background hover:border-border/50",
-                                isClickable && !isCurrent && "cursor-pointer"
-                              )}
-                            >
-                              <span className={cn(
-                                "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold",
-                                isCurrent && "bg-primary text-primary-foreground",
-                                isCompleted && !isCurrent && "bg-accent text-accent-foreground",
-                                isSkipped && !isCurrent && "bg-muted text-muted-foreground",
-                                !isDone && !isCurrent && !isLocked && "bg-muted text-muted-foreground",
-                                isLocked && "bg-muted/50 text-muted-foreground/30"
-                              )}>
-                                {isCompleted ? (
-                                  <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                                ) : isSkipped ? (
-                                  <span className="text-[10px]">—</span>
-                                ) : (
-                                  <span>{index + 1}</span>
-                                )}
-                              </span>
-                              <span>{tab.label}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
