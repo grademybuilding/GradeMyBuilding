@@ -716,15 +716,32 @@ export function ChecklistCategoryContent({
         
       case 'checkbox':
       default:
-        // For defect and green feature items, show editable comment area only
-        if (item.subcategory?.includes('Defects') || item.category === 'Green Features') {
+        // For defect items, show checkbox with category badge and description textarea
+        if (item.subcategory?.includes('Defects')) {
+          const isDefectSelected = selectedDefects[item.id] === true;
+          const defectCategoryLabel = `Defects - ${item.subcategory.replace('Defects - ', '')}`;
+          
           return (
-            <div className="space-y-3">
+            <div className="space-y-0">
               <Textarea
                 placeholder="Add inspection comments..."
                 value={notes[item.id] || defectDescriptions[item.id] || ''}
                 onChange={(e) => handleNoteChange(item.id, e.target.value)}
-                className="min-h-[120px] text-sm bg-background text-foreground"
+                className="min-h-[100px] text-sm bg-background text-foreground border-t-0 rounded-t-none"
+              />
+            </div>
+          );
+        }
+        
+        // For green feature items
+        if (item.category === 'Green Features') {
+          return (
+            <div className="space-y-3">
+              <Textarea
+                placeholder="Add inspection comments..."
+                value={notes[item.id] || ''}
+                onChange={(e) => handleNoteChange(item.id, e.target.value)}
+                className="min-h-[100px] text-sm bg-background text-foreground"
               />
             </div>
           );
@@ -820,28 +837,64 @@ export function ChecklistCategoryContent({
             </div>
           )}
           
-          {groupedItems[groupKey].map((item) => (
-            <div
-              key={item.id}
-              className={cn(
-                "p-4 rounded-lg border transition-colors",
-                item.subcategory?.includes('Defects')
-                  ? "border-destructive/30 bg-destructive/5"
-                  : "border-border bg-card"
-              )}
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  {getStatusIcon(checkedItems[item.id])}
-                  <span className="font-medium text-sm text-foreground">{item.item}</span>
-                  {item.required && (
-                    <Badge variant="destructive" className="text-xs">Required</Badge>
-                  )}
+          {groupedItems[groupKey].map((item) => {
+            const isDefectItem = item.subcategory?.includes('Defects');
+            const defectCategoryLabel = isDefectItem ? `Defects - ${item.subcategory?.replace('Defects - ', '')}` : '';
+            const isDefectSelected = selectedDefects[item.id] === true;
+            
+            // Special rendering for defect items to match reference design
+            if (isDefectItem) {
+              return (
+                <div
+                  key={item.id}
+                  className="rounded-lg border border-border bg-card overflow-hidden"
+                >
+                  {/* Header row with checkbox, badge, and item name */}
+                  <div className="flex items-center gap-3 p-3 border-b border-border/50">
+                    <Checkbox
+                      id={item.id}
+                      checked={isDefectSelected}
+                      onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
+                      className="h-5 w-5"
+                    />
+                    <Badge 
+                      variant="outline" 
+                      className="text-xs font-normal border-destructive/50 text-destructive bg-destructive/5 whitespace-nowrap"
+                    >
+                      {defectCategoryLabel}
+                    </Badge>
+                    <label 
+                      htmlFor={item.id}
+                      className="font-medium text-sm text-foreground cursor-pointer flex-1"
+                    >
+                      {item.item}
+                    </label>
+                  </div>
+                  {/* Description textarea */}
+                  {renderItemContent(item)}
                 </div>
+              );
+            }
+            
+            // Standard rendering for non-defect items
+            return (
+              <div
+                key={item.id}
+                className="p-4 rounded-lg border border-border bg-card transition-colors"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    {getStatusIcon(checkedItems[item.id])}
+                    <span className="font-medium text-sm text-foreground">{item.item}</span>
+                    {item.required && (
+                      <Badge variant="destructive" className="text-xs">Required</Badge>
+                    )}
+                  </div>
+                </div>
+                {renderItemContent(item)}
               </div>
-              {renderItemContent(item)}
-            </div>
-          ))}
+            );
+          })}
         </div>
       ))}
     </div>
