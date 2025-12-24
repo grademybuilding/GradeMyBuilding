@@ -1,39 +1,38 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Header } from "./Header";
 
-interface AuthenticatedLayoutProps {
-  children: React.ReactNode;
-}
-
-export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
+export function AuthenticatedLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { loading, isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      navigate('/auth');
+      navigate("/auth");
     }
   }, [loading, isAuthenticated, navigate]);
 
-  const getActiveTab = () => {
-    const path = location.pathname.replace('/', '');
-    return path === '' ? 'dashboard' : path;
-  };
+  const activeTab = useMemo(() => {
+    const path = location.pathname.replace("/", "");
+    return path === "" ? "dashboard" : path;
+  }, [location.pathname]);
 
-  const handleTabChange = (tab: string) => {
-    navigate(`/${tab === 'dashboard' ? 'dashboard' : tab}`);
-  };
+  const handleTabChange = useCallback(
+    (tab: string) => {
+      navigate(`/${tab === "dashboard" ? "dashboard" : tab}`);
+    },
+    [navigate]
+  );
 
   if (loading) {
     return (
       <div className="flex flex-col h-screen bg-background">
-        <Header activeTab={getActiveTab()} onTabChange={handleTabChange} />
+        <Header activeTab={activeTab} onTabChange={handleTabChange} />
         <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
           <div className="flex items-center justify-center h-full">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
           </div>
         </main>
       </div>
@@ -44,9 +43,9 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <Header activeTab={getActiveTab()} onTabChange={handleTabChange} />
+      <Header activeTab={activeTab} onTabChange={handleTabChange} />
       <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
-        {children}
+        <Outlet />
       </main>
     </div>
   );
