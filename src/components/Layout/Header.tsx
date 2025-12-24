@@ -13,7 +13,6 @@ import { Navigation } from "./Navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
 
@@ -25,25 +24,23 @@ interface HeaderProps {
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   const { profile, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Avoid hydration mismatch by only rendering theme-dependent content after mount
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const logoSrc = mounted ? (resolvedTheme === 'dark' ? logoWhite : logoColor) : logoColor;
 
   return (
     <>
       {/* Top Header - Desktop/Tablet */}
       <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border shadow-card">
         <div className="flex items-center gap-4 md:gap-6">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 relative">
+            {/* Render both logos and use CSS to toggle visibility - prevents reload on route change */}
             <img 
-              src={logoSrc} 
+              src={logoColor} 
               alt="GradeMyBuilding" 
-              className="h-12 md:h-16 lg:h-20 w-auto" 
+              className={`h-12 md:h-16 lg:h-20 w-auto transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
+            />
+            <img 
+              src={logoWhite} 
+              alt="GradeMyBuilding" 
+              className={`h-12 md:h-16 lg:h-20 w-auto transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
             />
           </div>
           {/* Navigation - Hidden on mobile, shown on md+ */}
