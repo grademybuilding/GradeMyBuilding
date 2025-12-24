@@ -1,6 +1,11 @@
 import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/Layout/ThemeToggle";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "next-themes";
+import logoWhite from "@/assets/logo-white.png";
+import logoColor from "@/assets/logo-color.png";
 
 const pricingPlans = [
   {
@@ -38,17 +43,46 @@ const pricingPlans = [
 ];
 
 export default function Pricing() {
+  const navigate = useNavigate();
+  const { resolvedTheme } = useTheme();
+
   return (
-    <div className="p-4 md:p-6 lg:p-8">
-      {/* Hero Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-foreground mb-4">
-          Simple, Transparent Pricing
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Choose the plan that fits your needs. All plans include one-time payment with no recurring fees.
-        </p>
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Header with Logo */}
+      <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border">
+        <div 
+          className="flex items-center gap-2 relative cursor-pointer" 
+          onClick={() => navigate('/')}
+        >
+          <img 
+            src={logoColor} 
+            alt="GradeMyBuilding" 
+            className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
+          />
+          <img 
+            src={logoWhite} 
+            alt="GradeMyBuilding" 
+            className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button variant="outline" onClick={() => navigate('/auth')}>
+            Sign In
+          </Button>
+        </div>
+      </header>
+
+      <div className="p-4 md:p-6 lg:p-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
+            Simple, Transparent Pricing
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Choose the plan that fits your needs. All plans include one-time payment with no recurring fees.
+          </p>
+        </div>
 
       {/* Pricing Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -127,6 +161,7 @@ export default function Pricing() {
           <span className="font-medium text-foreground">3.</span>{" "}
           <span className="font-semibold text-foreground">Annual discount</span> (20% off for yearly commitment)
         </p>
+      </div>
       </div>
     </div>
   );
