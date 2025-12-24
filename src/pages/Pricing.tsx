@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
 import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
 import { Header } from "@/components/Layout/Header";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
+import { useAuth } from "@/hooks/useAuth";
 
 const pricingPlans = [
   {
@@ -49,49 +47,41 @@ const pricingPlans = [
 
 export default function Pricing() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-  const [initialCheckDone, setInitialCheckDone] = useState(false);
-
-  useEffect(() => {
-    // Check for existing session first (synchronously if cached)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setInitialCheckDone(true);
-    });
-
-    // Set up auth state listener for changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const { isAuthenticated, loading } = useAuth();
 
   const handleTabChange = (tab: string) => {
     // Navigation is handled by Navigation component
   };
 
+  // Don't render conditional header until auth state is determined
+  const renderHeader = () => {
+    if (loading) {
+      // Return placeholder with same height to prevent layout shift
+      return <div className="h-[72px] md:h-[88px] lg:h-[104px] bg-card border-b border-border" />;
+    }
+    
+    if (isAuthenticated) {
+      return <Header activeTab="pricing" onTabChange={handleTabChange} />;
+    }
+    
+    return (
+      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <button 
+            onClick={() => navigate("/")}
+            className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+          >
+            BuildingGrade Pro
+          </button>
+          <ThemeToggle />
+        </div>
+      </header>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Conditional Header */}
-      {user ? (
-        <Header activeTab="pricing" onTabChange={handleTabChange} />
-      ) : (
-        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <button 
-              onClick={() => navigate("/")}
-              className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
-            >
-              BuildingGrade Pro
-            </button>
-            <ThemeToggle />
-          </div>
-        </header>
-      )}
-
+      {renderHeader()}
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
