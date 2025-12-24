@@ -203,7 +203,14 @@ export default function PhotoGallery() {
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <ThemeToggle />
           <Button 
-            onClick={() => setIsUploadModalOpen(true)}
+            onClick={() => {
+              console.debug('[PhotoGallery] open upload modal', {
+                selectedInspectionId,
+                isViewingAll,
+                inspectionsCount: inspections.length,
+              });
+              setIsUploadModalOpen(true);
+            }}
             disabled={isViewingAll && inspections.length === 0}
             className="flex-1 sm:flex-initial text-xs sm:text-sm"
           >
