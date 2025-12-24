@@ -40,12 +40,9 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   };
 
   const handleResumeInspection = (inspectionId: string) => {
-    // Navigate to new inspection with draft ID
-    if (onTabChange) {
-      // Store the inspection ID to resume
-      sessionStorage.setItem('resume_inspection_id', inspectionId);
-      onTabChange('new-inspection');
-    }
+    // Navigate to new-inspection page with inspection ID as query param
+    console.log('[RESUME] Navigating to /new-inspection with id', inspectionId);
+    navigate(`/new-inspection?id=${inspectionId}`);
   };
 
   const getGradeColor = (grade: string | null) => {
