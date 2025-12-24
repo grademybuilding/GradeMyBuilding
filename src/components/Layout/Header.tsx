@@ -13,6 +13,7 @@ import { Navigation } from "./Navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
+import { useState, useEffect } from "react";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
 
@@ -24,8 +25,14 @@ interface HeaderProps {
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   const { profile, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const logoSrc = resolvedTheme === 'dark' ? logoWhite : logoColor;
+  // Avoid hydration mismatch by only rendering theme-dependent content after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logoSrc = mounted ? (resolvedTheme === 'dark' ? logoWhite : logoColor) : logoColor;
 
   return (
     <>
