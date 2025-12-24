@@ -46,15 +46,24 @@ export default function PhotoGallery() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [carouselPhotos, setCarouselPhotos] = useState<InspectionPhoto[]>([]);
 
+  // Track which inspection to upload to (separate from view filter)
+  const [uploadTargetInspectionId, setUploadTargetInspectionId] = useState<string | null>(null);
+
   // Use hook for single inspection view
   const {
     photos: singleInspectionPhotos,
     isLoading,
-    isUploading,
-    uploadPhotos,
+    isUploading: isUploadingSingle,
+    uploadPhotos: uploadToSingleInspection,
     deletePhoto,
     refetch: refetchSinglePhotos
   } = useInspectionPhotos(selectedInspectionId !== ALL_INSPECTIONS ? selectedInspectionId : null);
+
+  // Use hook for uploading to a specific inspection (when in "All" view)
+  const {
+    isUploading: isUploadingTarget,
+    uploadPhotos: uploadToTargetInspection,
+  } = useInspectionPhotos(uploadTargetInspectionId);
 
   // Fetch user's inspections
   useEffect(() => {
@@ -350,22 +359,33 @@ export default function PhotoGallery() {
       {/* Upload Modal */}
       <PhotoUploadModal
         open={isUploadModalOpen}
-        onOpenChange={setIsUploadModalOpen}
-        onUpload={async (files, inspectionId, caption) => {
-          // If we're in "all" view, use the inspection ID from the modal
-          if (isViewingAll) {
-            // We need to temporarily set the inspection ID for upload
-            setSelectedInspectionId(inspectionId);
-            // Small delay to allow the hook to update
-            await new Promise(resolve => setTimeout(resolve, 100));
-          }
-          await uploadPhotos(files, 'General', caption);
-          // Reset to all view after upload if we were in all view
-          if (isViewingAll) {
-            setSelectedInspectionId(ALL_INSPECTIONS);
+        onOpenChange={(open) => {
+          setIsUploadModalOpen(open);
+          if (!open) {
+            setUploadTargetInspectionId(null);
           }
         }}
-        isUploading={isUploading}
+        onUpload={async (files, inspectionId, caption) => {
+          if (isViewingAll) {
+            // Set target inspection and upload using dedicated hook
+            setUploadTargetInspectionId(inspectionId);
+            // Wait for state to update
+            await new Promise(resolve => setTimeout(resolve, 50));
+            await uploadToTargetInspection(files, 'General', caption);
+            // Refetch all photos after upload
+            const inspectionIds = inspections.map(i => i.id);
+            const { data } = await supabase
+              .from('inspection_photos')
+              .select('*')
+              .in('inspection_id', inspectionIds)
+              .order('created_at', { ascending: false });
+            setAllPhotos(data || []);
+            setUploadTargetInspectionId(null);
+          } else {
+            await uploadToSingleInspection(files, 'General', caption);
+          }
+        }}
+        isUploading={isUploadingSingle || isUploadingTarget}
         inspections={inspections}
         selectedInspectionId={isViewingAll ? null : selectedInspectionId}
       />
