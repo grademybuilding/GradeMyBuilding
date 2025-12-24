@@ -4,13 +4,15 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PropertyInfoProps {
   formData: any;
   onChange: (field: string, value: string) => void;
+  validationErrors?: Record<string, string>;
 }
 
-export function PropertyInfo({ formData, onChange }: PropertyInfoProps) {
+export function PropertyInfo({ formData, onChange, validationErrors = {} }: PropertyInfoProps) {
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -28,7 +30,11 @@ export function PropertyInfo({ formData, onChange }: PropertyInfoProps) {
               placeholder="123 Main Street"
               value={formData.address || ''}
               onChange={(e) => onChange('address', e.target.value)}
+              className={cn(validationErrors.address && "border-destructive focus-visible:ring-destructive")}
             />
+            {validationErrors.address && (
+              <p className="text-sm text-destructive">{validationErrors.address}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="city">City *</Label>
@@ -37,7 +43,11 @@ export function PropertyInfo({ formData, onChange }: PropertyInfoProps) {
               placeholder="Downtown"
               value={formData.city || ''}
               onChange={(e) => onChange('city', e.target.value)}
+              className={cn(validationErrors.city && "border-destructive focus-visible:ring-destructive")}
             />
+            {validationErrors.city && (
+              <p className="text-sm text-destructive">{validationErrors.city}</p>
+            )}
           </div>
         </div>
 
@@ -63,7 +73,7 @@ export function PropertyInfo({ formData, onChange }: PropertyInfoProps) {
           <div className="space-y-2">
             <Label htmlFor="propertyType">Property Type *</Label>
             <Select value={formData.propertyType || ''} onValueChange={(value) => onChange('propertyType', value)}>
-              <SelectTrigger>
+              <SelectTrigger className={cn(validationErrors.propertyType && "border-destructive focus:ring-destructive")}>
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent>
@@ -73,6 +83,9 @@ export function PropertyInfo({ formData, onChange }: PropertyInfoProps) {
                 <SelectItem value="mixed-use">Mixed Use</SelectItem>
               </SelectContent>
             </Select>
+            {validationErrors.propertyType && (
+              <p className="text-sm text-destructive">{validationErrors.propertyType}</p>
+            )}
           </div>
         </div>
 

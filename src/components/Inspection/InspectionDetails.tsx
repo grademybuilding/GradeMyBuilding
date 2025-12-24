@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
 interface InspectionDetailsProps {
   formData: any;
   onChange: (field: string, value: any) => void;
+  validationErrors?: Record<string, string>;
 }
 
 const inspectionCategories = [
@@ -41,7 +43,9 @@ const commercialBuildingTypes = [
   'Specialty', 'Health Care', 'Hospitality', 'Sports & Entertainment'
 ];
 
-export function InspectionDetails({ formData, onChange }: InspectionDetailsProps) {
+export function InspectionDetails({ formData, onChange, validationErrors = {} }: InspectionDetailsProps) {
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+  
   const handleMultiSelect = (field: string, option: string) => {
     const current = formData[field] || [];
     const updated = current.includes(option)
@@ -52,6 +56,13 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
 
   const isSelected = (field: string, option: string) => {
     return (formData[field] || []).includes(option);
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    onChange('inspectionDate', date);
+    if (date) {
+      setDatePickerOpen(false);
+    }
   };
 
   return (
@@ -67,13 +78,14 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label>Inspection Date *</Label>
-            <Popover>
+            <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   className={cn(
                     "w-full justify-start text-left font-normal",
-                    !formData.inspectionDate && "text-muted-foreground"
+                    !formData.inspectionDate && "text-muted-foreground",
+                    validationErrors.inspectionDate && "border-destructive"
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -84,12 +96,15 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
                 <Calendar
                   mode="single"
                   selected={formData.inspectionDate}
-                  onSelect={(date) => onChange('inspectionDate', date)}
+                  onSelect={handleDateSelect}
                   initialFocus
                   className="pointer-events-auto"
                 />
               </PopoverContent>
             </Popover>
+            {validationErrors.inspectionDate && (
+              <p className="text-sm text-destructive">{validationErrors.inspectionDate}</p>
+            )}
           </div>
           
           <div className="space-y-2">
@@ -111,7 +126,11 @@ export function InspectionDetails({ formData, onChange }: InspectionDetailsProps
               placeholder="John Doe"
               value={formData.inspectorName || ''}
               onChange={(e) => onChange('inspectorName', e.target.value)}
+              className={cn(validationErrors.inspectorName && "border-destructive focus-visible:ring-destructive")}
             />
+            {validationErrors.inspectorName && (
+              <p className="text-sm text-destructive">{validationErrors.inspectorName}</p>
+            )}
           </div>
           
           <div className="space-y-2">
