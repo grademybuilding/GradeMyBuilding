@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, Eye } from 'lucide-react';
 
 interface InspectionPhotoCardProps {
   inspectionId: string;
@@ -45,9 +45,9 @@ export function InspectionPhotoCard({
         </div>
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <Badge className="bg-primary text-primary-foreground">
-            View Photos
-          </Badge>
+          <div className="bg-primary text-primary-foreground rounded-full p-3">
+            <Eye className="h-6 w-6" />
+          </div>
         </div>
       </div>
       <CardContent className="p-3">
