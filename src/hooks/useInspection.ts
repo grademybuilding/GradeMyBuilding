@@ -243,17 +243,43 @@ export function useInspection(options: UseInspectionOptions = {}) {
       // Merge property data into form fields (property table takes precedence over checklist_data for property fields)
       const restoredData: InspectionFormData = {
         ...savedData,
-        // Property info - prefer property table, fallback to checklist_data
-        address: propertyData?.address || (savedData as any).address || '',
-        city: propertyData?.city || (savedData as any).city || '',
-        state: propertyData?.state || (savedData as any).state || '',
-        zipCode: propertyData?.zip_code || (savedData as any).zipCode || '',
-        propertyType: propertyData?.property_type || (savedData as any).propertyType || '',
-        yearBuilt: propertyData?.year_built?.toString() || (savedData as any).yearBuilt || '',
-        squareFootage: propertyData?.square_footage?.toString() || (savedData as any).squareFootage || '',
-        ownerContact: propertyData?.owner_name 
-          ? `${propertyData.owner_name}${propertyData.owner_phone ? ', ' + propertyData.owner_phone : ''}${propertyData.owner_email ? ', ' + propertyData.owner_email : ''}`
-          : (savedData as any).ownerContact || '',
+        // Property info - prefer property table, then current field names, then legacy field names
+        address:
+          propertyData?.address ||
+          (savedData as any).address ||
+          (savedData as any).propertyAddress ||
+          '',
+        city:
+          propertyData?.city ||
+          (savedData as any).city ||
+          (savedData as any).propertyCity ||
+          '',
+        state:
+          propertyData?.state ||
+          (savedData as any).state ||
+          (savedData as any).propertyState ||
+          '',
+        zipCode:
+          propertyData?.zip_code ||
+          (savedData as any).zipCode ||
+          (savedData as any).propertyZip ||
+          '',
+        propertyType:
+          propertyData?.property_type ||
+          (savedData as any).propertyType ||
+          'residential',
+        yearBuilt:
+          propertyData?.year_built?.toString() ||
+          (savedData as any).yearBuilt ||
+          '',
+        squareFootage:
+          propertyData?.square_footage?.toString() ||
+          (savedData as any).squareFootage ||
+          '',
+        ownerContact:
+          propertyData?.owner_name
+            ? `${propertyData.owner_name}${propertyData.owner_phone ? ', ' + propertyData.owner_phone : ''}${propertyData.owner_email ? ', ' + propertyData.owner_email : ''}`
+            : (savedData as any).ownerContact || (savedData as any).ownerInfo || '',
         // Inspection details
         inspectionDate: inspection.inspection_date || savedData.inspectionDate,
         inspectionTime: inspection.inspection_time || savedData.inspectionTime,
@@ -539,6 +565,13 @@ export function useInspection(options: UseInspectionOptions = {}) {
         // Also restore individual fields
         const restoredData: InspectionFormData = {
           ...savedData,
+          // Property fields (support current + legacy keys)
+          address: (savedData as any).address || (savedData as any).propertyAddress || '',
+          city: (savedData as any).city || (savedData as any).propertyCity || '',
+          state: (savedData as any).state || (savedData as any).propertyState || '',
+          zipCode: (savedData as any).zipCode || (savedData as any).propertyZip || '',
+          propertyType: (savedData as any).propertyType || 'residential',
+          // Inspection fields
           inspectionDate: draft.inspection_date || savedData.inspectionDate,
           inspectionTime: draft.inspection_time || savedData.inspectionTime,
           weatherConditions: draft.weather_conditions || savedData.weatherConditions,
