@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,7 @@ interface InspectionsListProps {
 }
 
 export default function InspectionsList({ onTabChange }: InspectionsListProps) {
+  const navigate = useNavigate();
   const { inspections, loading, error, refetch } = useInspections();
   const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -74,7 +76,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   if (loading) {
     return (
       <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
-        <QuickActions onTabChange={onTabChange || (() => {})} />
+        <QuickActions />
         <div className="flex flex-col items-center justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
           <p className="text-muted-foreground">Loading inspections...</p>
@@ -87,7 +89,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   if (error) {
     return (
       <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
-        <QuickActions onTabChange={onTabChange || (() => {})} />
+        <QuickActions />
         <div className="flex flex-col items-center justify-center py-12">
           <AlertCircle className="h-12 w-12 text-destructive mb-4" />
           <h3 className="text-lg font-semibold text-foreground mb-2">Failed to load inspections</h3>
@@ -105,7 +107,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   if (inspections.length === 0) {
     return (
       <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
-        <QuickActions onTabChange={onTabChange || (() => {})} />
+        <QuickActions />
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold">My Inspections</h1>
@@ -116,7 +118,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
           <Building className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-semibold text-foreground mb-2">No inspections yet</h3>
           <p className="text-muted-foreground mb-4">Start by creating your first inspection</p>
-          <Button onClick={() => onTabChange?.('new-inspection')}>
+          <Button onClick={() => navigate('/new-inspection')}>
             Start New Inspection
           </Button>
         </div>
@@ -126,7 +128,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
 
   return (
     <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
-      <QuickActions onTabChange={onTabChange || (() => {})} />
+      <QuickActions />
       
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>

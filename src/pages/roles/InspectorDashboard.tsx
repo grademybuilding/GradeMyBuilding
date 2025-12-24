@@ -39,7 +39,7 @@ export default function InspectorDashboard({ activeTab, onTabChange }: Inspector
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard onTabChange={onTabChange} />;
+        return <Dashboard />;
       case 'new-inspection':
         return (
           <NewInspection 
@@ -77,7 +77,7 @@ export default function InspectorDashboard({ activeTab, onTabChange }: Inspector
           </div>
         );
       default:
-        return <Dashboard onTabChange={onTabChange} />;
+        return <Dashboard />;
     }
   };
 
