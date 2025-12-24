@@ -16,7 +16,6 @@ import { PhotoUploadModal } from "@/components/Inspection/PhotoUploadModal";
 import { PhotoGalleryGrid } from "@/components/Inspection/PhotoGalleryGrid";
 import { PhotoCarousel } from "@/components/Inspection/PhotoCarousel";
 import { InspectionPhotoCard } from "@/components/Inspection/InspectionPhotoCard";
-import { ThemeToggle } from "@/components/Layout/ThemeToggle";
 
 interface Inspection {
   id: string;
@@ -201,7 +200,6 @@ export default function PhotoGallery() {
           </p>
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <ThemeToggle />
           <Button 
             onClick={() => {
               console.debug('[PhotoGallery] open upload modal', {
