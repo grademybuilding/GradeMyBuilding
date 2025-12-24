@@ -329,8 +329,8 @@ export default function PhotoGallery() {
         </Card>
       )}
 
-      {/* Photo Gallery Grid - Single Inspection View */}
-      {!isViewingAll && selectedInspectionId && (
+      {/* Photo Gallery - Single Inspection View (Grouped Card) */}
+      {!isViewingAll && selectedInspection && (
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between text-base">
@@ -344,12 +344,33 @@ export default function PhotoGallery() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <PhotoGalleryGrid
-              photos={singleInspectionPhotos}
-              isLoading={isLoading}
-              onPhotoClick={handlePhotoClick}
-              onDelete={handleDeletePhoto}
-            />
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : singleInspectionPhotos.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>No photos uploaded yet.</p>
+                <p className="text-sm mt-1">Click "Upload Photos" to add images to this inspection.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <InspectionPhotoCard
+                  inspectionId={selectedInspection.id}
+                  address={selectedInspection.property?.address || 'Unknown Address'}
+                  date={new Date(selectedInspection.inspection_date).toLocaleDateString()}
+                  status={selectedInspection.status}
+                  photoCount={singleInspectionPhotos.length}
+                  thumbnailUrl={singleInspectionPhotos[0]?.photo_url}
+                  onClick={() => {
+                    setCarouselPhotos(singleInspectionPhotos);
+                    setSelectedPhotoIndex(0);
+                    setCarouselOpen(true);
+                  }}
+                />
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
