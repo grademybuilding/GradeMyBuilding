@@ -345,14 +345,14 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Link to Inspection (Optional)</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value}>
+                      <Select onValueChange={(val) => field.onChange(val === "none" ? "" : val)} value={field.value || "none"}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select inspection" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="">None</SelectItem>
+                          <SelectItem value="none">None</SelectItem>
                           {inspections.map((inspection) => (
                             <SelectItem key={inspection.id} value={inspection.id}>
                               {inspection.properties.address}
