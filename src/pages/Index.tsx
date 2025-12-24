@@ -14,6 +14,14 @@ const Index = () => {
   const { user, profile, loading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  const handleTabChange = (tab: string) => {
+    if (tab === 'pricing') {
+      navigate('/pricing');
+    } else {
+      setActiveTab(tab);
+    }
+  };
+
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       navigate('/auth');
@@ -56,7 +64,7 @@ const Index = () => {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <Header activeTab={activeTab} onTabChange={handleTabChange} />
       <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
         {renderContent()}
       </main>
