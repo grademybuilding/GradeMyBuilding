@@ -1,10 +1,6 @@
 import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/Layout/ThemeToggle";
-import { Header } from "@/components/Layout/Header";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 
 const pricingPlans = [
   {
@@ -42,125 +38,96 @@ const pricingPlans = [
 ];
 
 export default function Pricing() {
-  const navigate = useNavigate();
-  const { isAuthenticated, loading } = useAuth();
-
-  const handleTabChange = (tab: string) => {
-    // Navigation is handled by Navigation component
-  };
-
-  // Always show authenticated header if user is authenticated OR still loading
-  // This prevents flicker when navigating between tabs as an authenticated user
-  // The unauthenticated header is only shown when we're certain there's no session
-  const showAuthenticatedHeader = isAuthenticated || loading;
-
   return (
-    <div className="min-h-screen bg-background">
-      {showAuthenticatedHeader ? (
-        <Header activeTab="pricing" onTabChange={handleTabChange} />
-      ) : (
-        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <button 
-              onClick={() => navigate("/")}
-              className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+    <div className="p-4 md:p-6 lg:p-8">
+      {/* Hero Section */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-foreground mb-4">
+          Simple, Transparent Pricing
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Choose the plan that fits your needs. All plans include one-time payment with no recurring fees.
+        </p>
+      </div>
+
+      {/* Pricing Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {pricingPlans.map((plan) => {
+          const IconComponent = plan.icon;
+          return (
+            <Card
+              key={plan.name}
+              className={`relative overflow-hidden transition-all duration-300 hover:shadow-elevated ${
+                plan.popular
+                  ? "border-primary border-t-4 shadow-lg scale-105"
+                  : "border-border hover:border-primary/50"
+              }`}
             >
-              BuildingGrade Pro
-            </button>
-            <ThemeToggle />
-          </div>
-        </header>
-      )}
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            Simple, Transparent Pricing
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose the plan that fits your needs. All plans include one-time payment with no recurring fees.
-          </p>
-        </div>
+              {plan.popular && (
+                <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-bl-lg">
+                  Most Popular
+                </div>
+              )}
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {pricingPlans.map((plan) => {
-            const IconComponent = plan.icon;
-            return (
-              <Card
-                key={plan.name}
-                className={`relative overflow-hidden transition-all duration-300 hover:shadow-elevated ${
-                  plan.popular
-                    ? "border-primary border-t-4 shadow-lg scale-105"
-                    : "border-border hover:border-primary/50"
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-bl-lg">
-                    Most Popular
+              <CardHeader className="text-center pb-2">
+                <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <IconComponent className="h-6 w-6 text-primary" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                    {plan.name}
+                  </p>
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-4xl font-bold text-foreground">
+                      {plan.price}
+                    </span>
+                    {plan.priceLabel && (
+                      <span className="text-muted-foreground">{plan.priceLabel}</span>
+                    )}
                   </div>
-                )}
-                
-                <CardHeader className="text-center pb-2">
-                  <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <IconComponent className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
-                      {plan.name}
-                    </p>
-                    <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-4xl font-bold text-foreground">
-                        {plan.price}
-                      </span>
-                      {plan.priceLabel && (
-                        <span className="text-muted-foreground">{plan.priceLabel}</span>
-                      )}
-                    </div>
-                  </div>
-                </CardHeader>
+                </div>
+              </CardHeader>
 
-                <CardContent className="space-y-6">
-                  <Button
-                    className={`w-full ${
-                      plan.popular
-                        ? "bg-primary hover:bg-primary/90"
-                        : "bg-primary/90 hover:bg-primary"
-                    }`}
-                  >
-                    {plan.name === "Enterprise" ? "CONTACT US" : "GET STARTED"}
-                  </Button>
+              <CardContent className="space-y-6">
+                <Button
+                  className={`w-full ${
+                    plan.popular
+                      ? "bg-primary hover:bg-primary/90"
+                      : "bg-primary/90 hover:bg-primary"
+                  }`}
+                >
+                  {plan.name === "Enterprise" ? "CONTACT US" : "GET STARTED"}
+                </Button>
 
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-3">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                          <Check className="h-3 w-3 text-primary" />
-                        </div>
-                        <span className="text-sm text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                <ul className="space-y-3">
+                  {plan.features.map((feature, index) => (
+                    <li key={index} className="flex items-center gap-3">
+                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Check className="h-3 w-3 text-primary" />
+                      </div>
+                      <span className="text-sm text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
 
-        {/* Additional Notes */}
-        <div className="max-w-2xl mx-auto mt-16 space-y-3">
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">1.</span> 14-day free trial on the Professional tier
-          </p>
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">2.</span> Usage-based add-ons for storage and team members
-          </p>
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">3.</span> <span className="font-semibold text-foreground">Annual discount</span> (20% off for yearly commitment)
-          </p>
-        </div>
-      </main>
+      {/* Additional Notes */}
+      <div className="max-w-2xl mx-auto mt-16 space-y-3">
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">1.</span> 14-day free trial on the Professional tier
+        </p>
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">2.</span> Usage-based add-ons for storage and team members
+        </p>
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">3.</span>{" "}
+          <span className="font-semibold text-foreground">Annual discount</span> (20% off for yearly commitment)
+        </p>
+      </div>
     </div>
   );
 }
