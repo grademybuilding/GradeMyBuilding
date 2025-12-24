@@ -219,6 +219,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
         propertyId: inspection.property_id,
         status: inspection.status,
         hasChecklistData: !!inspection.checklist_data,
+        checklistDataKeys: inspection.checklist_data ? Object.keys(inspection.checklist_data as object).length : 0,
         hasPropertyData: !!inspection.properties,
       });
 
@@ -267,6 +268,18 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       if (isStale(epoch)) return;
 
+      // If draft has no saved form data, tell user (common cause of "resume opens empty form")
+      const restoredKeys = Object.keys(restoredData).filter((k) => restoredData[k] !== undefined && restoredData[k] !== null && restoredData[k] !== '');
+      log.load('Restored form data summary', {
+        restoredKeysCount: restoredKeys.length,
+        sample: {
+          address: (restoredData as any).address,
+          city: (restoredData as any).city,
+          propertyType: (restoredData as any).propertyType,
+          inspectionDate: restoredData.inspectionDate,
+        },
+      });
+
       // Set inspection ID and property ID, update refs immediately for save operations
       setInspectionId(inspection.id);
       inspectionIdRef.current = inspection.id;
@@ -276,16 +289,24 @@ export function useInspection(options: UseInspectionOptions = {}) {
       setFormData(restoredData);
       formDataRef.current = restoredData;
       setJustSubmitted(false);
-      
+
+      if (restoredKeys.length === 0) {
+        toast({
+          title: 'Nothing to Resume',
+          description: 'This draft has no saved form data yet. Please start filling the form and click Save.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Inspection Loaded',
+          description: 'Continuing from where you left off.',
+        });
+      }
+
       log.load('State updated after resume', {
         inspectionId: inspection.id,
         propertyId: inspection.property_id,
         formDataKeys: Object.keys(restoredData).length,
-      });
-
-      toast({
-        title: 'Inspection Loaded',
-        description: 'Continuing from where you left off.',
       });
     } catch (error) {
       log.error('Error loading inspection by ID', error);
