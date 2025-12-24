@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -55,6 +55,25 @@ export function PhotoUploadModal({
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Keep local inspection selection in sync with the latest prop
+  useEffect(() => {
+    if (!open) return;
+
+    console.debug('[PhotoUploadModal] sync inspectionId', {
+      selectedInspectionId,
+      currentInspectionId: inspectionId,
+      inspectionsCount: inspections.length,
+    });
+
+    // If parent provides a selected inspection, always respect it.
+    if (selectedInspectionId) {
+      setInspectionId(selectedInspectionId);
+      return;
+    }
+
+    // Otherwise, keep whatever user picked (do not auto-select first inspection).
+  }, [open, selectedInspectionId, inspections.length]);
+
   const formatInspectionLabel = (inspection: Inspection) => {
     const address = inspection.property?.address || 'Unknown Address';
     const date = new Date(inspection.inspection_date).toLocaleDateString();
@@ -101,10 +120,17 @@ export function PhotoUploadModal({
   };
 
   const handleSubmit = async () => {
+    console.debug('[PhotoUploadModal] submit', {
+      inspectionId,
+      selectedInspectionId,
+      selectedFilesCount: selectedFiles.length,
+      captionLength: caption.length,
+    });
+
     if (selectedFiles.length === 0 || !inspectionId) return;
 
     await onUpload(selectedFiles, inspectionId, caption);
-    
+
     // Clean up
     previews.forEach(url => URL.revokeObjectURL(url));
     setSelectedFiles([]);
