@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { NewInspection } from "@/pages/NewInspection";
 import { Dashboard } from "@/pages/Dashboard";
 import InspectionsList from "@/components/Inspector/InspectionsList";
@@ -16,23 +16,6 @@ interface InspectorDashboardProps {
 
 export default function InspectorDashboard({ activeTab, onTabChange }: InspectorDashboardProps) {
   const [resumeInspectionId, setResumeInspectionId] = useState<string | null>(null);
-
-  // Check for resume inspection ID when tab changes to new-inspection
-  useEffect(() => {
-    if (activeTab === 'new-inspection') {
-      const storedId = sessionStorage.getItem('resume_inspection_id');
-      if (storedId) {
-        console.log('[RESUME] Found resume_inspection_id in sessionStorage', storedId);
-        setResumeInspectionId(storedId);
-        sessionStorage.removeItem('resume_inspection_id');
-      } else {
-        console.log('[RESUME] No resume_inspection_id found; starting fresh');
-      }
-    } else {
-      // Clear when navigating away
-      setResumeInspectionId(null);
-    }
-  }, [activeTab]);
 
   const handleBackFromInspection = () => {
     setResumeInspectionId(null);
