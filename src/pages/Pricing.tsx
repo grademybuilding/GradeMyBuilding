@@ -53,35 +53,28 @@ export default function Pricing() {
     // Navigation is handled by Navigation component
   };
 
-  // Don't render conditional header until auth state is determined
-  const renderHeader = () => {
-    if (loading) {
-      // Return placeholder with same height to prevent layout shift
-      return <div className="h-[72px] md:h-[88px] lg:h-[104px] bg-card border-b border-border" />;
-    }
-    
-    if (isAuthenticated) {
-      return <Header activeTab="pricing" onTabChange={handleTabChange} />;
-    }
-    
-    return (
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <button 
-            onClick={() => navigate("/")}
-            className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
-          >
-            BuildingGrade Pro
-          </button>
-          <ThemeToggle />
-        </div>
-      </header>
-    );
-  };
+  // Always show authenticated header if user is authenticated OR still loading
+  // This prevents flicker when navigating between tabs as an authenticated user
+  // The unauthenticated header is only shown when we're certain there's no session
+  const showAuthenticatedHeader = isAuthenticated || loading;
 
   return (
     <div className="min-h-screen bg-background">
-      {renderHeader()}
+      {showAuthenticatedHeader ? (
+        <Header activeTab="pricing" onTabChange={handleTabChange} />
+      ) : (
+        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <button 
+              onClick={() => navigate("/")}
+              className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+            >
+              BuildingGrade Pro
+            </button>
+            <ThemeToggle />
+          </div>
+        </header>
+      )}
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
         {/* Hero Section */}
