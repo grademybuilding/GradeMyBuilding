@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
+import { useEffect } from "react";
 import Index from "./pages/Index";
 import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
@@ -17,12 +18,33 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import NewInspectionPage from "./pages/NewInspectionPage";
 import NotFound from "./pages/NotFound";
+import logoWhite from "@/assets/logo-white.png";
+import logoColor from "@/assets/logo-color.png";
 
 const queryClient = new QueryClient();
+
+function AppAssetPreload() {
+  // Preload critical images once to avoid any re-fetching/jank on route changes.
+  useEffect(() => {
+    const imgs = [logoColor, logoWhite].map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+
+    return () => {
+      // keep existing code (no cleanup needed)
+      void imgs;
+    };
+  }, []);
+
+  return null;
+}
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <AppAssetPreload />
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -50,3 +72,4 @@ const App = () => (
 );
 
 export default App;
+
