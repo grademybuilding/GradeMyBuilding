@@ -3,7 +3,7 @@ import { RecentInspections } from "@/components/Dashboard/RecentInspections";
 import { QuickActions } from "@/components/Dashboard/QuickActions";
 import { Building, CheckCircle, Clock, AlertTriangle } from "lucide-react";
 
-export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void }) {
+export function Dashboard() {
   return (
     <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
       <div>
@@ -11,7 +11,7 @@ export function Dashboard({ onTabChange }: { onTabChange?: (tab: string) => void
         <p className="text-sm text-muted-foreground">Welcome back, Inspector</p>
       </div>
 
-      <QuickActions onTabChange={onTabChange || (() => {})} />
+      <QuickActions />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
