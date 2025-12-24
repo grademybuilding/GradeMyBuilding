@@ -49,11 +49,11 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   const getGradeColor = (grade: string | null) => {
     if (!grade) return 'bg-muted text-muted-foreground';
     switch (grade) {
-      case 'A': return 'bg-emerald-500 text-white';
-      case 'B': return 'bg-blue-500 text-white';
-      case 'C': return 'bg-yellow-500 text-white';
-      case 'D': return 'bg-orange-500 text-white';
-      case 'F': return 'bg-red-500 text-white';
+      case 'A': return 'bg-emerald-500 text-white hover:bg-emerald-500';
+      case 'B': return 'bg-blue-500 text-white hover:bg-blue-500';
+      case 'C': return 'bg-yellow-500 text-white hover:bg-yellow-500';
+      case 'D': return 'bg-orange-500 text-white hover:bg-orange-500';
+      case 'F': return 'bg-red-500 text-white hover:bg-red-500';
       default: return 'bg-muted text-muted-foreground';
     }
   };
