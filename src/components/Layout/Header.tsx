@@ -35,12 +35,12 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
             <img 
               src={logoColor} 
               alt="GradeMyBuilding" 
-              className={`h-12 md:h-16 lg:h-20 w-auto transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
+              className={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
             />
             <img 
               src={logoWhite} 
               alt="GradeMyBuilding" 
-              className={`h-12 md:h-16 lg:h-20 w-auto transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
+              className={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
             />
           </div>
           {/* Navigation - Hidden on mobile, shown on md+ */}
