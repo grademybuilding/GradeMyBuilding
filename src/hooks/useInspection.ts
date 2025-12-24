@@ -3,14 +3,21 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface InspectionFormData {
-  // Property Info
+  // Property Info (used by PropertyInfo form component)
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  propertyType?: string;
+  yearBuilt?: string;
+  squareFootage?: string;
+  ownerContact?: string;
+  
+  // Legacy property field names (for backwards compatibility)
   propertyAddress?: string;
   propertyCity?: string;
   propertyState?: string;
   propertyZip?: string;
-  propertyType?: string;
-  yearBuilt?: string;
-  squareFootage?: string;
   ownerInfo?: string;
   
   // Inspection Details
@@ -38,6 +45,9 @@ interface InspectionFormData {
   completedCategories?: number[];
   completedSubcategories?: Record<number, string[]>;
   skippedSubcategories?: Record<number, string[]>;
+  
+  // Allow dynamic keys for form fields
+  [key: string]: any;
 }
 
 interface UseInspectionOptions {
@@ -180,7 +190,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
 
       const { data: inspection, error } = await supabase
         .from('inspections')
-        .select('*')
+        .select('*, properties(*)')
         .eq('id', idToLoad)
         .eq('inspector_id', session.user.id)
         .single();
@@ -209,13 +219,41 @@ export function useInspection(options: UseInspectionOptions = {}) {
         propertyId: inspection.property_id,
         status: inspection.status,
         hasChecklistData: !!inspection.checklist_data,
+        hasPropertyData: !!inspection.properties,
       });
 
       // Restore form data from checklist_data JSONB
       const savedData = (inspection.checklist_data as InspectionFormData) || {};
+      
+      // Get property data from the properties table (if available)
+      const propertyData = inspection.properties as {
+        address?: string;
+        city?: string;
+        state?: string;
+        zip_code?: string;
+        property_type?: string;
+        year_built?: number;
+        square_footage?: number;
+        owner_name?: string;
+        owner_email?: string;
+        owner_phone?: string;
+      } | null;
 
+      // Merge property data into form fields (property table takes precedence over checklist_data for property fields)
       const restoredData: InspectionFormData = {
         ...savedData,
+        // Property info - prefer property table, fallback to checklist_data
+        address: propertyData?.address || (savedData as any).address || '',
+        city: propertyData?.city || (savedData as any).city || '',
+        state: propertyData?.state || (savedData as any).state || '',
+        zipCode: propertyData?.zip_code || (savedData as any).zipCode || '',
+        propertyType: propertyData?.property_type || (savedData as any).propertyType || '',
+        yearBuilt: propertyData?.year_built?.toString() || (savedData as any).yearBuilt || '',
+        squareFootage: propertyData?.square_footage?.toString() || (savedData as any).squareFootage || '',
+        ownerContact: propertyData?.owner_name 
+          ? `${propertyData.owner_name}${propertyData.owner_phone ? ', ' + propertyData.owner_phone : ''}${propertyData.owner_email ? ', ' + propertyData.owner_email : ''}`
+          : (savedData as any).ownerContact || '',
+        // Inspection details
         inspectionDate: inspection.inspection_date || savedData.inspectionDate,
         inspectionTime: inspection.inspection_time || savedData.inspectionTime,
         weatherConditions: inspection.weather_conditions || savedData.weatherConditions,
@@ -624,10 +662,16 @@ export function useInspection(options: UseInspectionOptions = {}) {
           log.update('Updating existing property', { propertyId: currentPropertyId });
           
           const propertyPayload: Record<string, any> = {};
-          if (data.propertyAddress) propertyPayload.address = data.propertyAddress;
-          if (data.propertyCity) propertyPayload.city = data.propertyCity;
-          if (data.propertyState) propertyPayload.state = data.propertyState;
-          if (data.propertyZip) propertyPayload.zip_code = data.propertyZip;
+          // Support both new field names (address, city) and legacy names (propertyAddress, propertyCity)
+          const address = data.address || data.propertyAddress;
+          const city = data.city || data.propertyCity;
+          const state = data.state || data.propertyState;
+          const zipCode = data.zipCode || data.propertyZip;
+          
+          if (address) propertyPayload.address = address;
+          if (city) propertyPayload.city = city;
+          if (state) propertyPayload.state = state;
+          if (zipCode) propertyPayload.zip_code = zipCode;
           if (data.propertyType) propertyPayload.property_type = data.propertyType;
           if (data.yearBuilt) propertyPayload.year_built = parseInt(data.yearBuilt);
           if (data.squareFootage) propertyPayload.square_footage = parseInt(data.squareFootage);
@@ -685,17 +729,23 @@ export function useInspection(options: UseInspectionOptions = {}) {
         // Create new inspection - need a property first
         
         if (!currentPropertyId) {
+          // Support both new field names and legacy names
+          const address = data.address || data.propertyAddress;
+          const city = data.city || data.propertyCity;
+          const state = data.state || data.propertyState;
+          const zipCode = data.zipCode || data.propertyZip;
+          
           // Check if there's an existing property with same address for this user
-          if (data.propertyAddress && data.propertyCity && data.propertyState) {
+          if (address && city && state) {
             log.create('Checking for existing property with same address');
             
             const { data: existingProperty } = await supabase
               .from('properties')
               .select('id')
               .eq('created_by', session.user.id)
-              .eq('address', data.propertyAddress)
-              .eq('city', data.propertyCity)
-              .eq('state', data.propertyState)
+              .eq('address', address)
+              .eq('city', city)
+              .eq('state', state)
               .limit(1)
               .maybeSingle();
             
@@ -709,7 +759,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
               
               // Update the existing property with latest data
               const propertyPayload: Record<string, any> = {
-                zip_code: data.propertyZip || '00000',
+                zip_code: zipCode || '00000',
                 property_type: data.propertyType || 'residential',
               };
               if (data.yearBuilt) propertyPayload.year_built = parseInt(data.yearBuilt);
@@ -721,25 +771,29 @@ export function useInspection(options: UseInspectionOptions = {}) {
                 .eq('id', existingProperty.id);
             }
           }
-        }
         
-        if (!currentPropertyId) {
-          log.create('Creating new property');
-          
-          const { data: property, error: propertyError } = await supabase
-            .from('properties')
-            .insert({
-              address: data.propertyAddress || 'Draft Property',
-              city: data.propertyCity || 'Unknown',
-              state: data.propertyState || 'Unknown',
-              zip_code: data.propertyZip || '00000',
-              property_type: data.propertyType || 'residential',
-              year_built: data.yearBuilt ? parseInt(data.yearBuilt) : null,
-              square_footage: data.squareFootage ? parseInt(data.squareFootage) : null,
-              created_by: session.user.id,
-            })
-            .select()
-            .single();
+          if (!currentPropertyId) {
+            log.create('Creating new property');
+            
+            const address = data.address || data.propertyAddress;
+            const city = data.city || data.propertyCity;
+            const state = data.state || data.propertyState;
+            const zipCode = data.zipCode || data.propertyZip;
+            
+            const { data: property, error: propertyError } = await supabase
+              .from('properties')
+              .insert({
+                address: address || 'Draft Property',
+                city: city || 'Unknown',
+                state: state || 'Unknown',
+                zip_code: zipCode || '00000',
+                property_type: data.propertyType || 'residential',
+                year_built: data.yearBuilt ? parseInt(data.yearBuilt) : null,
+                square_footage: data.squareFootage ? parseInt(data.squareFootage) : null,
+                created_by: session.user.id,
+              })
+              .select()
+              .single();
 
           if (propertyError) {
             log.error('Property creation failed', propertyError);
@@ -757,6 +811,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
           currentPropertyId = property.id;
           propertyIdRef.current = property.id;
           setPropertyId(property.id);
+          }
         }
 
         // Before creating inspection, check if draft already exists for this property
