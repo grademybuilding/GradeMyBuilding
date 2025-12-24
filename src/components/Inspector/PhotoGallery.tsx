@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/select";
 import { Camera, Upload, Loader2, ImageIcon, FolderOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useInspectionPhotos } from "@/hooks/useInspectionPhotos";
+import { useInspectionPhotos, InspectionPhoto } from "@/hooks/useInspectionPhotos";
 import { PhotoUploadModal } from "@/components/Inspection/PhotoUploadModal";
 import { PhotoGalleryGrid } from "@/components/Inspection/PhotoGalleryGrid";
 import { PhotoCarousel } from "@/components/Inspection/PhotoCarousel";
+import { InspectionPhotoCard } from "@/components/Inspection/InspectionPhotoCard";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
 
 interface Inspection {
@@ -28,21 +29,32 @@ interface Inspection {
   } | null;
 }
 
+interface InspectionWithPhotos extends Inspection {
+  photos: InspectionPhoto[];
+}
+
+const ALL_INSPECTIONS = "all";
+
 export default function PhotoGallery() {
   const [inspections, setInspections] = useState<Inspection[]>([]);
-  const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
+  const [allPhotos, setAllPhotos] = useState<InspectionPhoto[]>([]);
+  const [selectedInspectionId, setSelectedInspectionId] = useState<string>(ALL_INSPECTIONS);
   const [loadingInspections, setLoadingInspections] = useState(true);
+  const [loadingAllPhotos, setLoadingAllPhotos] = useState(true);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [carouselOpen, setCarouselOpen] = useState(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
+  const [carouselPhotos, setCarouselPhotos] = useState<InspectionPhoto[]>([]);
 
+  // Use hook for single inspection view
   const {
-    photos,
+    photos: singleInspectionPhotos,
     isLoading,
     isUploading,
     uploadPhotos,
-    deletePhoto
-  } = useInspectionPhotos(selectedInspectionId);
+    deletePhoto,
+    refetch: refetchSinglePhotos
+  } = useInspectionPhotos(selectedInspectionId !== ALL_INSPECTIONS ? selectedInspectionId : null);
 
   // Fetch user's inspections
   useEffect(() => {
@@ -64,9 +76,7 @@ export default function PhotoGallery() {
 
         if (error) throw error;
 
-        // Transform the data to match our interface
         const transformedData = (data || []).map(item => {
-          // Extract address from checklist_data JSON
           const checklistData = item.checklist_data as Record<string, any> | null;
           const address = checklistData?.address || 'Unknown Address';
           const city = checklistData?.city || '';
@@ -85,11 +95,6 @@ export default function PhotoGallery() {
         });
 
         setInspections(transformedData);
-        
-        // Auto-select the first inspection if available
-        if (transformedData.length > 0 && !selectedInspectionId) {
-          setSelectedInspectionId(transformedData[0].id);
-        }
       } catch (error) {
         console.error('Error fetching inspections:', error);
       } finally {
@@ -100,9 +105,77 @@ export default function PhotoGallery() {
     fetchInspections();
   }, []);
 
+  // Fetch all photos when viewing "All Inspections"
+  useEffect(() => {
+    const fetchAllPhotos = async () => {
+      if (selectedInspectionId !== ALL_INSPECTIONS) {
+        setLoadingAllPhotos(false);
+        return;
+      }
+
+      setLoadingAllPhotos(true);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) return;
+
+        // Get all inspection IDs for this user
+        const inspectionIds = inspections.map(i => i.id);
+        if (inspectionIds.length === 0) {
+          setAllPhotos([]);
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from('inspection_photos')
+          .select('*')
+          .in('inspection_id', inspectionIds)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        setAllPhotos(data || []);
+      } catch (error) {
+        console.error('Error fetching all photos:', error);
+      } finally {
+        setLoadingAllPhotos(false);
+      }
+    };
+
+    if (!loadingInspections) {
+      fetchAllPhotos();
+    }
+  }, [selectedInspectionId, inspections, loadingInspections]);
+
+  // Group photos by inspection
+  const inspectionsWithPhotos = useMemo((): InspectionWithPhotos[] => {
+    return inspections.map(inspection => ({
+      ...inspection,
+      photos: allPhotos.filter(p => p.inspection_id === inspection.id)
+    })).filter(i => i.photos.length > 0);
+  }, [inspections, allPhotos]);
+
   const handlePhotoClick = (index: number) => {
     setSelectedPhotoIndex(index);
     setCarouselOpen(true);
+  };
+
+  const handleInspectionCardClick = (inspection: InspectionWithPhotos) => {
+    setCarouselPhotos(inspection.photos);
+    setSelectedPhotoIndex(0);
+    setCarouselOpen(true);
+  };
+
+  const handleDeletePhoto = async (photoId: string, photoUrl: string) => {
+    await deletePhoto(photoId, photoUrl);
+    // Refetch all photos if viewing all
+    if (selectedInspectionId === ALL_INSPECTIONS) {
+      const inspectionIds = inspections.map(i => i.id);
+      const { data } = await supabase
+        .from('inspection_photos')
+        .select('*')
+        .in('inspection_id', inspectionIds)
+        .order('created_at', { ascending: false });
+      setAllPhotos(data || []);
+    }
   };
 
   const selectedInspection = inspections.find(i => i.id === selectedInspectionId);
@@ -112,6 +185,10 @@ export default function PhotoGallery() {
     const date = new Date(inspection.inspection_date).toLocaleDateString();
     return `${address} - ${date}`;
   };
+
+  const isViewingAll = selectedInspectionId === ALL_INSPECTIONS;
+  const displayPhotos = isViewingAll ? carouselPhotos : singleInspectionPhotos;
+  const totalPhotosCount = isViewingAll ? allPhotos.length : singleInspectionPhotos.length;
 
   return (
     <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
@@ -127,7 +204,7 @@ export default function PhotoGallery() {
           <ThemeToggle />
           <Button 
             onClick={() => setIsUploadModalOpen(true)}
-            disabled={!selectedInspectionId}
+            disabled={isViewingAll && inspections.length === 0}
             className="flex-1 sm:flex-initial text-xs sm:text-sm"
           >
             <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
@@ -159,13 +236,21 @@ export default function PhotoGallery() {
           ) : (
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Select
-                value={selectedInspectionId || ''}
+                value={selectedInspectionId}
                 onValueChange={setSelectedInspectionId}
               >
                 <SelectTrigger className="w-full sm:max-w-md">
                   <SelectValue placeholder="Select an inspection" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value={ALL_INSPECTIONS}>
+                    <div className="flex items-center gap-2">
+                      <span>All Inspections</span>
+                      <Badge variant="outline" className="text-xs">
+                        {allPhotos.length} photos
+                      </Badge>
+                    </div>
+                  </SelectItem>
                   {inspections.map(inspection => (
                     <SelectItem key={inspection.id} value={inspection.id}>
                       <div className="flex items-center gap-2">
@@ -182,9 +267,9 @@ export default function PhotoGallery() {
                 </SelectContent>
               </Select>
               
-              {selectedInspection && (
+              {!isViewingAll && selectedInspection && (
                 <div className="text-sm text-muted-foreground">
-                  <span className="font-medium">{photos.length}</span> photos
+                  <span className="font-medium">{singleInspectionPhotos.length}</span> photos
                 </div>
               )}
             </div>
@@ -192,26 +277,71 @@ export default function PhotoGallery() {
         </CardContent>
       </Card>
 
-      {/* Photo Gallery Grid */}
-      {selectedInspectionId && (
+      {/* Photo Gallery - Grouped Cards View for All Inspections */}
+      {isViewingAll && !loadingInspections && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center justify-between text-base">
+              <div className="flex items-center gap-2">
+                <Camera className="h-5 w-5 text-primary" />
+                Inspections with Photos
+                {inspectionsWithPhotos.length > 0 && (
+                  <Badge variant="secondary">{inspectionsWithPhotos.length}</Badge>
+                )}
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loadingAllPhotos ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : inspectionsWithPhotos.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>No photos uploaded yet.</p>
+                <p className="text-sm mt-1">Select an inspection and upload photos to get started.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {inspectionsWithPhotos.map(inspection => (
+                  <InspectionPhotoCard
+                    key={inspection.id}
+                    inspectionId={inspection.id}
+                    address={inspection.property?.address || 'Unknown Address'}
+                    date={new Date(inspection.inspection_date).toLocaleDateString()}
+                    status={inspection.status}
+                    photoCount={inspection.photos.length}
+                    thumbnailUrl={inspection.photos[0]?.photo_url}
+                    onClick={() => handleInspectionCardClick(inspection)}
+                  />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Photo Gallery Grid - Single Inspection View */}
+      {!isViewingAll && selectedInspectionId && (
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between text-base">
               <div className="flex items-center gap-2">
                 <Camera className="h-5 w-5 text-primary" />
                 Photos
-                {photos.length > 0 && (
-                  <Badge variant="secondary">{photos.length}</Badge>
+                {singleInspectionPhotos.length > 0 && (
+                  <Badge variant="secondary">{singleInspectionPhotos.length}</Badge>
                 )}
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <PhotoGalleryGrid
-              photos={photos}
+              photos={singleInspectionPhotos}
               isLoading={isLoading}
               onPhotoClick={handlePhotoClick}
-              onDelete={deletePhoto}
+              onDelete={handleDeletePhoto}
             />
           </CardContent>
         </Card>
@@ -222,16 +352,27 @@ export default function PhotoGallery() {
         open={isUploadModalOpen}
         onOpenChange={setIsUploadModalOpen}
         onUpload={async (files, inspectionId, caption) => {
+          // If we're in "all" view, use the inspection ID from the modal
+          if (isViewingAll) {
+            // We need to temporarily set the inspection ID for upload
+            setSelectedInspectionId(inspectionId);
+            // Small delay to allow the hook to update
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
           await uploadPhotos(files, 'General', caption);
+          // Reset to all view after upload if we were in all view
+          if (isViewingAll) {
+            setSelectedInspectionId(ALL_INSPECTIONS);
+          }
         }}
         isUploading={isUploading}
         inspections={inspections}
-        selectedInspectionId={selectedInspectionId}
+        selectedInspectionId={isViewingAll ? null : selectedInspectionId}
       />
 
       {/* Photo Carousel */}
       <PhotoCarousel
-        photos={photos}
+        photos={displayPhotos}
         initialIndex={selectedPhotoIndex}
         open={carouselOpen}
         onOpenChange={setCarouselOpen}
