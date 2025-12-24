@@ -11,6 +11,14 @@ const Landing = () => {
       <div className="absolute top-6 right-6 flex items-center gap-3">
         <Button 
           size="sm"
+          onClick={() => navigate("/pricing")}
+          variant="outline"
+          className="shadow-md hover:shadow-lg transition-all duration-300"
+        >
+          Pricing
+        </Button>
+        <Button 
+          size="sm"
           onClick={() => navigate("/search")}
           variant="outline"
           className="shadow-md hover:shadow-lg transition-all duration-300"
