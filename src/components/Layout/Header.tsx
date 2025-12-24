@@ -12,6 +12,9 @@ import {
 import { Navigation } from "./Navigation";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "next-themes";
+import logoDefault from "@/assets/logo.png";
+import logoWhite from "@/assets/logo-white.png";
 
 interface HeaderProps {
   activeTab: string;
@@ -20,6 +23,9 @@ interface HeaderProps {
 
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   const { profile, signOut } = useAuth();
+  const { resolvedTheme } = useTheme();
+
+  const logoSrc = resolvedTheme === 'dark' ? logoWhite : logoDefault;
 
   return (
     <>
@@ -28,7 +34,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
         <div className="flex items-center gap-4 md:gap-6">
           <div className="flex items-center gap-2">
             <img 
-              src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" 
+              src={logoSrc} 
               alt="GradeMyBuilding" 
               className="h-12 md:h-16 lg:h-20 w-auto" 
             />

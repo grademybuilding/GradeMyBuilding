@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -90,6 +91,20 @@ interface PropertiesListProps {
 }
 
 export default function PropertiesList({ onTabChange }: PropertiesListProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredProperties = mockProperties.filter((property) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      property.address.toLowerCase().includes(query) ||
+      property.city.toLowerCase().includes(query) ||
+      property.state.toLowerCase().includes(query) ||
+      property.zipCode.includes(query) ||
+      property.propertyType.toLowerCase().includes(query) ||
+      property.lastGrade.toLowerCase().includes(query)
+    );
+  });
+
   const getPropertyTypeBadge = (type: string) => {
     const variants: Record<string, "default" | "secondary" | "outline"> = {
       Commercial: "default",
@@ -114,11 +129,23 @@ export default function PropertiesList({ onTabChange }: PropertiesListProps) {
 
       <div className="relative w-full sm:max-w-md">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input placeholder="Search properties..." className="pl-10" />
+        <Input 
+          placeholder="Search by address, city, grade..." 
+          className="pl-10"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
 
       <div className="grid gap-4">
-        {mockProperties.map((property) => (
+        {filteredProperties.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 border border-dashed border-border rounded-lg">
+            <Search className="h-12 w-12 text-muted-foreground mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">No properties found</h3>
+            <p className="text-muted-foreground">Try adjusting your search terms</p>
+          </div>
+        ) : null}
+        {filteredProperties.map((property) => (
           <Card key={property.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-4">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">

@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Header } from "@/components/Layout/Header";
+import { AuthenticatedLayout } from "@/components/Layout/AuthenticatedLayout";
 import { useAuth } from "@/hooks/useAuth";
 import InspectorDashboard from "@/pages/roles/InspectorDashboard";
 import AppraiserDashboard from "@/pages/roles/AppraiserDashboard";
@@ -10,36 +8,14 @@ import UnderwriterDashboard from "@/pages/roles/UnderwriterDashboard";
 import AdminDashboard from "@/pages/roles/AdminDashboard";
 
 const Index = () => {
-  const { profile, loading, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      navigate('/auth');
-    }
-  }, [loading, isAuthenticated, navigate]);
+  const { profile } = useAuth();
 
   const handleTabChange = (tab: string) => {
     // Navigation is now handled by the Navigation component directly
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-background">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated || !profile) {
-    return null;
-  }
-
   const renderContent = () => {
-    switch (profile.role) {
+    switch (profile?.role) {
       case 'inspector':
         return <InspectorDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'appraiser':
@@ -58,12 +34,9 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
-      <Header activeTab="dashboard" onTabChange={handleTabChange} />
-      <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
-        {renderContent()}
-      </main>
-    </div>
+    <AuthenticatedLayout>
+      {renderContent()}
+    </AuthenticatedLayout>
   );
 };
 
