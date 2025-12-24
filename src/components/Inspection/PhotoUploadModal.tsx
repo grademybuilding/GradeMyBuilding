@@ -140,17 +140,32 @@ export function PhotoUploadModal({
     onOpenChange(false);
   };
 
-  const handleClose = () => {
+  const resetForm = () => {
     previews.forEach(url => URL.revokeObjectURL(url));
     setSelectedFiles([]);
     setPreviews([]);
     setInspectionId(selectedInspectionId || '');
     setCaption('');
+  };
+
+  const handleClose = () => {
+    console.debug('[PhotoUploadModal] close');
+    resetForm();
     onOpenChange(false);
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog
+      open={open}
+      onOpenChange={(nextOpen) => {
+        console.debug('[PhotoUploadModal] onOpenChange', { nextOpen });
+        if (!nextOpen) {
+          handleClose();
+        } else {
+          onOpenChange(true);
+        }
+      }}
+    >
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
@@ -163,7 +178,13 @@ export function PhotoUploadModal({
           {/* Inspection Selection */}
           <div className="space-y-2">
             <Label htmlFor="inspection">Inspection *</Label>
-            <Select value={inspectionId} onValueChange={setInspectionId}>
+            <Select
+              value={inspectionId}
+              onValueChange={(val) => {
+                console.debug('[PhotoUploadModal] inspection selected', { val });
+                setInspectionId(val);
+              }}
+            >
               <SelectTrigger id="inspection">
                 <SelectValue placeholder="Select an inspection" />
               </SelectTrigger>
