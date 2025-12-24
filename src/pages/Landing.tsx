@@ -11,6 +11,10 @@ import heroStreetHomes from "@/assets/hero-street-homes.jpg";
 import featureResidential from "@/assets/feature-residential.jpg";
 import featureCommercial from "@/assets/feature-commercial.jpg";
 import featureMultifamily from "@/assets/feature-multifamily.jpg";
+import personaInspector from "@/assets/persona-inspector.jpg";
+import personaSeller from "@/assets/persona-seller.jpg";
+import personaBuyer from "@/assets/persona-buyer.jpg";
+import personaAppraiser from "@/assets/persona-appraiser.jpg";
 
 const features = [
   {
@@ -30,6 +34,33 @@ const features = [
     title: "Multi-Family Properties",
     description: "Apartment complexes and multi-unit buildings evaluated comprehensively.",
     grade: "A+",
+  },
+];
+
+const personas = [
+  {
+    image: personaInspector,
+    title: "Building Inspector",
+    benefits: [
+      "Increased Inspection Volume",
+      "Faster, Smarter Inspections",
+      "All-in-One Mobile App",
+    ],
+  },
+  {
+    image: personaSeller,
+    title: "Seller & Seller Agent",
+    description: "A better building health score/grade justifies a higher asking price and attracts serious buyers.",
+  },
+  {
+    image: personaBuyer,
+    title: "Buyer & Buyer Agent",
+    description: "Access a clear, pre-certified, and graded building before making an offer—no surprises, no stress.",
+  },
+  {
+    image: personaAppraiser,
+    title: "Appraiser, Lender & Underwriter",
+    description: "An integrated scoring & grading system increases confidence among buyers, underwriters, and lenders.",
   },
 ];
 
@@ -140,6 +171,45 @@ const Landing = () => {
                 </button>
               </div>
             </form>
+          </div>
+          {/* Second Row - Personas */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+            {personas.map((persona, index) => (
+              <Card key={index} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-border hover:border-primary/50 cursor-pointer bg-muted/30">
+                <div className="relative h-56 overflow-hidden">
+                  <img 
+                    src={persona.image} 
+                    alt={persona.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-3">
+                    {persona.title}
+                  </h3>
+                  {persona.benefits ? (
+                    <ul className="space-y-1">
+                      {persona.benefits.map((benefit, idx) => (
+                        <li key={idx} className="text-muted-foreground text-sm">
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted-foreground text-sm">
+                      {persona.description}
+                    </p>
+                  )}
+                  <Button 
+                    className="mt-4"
+                    size="sm"
+                    onClick={() => navigate("/auth")}
+                  >
+                    read more
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
