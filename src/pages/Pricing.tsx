@@ -1,8 +1,12 @@
+import { useState, useEffect } from "react";
 import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
+import { Header } from "@/components/Layout/Header";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const pricingPlans = [
   {
@@ -45,21 +49,62 @@ const pricingPlans = [
 
 export default function Pricing() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [activeTab, setActiveTab] = useState('pricing');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleTabChange = (tab: string) => {
+    if (tab === 'pricing') {
+      return; // Already on pricing
+    }
+    navigate('/dashboard');
+    // The dashboard will handle the tab
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <button 
-            onClick={() => navigate("/")}
-            className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
-          >
-            BuildingGrade Pro
-          </button>
-          <ThemeToggle />
-        </div>
-      </header>
+      {/* Conditional Header */}
+      {user ? (
+        <Header activeTab={activeTab} onTabChange={handleTabChange} />
+      ) : (
+        <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <button 
+              onClick={() => navigate("/")}
+              className="text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+            >
+              BuildingGrade Pro
+            </button>
+            <ThemeToggle />
+          </div>
+        </header>
+      )}
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-12">
