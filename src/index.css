@@ -43,9 +43,9 @@ All colors MUST be HSL.
     --muted: 213 20% 96%;
     --muted-foreground: 213 15% 45%;
 
-    /* Success green from logo checkmark */
-    --accent: 142 69% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* Blue accent matching primary theme */
+    --accent: 213 89% 95%;
+    --accent-foreground: 213 89% 35%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -101,7 +101,7 @@ All colors MUST be HSL.
     --muted: 213 25% 15%;
     --muted-foreground: 213 15% 65%;
 
-    --accent: 142 69% 50%;
+    --accent: 213 89% 25%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 50%;

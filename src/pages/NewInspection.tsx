@@ -8,6 +8,7 @@ import { StepProgress } from "@/components/Inspection/StepProgress";
 import { DebugPanel } from "@/components/Inspection/DebugPanel";
 import { ArrowLeft, Save, Camera, ChevronRight, Loader2, Cloud, CheckCircle } from "lucide-react";
 import { useInspection } from "@/hooks/useInspection";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 // Context for scroll-to-top function
@@ -44,7 +45,9 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const contentRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   const steps = [
     { id: 1, title: "Property Info", shortTitle: "Property" },
@@ -109,7 +112,49 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     });
   }, [completedSteps, updateNavigationState]);
 
+  // Validation for each step
+  const validateStep = (step: number): Record<string, string> => {
+    const errors: Record<string, string> = {};
+    
+    if (step === 0) {
+      // Property Info validation - use 'as any' since formData can have dynamic keys from form inputs
+      const data = formData as any;
+      if (!data.address?.trim()) {
+        errors.address = "Property address is required";
+      }
+      if (!data.city?.trim()) {
+        errors.city = "City is required";
+      }
+      if (!data.propertyType) {
+        errors.propertyType = "Property type is required";
+      }
+    } else if (step === 1) {
+      // Inspection Details validation
+      if (!formData.inspectionDate) {
+        errors.inspectionDate = "Inspection date is required";
+      }
+      if (!formData.inspectorName?.trim()) {
+        errors.inspectorName = "Inspector name is required";
+      }
+    }
+    
+    return errors;
+  };
+
   const handleNext = () => {
+    // Validate current step before proceeding
+    const errors = validateStep(currentStep);
+    setValidationErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields before proceeding.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     if (currentStep < steps.length - 1) {
       const newCompletedSteps = completedSteps.includes(currentStep) 
         ? completedSteps 
@@ -181,12 +226,25 @@ export function NewInspection({ onBack, inspectionId }: NewInspectionProps) {
     );
   }
 
+  // Clear validation error when a field changes
+  const handleFieldChangeWithValidation = (field: string, value: any) => {
+    handleFieldChange(field, value);
+    // Clear the specific validation error when the field is edited
+    if (validationErrors[field]) {
+      setValidationErrors(prev => {
+        const updated = { ...prev };
+        delete updated[field];
+        return updated;
+      });
+    }
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 0:
-        return <PropertyInfo formData={formData} onChange={handleFieldChange} />;
+        return <PropertyInfo formData={formData} onChange={handleFieldChangeWithValidation} validationErrors={validationErrors} />;
       case 1:
-        return <InspectionDetails formData={formData} onChange={handleFieldChange} />;
+        return <InspectionDetails formData={formData} onChange={handleFieldChangeWithValidation} validationErrors={validationErrors} />;
       case 2:
         return (
           <ScrollContext.Provider value={scrollToTop}>
