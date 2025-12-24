@@ -1,5 +1,6 @@
 import { Home, ClipboardCheck, Building, Camera, FileText, Settings, Receipt, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 interface NavigationProps {
   activeTab: string;
@@ -8,17 +9,24 @@ interface NavigationProps {
 }
 
 const navItems = [
-  { id: 'dashboard', label: 'Home', icon: Home },
-  { id: 'inspections', label: 'Inspections', icon: ClipboardCheck },
-  { id: 'properties', label: 'Properties', icon: Building },
-  { id: 'photos', label: 'Photos', icon: Camera },
-  { id: 'invoices', label: 'Invoices', icon: Receipt },
-  { id: 'pricing', label: 'Pricing', icon: CreditCard },
-  { id: 'reports', label: 'Reports', icon: FileText },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: 'dashboard', label: 'Home', icon: Home, path: '/dashboard' },
+  { id: 'inspections', label: 'Inspections', icon: ClipboardCheck, path: '/inspections' },
+  { id: 'properties', label: 'Properties', icon: Building, path: '/properties' },
+  { id: 'photos', label: 'Photos', icon: Camera, path: '/photos' },
+  { id: 'invoices', label: 'Invoices', icon: Receipt, path: '/invoices' },
+  { id: 'pricing', label: 'Pricing', icon: CreditCard, path: '/pricing' },
+  { id: 'reports', label: 'Reports', icon: FileText, path: '/reports' },
+  { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
 ];
 
 export function Navigation({ activeTab, onTabChange, isMobile = false }: NavigationProps) {
+  const navigate = useNavigate();
+
+  const handleNavClick = (item: typeof navItems[0]) => {
+    navigate(item.path);
+    onTabChange(item.id);
+  };
+
   if (isMobile) {
     return (
       <div className="flex items-center justify-around px-2 py-2 pb-[env(safe-area-inset-bottom)]">
@@ -29,7 +37,7 @@ export function Navigation({ activeTab, onTabChange, isMobile = false }: Navigat
           return (
             <button
               key={item.id}
-              onClick={() => onTabChange(item.id)}
+              onClick={() => handleNavClick(item)}
               className={cn(
                 "flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-lg min-w-[48px] transition-all duration-200",
                 isActive
@@ -69,7 +77,7 @@ export function Navigation({ activeTab, onTabChange, isMobile = false }: Navigat
         return (
           <button
             key={item.id}
-            onClick={() => onTabChange(item.id)}
+            onClick={() => handleNavClick(item)}
             className={cn(
               "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
               isActive
