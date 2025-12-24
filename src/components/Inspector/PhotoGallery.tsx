@@ -46,24 +46,15 @@ export default function PhotoGallery() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
   const [carouselPhotos, setCarouselPhotos] = useState<InspectionPhoto[]>([]);
 
-  // Track which inspection to upload to (separate from view filter)
-  const [uploadTargetInspectionId, setUploadTargetInspectionId] = useState<string | null>(null);
-
-  // Use hook for single inspection view
+  // Use hook for viewing single inspection OR uploading to a chosen inspection
   const {
     photos: singleInspectionPhotos,
     isLoading,
-    isUploading: isUploadingSingle,
-    uploadPhotos: uploadToSingleInspection,
+    isUploading,
+    uploadPhotos,
     deletePhoto,
     refetch: refetchSinglePhotos
   } = useInspectionPhotos(selectedInspectionId !== ALL_INSPECTIONS ? selectedInspectionId : null);
-
-  // Use hook for uploading to a specific inspection (when in "All" view)
-  const {
-    isUploading: isUploadingTarget,
-    uploadPhotos: uploadToTargetInspection,
-  } = useInspectionPhotos(uploadTargetInspectionId);
 
   // Fetch user's inspections
   useEffect(() => {
@@ -359,20 +350,19 @@ export default function PhotoGallery() {
       {/* Upload Modal */}
       <PhotoUploadModal
         open={isUploadModalOpen}
-        onOpenChange={(open) => {
-          setIsUploadModalOpen(open);
-          if (!open) {
-            setUploadTargetInspectionId(null);
-          }
-        }}
+        onOpenChange={setIsUploadModalOpen}
         onUpload={async (files, inspectionId, caption) => {
+          console.debug('[PhotoGallery] onUpload', {
+            isViewingAll,
+            selectedInspectionId,
+            inspectionIdFromModal: inspectionId,
+            filesCount: files.length,
+          });
+
+          await uploadPhotos(files, inspectionId, caption, 'General');
+
+          // If we're in "all" view, refetch grouped data after upload
           if (isViewingAll) {
-            // Set target inspection and upload using dedicated hook
-            setUploadTargetInspectionId(inspectionId);
-            // Wait for state to update
-            await new Promise(resolve => setTimeout(resolve, 50));
-            await uploadToTargetInspection(files, 'General', caption);
-            // Refetch all photos after upload
             const inspectionIds = inspections.map(i => i.id);
             const { data } = await supabase
               .from('inspection_photos')
@@ -380,12 +370,9 @@ export default function PhotoGallery() {
               .in('inspection_id', inspectionIds)
               .order('created_at', { ascending: false });
             setAllPhotos(data || []);
-            setUploadTargetInspectionId(null);
-          } else {
-            await uploadToSingleInspection(files, 'General', caption);
           }
         }}
-        isUploading={isUploadingSingle || isUploadingTarget}
+        isUploading={isUploading}
         inspections={inspections}
         selectedInspectionId={isViewingAll ? null : selectedInspectionId}
       />

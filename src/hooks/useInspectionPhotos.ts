@@ -17,7 +17,12 @@ interface UseInspectionPhotosReturn {
   photos: InspectionPhoto[];
   isLoading: boolean;
   isUploading: boolean;
-  uploadPhotos: (files: File[], category: string, caption: string) => Promise<void>;
+  uploadPhotos: (
+    files: File[],
+    inspectionId: string,
+    caption: string,
+    category?: string
+  ) => Promise<void>;
   deletePhoto: (photoId: string, photoUrl: string) => Promise<void>;
   refetch: () => Promise<void>;
 }
@@ -55,8 +60,23 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
     fetchPhotos();
   }, [fetchPhotos]);
 
-  const uploadPhotos = async (files: File[], category: string, caption: string) => {
-    if (!inspectionId) {
+  const uploadPhotos = async (
+    files: File[],
+    inspectionIdParam: string,
+    caption: string,
+    category: string = 'General'
+  ) => {
+    const targetInspectionId = inspectionIdParam || inspectionId;
+
+    console.debug('[useInspectionPhotos] uploadPhotos', {
+      hookInspectionId: inspectionId,
+      inspectionIdParam,
+      targetInspectionId,
+      filesCount: files.length,
+      category,
+    });
+
+    if (!targetInspectionId) {
       toast.error('No inspection selected');
       return;
     }
@@ -68,10 +88,10 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
       for (const file of files) {
         // Create unique file name
         const fileExt = file.name.split('.').pop();
-        const fileName = `${inspectionId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+        const fileName = `${targetInspectionId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
 
         // Upload to Supabase Storage
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        const { error: uploadError } = await supabase.storage
           .from('inspection-photos')
           .upload(fileName, file, {
             cacheControl: '3600',
@@ -89,7 +109,7 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
           .getPublicUrl(fileName);
 
         uploadedPhotos.push({
-          inspection_id: inspectionId,
+          inspection_id: targetInspectionId,
           checklist_item_id: null,
           photo_url: urlData.publicUrl,
           caption: caption || null,
