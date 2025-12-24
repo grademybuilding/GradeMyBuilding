@@ -8,39 +8,35 @@ import { useAuth } from "@/hooks/useAuth";
 
 const pricingPlans = [
   {
-    name: "Starter",
-    price: 7,
-    credits: 1000,
-    costPer1000: 7,
+    name: "Free/Starter",
+    price: "$0",
+    priceLabel: "/month",
     icon: Zap,
-    features: ["1,000 credits", "CSV or TXT export", "API access", "GDPR compliant"],
+    features: ["5 inspections/month", "Basic grading", "Limited storage"],
     popular: false,
   },
   {
-    name: "Basic",
-    price: 22,
-    credits: 5000,
-    costPer1000: 4.4,
+    name: "Professional",
+    price: "$29-49",
+    priceLabel: "/month",
     icon: Star,
-    features: ["5,000 credits", "CSV or TXT export", "API access", "GDPR compliant"],
-    popular: false,
-  },
-  {
-    name: "Pro",
-    price: 47,
-    credits: 20000,
-    costPer1000: 2.35,
-    icon: Crown,
-    features: ["20,000 credits", "CSV or TXT export", "API access", "GDPR compliant"],
+    features: ["Unlimited inspections", "Full grading algorithm", "Report generating", "Invoicing", "10GB storage"],
     popular: true,
   },
   {
+    name: "Business",
+    price: "$79-99",
+    priceLabel: "/month",
+    icon: Crown,
+    features: ["Multi-user access", "Advanced reports", "API access", "50GB storage"],
+    popular: false,
+  },
+  {
     name: "Enterprise",
-    price: 97,
-    credits: 50000,
-    costPer1000: 1.94,
+    price: "Custom",
+    priceLabel: "",
     icon: Rocket,
-    features: ["50,000 credits", "CSV or TXT export", "API access", "GDPR compliant"],
+    features: ["Unlimited users", "Custom integrations", "SaaS Platform"],
     popular: false,
   },
 ];
@@ -116,10 +112,12 @@ export default function Pricing() {
                     </p>
                     <div className="flex items-baseline justify-center gap-1">
                       <span className="text-4xl font-bold text-foreground">
-                        {plan.price}€
+                        {plan.price}
                       </span>
+                      {plan.priceLabel && (
+                        <span className="text-muted-foreground">{plan.priceLabel}</span>
+                      )}
                     </div>
-                    <p className="text-sm text-muted-foreground">One time payment</p>
                   </div>
                 </CardHeader>
 
@@ -131,7 +129,7 @@ export default function Pricing() {
                         : "bg-primary/90 hover:bg-primary"
                     }`}
                   >
-                    BUY NOW
+                    {plan.name === "Enterprise" ? "CONTACT US" : "GET STARTED"}
                   </Button>
 
                   <ul className="space-y-3">
@@ -144,27 +142,22 @@ export default function Pricing() {
                       </li>
                     ))}
                   </ul>
-
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-xs text-muted-foreground text-center">
-                      <span className="font-semibold text-foreground">{plan.costPer1000}€</span>
-                      {" "}/ 1,000 credits
-                    </p>
-                  </div>
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        {/* FAQ or Additional Info */}
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground">
-            Need more credits?{" "}
-            <button className="text-primary hover:underline font-medium">
-              Contact us
-            </button>{" "}
-            for custom enterprise solutions.
+        {/* Additional Notes */}
+        <div className="max-w-2xl mx-auto mt-16 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">1.</span> 14-day free trial on the Professional tier
+          </p>
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">2.</span> Usage-based add-ons for storage and team members
+          </p>
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">3.</span> <span className="font-semibold text-foreground">Annual discount</span> (20% off for yearly commitment)
           </p>
         </div>
       </main>
