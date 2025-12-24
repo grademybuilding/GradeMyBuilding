@@ -89,7 +89,9 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
   }, [open, invoiceId]);
 
   const fetchCustomers = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data } = await supabase
@@ -102,18 +104,22 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
   };
 
   const fetchInspections = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { data } = await supabase
       .from("inspections")
-      .select(`
+      .select(
+        `
         id,
         property_id,
         properties (
           address
         )
-      `)
+      `,
+      )
       .eq("inspector_id", user.id)
       .order("created_at", { ascending: false });
 
@@ -123,7 +129,9 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
   const [invoiceNumber, setInvoiceNumber] = useState("");
 
   const generateInvoiceNumber = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     if (!user) return;
 
     const { count } = await supabase
@@ -140,10 +148,12 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
 
     const { data, error } = await supabase
       .from("invoices")
-      .select(`
+      .select(
+        `
         *,
         invoice_items (*)
-      `)
+      `,
+      )
       .eq("id", invoiceId)
       .single();
 
@@ -192,7 +202,7 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
           updated.total = updated.quantity * updated.unit_price;
         }
         return updated;
-      })
+      }),
     );
   };
 
@@ -209,7 +219,9 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
   const onSubmit = async (values: z.infer<typeof invoiceSchema>, status: string) => {
     setLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
       const subtotal = calculateSubtotal();
@@ -312,7 +324,7 @@ export function InvoiceForm({ open, onOpenChange, invoiceId }: InvoiceFormProps)
                           </FormControl>
                           <SelectContent>
                             {customers.map((customer) => (
-                              <SelectItem key={customer.id} value={customer.id}>
+                              <SelectItem key={customer.id} value={customer.id || ""}>
                                 {customer.name} - {customer.email}
                               </SelectItem>
                             ))}
