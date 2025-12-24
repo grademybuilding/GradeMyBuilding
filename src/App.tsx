@@ -55,7 +55,6 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/search" element={<Search />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/pricing" element={<Pricing />} />
 
             {/* Authenticated area (layout mounts once, persists across route changes) */}
             <Route element={<AuthenticatedLayout />}>
@@ -64,6 +63,7 @@ const App = () => (
               <Route path="/properties" element={<Properties />} />
               <Route path="/photos" element={<Photos />} />
               <Route path="/invoices" element={<Invoices />} />
+              <Route path="/pricing" element={<Pricing />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/new-inspection" element={<NewInspectionPage />} />
