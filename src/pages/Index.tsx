@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Layout/Header";
 import { useAuth } from "@/hooks/useAuth";
@@ -10,23 +10,18 @@ import UnderwriterDashboard from "@/pages/roles/UnderwriterDashboard";
 import AdminDashboard from "@/pages/roles/AdminDashboard";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const { user, profile, loading, isAuthenticated } = useAuth();
+  const { profile, loading, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-  const handleTabChange = (tab: string) => {
-    if (tab === 'pricing') {
-      navigate('/pricing');
-    } else {
-      setActiveTab(tab);
-    }
-  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
       navigate('/auth');
     }
   }, [loading, isAuthenticated, navigate]);
+
+  const handleTabChange = (tab: string) => {
+    // Navigation is now handled by the Navigation component directly
+  };
 
   if (loading) {
     return (
@@ -46,25 +41,25 @@ const Index = () => {
   const renderContent = () => {
     switch (profile.role) {
       case 'inspector':
-        return <InspectorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <InspectorDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'appraiser':
-        return <AppraiserDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <AppraiserDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'real_estate_agent':
-        return <AgentDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <AgentDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'assessor':
-        return <AssessorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <AssessorDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'underwriter':
-        return <UnderwriterDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <UnderwriterDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       case 'admin':
-        return <AdminDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <AdminDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
       default:
-        return <InspectorDashboard activeTab={activeTab} onTabChange={setActiveTab} />;
+        return <InspectorDashboard activeTab="dashboard" onTabChange={handleTabChange} />;
     }
   };
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <Header activeTab={activeTab} onTabChange={handleTabChange} />
+      <Header activeTab="dashboard" onTabChange={handleTabChange} />
       <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
         {renderContent()}
       </main>

@@ -50,7 +50,6 @@ const pricingPlans = [
 export default function Pricing() {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [activeTab, setActiveTab] = useState('pricing');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -72,11 +71,7 @@ export default function Pricing() {
   }, []);
 
   const handleTabChange = (tab: string) => {
-    if (tab === 'pricing') {
-      return; // Already on pricing
-    }
-    navigate('/dashboard');
-    // The dashboard will handle the tab
+    // Navigation is handled by Navigation component
   };
 
   if (loading) {
@@ -91,7 +86,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-background">
       {/* Conditional Header */}
       {user ? (
-        <Header activeTab={activeTab} onTabChange={handleTabChange} />
+        <Header activeTab="pricing" onTabChange={handleTabChange} />
       ) : (
         <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
