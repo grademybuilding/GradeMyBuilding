@@ -177,7 +177,16 @@ export function EditProfileModal({
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input placeholder="+1 (555) 123-4567" {...field} />
+                      <Input 
+                        placeholder="(555) 123-4567" 
+                        maxLength={17}
+                        {...field}
+                        onChange={(e) => {
+                          // Only allow digits, spaces, parentheses, dashes, dots, and plus
+                          const value = e.target.value.replace(/[^\d\s()\-+.]/g, '');
+                          field.onChange(value);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
