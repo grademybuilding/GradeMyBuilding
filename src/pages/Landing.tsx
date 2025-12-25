@@ -209,7 +209,10 @@ const Landing = () => {
             <button className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Terms
             </button>
-            <button className="text-base text-muted-foreground hover:text-foreground transition-colors">
+            <button 
+              onClick={() => navigate("/contact")}
+              className="text-base text-muted-foreground hover:text-foreground transition-colors"
+            >
               Contact
             </button>
           </div>

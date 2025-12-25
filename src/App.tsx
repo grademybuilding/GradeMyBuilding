@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Search from "./pages/Search";
 import Pricing from "./pages/Pricing";
+import Contact from "./pages/Contact";
 import Inspections from "./pages/Inspections";
 import Properties from "./pages/Properties";
 import Photos from "./pages/Photos";
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Authenticated area (layout mounts once, persists across route changes) */}
             <Route element={<AuthenticatedLayout />}>
