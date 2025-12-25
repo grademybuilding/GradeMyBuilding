@@ -51,7 +51,7 @@ const Landing = () => {
                 onClick={() => navigate("/search")}
                 className="text-white hover:text-white/80 font-medium text-lg transition-colors"
               >
-                Search Grades
+                Search Building Grades
               </button>
               <button 
                 onClick={() => navigate("/pricing")}
