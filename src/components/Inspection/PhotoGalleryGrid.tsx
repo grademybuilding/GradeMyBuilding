@@ -51,7 +51,7 @@ export function PhotoGalleryGrid({
         <Card key={photo.id} className="overflow-hidden group hover:shadow-md transition-shadow">
           <div className="aspect-square relative">
             <img
-              src={photo.photo_url}
+              src={photo.signedUrl || photo.photo_url}
               alt={photo.caption || `Photo ${index + 1}`}
               className="w-full h-full object-cover cursor-pointer"
               onClick={() => onPhotoClick(index)}

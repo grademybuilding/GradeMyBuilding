@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,40 @@ import { PhotoUploadModal } from "@/components/Inspection/PhotoUploadModal";
 import { PhotoGalleryGrid } from "@/components/Inspection/PhotoGalleryGrid";
 import { PhotoCarousel } from "@/components/Inspection/PhotoCarousel";
 import { InspectionPhotoCard } from "@/components/Inspection/InspectionPhotoCard";
+
+// Generate signed URLs for photos
+async function generateSignedUrls(photos: InspectionPhoto[]): Promise<InspectionPhoto[]> {
+  if (photos.length === 0) return photos;
+
+  const photosWithSignedUrls = await Promise.all(
+    photos.map(async (photo) => {
+      try {
+        let filePath = photo.photo_url;
+        
+        if (photo.photo_url.includes('/inspection-photos/')) {
+          const parts = photo.photo_url.split('/inspection-photos/');
+          filePath = parts[parts.length - 1];
+        }
+
+        const { data, error } = await supabase.storage
+          .from('inspection-photos')
+          .createSignedUrl(filePath, 3600);
+
+        if (error) {
+          console.warn('Failed to generate signed URL for photo:', photo.id, error);
+          return photo;
+        }
+
+        return { ...photo, signedUrl: data.signedUrl };
+      } catch (error) {
+        console.warn('Error generating signed URL:', error);
+        return photo;
+      }
+    })
+  );
+
+  return photosWithSignedUrls;
+}
 
 interface Inspection {
   id: string;
@@ -131,7 +165,10 @@ export default function PhotoGallery() {
           .order('created_at', { ascending: false });
 
         if (error) throw error;
-        setAllPhotos(data || []);
+        
+        // Generate signed URLs for all photos
+        const photosWithUrls = await generateSignedUrls(data || []);
+        setAllPhotos(photosWithUrls);
       } catch (error) {
         console.error('Error fetching all photos:', error);
       } finally {
@@ -173,7 +210,8 @@ export default function PhotoGallery() {
         .select('*')
         .in('inspection_id', inspectionIds)
         .order('created_at', { ascending: false });
-      setAllPhotos(data || []);
+      const photosWithUrls = await generateSignedUrls(data || []);
+      setAllPhotos(photosWithUrls);
     }
   };
 
@@ -317,7 +355,7 @@ export default function PhotoGallery() {
                     date={new Date(inspection.inspection_date).toLocaleDateString()}
                     status={inspection.status}
                     photoCount={inspection.photos.length}
-                    thumbnailUrl={inspection.photos[0]?.photo_url}
+                    thumbnailUrl={inspection.photos[0]?.signedUrl || inspection.photos[0]?.photo_url}
                     onClick={() => handleInspectionCardClick(inspection)}
                   />
                 ))}
@@ -360,7 +398,7 @@ export default function PhotoGallery() {
                   date={new Date(selectedInspection.inspection_date).toLocaleDateString()}
                   status={selectedInspection.status}
                   photoCount={singleInspectionPhotos.length}
-                  thumbnailUrl={singleInspectionPhotos[0]?.photo_url}
+                  thumbnailUrl={singleInspectionPhotos[0]?.signedUrl || singleInspectionPhotos[0]?.photo_url}
                   onClick={() => {
                     setCarouselPhotos(singleInspectionPhotos);
                     setSelectedPhotoIndex(0);
@@ -395,7 +433,8 @@ export default function PhotoGallery() {
               .select('*')
               .in('inspection_id', inspectionIds)
               .order('created_at', { ascending: false });
-            setAllPhotos(data || []);
+            const photosWithUrls = await generateSignedUrls(data || []);
+            setAllPhotos(photosWithUrls);
           }
         }}
         isUploading={isUploading}
