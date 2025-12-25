@@ -53,12 +53,6 @@ const Landing = () => {
               >
                 Search Building Grades
               </button>
-              <button 
-                onClick={() => navigate("/pricing")}
-                className="text-white hover:text-white/80 font-medium text-lg transition-colors"
-              >
-                Pricing
-              </button>
             </nav>
 
             {/* Center Logo */}
