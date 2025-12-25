@@ -79,9 +79,6 @@ export default function Pricing() {
           <h1 className="text-4xl font-bold text-foreground mb-4">
             Simple, Transparent Pricing
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose the plan that fits your needs. All plans include one-time payment with no recurring fees.
-          </p>
         </div>
 
       {/* Pricing Cards */}
