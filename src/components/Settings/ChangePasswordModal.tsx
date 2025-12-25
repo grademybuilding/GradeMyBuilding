@@ -24,11 +24,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const passwordSchema = z.object({
+  oldPassword: z.string().min(1, "Current password is required"),
   newPassword: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
 }).refine((data) => data.newPassword === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
+}).refine((data) => data.oldPassword !== data.newPassword, {
+  message: "New password must be different from current password",
+  path: ["newPassword"],
 });
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
@@ -40,12 +44,14 @@ interface ChangePasswordModalProps {
 
 export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalProps) {
   const [loading, setLoading] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
+      oldPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
@@ -54,11 +60,28 @@ export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalP
   const onSubmit = async (values: PasswordFormValues) => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.updateUser({
+      // Get current user email
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.email) {
+        throw new Error("Unable to verify user");
+      }
+
+      // Verify old password by attempting to sign in
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: values.oldPassword,
+      });
+
+      if (signInError) {
+        throw new Error("Current password is incorrect");
+      }
+
+      // Update to new password
+      const { error: updateError } = await supabase.auth.updateUser({
         password: values.newPassword,
       });
 
-      if (error) throw error;
+      if (updateError) throw updateError;
 
       toast.success("Password updated successfully");
       form.reset();
@@ -85,6 +108,39 @@ export function ChangePasswordModal({ open, onOpenChange }: ChangePasswordModalP
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="oldPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Current Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Input
+                        type={showOldPassword ? "text" : "password"}
+                        placeholder="Enter current password"
+                        {...field}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 hover:bg-transparent"
+                        onClick={() => setShowOldPassword(!showOldPassword)}
+                      >
+                        {showOldPassword ? (
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        )}
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="newPassword"
