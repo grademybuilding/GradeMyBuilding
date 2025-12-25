@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,9 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { ThemeToggle } from "@/components/Layout/ThemeToggle";
-import logoWhite from "@/assets/logo-white.png";
-import logoColor from "@/assets/logo-color.png";
+import { PublicHeader } from "@/components/Layout/PublicHeader";
 
 const interestOptions = [
   { id: "mobile-app", label: "Free AI-Powered Mobile App for Inspectors" },
@@ -33,8 +29,6 @@ const contactFormSchema = z.object({
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
-  const navigate = useNavigate();
-  const { resolvedTheme } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ContactFormValues>({
@@ -65,26 +59,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <div
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            <img
-              src={resolvedTheme === "dark" ? logoWhite : logoColor}
-              alt="Building Grade"
-              className="h-10 w-auto"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Button variant="outline" onClick={() => navigate("/auth")}>
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
 
       {/* Hero Section */}
       <section className="py-12 md:py-16 lg:py-20">
