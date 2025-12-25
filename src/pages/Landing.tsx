@@ -221,9 +221,6 @@ const Landing = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               We Grade All Property Types
             </h2>
-            <p className="text-muted-foreground text-xl max-w-3xl mx-auto">
-              Professional building assessments for residential, commercial, and multi-family properties
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
