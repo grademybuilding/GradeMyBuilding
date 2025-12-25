@@ -36,8 +36,8 @@ export function StepProgress({
       {/* Desktop/Tablet Horizontal Stepper */}
       <div className="hidden sm:flex items-center justify-between relative px-5">
         {/* Progress Line Track (clipped so it never bleeds outside the bar) */}
-        <div className="absolute top-5 left-0 right-0 h-0.5 bg-muted overflow-hidden rounded-full">
-          {/* Progress Line Filled */}
+        <div className="absolute top-5 left-5 right-5 h-0.5 bg-muted overflow-hidden rounded-full">
+          {/* Progress Line Filled (starts at the center of step 1 because of px-5 + left-5) */}
           {currentStep > 0 && (
             <div
               className="absolute inset-y-0 left-0 bg-primary transition-[width] duration-500"
