@@ -104,7 +104,7 @@ const Landing = () => {
             playsInline
             className="w-full h-full object-cover"
           >
-            <source src="/videos/House_Inspection_Grade_Video_Generation.mp4" type="video/mp4" />
+            <source src="/videos/Building_Grades_Pop_Up_Video.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
         </div>
