@@ -137,38 +137,31 @@ const Landing = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {personas.map((persona, index) => (
-              <Card key={index} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-border hover:border-primary/50 cursor-pointer bg-muted/30">
-                <div className="relative h-56 overflow-hidden">
+              <Card key={index} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border-border hover:border-primary/50 bg-muted/30">
+                <div className="relative h-40 overflow-hidden">
                   <img 
                     src={persona.image} 
                     alt={persona.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-foreground mb-3">
+                <CardContent className="p-4">
+                  <h3 className="text-lg font-bold text-foreground mb-2">
                     {persona.title}
                   </h3>
                   {persona.benefits ? (
-                    <ul className="space-y-1">
+                    <ul className="space-y-0.5">
                       {persona.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-muted-foreground text-sm">
+                        <li key={idx} className="text-muted-foreground text-xs">
                           {benefit}
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-xs">
                       {persona.description}
                     </p>
                   )}
-                  <Button 
-                    className="mt-4"
-                    size="sm"
-                    onClick={() => navigate("/auth")}
-                  >
-                    read more
-                  </Button>
                 </CardContent>
               </Card>
             ))}
