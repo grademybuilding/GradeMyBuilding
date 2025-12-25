@@ -15,6 +15,8 @@ interface StepProgressProps {
   allowNavigation?: boolean;
 }
 
+const CIRCLE_SIZE = 36; // px
+
 export function StepProgress({
   steps,
   currentStep,
@@ -24,29 +26,34 @@ export function StepProgress({
 }: StepProgressProps) {
   const handleStepClick = (index: number) => {
     if (!allowNavigation || !onStepClick) return;
-    
-    // Can only navigate to completed steps or current step
     if (completedSteps.includes(index) || index === currentStep) {
       onStepClick(index);
     }
   };
 
+  const halfCircle = CIRCLE_SIZE / 2;
+
   return (
-    <div className="w-full">
-      {/* Desktop/Tablet Horizontal Stepper */}
-      <div className="hidden sm:flex items-center justify-between relative">
-        {/* Progress Line Track: starts/ends exactly at the center of step circles (40px / 2 = 20px) */}
+    <div className="w-full py-2">
+      {/* Desktop / Tablet Horizontal Stepper */}
+      <div className="hidden sm:flex items-start justify-between relative">
+        {/* Track (gray line behind circles) */}
         <div
-          className="absolute top-5 h-0.5 bg-muted overflow-hidden rounded-full"
-          style={{ left: 20, right: 20 }}
-        >
-          {currentStep > 0 && (
-            <div
-              className="absolute inset-y-0 left-0 bg-primary transition-[width] duration-500"
-              style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-            />
-          )}
-        </div>
+          className="absolute h-[2px] bg-border rounded-full"
+          style={{ top: halfCircle, left: halfCircle, right: halfCircle }}
+        />
+
+        {/* Filled line (blue) – only when past step 0 */}
+        {currentStep > 0 && (
+          <div
+            className="absolute h-[2px] bg-primary rounded-full transition-[width] duration-500 ease-out"
+            style={{
+              top: halfCircle,
+              left: halfCircle,
+              width: `calc(${(currentStep / (steps.length - 1)) * 100}% - ${halfCircle}px)`,
+            }}
+          />
+        )}
 
         {steps.map((step, index) => {
           const isCompleted = completedSteps.includes(index);
@@ -59,30 +66,35 @@ export function StepProgress({
               key={step.id}
               className={cn(
                 "flex flex-col items-center relative z-10",
-                isClickable && "cursor-pointer"
+                isClickable && "cursor-pointer group"
               )}
               onClick={() => handleStepClick(index)}
+              style={{ width: CIRCLE_SIZE }}
             >
-              {/* Step Circle */}
+              {/* Circle */}
               <div
                 className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 border-2",
-                  isCompleted && "bg-primary border-primary text-primary-foreground",
-                  isCurrent && "bg-primary border-primary text-primary-foreground ring-4 ring-primary/20",
-                  isUpcoming && "bg-background border-muted-foreground/30 text-muted-foreground"
+                  "flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 border-2",
+                  isCompleted &&
+                    "bg-primary border-primary text-primary-foreground",
+                  isCurrent &&
+                    "bg-primary border-primary text-primary-foreground shadow-md ring-2 ring-primary/30",
+                  isUpcoming &&
+                    "bg-background border-border text-muted-foreground"
                 )}
+                style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE }}
               >
                 {isCompleted ? (
-                  <Check className="h-5 w-5" />
+                  <Check className="h-4 w-4" strokeWidth={3} />
                 ) : (
                   <span>{index + 1}</span>
                 )}
               </div>
 
-              {/* Step Title */}
+              {/* Title */}
               <span
                 className={cn(
-                  "mt-2 text-sm font-medium text-center max-w-[100px] transition-colors duration-300",
+                  "mt-2 text-xs font-medium text-center leading-tight transition-colors duration-300 whitespace-nowrap",
                   isCurrent && "text-primary",
                   isCompleted && "text-foreground",
                   isUpcoming && "text-muted-foreground"
@@ -121,10 +133,12 @@ export function StepProgress({
                   {isCompleted && !isCurrent ? (
                     <Check className="h-3.5 w-3.5 shrink-0" />
                   ) : (
-                    <span className={cn(
-                      "w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0",
-                      isCurrent ? "bg-primary-foreground/20" : "bg-background/60"
-                    )}>
+                    <span
+                      className={cn(
+                        "w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0",
+                        isCurrent ? "bg-primary-foreground/20" : "bg-background/60"
+                      )}
+                    >
                       {index + 1}
                     </span>
                   )}
