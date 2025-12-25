@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Search from "./pages/Search";
 import Pricing from "./pages/Pricing";
+import AppPricing from "./pages/AppPricing";
 import Contact from "./pages/Contact";
 import Inspections from "./pages/Inspections";
 import Properties from "./pages/Properties";
@@ -69,6 +70,8 @@ const App = () => (
               <Route path="/reports" element={<Reports />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/new-inspection" element={<NewInspectionPage />} />
+              {/* Pricing inside authenticated layout so header stays mounted */}
+              <Route path="/app/pricing" element={<AppPricing />} />
               {/* Optional convenience: redirect /app -> /dashboard if you add /app later */}
               <Route path="/app" element={<Navigate to="/dashboard" replace />} />
             </Route>
