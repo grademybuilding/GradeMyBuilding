@@ -35,18 +35,18 @@ export function StepProgress({
     <div className="w-full">
       {/* Desktop/Tablet Horizontal Stepper */}
       <div className="hidden sm:flex items-center justify-between relative">
-        {/* Progress Line Background */}
-        <div className="absolute top-5 left-5 right-5 h-0.5 bg-muted" />
-        
-        {/* Progress Line Filled - render only after step 1 to avoid any stray blue pixel */}
-        {currentStep > 0 && (
-          <div
-            className="absolute top-5 left-5 h-0.5 bg-primary transition-all duration-500"
-            style={{
-              width: `calc(${(currentStep / (steps.length - 1)) * 100}% - ${(currentStep / (steps.length - 1)) * 40}px)`,
-            }}
-          />
-        )}
+        {/* Progress Line Track (clipped so it never bleeds outside the bar) */}
+        <div className="absolute top-5 left-5 right-5 h-0.5 bg-muted overflow-hidden rounded-full">
+          {/* Progress Line Filled */}
+          {currentStep > 0 && (
+            <div
+              className="absolute inset-y-0 left-0 bg-primary transition-[width] duration-500"
+              style={{
+                width: `${(currentStep / (steps.length - 1)) * 100}%`,
+              }}
+            />
+          )}
+        </div>
 
         {steps.map((step, index) => {
           const isCompleted = completedSteps.includes(index);
