@@ -8,34 +8,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
 import heroStreetHomes from "@/assets/hero-street-homes.jpg";
-import featureResidential from "@/assets/feature-residential.jpg";
-import featureCommercial from "@/assets/feature-commercial.jpg";
-import featureMultifamily from "@/assets/feature-multifamily.jpg";
 import personaInspector from "@/assets/persona-inspector.jpg";
 import personaSeller from "@/assets/persona-seller.jpg";
 import personaBuyer from "@/assets/persona-buyer.jpg";
 import personaAppraiser from "@/assets/persona-appraiser.jpg";
-
-const features = [
-  {
-    image: featureResidential,
-    title: "Residential Homes",
-    description: "Single-family homes, townhouses, and condos graded for quality, safety, and condition.",
-    grade: "A+",
-  },
-  {
-    image: featureCommercial,
-    title: "Commercial Buildings",
-    description: "Office buildings, retail spaces, and industrial properties assessed professionally.",
-    grade: "A",
-  },
-  {
-    image: featureMultifamily,
-    title: "Multi-Family Properties",
-    description: "Apartment complexes and multi-unit buildings evaluated comprehensively.",
-    grade: "A+",
-  },
-];
 
 const personas = [
   {
@@ -214,41 +190,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Features Section with Images */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              We Grade All Property Types
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Card key={index} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-border hover:border-primary/50 cursor-pointer">
-                <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={feature.image} 
-                    alt={feature.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-bold text-2xl shadow-lg">
-                    {feature.grade}
-                  </div>
-                </div>
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-foreground mb-3">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-lg">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-muted/50">
