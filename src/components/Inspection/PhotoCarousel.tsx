@@ -77,7 +77,8 @@ export function PhotoCarousel({
     if (!currentPhoto) return;
 
     try {
-      const response = await fetch(currentPhoto.photo_url);
+      const imageUrl = currentPhoto.signedUrl || currentPhoto.photo_url;
+      const response = await fetch(imageUrl);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -143,7 +144,7 @@ export function PhotoCarousel({
         {/* Image Container */}
         <div className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
           <img
-            src={currentPhoto.photo_url}
+            src={currentPhoto.signedUrl || currentPhoto.photo_url}
             alt={currentPhoto.caption || `Photo ${currentIndex + 1}`}
             className={cn(
               'max-w-full max-h-full object-contain transition-transform duration-300',
@@ -201,7 +202,7 @@ export function PhotoCarousel({
                   )}
                 >
                   <img
-                    src={photo.photo_url}
+                    src={photo.signedUrl || photo.photo_url}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

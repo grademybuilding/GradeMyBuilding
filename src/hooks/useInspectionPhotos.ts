@@ -11,6 +11,7 @@ export interface InspectionPhoto {
   category: string | null;
   tag: string | null;
   created_at: string | null;
+  signedUrl?: string; // Signed URL for display
 }
 
 interface UseInspectionPhotosReturn {
@@ -25,6 +26,42 @@ interface UseInspectionPhotosReturn {
   ) => Promise<void>;
   deletePhoto: (photoId: string, photoUrl: string) => Promise<void>;
   refetch: () => Promise<void>;
+}
+
+// Generate signed URLs for photos (1 hour expiry)
+async function generateSignedUrls(photos: InspectionPhoto[]): Promise<InspectionPhoto[]> {
+  if (photos.length === 0) return photos;
+
+  const photosWithSignedUrls = await Promise.all(
+    photos.map(async (photo) => {
+      try {
+        // Extract file path from stored URL or use stored path directly
+        let filePath = photo.photo_url;
+        
+        // If it's a full URL, extract the path
+        if (photo.photo_url.includes('/inspection-photos/')) {
+          const parts = photo.photo_url.split('/inspection-photos/');
+          filePath = parts[parts.length - 1];
+        }
+
+        const { data, error } = await supabase.storage
+          .from('inspection-photos')
+          .createSignedUrl(filePath, 3600); // 1 hour expiry
+
+        if (error) {
+          console.warn('Failed to generate signed URL for photo:', photo.id, error);
+          return photo;
+        }
+
+        return { ...photo, signedUrl: data.signedUrl };
+      } catch (error) {
+        console.warn('Error generating signed URL:', error);
+        return photo;
+      }
+    })
+  );
+
+  return photosWithSignedUrls;
 }
 
 export function useInspectionPhotos(inspectionId: string | null): UseInspectionPhotosReturn {
@@ -47,7 +84,10 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setPhotos(data || []);
+      
+      // Generate signed URLs for all photos
+      const photosWithUrls = await generateSignedUrls(data || []);
+      setPhotos(photosWithUrls);
     } catch (error: any) {
       console.error('Error fetching photos:', error);
       toast.error('Failed to load photos');
@@ -82,7 +122,7 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
     }
 
     setIsUploading(true);
-    const uploadedPhotos: Omit<InspectionPhoto, 'id' | 'created_at'>[] = [];
+    const uploadedPhotos: Omit<InspectionPhoto, 'id' | 'created_at' | 'signedUrl'>[] = [];
 
     try {
       for (const file of files) {
@@ -103,15 +143,11 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
           throw uploadError;
         }
 
-        // Get public URL
-        const { data: urlData } = supabase.storage
-          .from('inspection-photos')
-          .getPublicUrl(fileName);
-
+        // Store the file path (not full URL) for private bucket access
         uploadedPhotos.push({
           inspection_id: targetInspectionId,
           checklist_item_id: null,
-          photo_url: urlData.publicUrl,
+          photo_url: fileName, // Store just the path, not full URL
           caption: caption || null,
           category: category || null,
           tag: null
@@ -137,19 +173,20 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
 
   const deletePhoto = async (photoId: string, photoUrl: string) => {
     try {
-      // Extract file path from URL
-      const urlParts = photoUrl.split('/inspection-photos/');
-      if (urlParts.length > 1) {
-        const filePath = urlParts[1];
-        
-        // Delete from storage
-        const { error: storageError } = await supabase.storage
-          .from('inspection-photos')
-          .remove([filePath]);
+      // Extract file path from URL or use directly if it's just a path
+      let filePath = photoUrl;
+      if (photoUrl.includes('/inspection-photos/')) {
+        const urlParts = photoUrl.split('/inspection-photos/');
+        filePath = urlParts[urlParts.length - 1];
+      }
 
-        if (storageError) {
-          console.warn('Storage deletion warning:', storageError);
-        }
+      // Delete from storage
+      const { error: storageError } = await supabase.storage
+        .from('inspection-photos')
+        .remove([filePath]);
+
+      if (storageError) {
+        console.warn('Storage deletion warning:', storageError);
       }
 
       // Delete from database
@@ -176,4 +213,29 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
     deletePhoto,
     refetch: fetchPhotos
   };
+}
+
+// Export helper function for other components that need to generate signed URLs
+export async function getSignedPhotoUrl(photoUrl: string): Promise<string | null> {
+  try {
+    let filePath = photoUrl;
+    if (photoUrl.includes('/inspection-photos/')) {
+      const parts = photoUrl.split('/inspection-photos/');
+      filePath = parts[parts.length - 1];
+    }
+
+    const { data, error } = await supabase.storage
+      .from('inspection-photos')
+      .createSignedUrl(filePath, 3600);
+
+    if (error) {
+      console.warn('Failed to generate signed URL:', error);
+      return null;
+    }
+
+    return data.signedUrl;
+  } catch (error) {
+    console.warn('Error generating signed URL:', error);
+    return null;
+  }
 }
