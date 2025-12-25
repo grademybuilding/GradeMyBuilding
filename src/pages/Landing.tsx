@@ -90,7 +90,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section with Background Image */}
-      <section className="relative h-[75vh] min-h-[550px] flex items-center">
+      <section className="relative h-[70vh] min-h-[500px] flex items-center">
         {/* Background Video */}
         <div className="absolute inset-0">
           <video 
