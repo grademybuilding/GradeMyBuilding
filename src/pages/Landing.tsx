@@ -2,8 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
-import { Search, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
@@ -43,16 +42,6 @@ const personas = [
 const Landing = () => {
   const navigate = useNavigate();
   const { resolvedTheme } = useTheme();
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
-    } else {
-      navigate("/search");
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -129,24 +118,15 @@ const Landing = () => {
               Professional building inspection and grading for informed decisions.
             </p>
 
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="relative max-w-2xl">
-              <div className="flex items-center bg-white rounded-xl shadow-2xl overflow-hidden">
-                <input
-                  type="text"
-                  placeholder="Enter an address, city, or ZIP code"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-6 py-5 text-foreground bg-white placeholder:text-muted-foreground focus:outline-none text-lg"
-                />
-                <button 
-                  type="submit"
-                  className="px-6 py-5 bg-primary hover:bg-primary/90 transition-colors"
-                >
-                  <Search className="h-6 w-6 text-primary-foreground" />
-                </button>
-              </div>
-            </form>
+            {/* CTA Button */}
+            <Button 
+              size="lg"
+              onClick={() => navigate("/auth")}
+              className="text-xl px-10 py-6 h-auto"
+            >
+              Start Free Trial
+              <ChevronRight className="ml-2 h-6 w-6" />
+            </Button>
           </div>
         </div>
       </section>
