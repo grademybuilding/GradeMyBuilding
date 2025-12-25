@@ -29,7 +29,7 @@ export function ThemeToggle() {
       {theme === "dark" ? (
         <Sun className="h-5 w-5 transition-transform duration-200 hover:rotate-45" />
       ) : (
-        <Moon className="h-5 w-5 transition-transform duration-200 hover:-rotate-12" />
+        <Moon className="h-5 w-5 text-foreground transition-transform duration-200 hover:-rotate-12" />
       )}
     </Button>
   );
