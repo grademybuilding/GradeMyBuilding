@@ -65,10 +65,20 @@ export function PropertyInfo({ formData, onChange, validationErrors = {} }: Prop
             <Label htmlFor="zipCode">Zip Code</Label>
             <Input
               id="zipCode"
-              placeholder="12345"
+              placeholder="12345 or 12345-6789"
               value={formData.zipCode || ''}
-              onChange={(e) => onChange('zipCode', e.target.value)}
+              onChange={(e) => {
+                // Allow only digits and hyphen, max 10 chars (12345-6789)
+                const value = e.target.value.replace(/[^\d-]/g, '').slice(0, 10);
+                onChange('zipCode', value);
+              }}
+              maxLength={10}
+              pattern="^\d{5}(-\d{4})?$"
+              className={cn(validationErrors.zipCode && "border-destructive focus-visible:ring-destructive")}
             />
+            {validationErrors.zipCode && (
+              <p className="text-sm text-destructive">{validationErrors.zipCode}</p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="propertyType">Property Type *</Label>

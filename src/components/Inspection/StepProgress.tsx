@@ -36,13 +36,15 @@ export function StepProgress({
       {/* Desktop/Tablet Horizontal Stepper */}
       <div className="hidden sm:flex items-center justify-between relative">
         {/* Progress Line Background */}
-        <div className="absolute top-5 left-0 right-0 h-0.5 bg-muted mx-12" />
+        <div className="absolute top-5 left-5 right-5 h-0.5 bg-muted" />
         
-        {/* Progress Line Filled */}
+        {/* Progress Line Filled - extends from first step center to current step center */}
         <div 
-          className="absolute top-5 left-0 h-0.5 bg-primary mx-12 transition-all duration-500"
+          className="absolute top-5 left-5 h-0.5 bg-primary transition-all duration-500"
           style={{ 
-            width: `calc(${(currentStep / (steps.length - 1)) * 100}% - 6rem)`,
+            width: currentStep === 0 
+              ? '0%' 
+              : `calc(${(currentStep / (steps.length - 1)) * 100}% - ${(currentStep / (steps.length - 1)) * 40}px)`,
           }}
         />
 
