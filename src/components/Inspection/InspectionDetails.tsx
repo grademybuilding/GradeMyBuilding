@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,6 +45,19 @@ const commercialBuildingTypes = [
 
 export function InspectionDetails({ formData, onChange, validationErrors = {} }: InspectionDetailsProps) {
   const [datePickerOpen, setDatePickerOpen] = useState(false);
+  
+  // Auto-fill current date and time when component mounts (if not already set)
+  useEffect(() => {
+    if (!formData.inspectionDate) {
+      onChange('inspectionDate', new Date());
+    }
+    if (!formData.startTime) {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      onChange('startTime', `${hours}:${minutes}`);
+    }
+  }, []); // Run only on mount
   
   const handleMultiSelect = (field: string, option: string) => {
     const current = formData[field] || [];

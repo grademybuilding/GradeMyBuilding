@@ -1,4 +1,4 @@
-import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
+import { Check, Zap, Star, Crown, Rocket, Bell, User, LogOut } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
@@ -6,6 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const pricingPlans = [
   {
@@ -45,33 +55,87 @@ const pricingPlans = [
 export default function Pricing() {
   const navigate = useNavigate();
   const { resolvedTheme } = useTheme();
+  const { isAuthenticated, profile, signOut } = useAuth();
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header with Logo */}
-      <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border">
-        <div 
-          className="flex items-center gap-2 relative cursor-pointer" 
-          onClick={() => navigate('/')}
-        >
-          <img 
-            src={logoColor} 
-            alt="GradeMyBuilding" 
-            className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
-          />
-          <img 
-            src={logoWhite} 
-            alt="GradeMyBuilding" 
-            className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Button variant="outline" onClick={() => navigate('/auth')}>
-            Sign In
-          </Button>
-        </div>
-      </header>
+      {/* Show authenticated header if logged in, otherwise show simple header */}
+      {isAuthenticated ? (
+        <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border shadow-card">
+          <div className="flex items-center gap-4 md:gap-6">
+            <div 
+              className="flex items-center gap-2 relative cursor-pointer" 
+              onClick={() => navigate('/dashboard')}
+            >
+              <img 
+                src={logoColor} 
+                alt="GradeMyBuilding" 
+                className={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
+              />
+              <img 
+                src={logoWhite} 
+                alt="GradeMyBuilding" 
+                className={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
+              />
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-1 md:gap-2">
+            <ThemeToggle />
+            <Button variant="ghost" size="sm" className="h-8 w-8 md:h-9 md:w-9">
+              <Bell className="h-4 w-4 md:h-5 md:w-5" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-sm">
+                      <User className="h-4 w-4" />
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium">{profile?.full_name}</p>
+                    <p className="text-xs text-muted-foreground">{profile?.email}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={signOut}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+      ) : (
+        <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border">
+          <div 
+            className="flex items-center gap-2 relative cursor-pointer" 
+            onClick={() => navigate('/')}
+          >
+            <img 
+              src={logoColor} 
+              alt="GradeMyBuilding" 
+              className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-0 absolute' : 'opacity-100'}`}
+            />
+            <img 
+              src={logoWhite} 
+              alt="GradeMyBuilding" 
+              className={`h-12 md:h-16 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" onClick={() => navigate('/auth')}>
+              Sign In
+            </Button>
+          </div>
+        </header>
+      )}
 
       <div className="p-4 md:p-6 lg:p-8">
         {/* Hero Section */}
