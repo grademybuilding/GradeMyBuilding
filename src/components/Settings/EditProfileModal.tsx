@@ -24,9 +24,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { UserProfile } from "@/hooks/useAuth";
 
+const usPhoneRegex = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/;
+
 const profileSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters").max(100),
-  phone: z.string().max(20).optional().or(z.literal("")),
+  phone: z.string()
+    .refine((val) => !val || usPhoneRegex.test(val), {
+      message: "Please enter a valid US phone number (e.g., (555) 123-4567)",
+    })
+    .optional()
+    .or(z.literal("")),
   company_name: z.string().max(100).optional().or(z.literal("")),
   company_email: z.string().email("Invalid email").optional().or(z.literal("")),
   license_number: z.string().max(50).optional().or(z.literal("")),
