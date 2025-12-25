@@ -16,11 +16,7 @@ const personas = [
   {
     image: personaInspector,
     title: "Building Inspector",
-    benefits: [
-      "Increased Inspection Volume",
-      "Faster, Smarter Inspections",
-      "All-in-One Mobile App",
-    ],
+    description: "Increase inspection volume with faster, smarter inspections using our all-in-one mobile app.",
   },
   {
     image: personaSeller,
@@ -153,19 +149,9 @@ const Landing = () => {
                   <h3 className="text-lg font-bold text-foreground mb-2">
                     {persona.title}
                   </h3>
-                  {persona.benefits ? (
-                    <ul className="space-y-0.5">
-                      {persona.benefits.map((benefit, idx) => (
-                        <li key={idx} className="text-muted-foreground text-xs">
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-muted-foreground text-xs">
-                      {persona.description}
-                    </p>
-                  )}
+                  <p className="text-muted-foreground text-xs">
+                    {persona.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}
