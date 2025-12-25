@@ -149,7 +149,7 @@ const Landing = () => {
             </form>
           </div>
           {/* Second Row - Personas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-32">
             {personas.map((persona, index) => (
               <Card key={index} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-border hover:border-primary/50 cursor-pointer bg-muted/30">
                 <div className="relative h-56 overflow-hidden">
