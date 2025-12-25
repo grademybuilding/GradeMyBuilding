@@ -148,8 +148,16 @@ const Landing = () => {
               </div>
             </form>
           </div>
-          {/* Second Row - Personas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-32">
+        </div>
+      </section>
+
+      {/* Who We Serve Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-center mb-12">
+            Who We Serve
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {personas.map((persona, index) => (
               <Card key={index} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 border-border hover:border-primary/50 cursor-pointer bg-muted/30">
                 <div className="relative h-56 overflow-hidden">
