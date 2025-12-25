@@ -94,7 +94,7 @@ const Landing = () => {
       </header>
 
       {/* Hero Section with Background Image */}
-      <section className="relative h-[85vh] min-h-[700px] flex items-center">
+      <section className="relative h-[60vh] min-h-[450px] flex items-center">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
@@ -109,12 +109,10 @@ const Landing = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="max-w-3xl">
             {/* Headline */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-              Inspect.<br />
-              Grade.<br />
-              Trust.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight whitespace-nowrap">
+              Inspect. Grade. Trust.
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-10">
+            <p className="text-xl md:text-2xl text-white/90 mb-8">
               Professional building inspection and grading for informed decisions.
             </p>
 
