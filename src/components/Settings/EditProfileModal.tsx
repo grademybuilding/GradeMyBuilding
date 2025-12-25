@@ -24,18 +24,23 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { UserProfile } from "@/hooks/useAuth";
 
-const usPhoneRegex = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/;
+// US phone formats: (555) 123-4567, 555-123-4567, 5551234567, +1 555-123-4567
+const usPhoneRegex = /^(\+1[\s.-]?)?(\(?\d{3}\)?[\s.-]?)?\d{3}[\s.-]?\d{4}$/;
 
 const profileSchema = z.object({
   full_name: z.string().min(2, "Name must be at least 2 characters").max(100),
-  phone: z.string()
-    .refine((val) => !val || usPhoneRegex.test(val), {
-      message: "Please enter a valid US phone number (e.g., (555) 123-4567)",
-    })
+  phone: z
+    .string()
     .optional()
-    .or(z.literal("")),
+    .refine(
+      (val) => !val || val === "" || usPhoneRegex.test(val.trim()),
+      { message: "Please enter a valid US phone number (e.g., (555) 123-4567)" }
+    ),
   company_name: z.string().max(100).optional().or(z.literal("")),
-  company_email: z.string().email("Invalid email").optional().or(z.literal("")),
+  company_email: z.union([
+    z.string().email("Invalid email"),
+    z.literal("")
+  ]).optional(),
   license_number: z.string().max(50).optional().or(z.literal("")),
   license_state: z.string().max(50).optional().or(z.literal("")),
 });
