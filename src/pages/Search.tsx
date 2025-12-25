@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ThemeToggle } from "@/components/Layout/ThemeToggle";
-import { Button } from "@/components/ui/button";
+import { PublicHeader } from "@/components/Layout/PublicHeader";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -99,26 +99,7 @@ const Search = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <a href="/" className="flex items-center hover:opacity-80 transition-opacity">
-              <img 
-                src="/lovable-uploads/baf6cbbd-4a8c-4a90-8e3d-674c6327dab6.png" 
-                alt="GradeMyBuilding" 
-                className="h-12 w-auto"
-              />
-            </a>
-            <Badge variant="outline">Public Search</Badge>
-          </div>
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <Button variant="outline" onClick={() => window.location.href = '/auth'}>
-              Sign In
-            </Button>
-          </div>
-        </div>
-      </header>
+      <PublicHeader />
 
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-background via-background to-muted/20 py-12 border-b relative overflow-hidden">
