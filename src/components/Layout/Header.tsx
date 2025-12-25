@@ -1,4 +1,4 @@
-import { Bell, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Navigation } from "./Navigation";
 import { ThemeToggle } from "./ThemeToggle";
+import { NotificationsDropdown } from "@/components/Header/NotificationsDropdown";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "next-themes";
 import logoWhite from "@/assets/logo-white.png";
@@ -51,9 +52,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
         
         <div className="flex items-center gap-1 md:gap-2">
           <ThemeToggle />
-          <Button variant="ghost" size="sm" className="h-8 w-8 md:h-9 md:w-9">
-            <Bell className="h-4 w-4 md:h-5 md:w-5" />
-          </Button>
+          <NotificationsDropdown />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
