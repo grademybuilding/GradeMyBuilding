@@ -95,13 +95,17 @@ const Landing = () => {
 
       {/* Hero Section with Background Image */}
       <section className="relative h-[60vh] min-h-[450px] flex items-center">
-        {/* Background Image */}
+        {/* Background Video */}
         <div className="absolute inset-0">
-          <img 
-            src={heroStreetHomes} 
-            alt="Homes on a street" 
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
             className="w-full h-full object-cover"
-          />
+          >
+            <source src="/videos/House_Inspection_Grade_Video_Generation.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
         </div>
 
