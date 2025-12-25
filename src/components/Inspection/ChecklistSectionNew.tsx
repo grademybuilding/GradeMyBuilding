@@ -319,7 +319,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-sm",
                           isCompleted && !isCurrent && "bg-accent/15 text-accent border-accent/30 hover:bg-accent/20",
                           isSkipped && !isCurrent && "bg-muted text-muted-foreground border-border/50 hover:bg-muted/80",
-                          isLocked && "bg-muted/30 text-muted-foreground/40 border-transparent cursor-not-allowed",
+                          isLocked && "bg-muted/50 text-muted-foreground/60 border-border/40 cursor-not-allowed opacity-60",
                           !isLocked && !isCurrent && !isDone && "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
                           isClickable && !isCurrent && "cursor-pointer"
                         )}
