@@ -38,15 +38,15 @@ export function StepProgress({
         {/* Progress Line Background */}
         <div className="absolute top-5 left-5 right-5 h-0.5 bg-muted" />
         
-        {/* Progress Line Filled - extends from first step center to current step center */}
-        <div 
-          className="absolute top-5 left-5 h-0.5 bg-primary transition-all duration-500"
-          style={{ 
-            width: currentStep === 0 
-              ? '0%' 
-              : `calc(${(currentStep / (steps.length - 1)) * 100}% - ${(currentStep / (steps.length - 1)) * 40}px)`,
-          }}
-        />
+        {/* Progress Line Filled - render only after step 1 to avoid any stray blue pixel */}
+        {currentStep > 0 && (
+          <div
+            className="absolute top-5 left-5 h-0.5 bg-primary transition-all duration-500"
+            style={{
+              width: `calc(${(currentStep / (steps.length - 1)) * 100}% - ${(currentStep / (steps.length - 1)) * 40}px)`,
+            }}
+          />
+        )}
 
         {steps.map((step, index) => {
           const isCompleted = completedSteps.includes(index);
