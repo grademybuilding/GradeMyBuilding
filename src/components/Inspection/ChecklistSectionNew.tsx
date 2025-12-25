@@ -227,8 +227,8 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
             </div>
 
             {/* Horizontal Stepper with Connected Circles */}
-            <div className="px-4 py-4 sm:px-6 sm:py-5 overflow-x-auto lg:overflow-y-auto lg:max-h-[60vh] scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground/40">
-              <div className="flex items-start min-w-max lg:flex-col lg:min-w-0 lg:gap-2">
+            <div className="px-4 py-4 sm:px-6 sm:py-5 overflow-x-auto overflow-y-hidden scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent hover:scrollbar-thumb-muted-foreground/40">
+              <div className="flex items-start min-w-max gap-2">
                 {inspectionCategories.map((category, index) => {
                   const isCompleted = completedCategories.includes(index);
                   const isCurrent = index === activeMainCategory;
