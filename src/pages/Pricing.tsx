@@ -21,7 +21,7 @@ const pricingPlans = [
   },
   {
     name: "Business",
-    price: "$79-99",
+    price: "$79",
     priceLabel: "/month",
     icon: Crown,
     features: ["Multi-user access", "Advanced reports", "API access", "50GB storage"],
