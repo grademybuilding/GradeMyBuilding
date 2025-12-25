@@ -14,7 +14,7 @@ const navItems = [
   { id: 'properties', label: 'Properties', icon: Building, path: '/properties' },
   { id: 'photos', label: 'Photos', icon: Camera, path: '/photos' },
   { id: 'invoices', label: 'Invoices', icon: Receipt, path: '/invoices' },
-  { id: 'pricing', label: 'Pricing', icon: CreditCard, path: '/pricing' },
+  { id: 'app-pricing', label: 'Pricing', icon: CreditCard, path: '/app/pricing' },
   { id: 'reports', label: 'Reports', icon: FileText, path: '/reports' },
   { id: 'settings', label: 'Settings', icon: Settings, path: '/settings' },
 ];
