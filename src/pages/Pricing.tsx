@@ -13,7 +13,7 @@ const pricingPlans = [
   },
   {
     name: "Professional",
-    price: "$29-49",
+    price: "$29",
     priceLabel: "/month",
     icon: Star,
     features: ["Unlimited inspections", "Full grading algorithm", "Report generating", "Invoicing", "10GB storage"],
