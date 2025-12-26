@@ -20,6 +20,7 @@ const allInspectionCategories = [
   { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
   { id: 'radon', label: 'Radon', subcategories: [] },
+  { id: 'well', label: 'Well', subcategories: [] },
 ];
 
 interface ChecklistSectionProps {
@@ -39,10 +40,19 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     return selected.includes("Radon");
   }, [formData.inspectionCategories]);
 
-  // Only show Radon if it's selected
+  const wellSelected = useMemo(() => {
+    const selected = (formData.inspectionCategories ?? []) as string[];
+    return selected.includes("Well");
+  }, [formData.inspectionCategories]);
+
+  // Only show Radon/Well if they're selected in Inspection Details
   const inspectionCategories = useMemo(() => {
-    return allInspectionCategories.filter((cat) => cat.id !== "radon" || radonSelected);
-  }, [radonSelected]);
+    return allInspectionCategories.filter((cat) => {
+      if (cat.id === "radon") return radonSelected;
+      if (cat.id === "well") return wellSelected;
+      return true;
+    });
+  }, [radonSelected, wellSelected]);
 
   // State for navigation - restore from formData if available
   const [activeMainCategory, setActiveMainCategory] = useState(

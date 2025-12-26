@@ -12,8 +12,9 @@ interface ChecklistItem {
   subcategory?: string;
   item: string;
   required: boolean;
-  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info' | 'textarea';
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info' | 'textarea' | 'boolean';
   options?: string[];
+  commentText?: string;
 }
 
 // Category to label mapping
@@ -30,6 +31,7 @@ const categoryMapping: Record<string, string> = {
   'appliances': 'Built-in Appliances',
   'green': 'Green Features',
   'radon': 'Radon',
+  'well': 'Well',
 };
 
 // Complete Inspection Checklist Data
@@ -498,6 +500,25 @@ const inspectionChecklist: ChecklistItem[] = [
   // Radon - Summary
   { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Summary', item: 'Average pCi/L', required: false, type: 'number' },
   { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'textarea' },
+
+  // ============== WELL ==============
+  // Well System Details - Boolean items (radio buttons)
+  { id: 'well-well-head-casing-photos', category: 'Well', subcategory: 'Well System Details', item: 'Well Head / Casing Photos', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'Well head should be secured to casing, Should not be loose or have holes or cracks. The well head, cap, should be tight and vermin-proof.' },
+  { id: 'well-electrical-components', category: 'Well', subcategory: 'Well System Details', item: 'Electrical Components', required: false, type: 'boolean', options: ['Functional', 'Not Functional'], commentText: 'Electrical conduit and connections were functional' },
+  { id: 'well-height-of-well-casing', category: 'Well', subcategory: 'Well System Details', item: 'Height of Well Casing', required: false, type: 'boolean', options: ['Complies', 'Does Not Comply'], commentText: 'Well heads should extend 12 inches above ground if installed after 1991 to prevent contamination into the well head.' },
+  { id: 'well-water-flow-information', category: 'Well', subcategory: 'Well System Details', item: 'Water Flow Information', required: false, type: 'boolean', options: ['Adequate', 'Inadequate'], commentText: 'The pressure should be between 40 and 60 pounds per square inch (psi). As the well pump cycles on and off, it is normal for the pressure to vary from low (pump cut-in) to high (pump cut-out) pressure.' },
+  { id: 'well-final-comments', category: 'Well', subcategory: 'Well System Details', item: 'Final Comments', required: false, type: 'textarea', commentText: 'Items to be further evaluated prior to grading a building by a qualified plumber.' },
+
+  // Well System Details - Checkbox items (multiselect)
+  { id: 'well-casing-diameter', category: 'Well', subcategory: 'Well System Details', item: 'Well Casing Diameter', required: false, type: 'multiselect', options: ['6 Inch Steel', '4 Inch Steel', '5 inch', '7 inch', 'NA'], commentText: 'The steel casing should be in functional condition. Small amounts of surface rust is ok, but if you see pitting or large amounts of rust or metal flaking, further evaluation is recommended by a plumber.' },
+  { id: 'well-pressure-tank', category: 'Well', subcategory: 'Well System Details', item: 'Pressure Tank', required: false, type: 'multiselect', options: ['Functional Condition', 'Deficient Condition', 'Further Evaluation Recommended', 'N/A', 'Pressure tank was buried'], commentText: 'Pressure Tank air pressure: Water logged test: The pressure tank should sound like a bell when knocked. Tank pressure should be about 2-3 PSI less than the turn on pressure on the pressure switch.' },
+  { id: 'well-pressure-switch', category: 'Well', subcategory: 'Well System Details', item: 'Pressure Switch', required: false, type: 'multiselect', options: ['Appears Functional', 'Appears non functional', 'NA', 'Further evaluation needed'], commentText: 'Typically well pumps draw between 5-9 amps depending on pump horse power, well depth, etc. Pressure switch should be in functional condition.' },
+  { id: 'well-pressure-gauge', category: 'Well', subcategory: 'Well System Details', item: 'Pressure Gauge', required: false, type: 'multiselect', options: ['Appears functional', 'Not functional', 'NA'], commentText: 'Pressure gauge should be in working condition. If pressure gauge is not functioning correctly, please replace.' },
+  { id: 'well-pump-shut-off-switch', category: 'Well', subcategory: 'Well System Details', item: 'Pump Shut Off Switch', required: false, type: 'multiselect', options: ['Functional', 'Not functional', 'Not Labeled'], commentText: 'Shut off switch may be near the pressure tank or at the electrical meter. Shut off switch should be functional.' },
+  { id: 'well-water-supply-lines', category: 'Well', subcategory: 'Well System Details', item: 'Condition of Water Supply Lines', required: false, type: 'multiselect', options: ['Functional', 'Further evaluation recommended'], commentText: 'Water Pipe material: Check for leaks, if seen, and will report them. If a leak develops later on, please seek further evaluation from a plumber.' },
+  { id: 'well-components-checked', category: 'Well', subcategory: 'Well System Details', item: 'Components Checked', required: false, type: 'multiselect', options: ['Water Softener', 'Above Ground Water Storage Tank', 'NA', 'RO Filter'], commentText: 'We do not open filtration equipment, these components can sometimes be brittle and break. Please ask seller when the last time filters for water/softeners were replaced.' },
+  { id: 'well-sample-faucet', category: 'Well', subcategory: 'Well System Details', item: 'Sample Faucet', required: false, type: 'multiselect', options: ['Complies', 'Does not Comply', 'Sample faucet Missing', 'Not Available', 'Community well'], commentText: 'Sample faucet should be installed upstream of the pressure tank, 12 inches above the floor, inside diameter of 1/4 inch and smooth sample end.' },
+  { id: 'well-set-backs', category: 'Well', subcategory: 'Well System Details', item: 'Well Set Backs', required: false, type: 'multiselect', options: ['Septic System', 'Buildings', 'Other'], commentText: 'Septic 25 plus feet, Building 10 plus feet' },
 ];
 
 interface ChecklistCategoryContentProps {
@@ -606,6 +627,9 @@ export function ChecklistCategoryContent({
       case 'multiselect':
         return (
           <div className="space-y-2">
+            {item.commentText && (
+              <p className="text-xs text-muted-foreground italic mb-2">{item.commentText}</p>
+            )}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {item.options?.map((option) => (
                 <label key={option} className="flex items-center space-x-2 text-sm">
@@ -672,6 +696,31 @@ export function ChecklistCategoryContent({
                   pCi/L
                 </span>
               )}
+            </div>
+          </div>
+        );
+
+      case 'boolean':
+        // Radio button UI for boolean type items
+        return (
+          <div className="space-y-3">
+            {item.commentText && (
+              <p className="text-xs text-muted-foreground italic mb-2">{item.commentText}</p>
+            )}
+            <div className="flex gap-4 flex-wrap">
+              {item.options?.map((option) => (
+                <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name={item.id}
+                    value={option}
+                    checked={ratingValues[item.id] === option}
+                    onChange={(e) => handleRatingChange(item.id, e.target.value)}
+                    className="h-4 w-4 text-primary border-input focus:ring-primary"
+                  />
+                  <span className="text-sm text-foreground">{option}</span>
+                </label>
+              ))}
             </div>
           </div>
         );
