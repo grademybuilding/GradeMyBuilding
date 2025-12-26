@@ -377,6 +377,41 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                         </Card>
                       )}
 
+                      {/* Category Grades */}
+                      {selectedInspection.category_scores && Object.keys(selectedInspection.category_scores as Record<string, unknown>).length > 0 && (
+                        <Card>
+                          <CardHeader className="pb-2">
+                            <CardTitle className="text-sm">Category Grades</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {Object.entries(selectedInspection.category_scores as Record<string, { score: number; grade: string; subcategories?: Record<string, { score: number; grade: string; items_rated: number }> }>).map(([category, data]) => (
+                                <div key={category} className="border rounded-lg p-3 space-y-2">
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-medium text-sm">{category}</span>
+                                    <Badge className={getGradeColor(data.grade?.charAt(0))}>
+                                      {data.grade} ({data.score?.toFixed(1)}%)
+                                    </Badge>
+                                  </div>
+                                  {data.subcategories && Object.keys(data.subcategories).length > 0 && (
+                                    <div className="pl-3 border-l-2 border-muted space-y-1">
+                                      {Object.entries(data.subcategories).map(([subcat, subData]) => (
+                                        <div key={subcat} className="flex items-center justify-between text-xs">
+                                          <span className="text-muted-foreground truncate pr-2">{subcat}</span>
+                                          <Badge variant="outline" className="text-xs shrink-0">
+                                            {subData.grade} ({subData.score?.toFixed(0)}%)
+                                          </Badge>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )}
+
                       {/* Checklist Items */}
                       {checklistItems.length > 0 && (
                         <Card>
