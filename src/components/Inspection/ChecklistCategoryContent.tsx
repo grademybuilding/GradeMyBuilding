@@ -12,7 +12,7 @@ interface ChecklistItem {
   subcategory?: string;
   item: string;
   required: boolean;
-  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info';
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info' | 'textarea';
   options?: string[];
 }
 
@@ -497,7 +497,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // ============== RADON ==============
   // Radon - Summary
   { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Summary', item: 'Average pCi/L', required: false, type: 'number' },
-  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'info' },
+  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'textarea' },
 ];
 
 interface ChecklistCategoryContentProps {
@@ -708,6 +708,18 @@ export function ChecklistCategoryContent({
           );
         }
         return null;
+
+      case 'textarea':
+        return (
+          <div className="space-y-2">
+            <Textarea
+              placeholder="Enter notes..."
+              value={notes[item.id] || ''}
+              onChange={(e) => handleNoteChange(item.id, e.target.value)}
+              className="min-h-[120px] text-sm bg-background text-foreground"
+            />
+          </div>
+        );
         
       case 'rating':
         return (
