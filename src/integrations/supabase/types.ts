@@ -934,6 +934,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      calculate_category_grades: {
+        Args: { _inspection_id: string }
+        Returns: Json
+      }
       calculate_inspection_grade: {
         Args: { _inspection_id: string }
         Returns: {
