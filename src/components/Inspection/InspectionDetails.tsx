@@ -171,10 +171,123 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                 <Label htmlFor={`category-${category}`} className="text-sm">
                   {category}
                 </Label>
-              </div>
+          </div>
             ))}
           </div>
         </div>
+
+        {/* Radon-Specific Fields - Only show when Radon is selected */}
+        {isSelected('inspectionCategories', 'Radon') && (
+          <div className="space-y-4 p-4 rounded-lg border border-primary/20 bg-primary/5">
+            <Label className="text-base font-semibold flex items-center gap-2">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">R</span>
+              Radon Monitor Details
+            </Label>
+            
+            {/* General Info Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="radonStartTime">Start Time</Label>
+                <Input
+                  id="radonStartTime"
+                  type="time"
+                  value={formData.radonStartTime || ''}
+                  onChange={(e) => onChange('radonStartTime', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="radonEndTime">End Time</Label>
+                <Input
+                  id="radonEndTime"
+                  type="time"
+                  value={formData.radonEndTime || ''}
+                  onChange={(e) => onChange('radonEndTime', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Monitor Location */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Monitor Location</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Basement', 'Lower Level', 'Main Level'].map((location) => (
+                  <div key={location} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`monitor-location-${location}`}
+                      checked={isSelected('radonMonitorLocation', location)}
+                      onCheckedChange={() => handleMultiSelect('radonMonitorLocation', location)}
+                    />
+                    <Label htmlFor={`monitor-location-${location}`} className="text-sm">
+                      {location}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Method */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Method</Label>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="radon-method-continuous"
+                  checked={isSelected('radonMethod', 'Continuous')}
+                  onCheckedChange={() => handleMultiSelect('radonMethod', 'Continuous')}
+                />
+                <Label htmlFor="radon-method-continuous" className="text-sm">
+                  Continuous
+                </Label>
+              </div>
+            </div>
+
+            {/* Measurement Interval & Elapsed Time */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="radonMeasurementInterval">Measurement Interval (hr)</Label>
+                <Input
+                  id="radonMeasurementInterval"
+                  type="number"
+                  placeholder="e.g., 1"
+                  value={formData.radonMeasurementInterval || ''}
+                  onChange={(e) => onChange('radonMeasurementInterval', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="radonElapsedTime">Elapsed Time (days)</Label>
+                <Input
+                  id="radonElapsedTime"
+                  type="number"
+                  placeholder="e.g., 2"
+                  value={formData.radonElapsedTime || ''}
+                  onChange={(e) => onChange('radonElapsedTime', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Monitor Type Info */}
+            <Label className="text-sm font-semibold pt-2">Monitor Type</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="radonSerialNumber">Serial Number</Label>
+                <Input
+                  id="radonSerialNumber"
+                  placeholder="Enter serial number"
+                  value={formData.radonSerialNumber || ''}
+                  onChange={(e) => onChange('radonSerialNumber', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="radonModelNumber">Model Number</Label>
+                <Input
+                  id="radonModelNumber"
+                  placeholder="Enter model number"
+                  value={formData.radonModelNumber || ''}
+                  onChange={(e) => onChange('radonModelNumber', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Weather Conditions */}
         <div className="space-y-3">
