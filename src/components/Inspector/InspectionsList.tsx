@@ -379,21 +379,55 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
 
                       {/* Category Grades */}
                       {selectedInspection.category_scores && Object.keys(selectedInspection.category_scores as Record<string, unknown>).length > 0 && (
-                        <Card>
-                          <CardHeader className="pb-2">
-                            <CardTitle className="text-sm">Category Grades</CardTitle>
+                        <Card className="overflow-hidden">
+                          <CardHeader className="pb-3 bg-muted/30">
+                            <CardTitle className="text-sm flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-primary" />
+                              Category Grades
+                            </CardTitle>
                           </CardHeader>
-                          <CardContent>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                              {Object.entries(selectedInspection.category_scores as Record<string, { score: number; grade: string }>).map(([category, data]) => (
-                                <div key={category} className="border rounded-lg p-3 text-center">
-                                  <div className="text-xs text-muted-foreground mb-1 truncate" title={category}>{category}</div>
-                                  <Badge className={`text-sm font-bold ${getGradeColor(data.grade?.charAt(0))}`}>
-                                    {data.grade}
-                                  </Badge>
-                                  <div className="text-xs text-muted-foreground mt-1">{data.score?.toFixed(1)}%</div>
-                                </div>
-                              ))}
+                          <CardContent className="p-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                              {Object.entries(selectedInspection.category_scores as Record<string, { score: number; grade: string }>)
+                                .sort(([, a], [, b]) => (b.score ?? 0) - (a.score ?? 0))
+                                .map(([category, data]) => {
+                                  const gradeColor = getGradeColor(data.grade?.charAt(0));
+                                  const score = data.score ?? 0;
+                                  return (
+                                    <div 
+                                      key={category} 
+                                      className="group relative bg-card border rounded-xl p-4 hover:shadow-md transition-all duration-200 hover:border-primary/30"
+                                    >
+                                      <div className="flex items-start justify-between gap-3">
+                                        <div className="flex-1 min-w-0">
+                                          <p className="text-sm font-medium text-foreground leading-tight mb-2" title={category}>
+                                            {category}
+                                          </p>
+                                          <div className="flex items-center gap-2">
+                                            <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+                                              <div 
+                                                className={`h-full rounded-full transition-all duration-500 ${
+                                                  score >= 90 ? 'bg-emerald-500' :
+                                                  score >= 80 ? 'bg-blue-500' :
+                                                  score >= 70 ? 'bg-yellow-500' :
+                                                  score >= 60 ? 'bg-orange-500' :
+                                                  'bg-red-500'
+                                                }`}
+                                                style={{ width: `${Math.min(score, 100)}%` }}
+                                              />
+                                            </div>
+                                            <span className="text-xs font-medium text-muted-foreground w-12 text-right">
+                                              {score.toFixed(0)}%
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold text-white shadow-sm ${gradeColor}`}>
+                                          {data.grade}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  );
+                                })}
                             </div>
                           </CardContent>
                         </Card>
