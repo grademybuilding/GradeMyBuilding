@@ -289,6 +289,108 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
           </div>
         )}
 
+        {/* Water Testing-Specific Fields - Only show when Water Testing is selected */}
+        {isSelected('inspectionCategories', 'Water Testing') && (
+          <div className="space-y-4 p-4 rounded-lg border border-primary/20 bg-primary/5">
+            <Label className="text-base font-semibold flex items-center gap-2">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">W</span>
+              Water Testing Details
+            </Label>
+            
+            {/* Testing Method */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Testing Method</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'].map((method) => (
+                  <div key={method} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`water-testing-method-${method}`}
+                      checked={isSelected('waterTestingMethod', method)}
+                      onCheckedChange={() => handleMultiSelect('waterTestingMethod', method)}
+                    />
+                    <Label htmlFor={`water-testing-method-${method}`} className="text-sm">
+                      {method}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Testing Locations */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Testing Locations</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Kitchen Sink', 'Bathroom Sink'].map((location) => (
+                  <div key={location} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`water-testing-location-${location}`}
+                      checked={isSelected('waterTestingLocations', location)}
+                      onCheckedChange={() => handleMultiSelect('waterTestingLocations', location)}
+                    />
+                    <Label htmlFor={`water-testing-location-${location}`} className="text-sm">
+                      {location}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Abnormal Smell or Taste */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Abnormal Smell or Taste</Label>
+              <div className="flex gap-4 flex-wrap">
+                {['Yes', 'No', 'N/A'].map((option) => (
+                  <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="waterAbnormalSmellTaste"
+                      value={option}
+                      checked={formData.waterAbnormalSmellTaste === option}
+                      onChange={(e) => onChange('waterAbnormalSmellTaste', e.target.value)}
+                      className="h-4 w-4 text-primary border-input focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Start/End Days */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="waterTestStartDay">Start Day</Label>
+                <Input
+                  id="waterTestStartDay"
+                  type="text"
+                  placeholder="e.g., Monday"
+                  value={formData.waterTestStartDay || ''}
+                  onChange={(e) => onChange('waterTestStartDay', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="waterTestEndDay">End Day</Label>
+                <Input
+                  id="waterTestEndDay"
+                  type="text"
+                  placeholder="e.g., Wednesday"
+                  value={formData.waterTestEndDay || ''}
+                  onChange={(e) => onChange('waterTestEndDay', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Testing Device Information */}
+            <div className="space-y-2">
+              <Label htmlFor="waterTestingDeviceInfo">Testing Device Information</Label>
+              <Input
+                id="waterTestingDeviceInfo"
+                placeholder="e.g., Best Prod 17 in One Test Kit for Water"
+                value={formData.waterTestingDeviceInfo || ''}
+                onChange={(e) => onChange('waterTestingDeviceInfo', e.target.value)}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Weather Conditions */}
         <div className="space-y-3">
