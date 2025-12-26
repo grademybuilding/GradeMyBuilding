@@ -305,11 +305,12 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               <div className="flex items-start space-x-3">
                 <Checkbox
                   id="water-testing-delayed"
+                  className="mt-0.5"
                   checked={formData.waterTestingDelayed || false}
                   onCheckedChange={(checked) => onChange('waterTestingDelayed', checked)}
                 />
                 <div className="space-y-1">
-                  <Label htmlFor="water-testing-delayed" className="text-sm font-medium">Delayed Test</Label>
+                  <Label htmlFor="water-testing-delayed" className="text-sm font-medium cursor-pointer">Delayed Test</Label>
                   <p className="text-xs text-muted-foreground">The test was delayed due to closed building conditions not met 12 hours to start of test.</p>
                 </div>
               </div>
@@ -337,11 +338,12 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               <div className="flex items-start space-x-3">
                 <Checkbox
                   id="water-testing-flue-open"
+                  className="mt-0.5"
                   checked={formData.waterTestingFlueOpen || false}
                   onCheckedChange={(checked) => onChange('waterTestingFlueOpen', checked)}
                 />
                 <div className="space-y-1">
-                  <Label htmlFor="water-testing-flue-open" className="text-sm font-medium">Fireplace Flue Open</Label>
+                  <Label htmlFor="water-testing-flue-open" className="text-sm font-medium cursor-pointer">Fireplace Flue Open</Label>
                   <p className="text-xs text-muted-foreground">The fireplace flue damper could not be operated. Closed building conditions may not be fully met.</p>
                 </div>
               </div>
@@ -350,11 +352,12 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               <div className="flex items-start space-x-3">
                 <Checkbox
                   id="water-testing-device"
+                  className="mt-0.5"
                   checked={formData.waterTestingDeviceChecked || false}
                   onCheckedChange={(checked) => onChange('waterTestingDeviceChecked', checked)}
                 />
                 <div className="space-y-1">
-                  <Label htmlFor="water-testing-device" className="text-sm font-medium">Testing Device Information</Label>
+                  <Label htmlFor="water-testing-device" className="text-sm font-medium cursor-pointer">Testing Device Information</Label>
                   <p className="text-xs text-muted-foreground">Best Prod 17 in One Test Kit for Water, Metric Coliform Bacteria Test Kit</p>
                 </div>
               </div>
@@ -363,11 +366,12 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               <div className="flex items-start space-x-3">
                 <Checkbox
                   id="water-testing-windows"
+                  className="mt-0.5"
                   checked={formData.waterTestingWindowsOpened || false}
                   onCheckedChange={(checked) => onChange('waterTestingWindowsOpened', checked)}
                 />
                 <div className="space-y-1">
-                  <Label htmlFor="water-testing-windows" className="text-sm font-medium">Windows Were Opened</Label>
+                  <Label htmlFor="water-testing-windows" className="text-sm font-medium cursor-pointer">Windows Were Opened</Label>
                   <p className="text-xs text-muted-foreground">The windows were opened during the inspection preventing a true analysis.</p>
                 </div>
               </div>
