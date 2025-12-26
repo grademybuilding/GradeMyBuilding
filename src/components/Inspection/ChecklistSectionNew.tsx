@@ -32,11 +32,17 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   // Get scroll function from context
   const scrollToTop = useContext(ScrollContext);
   
-  // Filter categories based on inspectionLevel - only show Radon if it's selected
+  // Filter categories based on Inspection Details "Inspection Level" selections
+  // (InspectionDetails stores this as formData.inspectionCategories)
+  const radonSelected = useMemo(() => {
+    const selected = (formData.inspectionCategories ?? []) as string[];
+    return selected.includes("Radon");
+  }, [formData.inspectionCategories]);
+
+  // Only show Radon if it's selected
   const inspectionCategories = useMemo(() => {
-    const radonSelected = formData.inspectionLevel?.includes('Radon');
-    return allInspectionCategories.filter(cat => cat.id !== 'radon' || radonSelected);
-  }, [formData.inspectionLevel]);
+    return allInspectionCategories.filter((cat) => cat.id !== "radon" || radonSelected);
+  }, [radonSelected]);
 
   // State for navigation - restore from formData if available
   const [activeMainCategory, setActiveMainCategory] = useState(
@@ -56,6 +62,15 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     formData.skippedSubcategories ?? {}
   );
 
+  // Keep active category in range when categories list changes (e.g., Radon toggled)
+  useEffect(() => {
+    if (activeMainCategory >= inspectionCategories.length) {
+      setAtSubmitScreen(false);
+      setActiveMainCategory(Math.max(0, inspectionCategories.length - 1));
+      setActiveSubcategory(0);
+    }
+  }, [activeMainCategory, inspectionCategories.length]);
+
   // Save navigation state when it changes
   useEffect(() => {
     // Debounce to avoid too many updates
@@ -70,7 +85,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     return () => clearTimeout(timeoutId);
   }, [activeMainCategory, activeSubcategory, completedCategories, completedSubcategories, skippedSubcategories]);
 
-  const currentCategory = inspectionCategories[activeMainCategory];
+  const currentCategory = inspectionCategories[activeMainCategory] ?? inspectionCategories[0];
   const hasSubcategories = currentCategory?.subcategories.length > 0;
 
   // Auto scroll to top when category/subcategory changes OR when entering submit screen
