@@ -32,6 +32,7 @@ const categoryMapping: Record<string, string> = {
   'green': 'Green Features',
   'radon': 'Radon',
   'well': 'Well',
+  'pool-spa': 'Swimming Pools and Spas',
 };
 
 // Complete Inspection Checklist Data
@@ -519,6 +520,108 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'well-components-checked', category: 'Well', subcategory: 'Well System Details', item: 'Components Checked', required: false, type: 'multiselect', options: ['Water Softener', 'Above Ground Water Storage Tank', 'NA', 'RO Filter'], commentText: 'We do not open filtration equipment, these components can sometimes be brittle and break. Please ask seller when the last time filters for water/softeners were replaced.' },
   { id: 'well-sample-faucet', category: 'Well', subcategory: 'Well System Details', item: 'Sample Faucet', required: false, type: 'multiselect', options: ['Complies', 'Does not Comply', 'Sample faucet Missing', 'Not Available', 'Community well'], commentText: 'Sample faucet should be installed upstream of the pressure tank, 12 inches above the floor, inside diameter of 1/4 inch and smooth sample end.' },
   { id: 'well-set-backs', category: 'Well', subcategory: 'Well System Details', item: 'Well Set Backs', required: false, type: 'multiselect', options: ['Septic System', 'Buildings', 'Other'], commentText: 'Septic 25 plus feet, Building 10 plus feet' },
+
+  // ============== SWIMMING POOLS AND SPAS ==============
+  // Limitations
+  { id: 'pool-vessels-empty', category: 'Swimming Pools and Spas', subcategory: 'Limitations', item: 'Vessel(s) Were Empty', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'The pool/spa vessels were empty and could not be tested. Be aware that empty shells may be structurally affected. Further evaluation by a qualified specialist is recommended.' },
+  { id: 'pool-spa-not-inspected', category: 'Swimming Pools and Spas', subcategory: 'Limitations', item: 'Spa Not Inspected', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'The spa was not inspected nor tested.' },
+  { id: 'pool-spa-view', category: 'Swimming Pools and Spas', subcategory: 'Limitations', item: 'Pool/Spa View', required: false, type: 'boolean', options: ['Yes', 'No'] },
+
+  // General
+  { id: 'pool-type', category: 'Swimming Pools and Spas', subcategory: 'General', item: 'Type of Pool/Spa', required: false, type: 'multiselect', options: ['Inground Pool', 'Inground Spa', 'Above Ground Pool', 'Inground Pool and Spa', 'Above Ground Spa'] },
+
+  // Safety Devices
+  { id: 'pool-barriers', category: 'Swimming Pools and Spas', subcategory: 'Safety Devices', item: 'Pool Barriers', required: false, type: 'multiselect', options: ['Pool Area Fenced Off', 'Perimeter Yard Fencing', 'Pool Retractable Cover', 'Door Alarms', 'Gate(s) Self-closing/Self-latching', 'Spa Latching Cover', 'Pool Hard Cover', 'All doors Self-closing/Self-latching', 'Pool Web Cover', 'Spa is Being Removed'], commentText: 'All pool fencing should be a minimum of 60 inches with the latch a minimum of 54 inches off the grade. Gates should be self-closing and self-latching and open away from the pool/spa area.' },
+  { id: 'pool-no-fencing', category: 'Swimming Pools and Spas', subcategory: 'Defects - Safety Devices', item: 'No pool fencing', required: false, type: 'checkbox', commentText: 'No separate pool area fencing was installed at this time. We recommend upgrading by installing pool fencing.' },
+  { id: 'pool-no-door-alarms', category: 'Swimming Pools and Spas', subcategory: 'Defects - Safety Devices', item: 'Door alarms are not installed', required: false, type: 'checkbox', commentText: 'All doors that lead to the pool area should be protected with door alarms unless separate pool fencing is installed.' },
+  { id: 'pool-gates-non-compliant', category: 'Swimming Pools and Spas', subcategory: 'Defects - Safety Devices', item: 'Perimeter gates do not comply with barrier requirement', required: false, type: 'checkbox', commentText: 'The perimeter gates that provide access to the pool/spa area should be self-closing and self-latching and open away from the pool area.' },
+  { id: 'pool-doors-not-self-closing', category: 'Swimming Pools and Spas', subcategory: 'Defects - Safety Devices', item: 'The doors that provide access to the pool area are not self-closing and self-latching', required: false, type: 'checkbox', commentText: 'If door alarms are not present, then this is required.' },
+  { id: 'pool-spa-cover-latches', category: 'Swimming Pools and Spas', subcategory: 'Defects - Safety Devices', item: 'Spa cover latches not working', required: false, type: 'checkbox', commentText: 'The spa cover latches should be installed so that they can be locked closed when not being used.' },
+
+  // Pool Area Coping, Tile and Decking
+  { id: 'pool-coping-type', category: 'Swimming Pools and Spas', subcategory: 'Coping, Tile & Decking', item: 'Coping Type', required: false, type: 'multiselect', options: ['None', 'Concrete', 'Stone', 'Brick', 'N/A'] },
+  { id: 'pool-decking-type', category: 'Swimming Pools and Spas', subcategory: 'Coping, Tile & Decking', item: 'Decking Type', required: false, type: 'multiselect', options: ['Concrete', 'Stamped Concrete', 'Brick', 'Paver', 'Wood', 'Composite', 'Stone'] },
+  { id: 'pool-reseal-coping', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Reseal Coping', required: false, type: 'checkbox', commentText: 'We recommend re-sealed between the deck and coping to prevent water from leaking behind the pool walls.' },
+  { id: 'pool-cracked-tile', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Cracked Tile Noted', required: false, type: 'checkbox', commentText: 'The cracked tile(s) should be evaluated and repaired as needed by a qualified pool contractor.' },
+  { id: 'pool-bond-beam-cracking', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Bond Beam Cracking Noted', required: false, type: 'checkbox', commentText: 'The cracking at the pool tile appears to be at the bond beam area. This can be a serious defect and should be further evaluated by a qualified pool contractor to determine the extent of the repair needed.' },
+  { id: 'pool-broken-drain-covers', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Broken Drain Cover(s)', required: false, type: 'checkbox', commentText: 'The broken deck drain covers should be replaced.' },
+  { id: 'pool-settling-noted', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Settling Noted', required: false, type: 'checkbox', commentText: 'The settling noted should be repaired and monitored for any additional changes.' },
+  { id: 'pool-deteriorated-grout', category: 'Swimming Pools and Spas', subcategory: 'Defects - Coping, Tile & Decking', item: 'Deteriorated Tile Grout Noted', required: false, type: 'checkbox', commentText: 'The deteriorated grout at the tile should be evaluated and repaired by a qualified contractor.' },
+
+  // Vessel Surface
+  { id: 'pool-interior-finish', category: 'Swimming Pools and Spas', subcategory: 'Vessel Surface', item: 'Interior Finish Material', required: false, type: 'multiselect', options: ['Plaster/Gunite', 'Aggregate (Pebble)', 'Acrylic', 'Dark Bottom', 'N/A', 'Fiberglass', 'Vinyl'] },
+  { id: 'pool-surface-defects', category: 'Swimming Pools and Spas', subcategory: 'Defects - Vessel Surface', item: 'Surface Defects need further evaluation and likely repair', required: false, type: 'checkbox', commentText: 'The plaster surface is worn and needs to be re-surfaced.' },
+  { id: 'pool-cosmetic-stains', category: 'Swimming Pools and Spas', subcategory: 'Defects - Vessel Surface', item: 'Cosmetic stains noted', required: false, type: 'checkbox', commentText: 'Usually caused by a chemical imbalance and easily corrected.' },
+
+  // Drains
+  { id: 'pool-drain-types', category: 'Swimming Pools and Spas', subcategory: 'Drains', item: 'Drain Type(s)', required: false, type: 'multiselect', options: ['Anti-vortex Drain Covers', 'Anti-Entrapment Drains', 'Multiple Drains'] },
+  { id: 'pool-install-antivortex', category: 'Swimming Pools and Spas', subcategory: 'Defects - Drains', item: 'Install Anti-vortex Cover(s)', required: false, type: 'checkbox', commentText: 'All pool/spa drain covers should be anti-vortex style covers for increased safety.' },
+  { id: 'pool-install-antientrapment', category: 'Swimming Pools and Spas', subcategory: 'Defects - Drains', item: 'Install anti-entrapment drains', required: false, type: 'checkbox', commentText: 'We recommend upgrading the pool drain to anti-entrapment style drains for better protection.' },
+
+  // Pool Electrical
+  { id: 'pool-circuit-breaker-location', category: 'Swimming Pools and Spas', subcategory: 'Pool Electrical', item: 'Circuit Breaker Location(s)', required: false, type: 'multiselect', options: ['Equipment Area', 'Main House Panel', 'Garage', 'N/A', 'Shed', 'Other', 'Near Spa'] },
+  { id: 'pool-equipment-bonding', category: 'Swimming Pools and Spas', subcategory: 'Pool Electrical', item: 'Equipment Bonding', required: false, type: 'multiselect', options: ['Pump(s)', 'Heater', 'Windows', 'Filter', 'None', 'Slide', 'Not visible'] },
+  { id: 'pool-electric-controls', category: 'Swimming Pools and Spas', subcategory: 'Pool Electrical', item: 'Electric Controls', required: false, type: 'multiselect', options: ['Wall Remote', 'Local Subpanel', 'Spa Side Remote', 'Phone App', 'Adjacent to Spa', 'Handheld Remote', 'X10 Style Plug-in Remote', 'Spa Control Panel'] },
+  { id: 'pool-wiring-type', category: 'Swimming Pools and Spas', subcategory: 'Pool Electrical', item: 'Wiring Type', required: false, type: 'multiselect', options: ['Rigid Metal', 'Liquid Tight Conduit', 'NM (Romex)', 'N/A'] },
+  { id: 'pool-gfci-protection', category: 'Swimming Pools and Spas', subcategory: 'Pool Electrical', item: 'GFCI Protection', required: false, type: 'multiselect', options: ['At Equipment Area', 'At Exterior', 'At Subpanel', 'Pool Light(s)', 'Spa Light(s)', 'None'] },
+  { id: 'pool-damaged-conduit', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Electrical', item: 'Damaged Conduit', required: false, type: 'checkbox', commentText: 'The damaged conduit should be repaired or replaced as needed.' },
+  { id: 'pool-unterminated-wiring', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Electrical', item: 'Unterminated Wiring', required: false, type: 'checkbox', commentText: 'The unterminated wiring coming to and from the spa should be properly capped off or removed.' },
+  { id: 'pool-light-not-working', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Electrical', item: 'Pool light not working', required: false, type: 'checkbox', commentText: 'Repair or replace as needed and verify GFCI protection.' },
+  { id: 'pool-bonding-missing', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Electrical', item: 'Bonding connection missing', required: false, type: 'checkbox', commentText: 'The Pool Spa heater bonding connection is not tied into the bonding system for the equipment.' },
+  { id: 'pool-spa-remote-inop', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Electrical', item: 'Spa Side Remote Inop', required: false, type: 'checkbox', commentText: 'The spa side remote control panel is not working and should be repaired or replaced with a remote control.' },
+
+  // Control Valves
+  { id: 'pool-valve-types', category: 'Swimming Pools and Spas', subcategory: 'Control Valves', item: 'Valve Type(s)', required: false, type: 'multiselect', options: ['Standard Manual Valves', 'Automatic Valves with Actuator', 'Not visible', 'In-ground Valves'] },
+  { id: 'pool-valve-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Control Valves', item: 'Leak at valve', required: false, type: 'checkbox' },
+
+  // Filtering/Cleaning
+  { id: 'pool-filtration-type', category: 'Swimming Pools and Spas', subcategory: 'Filtering & Cleaning', item: 'Filtration Type', required: false, type: 'multiselect', options: ['Diatomaceous Earth', 'Sand', 'Cartridge', 'None'] },
+  { id: 'pool-water-treatment', category: 'Swimming Pools and Spas', subcategory: 'Filtering & Cleaning', item: 'Water Treatment', required: false, type: 'multiselect', options: ['Standard Chlorine', 'Auto-Chlorination', 'Other', 'N/A', 'Salt Water System'] },
+  { id: 'pool-filtering-components', category: 'Swimming Pools and Spas', subcategory: 'Filtering & Cleaning', item: 'Filtering Components', required: false, type: 'multiselect', options: ['Skimmer', 'Pool Sweep', 'Auto-chlorinator'] },
+  { id: 'pool-skimmer-noted', category: 'Swimming Pools and Spas', subcategory: 'Filtering & Cleaning', item: 'Skimmer Noted', required: false, type: 'boolean', options: ['Yes', 'No'] },
+  { id: 'pool-filter-high-pressure', category: 'Swimming Pools and Spas', subcategory: 'Defects - Filtering & Cleaning', item: 'Filter High Pressure', required: false, type: 'checkbox', commentText: 'The pool filter gauge shows high pressure and needs service.' },
+  { id: 'pool-skimmer-damaged', category: 'Swimming Pools and Spas', subcategory: 'Defects - Filtering & Cleaning', item: 'Skimmer Box Damaged', required: false, type: 'checkbox', commentText: 'The damaged skimmer box should be repaired to minimize leakage into the surrounding soil.' },
+  { id: 'pool-salt-system-error', category: 'Swimming Pools and Spas', subcategory: 'Defects - Filtering & Cleaning', item: 'Salt System Error Noted', required: false, type: 'checkbox', commentText: 'The error message noted on the salt water control system indicates the need for service or repair.' },
+  { id: 'pool-filter-gauge-inop', category: 'Swimming Pools and Spas', subcategory: 'Defects - Filtering & Cleaning', item: 'Filter pressure gauge is inoperative', required: false, type: 'checkbox' },
+
+  // Pool Plumbing
+  { id: 'pool-pipes', category: 'Swimming Pools and Spas', subcategory: 'Pool Plumbing', item: 'Pipes', required: false, type: 'multiselect', options: ['PVC', 'Copper', 'Metal'] },
+  { id: 'pool-fill-valve-type', category: 'Swimming Pools and Spas', subcategory: 'Pool Plumbing', item: 'Fill Valve Type', required: false, type: 'multiselect', options: ['Manual', 'Auto-fill valve with float', 'None', 'Not found'] },
+  { id: 'pool-fill-valve-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Plumbing', item: 'Fill-valve Leaking', required: false, type: 'checkbox', commentText: 'The pool fill valve is leaking and should be repaired.' },
+  { id: 'pool-pvc-paint', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Plumbing', item: 'PVC piping should be painted', required: false, type: 'checkbox', commentText: 'PVC can be damaged by sunlight and should be painted or coated for UV protection.' },
+  { id: 'pool-water-level-low', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Plumbing', item: 'Water Level Too Low', required: false, type: 'checkbox', commentText: 'The fill valve does keep the water level at the proper height and should be repaired or adjusted as needed.' },
+  { id: 'pool-pipe-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pool Plumbing', item: 'Pipe Leaking', required: false, type: 'checkbox', commentText: 'The leaking pipe should be repaired.' },
+
+  // Pumps
+  { id: 'pool-pump-types', category: 'Swimming Pools and Spas', subcategory: 'Pumps', item: 'Pump Types', required: false, type: 'multiselect', options: ['Standard', 'Circulation', 'Variable Speed', 'Sweep', 'Waterfall', 'Other', 'Booster', 'N/A'] },
+  { id: 'pool-pump-loose', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pumps', item: 'Pump is Loose', required: false, type: 'checkbox', commentText: 'The pool pump should be properly secured or anchored to prevent movement.' },
+  { id: 'pool-pump-halves-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pumps', item: 'Leaking Pump Halves', required: false, type: 'checkbox', commentText: 'The leaking pump halves should be tightened or repaired as needed.' },
+  { id: 'pool-equipment-replace', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pumps', item: 'All Equipment Needs to be Replaced', required: false, type: 'checkbox' },
+  { id: 'pool-pump-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Pumps', item: 'Leak', required: false, type: 'checkbox' },
+
+  // Spa Controls
+  { id: 'pool-spa-jets', category: 'Swimming Pools and Spas', subcategory: 'Spa Controls', item: 'Spa Jets', required: false, type: 'multiselect', options: ['Jets were operational', 'Air Blower (bubbler)', 'Booster Pump'] },
+  { id: 'pool-spa-controls', category: 'Swimming Pools and Spas', subcategory: 'Spa Controls', item: 'Control(s)', required: false, type: 'multiselect', options: ['Spa Side Control', 'Remote Control', 'In-house Control'], commentText: 'We recommend verifying equipment with seller.' },
+  { id: 'pool-spa-control-not-working', category: 'Swimming Pools and Spas', subcategory: 'Defects - Spa Controls', item: 'Spa Side Control Not Working', required: false, type: 'checkbox', commentText: 'The spa side remote control is not working.' },
+  { id: 'pool-remote-not-working', category: 'Swimming Pools and Spas', subcategory: 'Defects - Spa Controls', item: 'Remote Not Working', required: false, type: 'checkbox', commentText: 'The pool/spa remote control is not working properly and should be repaired or replaced as needed.' },
+  { id: 'pool-jets-not-operational', category: 'Swimming Pools and Spas', subcategory: 'Defects - Spa Controls', item: 'Jets were not operational', required: false, type: 'checkbox', commentText: 'The spa jets were not working properly and should be evaluated and repaired by a qualified specialist.' },
+  { id: 'pool-air-bubbler-not-working', category: 'Swimming Pools and Spas', subcategory: 'Defects - Spa Controls', item: 'Air Injection (Bubbler) Not Working', required: false, type: 'checkbox', commentText: 'The spa air injection or bubbler is not working properly and should be repaired or replaced as needed.' },
+
+  // Heating
+  { id: 'pool-heating-type', category: 'Swimming Pools and Spas', subcategory: 'Heating', item: 'Heating Type', required: false, type: 'multiselect', options: ['Natural Gas Heater', 'Solar Heating', 'Electric Heater', 'Propane Heater', 'None', 'In-deck Solar'] },
+  { id: 'pool-heater-age', category: 'Swimming Pools and Spas', subcategory: 'Heating', item: 'Age of Heater (Approx)', required: false, type: 'number' },
+  { id: 'pool-heater-btu', category: 'Swimming Pools and Spas', subcategory: 'Heating', item: 'BTU Rating', required: false, type: 'number' },
+  { id: 'pool-heater-serviceable', category: 'Swimming Pools and Spas', subcategory: 'Heating', item: 'Serviceable', required: false, type: 'boolean', options: ['Yes', 'No'] },
+  { id: 'pool-heater-not-operational', category: 'Swimming Pools and Spas', subcategory: 'Defects - Heating', item: 'The pool heater is not operational', required: false, type: 'checkbox', commentText: 'The pool heater is not operational and should be further evaluated and repaired or replaced as needed.' },
+  { id: 'pool-heater-rust-leak', category: 'Swimming Pools and Spas', subcategory: 'Defects - Heating', item: 'Rust and Leaking', required: false, type: 'checkbox', commentText: 'The pool heater has excessive corrosion and appears to be leaking and may need replacement. Further evaluation by a qualified specialist is needed.' },
+
+  // Accessories
+  { id: 'pool-diving-board-removed', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Diving Board was Removed', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'The diving board has apparently been removed.' },
+  { id: 'pool-diving-board', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Diving Board', required: false, type: 'boolean', options: ['Present', 'Not Present'], commentText: 'Diving boards are not inspected as part of our inspection. Any comments made regarding this equipment is done as a courtesy only. Diving boards are inherently dangerous and should be inspected regularly and closely monitored when in use.' },
+  { id: 'pool-no-wall-diving', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'No Wall Diving', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'The raised wall above the pool surface is not designed for diving as the pool depth may not be adequate. These areas should be monitored to prevent injury.' },
+  { id: 'pool-exposed-bolts', category: 'Swimming Pools and Spas', subcategory: 'Defects - Accessories', item: 'Exposed Bolts from Diving Board', required: false, type: 'checkbox', commentText: 'The exposed bolts at the previous diving board location should be ground down or removed for safety.' },
+  { id: 'pool-builtin-slide', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Built-in Slide', required: false, type: 'boolean', options: ['Present', 'Not Present'], commentText: 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury. Built-in slides may need to be re-coated or re-sealed every few years for safe operation.' },
+  { id: 'pool-fiberglass-slide', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Fiberglass Slide', required: false, type: 'boolean', options: ['Present', 'Not Present'], commentText: 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury.' },
 ];
 
 interface ChecklistCategoryContentProps {
