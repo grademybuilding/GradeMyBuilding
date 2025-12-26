@@ -401,5 +401,56 @@ Proper flashing around the skylight is critical.`,
   'pool-no-wall-diving': 'The raised wall above the pool surface is not designed for diving as the pool depth may not be adequate. These areas should be monitored to prevent injury.',
   'pool-exposed-bolts': 'The exposed bolts at the previous diving board location should be ground down or removed for safety.',
   'pool-builtin-slide': 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury. Built-in slides may need to be re-coated or re-sealed every few years for safe operation.',
-  'pool-fiberglass-slide': 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury.'
+  'pool-fiberglass-slide': 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury.',
+
+  // ============== SEWER LATERAL DEFECTS ==============
+  'sewer-90-degree-turn': 'Encountered a T or 90 turn in the sewer line that the camera could not navigate past. According to IPC 708.3.3, cleanouts shall be installed at each change of direction greater than 45 degrees (0.79 rad) in the building sewer, building drain, and horizontal waste or soil lines. It is recommended to have a cleanout installed and have the line re-scoped to the city main before the end of the inspection contingency period.',
+
+  'sewer-backflow-no-access': 'The sewer inspection exposed a back flow prevention valve in the sewer line with no visible access to it for routine maintenance. The IPC - Section 715.1 and 715.1.7 say backwater valves are required when the drainage piping of a building is subject to backflow from a public sewer. When a backflow valve is installed, the valve shall be accessible for inspection and maintenance. It is recommended to have a qualified plumber make the back flow prevention valve accessible prior to the final grading.',
+
+  'sewer-backflow-valve': 'A backflow prevention valve was in the sewer line with no visible access to remove it for maintenance. We do not knowingly go through backflow prevention valves simply because it is hard to get back through them without damaging the equipment or the valve. It is recommended to put access in on the other side of the valve and to have the sewer line scoped to the city main.',
+
+  'sewer-belly': 'There is a low point in the sewer drain line. A belly in the sewer line is a low area that can hold water and can possibly cause a build-up in the sewer line. It is recommended to monitor the sewer for backups and odors. If these occur, then a plumber should be contacted to hydro jet the sewer line.',
+
+  'sewer-buildup': 'There is a visible build-up of materials in the sewer line that prevents items from getting through and can lead to a full obstruction. It is recommended to have the sewer line hydro jetted and re-inspected prior to the final grading.',
+
+  'sewer-cleanout-inaccessible': 'The inspector was unable to open the cleanout(s). This could have been due to the plug being unable to be removed or the access to it being blocked. It is recommended to have the clean-out made accessible by removing the stuck plug and or having the items blocking the access moved and make sure that the access is openable and have the sewer line inspected prior to the final grading.',
+
+  'sewer-cleanout-needed': 'Per the IPC 708.3.1, a clean-out is required at least every 100 feet. It is recommended to have a yard clean-out installed and to have the sewer line scoped the rest of the way to the city main.',
+
+  'sewer-damaged-cap': 'The clean-out cap is damaged. It is recommended to replace the damaged cap.',
+
+  'sewer-damaged-line': 'The sewer drain line is damaged in one or more locations. It is recommended to have a qualified professional repair the sewer line as needed.',
+
+  'sewer-light-root-growth': 'The clay tile sewer lateral line will require regular maintenance, to ensure proper flow and function. This typically is due to light root growth in clay sections of the lateral line. It is recommended to camera the sewer line at least once a year from now on to re-assess root growth to determine when the sewer line will need scheduled cleaning. No immediate service is recommended at this time.',
+
+  'sewer-obstruction': 'There is an obstruction in the sewer line. It is recommended to have the sewer line cleaned and re-inspected prior to the final grading.',
+
+  'sewer-offset': 'There is an offset in the drain line where two pipes are not properly connected and there is a "lip" that can cause clogging. It is recommended to have a qualified contractor evaluate and repair as necessary.',
+
+  'sewer-orangeburg': 'A portion of the sewer line is Orangeburg. It is recommended to have a qualified plumber evaluate the Orangeburg and replace it as necessary.',
+
+  'sewer-recommend-cleanout': 'It is recommended to add an outside cleanout.',
+
+  'sewer-recommend-hydrojetting': 'The sewer line has an obstruction or blockage in it. It is recommended to have the sewer line Hydro Jetted. Hydro Jetting uses high-pressure water to clean a sewer line and is less likely to damage the sewer line than traditional cabling. It is recommended to then have the sewer line re-scoped to the city main to see what was not visible.',
+
+  'sewer-repair-observed': 'Sewer line shows signs of repairs in one or more areas. If unable to determine the effectiveness of the repairs, recommend consulting with a specialist before releasing the final grade.',
+
+  'sewer-root-intrusion': 'Root growth is present at approximately this location. Root intrusion is commonly a result from a damaged drain line or entry at a joint. It is recommended to have a qualified plumber evaluate the sewer line and repair it as necessary.',
+
+  'sewer-scale-buildup': 'There is scale build-up inside the sewer line which will promote clogging. It is recommended to have the sewer line hydro jetted.',
+
+  'sewer-separation': 'The sewer line is separated in one or more places. It is recommended to have a qualified plumber evaluate and repair as necessary.',
+
+  'sewer-cap-doesnt-fit': 'The sewer cap does not fit properly. It is recommended to install a proper fitting sewer cap.',
+
+  'sewer-vent-stack-clogged': 'The only access to the sewer main was through the roof vent. The roof vent is clogged, preventing access to the main sewer line. It is recommended that the main stack be cleaned and the sewer inspected before the final grade.',
+
+  'sewer-vent-stack-obstructed': 'The inspector tried to enter the sewer line through the main plumbing stack. The main plumbing stack is clogged preventing access to the sewer line. It is recommended to have the obstruction removed and to have the sewer line scoped to the city main prior to the final grade.',
+
+  'sewer-yard-trap-covered': 'The access point for the yard trap is covered. It is recommended to make it accessible and to have it inspected prior to the final grade.',
+
+  'sewer-yard-trap-present': 'There is a yard trap present. Due to the design of a yard trap, I was unable to get through it. It is recommended to replace the yard trap with a usable yard cleanout and to have the sewer line scoped the rest of the way to the city main prior to final grade.',
+
+  'sewer-no-visible-access': 'There was no visible sewer access. It is recommended to have an access made and to have the sewer line inspected prior to final grade.'
 };
