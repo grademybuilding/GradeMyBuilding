@@ -33,7 +33,6 @@ const categoryMapping: Record<string, string> = {
   'radon': 'Radon',
   'well': 'Well',
   'pool-spa': 'Swimming Pools and Spas',
-  'water-testing': 'Water Testing',
 };
 
 // Complete Inspection Checklist Data
@@ -624,28 +623,6 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'pool-builtin-slide', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Built-in Slide', required: false, type: 'boolean', options: ['Present', 'Not Present'], commentText: 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury. Built-in slides may need to be re-coated or re-sealed every few years for safe operation.' },
   { id: 'pool-fiberglass-slide', category: 'Swimming Pools and Spas', subcategory: 'Accessories', item: 'Fiberglass Slide', required: false, type: 'boolean', options: ['Present', 'Not Present'], commentText: 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury.' },
 
-  // ============== WATER TESTING ==============
-  // Water Testing - Test Information
-  { id: 'water-testing-delayed', category: 'Water Testing', subcategory: 'Test Information', item: 'Delayed Test', required: false, type: 'checkbox', commentText: 'The test was delayed due to closed building conditions not met 12 hours to start of test.' },
-  { id: 'water-testing-method', category: 'Water Testing', subcategory: 'Test Information', item: 'Testing Method', required: false, type: 'multiselect', options: ['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'] },
-  { id: 'water-testing-fireplace-flue-open', category: 'Water Testing', subcategory: 'Test Information', item: 'Fireplace Flue Open', required: false, type: 'checkbox', commentText: 'The fireplace flue damper could not be operated. Closed building conditions may not be fully met. Recommend flue damper repair and future testing.' },
-  { id: 'water-testing-device-info', category: 'Water Testing', subcategory: 'Test Information', item: 'Testing Device Information', required: false, type: 'checkbox', commentText: 'Best Prod 17 in One Test Kit for Water, Metric Coliform Bacteria Test Kit' },
-  { id: 'water-testing-windows-opened', category: 'Water Testing', subcategory: 'Test Information', item: 'Windows Were Opened', required: false, type: 'checkbox', commentText: 'The windows were opened during the inspection preventing a true analysis of the radon levels within the structure.' },
-  { id: 'water-testing-locations', category: 'Water Testing', subcategory: 'Test Information', item: 'Testing Locations', required: false, type: 'multiselect', options: ['Kitchen Sink', 'Bathroom Sink'] },
-  { id: 'water-testing-abnormal-smell', category: 'Water Testing', subcategory: 'Test Information', item: 'Abnormal Smell or Taste', required: false, type: 'multiselect', options: ['Yes', 'No', 'N/A'] },
-  { id: 'water-testing-window-ac', category: 'Water Testing', subcategory: 'Test Information', item: 'Window Mounted Air Conditioner', required: false, type: 'checkbox', commentText: 'One or more window mounted air conditioners were in place. Slight air blowby may have occurred. Recommend removal of unit(s) and future testing.' },
-  { id: 'water-testing-start-day', category: 'Water Testing', subcategory: 'Test Information', item: 'Start Day', required: false, type: 'textarea' },
-  { id: 'water-testing-test-kit-moved', category: 'Water Testing', subcategory: 'Test Information', item: 'Test Kit Moved', required: false, type: 'checkbox', commentText: 'The radon test machine or canisters were moved during the inspection. Tampering with the test kit voids the results. Recommend re testing.' },
-  { id: 'water-testing-mitigation-installed', category: 'Water Testing', subcategory: 'Test Information', item: 'Current Mitigation Installed', required: false, type: 'checkbox', commentText: 'A current radon mitigation system was in place which could change results.' },
-  { id: 'water-testing-end-day', category: 'Water Testing', subcategory: 'Test Information', item: 'End Day', required: false, type: 'textarea' },
-  { id: 'water-testing-epa-resources', category: 'Water Testing', subcategory: 'Test Information', item: 'EPA Resources', required: false, type: 'info' },
-  { id: 'water-testing-covid19', category: 'Water Testing', subcategory: 'Test Information', item: 'COVID 19', required: false, type: 'checkbox', commentText: 'Due to the COVID19 pandemic, the inspector shall wear a mask IAW CDC guidelines while indoors or in close proximity of personnel.' },
-
-  // Water Testing - Recommendations
-  { id: 'water-testing-levels-within-range', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Within Range', required: false, type: 'checkbox', commentText: 'Test strip results showed the water substances to be within range and not abnormal.' },
-  { id: 'water-testing-levels-slightly-abnormal', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Slightly Abnormal', required: false, type: 'checkbox', commentText: 'The water test results for some substances were slightly abnormal. Follow-up laboratory testing from a qualified contractor is recommended. In many instances, a water filtration and purification device can lower the levels of potentially harmful water substances. https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water' },
-  { id: 'water-testing-lab-not-used', category: 'Water Testing', subcategory: 'Recommendations', item: 'Laboratory Testing Not Used', required: false, type: 'textarea', commentText: 'A lab was not used for the water testing. The test strips are only a baseline test and may produce average or in some cases, inaccurate readings. https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water' },
-  { id: 'water-testing-levels-highly-abnormal', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Highly Abnormal', required: false, type: 'checkbox', commentText: 'The water test results for some substances were highly abnormal. Follow-up laboratory testing from a qualified contractor is recommended soon to verify the baseline readings. In many instances, a water filtration and purification device can lower the levels of potentially harmful water substances. https://www.epa.gov/dwlabcert/contact-information-certification-programs-and-certified-laboratories-drinking-water' },
 ];
 
 interface ChecklistCategoryContentProps {
