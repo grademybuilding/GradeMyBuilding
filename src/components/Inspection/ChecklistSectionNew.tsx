@@ -54,7 +54,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
 
   const sewerLateralSelected = useMemo(() => {
     const selected = (formData.inspectionCategories ?? []) as string[];
-    return selected.includes("Sewer Lateral");
+    return selected.includes("Sewer");
   }, [formData.inspectionCategories]);
 
   // Only show Radon/Well/Pool-Spa/Sewer Lateral if they're selected in Inspection Details
