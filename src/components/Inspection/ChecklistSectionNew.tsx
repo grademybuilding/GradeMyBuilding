@@ -249,8 +249,8 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           "relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-200",
                           isCurrent && "bg-accent border-accent text-accent-foreground shadow-lg shadow-accent/30",
                           isCompleted && !isCurrent && "bg-accent/20 border-accent text-accent",
-                          !isCompleted && !isCurrent && isAccessible && "bg-background border-border text-muted-foreground group-hover:border-accent/50",
-                          !isAccessible && "bg-muted/30 border-border/50 text-muted-foreground/40 cursor-not-allowed"
+                          !isCompleted && !isCurrent && isAccessible && "bg-background border-border text-foreground/70 group-hover:border-accent/50",
+                          !isAccessible && "bg-muted/30 border-border/50 text-foreground/40 cursor-not-allowed"
                         )}>
                           {isCompleted || isCurrent ? (
                             <CheckCircle className={cn(
@@ -265,10 +265,10 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         
                         {/* Label */}
                         <span className={cn(
-                          "text-[10px] sm:text-xs font-medium text-center max-w-[70px] sm:max-w-[90px] leading-tight",
-                          isCurrent && "text-accent font-semibold",
+                          "text-[10px] sm:text-xs font-semibold text-center max-w-[70px] sm:max-w-[90px] leading-tight",
+                          isCurrent && "text-accent",
                           isCompleted && !isCurrent && "text-foreground",
-                          !isCompleted && !isCurrent && "text-muted-foreground"
+                          !isCompleted && !isCurrent && "text-foreground/70"
                         )}>
                           {category.label}
                         </span>
@@ -299,29 +299,23 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                 
                 {/* Subcategory pills or single category pill */}
                 {hasSubcategories ? (
-                  currentTabs.map((tab, index) => {
+                  currentTabs.map((tab) => {
                     const isCompleted = currentCompletedTabs.includes(tab.id);
                     const isSkipped = currentSkippedTabs.includes(tab.id);
                     const isDone = isCompleted || isSkipped;
                     const isCurrent = tab.id === currentTabs[activeSubcategory]?.id;
-                    const doneCount = currentCompletedTabs.length + currentSkippedTabs.length;
-                    const isLocked = !isDone && !isCurrent && index > doneCount;
-                    const isClickable = isDone || isCurrent || index === doneCount;
 
                     return (
                       <button
                         key={tab.id}
                         type="button"
-                        disabled={isLocked}
                         onClick={() => handleTabChange(tab.id)}
                         className={cn(
-                          "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap border",
+                          "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border cursor-pointer",
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-sm",
-                          isCompleted && !isCurrent && "bg-accent/15 text-accent border-accent/30 hover:bg-accent/20",
-                          isSkipped && !isCurrent && "bg-muted text-muted-foreground border-border/50 hover:bg-muted/80",
-                          isLocked && "bg-muted/50 text-muted-foreground/60 border-border/40 cursor-not-allowed opacity-60",
-                          !isLocked && !isCurrent && !isDone && "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground",
-                          isClickable && !isCurrent && "cursor-pointer"
+                          isCompleted && !isCurrent && "bg-accent/15 text-accent border-accent/30 hover:bg-accent/25",
+                          isSkipped && !isCurrent && "bg-muted text-foreground/70 border-border hover:bg-muted/80",
+                          !isCurrent && !isDone && "bg-background text-foreground/80 border-border hover:border-primary/50 hover:bg-muted/50"
                         )}
                       >
                         <span>{tab.label}</span>
