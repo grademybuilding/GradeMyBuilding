@@ -710,13 +710,27 @@ export function ChecklistCategoryContent({
         return null;
 
       case 'textarea':
+        const defaultEpaText = item.id === 'radon-epa-resources' 
+          ? `This report includes test results from a radon-testing device that records the levels of radon gas in an air sample. The actual radon levels in the home may vary depending on many factors including, time, temperature, season, barometric pressure, ventilation, and other factors.
+
+Homes tested using the EPAs protocol should not be mitigated on the basis of a single short term test as used for real estate transactions under EPA protocols. A follow-up test is necessary for mitigation decision-making regardless of the initial test result.
+
+Consulting with a professional radon mitigation specialist is your best option for retesting if there is a concern for mitigation to reducing the level of radon in the home.
+
+EPA recommends that you should "fix your home" if the radon level is equal to or greater than 4 pCi/L (the Action Level) and "consider fixing your home" if the radon level is equal to or greater than 2 pCi/L.
+
+Homes should be checked every few years to make sure homes are lower than the 4pCi/L level set by the EPA, whether or not you have a mitigation system.
+
+More information can be found directly at the EPA's website: https://www.epa.gov/radon`
+          : '';
+        
         return (
           <div className="space-y-2">
             <Textarea
               placeholder="Enter notes..."
-              value={notes[item.id] || ''}
+              value={notes[item.id] ?? defaultEpaText}
               onChange={(e) => handleNoteChange(item.id, e.target.value)}
-              className="min-h-[120px] text-sm bg-background text-foreground"
+              className="min-h-[200px] text-sm bg-background text-foreground"
             />
           </div>
         );
