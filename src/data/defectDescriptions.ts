@@ -309,5 +309,97 @@ Proper flashing around the skylight is critical.`,
   'green-ductwork-sealed': 'Ductwork is sealed.',
   'green-dimmers': 'Some light fixtures have dimmers.',
   'green-close-to-public-transportation': 'The property appears to be in close proximity to public or alternative transportation.',
-  'green-can-build-up': 'The building\'s structure appears to permit expansion by building up versus out.'
+  'green-can-build-up': 'The building\'s structure appears to permit expansion by building up versus out.',
+
+  // ============== WELL SYSTEM DESCRIPTIONS ==============
+  'well-well-head-casing-photos': 'Well head should be secured to casing. Should not be loose or have holes or cracks. The well head, cap, should be tight and vermin-proof.',
+  'well-electrical-components': 'Electrical conduit and connections were functional.',
+  'well-height-of-well-casing': 'Well heads should extend 12 inches above ground if installed after 1991 to prevent contamination into the well head.',
+  'well-water-flow-information': 'The pressure should be between 40 and 60 pounds per square inch (psi). As the well pump cycles on and off, it is normal for the pressure to vary from low (pump cut-in) to high (pump cut-out) pressure.',
+  'well-final-comments': 'Items to be further evaluated prior to grading a building by a qualified plumber include: Well pressure system is old and should be updated with newer pressure tank, pressure switch and sample faucet. Always use licensed or certified water well drillers and pump installers.',
+  'well-casing-diameter': 'The steel casing should be in functional condition. Small amounts of surface rust is ok, but if you see pitting or large amounts of rust or metal flaking, further evaluation is recommended by a plumber.',
+  'well-pressure-tank': 'Pressure Tank air pressure: Water logged test: The pressure tank should sound like a bell when knocked. Tank pressure should be about 2-3 PSI less than the turn on pressure on the pressure switch. If the pressure is higher than the turn on PSI, tank pressure should be adjusted.',
+  'well-pressure-switch': 'Typically well pumps draw between 5-9 amps depending on pump horse power, well depth, etc. If well amps are higher this may indicate pump is failing, seeking further evaluation is recommended. Pressure switch should be in functional condition.',
+  'well-pressure-gauge': 'Pressure gauge should be in working condition. If pressure gauge is not functioning correctly, please replace.',
+  'well-pump-shut-off-switch': 'Shut off switch may be near the pressure tank or at the electrical meter. Shut off switch should be functional.',
+  'well-water-supply-lines': 'Water Pipe material: Check for leaks, if seen, and will report them. If a leak develops later on, please seek further evaluation from a plumber.',
+  'well-components-checked': 'We do not open filtration equipment, these components can sometimes be brittle and break. Please ask seller when the last time filters for water/softeners were replaced. Filters should be changed as needed and checked every three months.',
+  'well-sample-faucet': 'Sample faucet should be installed upstream of the pressure tank, 12 inches above the floor, inside diameter of 1/4 inch and smooth sample end. Sample faucets shall be metal and shall have an inside diameter of at least 1/4 inch.',
+  'well-set-backs': 'Septic 25 plus feet, Building 10 plus feet. Always maintain proper separation between your well and buildings, waste systems, or chemical storage facilities.',
+
+  // ============== SWIMMING POOLS AND SPAS DESCRIPTIONS ==============
+  // Limitations
+  'pool-vessels-empty': 'The pool/spa vessels were empty and could not be tested. Be aware that empty shells may be structurally affected. Further evaluation by a qualified specialist is recommended.',
+  'pool-spa-not-inspected': 'The spa was not inspected nor tested.',
+  'pool-spa-view': 'Pool/Spa view observations.',
+
+  // Safety Devices
+  'pool-barriers': 'All pool fencing should be a minimum of 60 inches with the latch a minimum of 54 inches off the grade. Gates should be self-closing and self-latching and open away from the pool/spa area.',
+  'pool-no-fencing': 'No separate pool area fencing was installed at this time. We recommend upgrading by installing pool fencing.',
+  'pool-no-door-alarms': 'All doors that lead to the pool area should be protected with door alarms unless separate pool fencing is installed.',
+  'pool-gates-non-compliant': 'The perimeter gates that provide access to the pool/spa area should be self-closing and self-latching and open away from the pool area.',
+  'pool-doors-not-self-closing': 'The doors that provide access to the pool area are not self-closing and self-latching. If door alarms are not present, then this is required.',
+  'pool-spa-cover-latches': 'The spa cover latches should be installed so that they can be locked closed when not being used.',
+
+  // Coping, Tile & Decking
+  'pool-reseal-coping': 'We recommend re-sealed between the deck and coping to prevent water from leaking behind the pool walls.',
+  'pool-cracked-tile': 'The cracked tile(s) should be evaluated and repaired as needed by a qualified pool contractor.',
+  'pool-bond-beam-cracking': 'The cracking at the pool tile appears to be at the bond beam area. This can be a serious defect and should be further evaluated by a qualified pool contractor to determine the extent of the repair needed.',
+  'pool-broken-drain-covers': 'The broken deck drain covers should be replaced.',
+  'pool-settling-noted': 'The settling noted should be repaired and monitored for any additional changes.',
+  'pool-deteriorated-grout': 'The deteriorated grout at the tile should be evaluated and repaired by a qualified contractor.',
+
+  // Vessel Surface
+  'pool-surface-defects': 'The plaster surface is worn and needs to be re-surfaced.',
+  'pool-cosmetic-stains': 'Usually caused by a chemical imbalance and easily corrected.',
+
+  // Drains
+  'pool-install-antivortex': 'All pool/spa drain covers should be anti-vortex style covers for increased safety.',
+  'pool-install-antientrapment': 'We recommend upgrading the pool drain to anti-entrapment style drains for better protection.',
+
+  // Pool Electrical
+  'pool-damaged-conduit': 'The damaged conduit should be repaired or replaced as needed.',
+  'pool-unterminated-wiring': 'The unterminated wiring coming to and from the spa should be properly capped off or removed.',
+  'pool-light-not-working': 'Pool light is not working. Repair or replace as needed and verify GFCI protection.',
+  'pool-bonding-missing': 'The Pool Spa heater bonding connection is not tied into the bonding system for the equipment.',
+  'pool-spa-remote-inop': 'The spa side remote control panel is not working and should be repaired or replaced with a remote control.',
+
+  // Control Valves
+  'pool-valve-leak': 'Leak at valve detected. The leaking valve should be repaired or replaced.',
+
+  // Filtering & Cleaning
+  'pool-filter-high-pressure': 'The pool filter gauge shows high pressure and needs service.',
+  'pool-skimmer-damaged': 'The damaged skimmer box should be repaired to minimize leakage into the surrounding soil.',
+  'pool-salt-system-error': 'The error message noted on the salt water control system indicates the need for service or repair.',
+  'pool-filter-gauge-inop': 'Filter pressure gauge is inoperative. Recommend replacement.',
+
+  // Pool Plumbing
+  'pool-fill-valve-leak': 'The pool fill valve is leaking and should be repaired.',
+  'pool-pvc-paint': 'PVC can be damaged by sunlight and should be painted or coated for UV protection.',
+  'pool-water-level-low': 'The fill valve does not keep the water level at the proper height and should be repaired or adjusted as needed.',
+  'pool-pipe-leak': 'The leaking pipe should be repaired.',
+
+  // Pumps
+  'pool-pump-loose': 'The pool pump should be properly secured or anchored to prevent movement.',
+  'pool-pump-halves-leak': 'The leaking pump halves should be tightened or repaired as needed.',
+  'pool-equipment-replace': 'All equipment needs to be replaced.',
+  'pool-pump-leak': 'Pump leak detected. The leaking pump should be repaired or replaced.',
+
+  // Spa Controls
+  'pool-spa-control-not-working': 'The spa side remote control is not working.',
+  'pool-spa-remote-not-working': 'The pool/spa remote control is not working properly and should be repaired or replaced as needed.',
+  'pool-spa-jets-not-operational': 'The spa jets were not working properly and should be evaluated and repaired by a qualified specialist.',
+  'pool-spa-bubbler-not-working': 'The spa air injection or "bubbler" is not working properly and should be repaired or replaced as needed.',
+
+  // Heating
+  'pool-heater-not-operational': 'The pool heater is not operational and should be further evaluated and repaired or replaced as needed.',
+  'pool-heater-rust-leak': 'The pool heater has excessive corrosion and appears to be leaking and may need replacement. Further evaluation by a qualified specialist is needed.',
+
+  // Accessories
+  'pool-diving-board-removed': 'The diving board has apparently been removed.',
+  'pool-diving-board': 'Diving boards are not inspected as part of our inspection. Any comments made regarding this equipment is done as a courtesy only. Diving boards are inherently dangerous and should be inspected regularly and closely monitored when in use.',
+  'pool-no-wall-diving': 'The raised wall above the pool surface is not designed for diving as the pool depth may not be adequate. These areas should be monitored to prevent injury.',
+  'pool-exposed-bolts': 'The exposed bolts at the previous diving board location should be ground down or removed for safety.',
+  'pool-builtin-slide': 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury. Built-in slides may need to be re-coated or re-sealed every few years for safe operation.',
+  'pool-fiberglass-slide': 'The slide is not inspected as part of our inspection. These are inherently dangerous and should be inspected regularly and monitored when in use. Always verify that the water flow is functional to prevent injury.'
 };
