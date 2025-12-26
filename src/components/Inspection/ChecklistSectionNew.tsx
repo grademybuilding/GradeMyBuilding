@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { ScrollContext } from "@/pages/NewInspection";
 
 // Main inspection categories for the sidebar/menu navigation
-const inspectionCategories = [
+const allInspectionCategories = [
   { id: 'roof', label: 'Roof', subcategories: ['Coverings', 'Roof Drainage Systems', 'Flashing', 'Skylights & Chimneys', 'Eaves, Soffits & Fascia'] },
   { id: 'exterior', label: 'Exterior Cladding', subcategories: [] },
   { id: 'walkways', label: 'Walkways, Patios & Driveways', subcategories: [] },
@@ -32,6 +32,12 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   // Get scroll function from context
   const scrollToTop = useContext(ScrollContext);
   
+  // Filter categories based on inspectionLevel - only show Radon if it's selected
+  const inspectionCategories = useMemo(() => {
+    const radonSelected = formData.inspectionLevel?.includes('Radon');
+    return allInspectionCategories.filter(cat => cat.id !== 'radon' || radonSelected);
+  }, [formData.inspectionLevel]);
+
   // State for navigation - restore from formData if available
   const [activeMainCategory, setActiveMainCategory] = useState(
     formData.currentMainCategory ?? 0
@@ -65,7 +71,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   }, [activeMainCategory, activeSubcategory, completedCategories, completedSubcategories, skippedSubcategories]);
 
   const currentCategory = inspectionCategories[activeMainCategory];
-  const hasSubcategories = currentCategory.subcategories.length > 0;
+  const hasSubcategories = currentCategory?.subcategories.length > 0;
 
   // Auto scroll to top when category/subcategory changes OR when entering submit screen
   useEffect(() => {
@@ -444,4 +450,4 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   );
 }
 
-export { inspectionCategories };
+export { allInspectionCategories as inspectionCategories };
