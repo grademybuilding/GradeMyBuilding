@@ -7,6 +7,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import { CalendarIcon, ClipboardCheck } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -285,6 +286,170 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                   onChange={(e) => onChange('radonModelNumber', e.target.value)}
                 />
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Well-Specific Fields - Only show when Well is selected */}
+        {isSelected('inspectionCategories', 'Well') && (
+          <div className="space-y-6 p-4 rounded-lg border border-primary/20 bg-primary/5">
+            <Label className="text-base font-semibold flex items-center gap-2">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-xs font-bold">W</span>
+              Well System Details
+            </Label>
+
+            {/* Utilities On */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Utilities On</Label>
+              <div className="flex gap-4 flex-wrap">
+                {['On', 'Off'].map((option) => (
+                  <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="wellUtilitiesOn"
+                      value={option}
+                      checked={formData.wellUtilitiesOn === option}
+                      onChange={(e) => onChange('wellUtilitiesOn', e.target.value)}
+                      className="h-4 w-4 text-primary border-input focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Property Occupied */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Property Occupied</Label>
+              <div className="flex gap-4 flex-wrap">
+                {['Yes', 'No'].map((option) => (
+                  <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="wellPropertyOccupied"
+                      value={option}
+                      checked={formData.wellPropertyOccupied === option}
+                      onChange={(e) => onChange('wellPropertyOccupied', e.target.value)}
+                      className="h-4 w-4 text-primary border-input focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Weather */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Weather</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Sunny', 'Cloudy', 'Rainy', 'Partly Sunny', 'Partly Cloudy', 'Snow'].map((condition) => (
+                  <div key={condition} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`well-weather-${condition}`}
+                      checked={isSelected('wellWeather', condition)}
+                      onCheckedChange={() => handleMultiSelect('wellWeather', condition)}
+                    />
+                    <Label htmlFor={`well-weather-${condition}`} className="text-sm cursor-pointer">
+                      {condition}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Soil Conditions */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Soil Conditions</Label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {['Dry', 'Wet', 'Semi Wet', 'Frozen'].map((condition) => (
+                  <div key={condition} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`well-soil-${condition}`}
+                      checked={isSelected('wellSoilConditions', condition)}
+                      onCheckedChange={() => handleMultiSelect('wellSoilConditions', condition)}
+                    />
+                    <Label htmlFor={`well-soil-${condition}`} className="text-sm cursor-pointer">
+                      {condition}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Location of Well Head */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Location of Well Head</Label>
+              <p className="text-xs text-muted-foreground">We reference where the well head in conjunction to the property. Grading should be considered near the well head. Water should not pool around casing, but go around it or away.</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Front of House', 'Right of House', 'Left of House', 'Back of House', 'Basement'].map((location) => (
+                  <div key={location} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`well-location-${location}`}
+                      checked={isSelected('wellHeadLocation', location)}
+                      onCheckedChange={() => handleMultiSelect('wellHeadLocation', location)}
+                    />
+                    <Label htmlFor={`well-location-${location}`} className="text-sm cursor-pointer">
+                      {location}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Water Flow Information */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Water Flow Information</Label>
+              <p className="text-xs text-muted-foreground">The pressure should be between 40 and 60 pounds per square inch (psi). As the well pump cycles on and off, it is normal for the pressure to vary from low (pump cut-in) to high (pump cut-out) pressure.</p>
+              <div className="flex gap-4 flex-wrap">
+                {['Adequate', 'Inadequate'].map((option) => (
+                  <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="wellWaterFlow"
+                      value={option}
+                      checked={formData.wellWaterFlow === option}
+                      onChange={(e) => onChange('wellWaterFlow', e.target.value)}
+                      className="h-4 w-4 text-primary border-input focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Well Setbacks */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Well Setbacks</Label>
+              <p className="text-xs text-muted-foreground">Septic 25 plus feet, Building 10 plus feet</p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Septic System', 'Buildings', 'Other'].map((setback) => (
+                  <div key={setback} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`well-setback-${setback}`}
+                      checked={isSelected('wellSetbacks', setback)}
+                      onCheckedChange={() => handleMultiSelect('wellSetbacks', setback)}
+                    />
+                    <Label htmlFor={`well-setback-${setback}`} className="text-sm cursor-pointer">
+                      {setback}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Final Comments */}
+            <div className="space-y-2">
+              <Label htmlFor="wellFinalComments" className="text-sm font-medium">Final Comments</Label>
+              <Textarea
+                id="wellFinalComments"
+                placeholder="Enter any final comments about the well system..."
+                value={formData.wellFinalComments || ''}
+                onChange={(e) => onChange('wellFinalComments', e.target.value)}
+                className="min-h-[100px]"
+              />
+              <p className="text-xs text-muted-foreground">
+                Items to be further evaluated prior to grading a building by a qualified plumber include: Well pressure system, sample faucet, etc.
+              </p>
             </div>
           </div>
         )}
