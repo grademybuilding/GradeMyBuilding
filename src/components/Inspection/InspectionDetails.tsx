@@ -19,7 +19,7 @@ interface InspectionDetailsProps {
 }
 
 const inspectionCategories = [
-  'Residential', 'Commercial', 'Sewer', 'Spa/Swimming Pool', 'Radon', 'Well', 'Water Testing', 'Green Features'
+  'Residential', 'Commercial', 'Sewer', 'Spa/Swimming Pool', 'Radon', 'Well', 'Water Testing', 'Green Features', 'Sewer Lateral'
 ];
 
 const weatherConditions = [

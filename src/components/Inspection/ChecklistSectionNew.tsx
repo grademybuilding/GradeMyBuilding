@@ -22,6 +22,7 @@ const allInspectionCategories = [
   { id: 'radon', label: 'Radon', subcategories: [] },
   { id: 'well', label: 'Well', subcategories: ['Inspection Details', 'Well System Details'] },
   { id: 'pool-spa', label: 'Swimming Pools and Spas', subcategories: ['Limitations', 'General', 'Safety Devices', 'Coping, Tile & Decking', 'Vessel Surface', 'Drains', 'Pool Electrical', 'Control Valves', 'Filtering & Cleaning', 'Pool Plumbing', 'Pumps', 'Spa Controls', 'Heating', 'Accessories'] },
+  { id: 'sewer-lateral', label: 'Sewer Lateral', subcategories: ['Inspection Details', 'General Information', 'Main Sewer Line'] },
 ];
 
 interface ChecklistSectionProps {
@@ -51,15 +52,21 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     return selected.includes("Spa/Swimming Pool");
   }, [formData.inspectionCategories]);
 
-  // Only show Radon/Well/Pool-Spa if they're selected in Inspection Details
+  const sewerLateralSelected = useMemo(() => {
+    const selected = (formData.inspectionCategories ?? []) as string[];
+    return selected.includes("Sewer Lateral");
+  }, [formData.inspectionCategories]);
+
+  // Only show Radon/Well/Pool-Spa/Sewer Lateral if they're selected in Inspection Details
   const inspectionCategories = useMemo(() => {
     return allInspectionCategories.filter((cat) => {
       if (cat.id === "radon") return radonSelected;
       if (cat.id === "well") return wellSelected;
       if (cat.id === "pool-spa") return poolSpaSelected;
+      if (cat.id === "sewer-lateral") return sewerLateralSelected;
       return true;
     });
-  }, [radonSelected, wellSelected, poolSpaSelected]);
+  }, [radonSelected, wellSelected, poolSpaSelected, sewerLateralSelected]);
 
   // State for navigation - restore from formData if available
   const [activeMainCategory, setActiveMainCategory] = useState(
