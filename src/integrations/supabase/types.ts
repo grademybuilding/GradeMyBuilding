@@ -938,6 +938,10 @@ export type Database = {
         Args: { _inspection_id: string }
         Returns: Json
       }
+      calculate_category_grades_admin: {
+        Args: { _inspection_id: string }
+        Returns: Json
+      }
       calculate_inspection_grade: {
         Args: { _inspection_id: string }
         Returns: {
@@ -985,6 +989,15 @@ export type Database = {
         Returns: boolean
       }
       migrate_checklist_data: { Args: never; Returns: undefined }
+      recalculate_all_inspection_grades: {
+        Args: never
+        Returns: {
+          category_count: number
+          inspection_id: string
+          new_grade: string
+          old_grade: string
+        }[]
+      }
       user_owns_inspection_property: {
         Args: { _inspection_id: string; _user_id: string }
         Returns: boolean
