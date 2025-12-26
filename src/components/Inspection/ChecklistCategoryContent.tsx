@@ -12,7 +12,7 @@ interface ChecklistItem {
   subcategory?: string;
   item: string;
   required: boolean;
-  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons';
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info';
   options?: string[];
 }
 
@@ -29,6 +29,7 @@ const categoryMapping: Record<string, string> = {
   'doors-windows': 'Doors & Windows',
   'appliances': 'Built-in Appliances',
   'green': 'Green Features',
+  'radon': 'Radon',
 };
 
 // Complete Inspection Checklist Data
@@ -492,6 +493,11 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'green-dimmers', category: 'Green Features', item: 'Dimmers', required: false, type: 'checkbox' },
   { id: 'green-close-to-public-transportation', category: 'Green Features', item: 'Close to Public Transportation', required: false, type: 'checkbox' },
   { id: 'green-can-build-up', category: 'Green Features', item: 'Can Build Up', required: false, type: 'checkbox' },
+
+  // ============== RADON ==============
+  // Radon - Summary
+  { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Summary', item: 'Average pCi/L', required: false, type: 'number' },
+  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'info' },
 ];
 
 interface ChecklistCategoryContentProps {
@@ -648,6 +654,60 @@ export function ChecklistCategoryContent({
             </div>
           </div>
         );
+
+      case 'number':
+        return (
+          <div className="space-y-2">
+            <div className="relative">
+              <input
+                type="number"
+                step="0.1"
+                placeholder="Enter value"
+                value={gallonsValues[item.id] || ''}
+                onChange={(e) => handleGallonsChange(item.id, e.target.value)}
+                className="w-full px-3 py-2 pr-16 border border-input rounded-md text-sm bg-background text-foreground"
+              />
+              {item.id === 'radon-average-pcil' && (
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-muted-foreground">
+                  pCi/L
+                </span>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'info':
+        // EPA Resources info block for Radon
+        if (item.id === 'radon-epa-resources') {
+          return (
+            <div className="space-y-4 p-4 bg-muted/50 rounded-lg border border-border">
+              <p className="text-sm text-foreground">
+                This report includes test results from a radon-testing device that records the levels of radon gas in an air sample. The actual radon levels in the home may vary depending on many factors including, time, temperature, season, barometric pressure, ventilation, and other factors.
+              </p>
+              <p className="text-sm text-foreground">
+                Homes tested using the EPA's protocol should not be mitigated on the basis of a single short term test as used for real estate transactions under EPA protocols. A follow-up test is necessary for mitigation decision-making regardless of the initial test result.
+              </p>
+              <p className="text-sm text-foreground">
+                Consulting with a professional radon mitigation specialist is your best option for retesting if there is a concern for mitigation to reducing the level of radon in the home.
+              </p>
+              <p className="text-sm text-foreground">
+                EPA recommends that you should "fix your home" if the radon level is equal to or greater than 4 pCi/L (the Action Level) and "consider fixing your home" if the radon level is equal to or greater than 2 pCi/L.
+              </p>
+              <p className="text-sm text-foreground">
+                Homes should be checked every few years to make sure homes are lower than the 4 pCi/L level set by the EPA, whether or not you have a mitigation system.
+              </p>
+              <a 
+                href="https://www.epa.gov/radon" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium"
+              >
+                More information at the EPA's website →
+              </a>
+            </div>
+          );
+        }
+        return null;
         
       case 'rating':
         return (

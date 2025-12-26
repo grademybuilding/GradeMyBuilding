@@ -19,6 +19,7 @@ const inspectionCategories = [
   { id: 'doors-windows', label: 'Doors & Windows', subcategories: ['Windows', 'Entry Doors', 'Interior Doors', 'Garage Doors'] },
   { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
+  { id: 'radon', label: 'Radon', subcategories: [] },
 ];
 
 interface ChecklistSectionProps {
