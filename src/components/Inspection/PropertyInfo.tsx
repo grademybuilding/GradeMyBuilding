@@ -5,6 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGooglePlacesAutocomplete } from "@/hooks/useGooglePlacesAutocomplete";
+import { useCallback, useEffect } from "react";
 
 interface PropertyInfoProps {
   formData: any;
@@ -13,6 +15,24 @@ interface PropertyInfoProps {
 }
 
 export function PropertyInfo({ formData, onChange, validationErrors = {} }: PropertyInfoProps) {
+  const handlePlaceSelect = useCallback((components: { address: string; city: string; state: string; zipCode: string }) => {
+    onChange('address', components.address);
+    onChange('city', components.city);
+    onChange('state', components.state);
+    onChange('zipCode', components.zipCode);
+  }, [onChange]);
+
+  const { inputRef } = useGooglePlacesAutocomplete({
+    onPlaceSelect: handlePlaceSelect,
+  });
+
+  // Sync the input ref value with formData when it changes externally
+  useEffect(() => {
+    if (inputRef.current && formData.address !== undefined) {
+      inputRef.current.value = formData.address || '';
+    }
+  }, [formData.address, inputRef]);
+
   return (
     <Card className="shadow-card">
       <CardHeader>
@@ -26,11 +46,13 @@ export function PropertyInfo({ formData, onChange, validationErrors = {} }: Prop
           <div className="space-y-2">
             <Label htmlFor="address">Property Address *</Label>
             <Input
+              ref={inputRef}
               id="address"
-              placeholder="123 Main Street"
-              value={formData.address || ''}
+              placeholder="Start typing an address..."
+              defaultValue={formData.address || ''}
               onChange={(e) => onChange('address', e.target.value)}
               className={cn(validationErrors.address && "border-destructive focus-visible:ring-destructive")}
+              autoComplete="off"
             />
             {validationErrors.address && (
               <p className="text-sm text-destructive">{validationErrors.address}</p>
