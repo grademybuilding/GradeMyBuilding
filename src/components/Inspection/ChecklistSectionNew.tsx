@@ -20,7 +20,7 @@ const allInspectionCategories = [
   { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
   { id: 'radon', label: 'Radon', subcategories: [] },
-  { id: 'well', label: 'Well', subcategories: [] },
+  { id: 'well', label: 'Well', subcategories: ['Inspection Details', 'Well System Details'] },
   { id: 'pool-spa', label: 'Swimming Pools and Spas', subcategories: ['Limitations', 'General', 'Safety Devices', 'Coping, Tile & Decking', 'Vessel Surface', 'Drains', 'Pool Electrical', 'Control Valves', 'Filtering & Cleaning', 'Pool Plumbing', 'Pumps', 'Spa Controls', 'Heating', 'Accessories'] },
 ];
 

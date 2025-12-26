@@ -503,6 +503,13 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'textarea' },
 
   // ============== WELL ==============
+  // Well - Inspection Details
+  { id: 'well-utilities-on', category: 'Well', subcategory: 'Inspection Details', item: 'Utilities On', required: false, type: 'boolean', options: ['On', 'Off'], commentText: 'Indicates whether utilities were on during the inspection.' },
+  { id: 'well-property-occupied', category: 'Well', subcategory: 'Inspection Details', item: 'Property Occupied', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'Indicates whether the property was occupied during the inspection.' },
+  { id: 'well-weather', category: 'Well', subcategory: 'Inspection Details', item: 'Weather', required: false, type: 'multiselect', options: ['Sunny', 'Cloudy', 'Rainy', 'Partly Sunny', 'Partly Cloudy', 'Snow'], commentText: 'Weather conditions during the well inspection.' },
+  { id: 'well-soil-conditions', category: 'Well', subcategory: 'Inspection Details', item: 'Soil Conditions', required: false, type: 'multiselect', options: ['Dry', 'Wet', 'Semi Wet', 'Frozen'], commentText: 'Soil conditions around the well area.' },
+  { id: 'well-location-of-well-head', category: 'Well', subcategory: 'Inspection Details', item: 'Location of Well Head', required: false, type: 'multiselect', options: ['Front of House', 'Right of House', 'Left of House', 'Back of House', 'Basement'], commentText: 'We reference where the well head in conjunction to the property. Grading should be considered near the well head. Water should not pool around casing, but go around it or away.' },
+
   // Well System Details - Boolean items (radio buttons)
   { id: 'well-well-head-casing-photos', category: 'Well', subcategory: 'Well System Details', item: 'Well Head / Casing Photos', required: false, type: 'boolean', options: ['Yes', 'No'], commentText: 'Well head should be secured to casing, Should not be loose or have holes or cracks. The well head, cap, should be tight and vermin-proof.' },
   { id: 'well-electrical-components', category: 'Well', subcategory: 'Well System Details', item: 'Electrical Components', required: false, type: 'boolean', options: ['Functional', 'Not Functional'], commentText: 'Electrical conduit and connections were functional' },
