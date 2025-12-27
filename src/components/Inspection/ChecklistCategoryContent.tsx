@@ -978,6 +978,14 @@ export function ChecklistCategoryContent({
             </div>
           );
         }
+        // Generic info block for other items (like Sewer Lateral)
+        if (item.commentText) {
+          return (
+            <div className="space-y-2 p-4 bg-muted/50 rounded-lg border border-border">
+              <p className="text-sm text-foreground">{item.commentText}</p>
+            </div>
+          );
+        }
         return null;
 
       case 'time':
