@@ -93,6 +93,8 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-flashing-loose', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Loose', required: false, type: 'checkbox' },
   { id: 'roof-flashing-missing', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Missing', required: false, type: 'checkbox' },
   { id: 'roof-flashing-improper-installation', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Improper Installation', required: false, type: 'checkbox' },
+  { id: 'roof-flashing-corroded-severe', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Severe', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of severe corrosion, which can lead to moisture intrusion and/or mold. Recommend a qualified roofing contractor evaluate and repair.' },
+  { id: 'roof-flashing-corroded-minor', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Minor', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of corrosion, but are still in working condition. Flashing should be monitored to prevent severe corrosion leading to moisture intrusion.' },
   
   // Roof - Skylights & Chimneys
   { id: 'roof-skylights-chimneys-material', category: 'Roof', subcategory: 'Skylights & Chimneys', item: 'Skylight/Chimney Material', required: false, type: 'multiselect', options: ['Glass', 'Acrylic', 'Polycarbonate', 'Brick', 'Stone', 'Metal', 'Stucco'] },
@@ -271,39 +273,131 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-fuel-shutoff-location', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Main Shut-off Location', required: false, type: 'multiselect', options: ['At Meter', 'Basement', 'Utility Room', 'Near Appliance'] },
   { id: 'plumbing-fuel-rating', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Plumbing - Defects
-  { id: 'plumbing-leaky-faucets', category: 'Plumbing', subcategory: 'Defects', item: 'Leaky Faucets', required: false, type: 'checkbox' },
-  { id: 'plumbing-running-toilet', category: 'Plumbing', subcategory: 'Defects', item: 'Running Toilet', required: false, type: 'checkbox' },
-  { id: 'plumbing-clogged-drains', category: 'Plumbing', subcategory: 'Defects', item: 'Clogged Drains', required: false, type: 'checkbox' },
-  { id: 'plumbing-low-water-pressure', category: 'Plumbing', subcategory: 'Defects', item: 'Low Water Pressure', required: false, type: 'checkbox' },
-  { id: 'plumbing-pipe-leaks', category: 'Plumbing', subcategory: 'Defects', item: 'Pipe Leaks', required: false, type: 'checkbox' },
-  { id: 'plumbing-water-heater-issues', category: 'Plumbing', subcategory: 'Defects', item: 'Water Heater Issues', required: false, type: 'checkbox' },
-  { id: 'plumbing-sewer-backup', category: 'Plumbing', subcategory: 'Defects', item: 'Sewer Backup', required: false, type: 'checkbox' },
-  { id: 'plumbing-frozen-pipes', category: 'Plumbing', subcategory: 'Defects', item: 'Frozen Pipes', required: false, type: 'checkbox' },
+  // Plumbing - Defects - Water Supply (from XLSX)
+  { id: 'plumbing-main-shutoff-corrosion', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Shut-off Corrosion', required: false, type: 'checkbox', commentText: 'Water main shut-off shows signs of corrosion. Recommend a qualified plumber evaluate.' },
+  { id: 'plumbing-toilet-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Toilet Leaking', required: false, type: 'checkbox', commentText: 'Toilet is loose and/or leaking at the base. Recommend a qualified plumber evaluate and repair to prevent further water damage.' },
+  { id: 'plumbing-distribution-pipe-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Distribution Pipe Leaking', required: false, type: 'checkbox', commentText: 'Distribution pipe was leaking. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-improper-installation-water-supply', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Distribution pipes were installed in a sub-standard way. Recommend a qualified plumber evaluate and properly fit and install pipes.' },
+  { id: 'plumbing-main-supply-pipe-corroded', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Water Supply Pipe Corroded', required: false, type: 'checkbox', commentText: 'Main water supply pipe was heavily corroded. This can lead to shortened lifespan of the pipe. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-main-supply-valve-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Water Supply Valve Leaking', required: false, type: 'checkbox', commentText: 'Main water supply shut-off valve was leaking. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-no-protective-sleeve', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'No Protective Sleeve', required: false, type: 'checkbox', commentText: 'Main water supply pipe was missing protective sleeve, which prevents corrosion and extends lifespan. Recommend a qualified plumber install protective sleeve.' },
+  { id: 'plumbing-polybutylene-supply-pipes', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Polybutylene Supply Pipes', required: false, type: 'checkbox', commentText: 'Water supply pipes were made from polybutylene material. This material can be prone to fail without warning, causing damage to the home structure. Recommend a qualified plumber replace pipes and fittings with an approved material like PEX.' },
+  
+  // Plumbing - Defects - Water Heater (from XLSX)
+  { id: 'plumbing-water-heater-near-end-of-life', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Near End of Life', required: false, type: 'checkbox', commentText: 'Water heater showed normal signs of wear and tear. Recommend monitoring its effectiveness and replacing in the near future.' },
+  { id: 'plumbing-water-heater-irregular-flame', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Irregular Flame', required: false, type: 'checkbox', commentText: 'Water heater flame is irregular. Recommend qualified plumber evaluate & repair.' },
+  { id: 'plumbing-water-heater-insufficient-capacity', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Insufficient Capacity', required: false, type: 'checkbox', commentText: 'Water heater may not have the capacity necessary to supply sufficient water to the home. Recommend evaluating options to replace water heater with a larger capacity tank.' },
+  { id: 'plumbing-water-heater-water-stains-leakage', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Water Stains / Leakage', required: false, type: 'checkbox', commentText: 'Water stains were observed beneath water heater, indicating a past or present leak. Recommend further evaluation and repair by a qualified plumber.' },
+  { id: 'plumbing-water-heater-corrosion', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Corrosion was noted at the burn chamber or pipe fittings. Recommend a qualified plumber evaluate for repair/replacement.' },
+  { id: 'plumbing-water-heater-improper-installation', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Water heater is improperly installed or in a dangerous location. Recommend qualified plumber evaluate & repair/relocate.' },
+  { id: 'plumbing-water-heater-no-expansion-tank', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Expansion Tank', required: false, type: 'checkbox', commentText: 'No expansion tank was present. Expansion tanks allow for the thermal expansion of water in the pipes. These are required in certain areas for new installs. Recommend a qualified plumber evaluate and install.' },
+  { id: 'plumbing-water-heater-no-drip-pan', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Drip Pan', required: false, type: 'checkbox', commentText: 'No drip pan was present. Recommend installation by a qualified plumber.' },
+  { id: 'plumbing-water-heater-no-burner-ignition', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Burner Ignition', required: false, type: 'checkbox', commentText: 'The burner was unresponsive and did not ignite, despite gas flowing properly. Recommend a qualified plumber evaluate and repair.' },
+  
+  // Plumbing - Defects - Fuel Storage (from XLSX)
+  { id: 'plumbing-fuel-improper-installation', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Gas supply or distribution pipes were improperly installed. Recommend a qualified contractor or local utility company evaluate and properly install pipes up to standards.' },
+  { id: 'plumbing-fuel-gas-odor-severe', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Gas Odor - Severe', required: false, type: 'checkbox', commentText: 'Excessive gas odor was present around meter. Recommend consulting with your local utility company or qualified gas company to evaluate for potential leaks.' },
+  { id: 'plumbing-fuel-corrosion', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Gas pipes were corroded. This can lead to gas leaks. Recommend contacting local utility company for evaluation and repair.' },
+  
+  // Plumbing - Defects - Sump Pump (from XLSX)
+  { id: 'plumbing-sump-no-shutoff-valve', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'No Shut-off Valve', required: false, type: 'checkbox', commentText: 'No shut-off valve was observed at time of inspection. Recommend a qualified plumber install.' },
+  { id: 'plumbing-sump-needs-cleaning', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Needs Cleaning', required: false, type: 'checkbox', commentText: 'Sump pump was excessively dirty and in need of cleaning/servicing.' },
+  { id: 'plumbing-sump-improper-installation', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Sump pump had sub-standard installation. Recommend a qualified plumber evaluate and properly install.' },
+  
+  // Plumbing - Defects - Drain Waste Vent (from XLSX)
+  { id: 'plumbing-drain-sink-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Sink - Poor Drainage', required: false, type: 'checkbox', commentText: 'Sink had slow/poor drainage. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-drain-shower-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Shower - Poor Drainage', required: false, type: 'checkbox', commentText: 'Shower had slow/poor drainage. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-drain-leaking-pipe', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Leaking Pipe', required: false, type: 'checkbox', commentText: 'A drain, waste and/or vent pipe showed signs of a leak. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-drain-improper-connection', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Improper Connection', required: false, type: 'checkbox', commentText: 'An improper connection was observed at a drain, waste or vent pipe. Recommend a qualified plumber evaluate and repair.' },
+  
+  // Plumbing - General Defects (legacy)
+  { id: 'plumbing-leaky-faucets', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Leaky Faucets', required: false, type: 'checkbox' },
+  { id: 'plumbing-running-toilet', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Running Toilet', required: false, type: 'checkbox' },
+  { id: 'plumbing-clogged-drains', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Clogged Drains', required: false, type: 'checkbox' },
+  { id: 'plumbing-low-water-pressure', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Low Water Pressure', required: false, type: 'checkbox' },
+  { id: 'plumbing-sewer-backup', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Sewer Backup', required: false, type: 'checkbox' },
+  { id: 'plumbing-frozen-pipes', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Frozen Pipes', required: false, type: 'checkbox' },
 
   // ============== ELECTRIC ==============
-  // Electric - Service Entrance
-  { id: 'electric-main-panel-type', category: 'Electric', subcategory: 'Service Entrance', item: 'Main Panel Type', required: false, type: 'multiselect', options: ['Circuit Breaker', 'Fuse Box', 'Main Lug', 'Main Breaker'] },
-  { id: 'electric-panel-amperage', category: 'Electric', subcategory: 'Service Entrance', item: 'Panel Amperage', required: false, type: 'multiselect', options: ['100 Amp', '150 Amp', '200 Amp', '400 Amp', 'Other'] },
-  { id: 'electric-service-entrance-rating', category: 'Electric', subcategory: 'Service Entrance', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Electric - Service Entrance Conductors
+  { id: 'electric-main-panel-type', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Main Panel Type', required: false, type: 'multiselect', options: ['Circuit Breaker', 'Fuse Box', 'Main Lug', 'Main Breaker'] },
+  { id: 'electric-panel-amperage', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Panel Amperage', required: false, type: 'multiselect', options: ['100 Amp', '150 Amp', '200 Amp', '400 Amp', 'Other'] },
+  { id: 'electric-service-entrance-rating', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - Service Entrance Conductors (from XLSX)
+  { id: 'electric-service-water-intrusion', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Water Intrusion', required: false, type: 'checkbox', commentText: 'There is possible water intrusion and the meter / service entrance. Moisture can deteriorate the electrical equipment. Recommend that a licensed electrician repair / replace as needed.' },
+  { id: 'electric-service-not-enough-clearance', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Not Enough Clearance', required: false, type: 'checkbox', commentText: 'Service drop overhead wires are too low, not giving enough clearance above roof. Recommend contacting your local electric utility company or qualified electrician to see if they can correct.' },
+  { id: 'electric-service-mast-improperly-installed', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Mast Improperly Installed', required: false, type: 'checkbox', commentText: 'Mast is not properly installed.' },
+  { id: 'electric-service-frayed-sheathing', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Frayed Sheathing', required: false, type: 'checkbox', commentText: 'Wires on service entrance are damaged or frayed. Recommend contacting your electric utility company or a qualified electrician to evaluate and repair.' },
+  
+  // Electric - Main & Subpanels
+  { id: 'electric-main-subpanels-type', category: 'Electric', subcategory: 'Main & Subpanels', item: 'Panel Type', required: false, type: 'multiselect', options: ['Main Panel', 'Subpanel', 'Fuse Box', 'Circuit Breaker Panel'] },
+  { id: 'electric-main-subpanels-rating', category: 'Electric', subcategory: 'Main & Subpanels', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - Main & Subpanels (from XLSX)
+  { id: 'electric-panel-damaged', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Panel Damaged', required: false, type: 'checkbox', commentText: 'Electrical panel is damaged. Recommend licensed electrician evaluate and repair.' },
+  { id: 'electric-no-ground-wire', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'No Ground Wire', required: false, type: 'checkbox', commentText: 'Missing ground wire. Recommend qualified electrician evaluate and install.' },
+  { id: 'electric-missing-labels-on-panel', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Missing Labels on Panel', required: false, type: 'checkbox', commentText: 'At the time of inspection, panel was missing labeling. Recommend a qualified electrician or person identify and map out locations.' },
+  { id: 'electric-meter-base-not-secure', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Meter Base Not Secure', required: false, type: 'checkbox', commentText: 'Meter base was loose at time of inspection. Recommend re-securing by a qualified contractor.' },
+  { id: 'electric-knockouts-missing', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Knockouts Missing', required: false, type: 'checkbox', commentText: '"Knockouts" are missing on the electric panel. This poses a safety hazard and it is recommended that the opening in the panel caused by the missing knockout(s) be properly sealed by a licensed electrician.' },
+  { id: 'electric-incompatible-meter-base', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Incompatible Meter Base', required: false, type: 'checkbox', commentText: 'I recommend meter base to be upgraded to be in line with upgraded service wires. Recommend qualified electrician evaluate.' },
+  { id: 'electric-inadequate-ground', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Inadequate Ground', required: false, type: 'checkbox', commentText: 'The ground at service entrance appears inadequate and should be checked by a licensed electrician.' },
+  { id: 'electric-breaker-incorrectly-wired', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Breaker Incorrectly Wired', required: false, type: 'checkbox', commentText: 'Circuit breaker was incorrectly wired / installed. This indicates that work was probably not performed by a licensed electrician and poses a safety hazard. Recommend that a licensed electrician check the entire panel and repair and replace as need.' },
   
   // Electric - Branch Circuits
   { id: 'electric-wiring-type', category: 'Electric', subcategory: 'Branch Circuits', item: 'Wiring Type', required: false, type: 'multiselect', options: ['Copper', 'Aluminum', 'Knob and Tube', 'Romex', 'Conduit'] },
   { id: 'electric-branch-circuits-rating', category: 'Electric', subcategory: 'Branch Circuits', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Electric - Connected Devices
-  { id: 'electric-outlets-type', category: 'Electric', subcategory: 'Connected Devices', item: 'Outlet Types', required: false, type: 'multiselect', options: ['Standard', 'GFCI', 'AFCI', 'USB Outlets'] },
-  { id: 'electric-connected-devices-rating', category: 'Electric', subcategory: 'Connected Devices', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Electric - Defects - Branch Circuits (from XLSX)
+  { id: 'electric-insufficient-load', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Insufficient Load', required: false, type: 'checkbox', commentText: 'Branch circuit has insufficient load capacity. Recommend licensed electrician evaluate.' },
+  { id: 'electric-improper-wiring', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Improper Wiring', required: false, type: 'checkbox', commentText: 'Improper wiring observed in branch circuits. Recommend licensed electrician evaluate and repair.' },
+  { id: 'electric-aluminum-branch-circuits', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Aluminum Branch Circuits', required: false, type: 'checkbox', commentText: 'Aluminum wire appears to be installed on branch electrical circuits in the subject premises. These single strand, branch circuit aluminum wires were used widely in houses during the mid 1960s and 1970s. According to the U.S. Consumer Product Safety Commission, problems due to expansion can cause overheating at connections between the wire and devices (switches and outlets) or at splices, which has resulted in fires. It is recommended that the electrical system be evaluated by a licensed electrician.' },
   
-  // Electric - Defects
-  { id: 'electric-overloaded-circuits', category: 'Electric', subcategory: 'Defects', item: 'Overloaded Circuits', required: false, type: 'checkbox' },
-  { id: 'electric-gfci-issues', category: 'Electric', subcategory: 'Defects', item: 'GFCI Issues', required: false, type: 'checkbox' },
-  { id: 'electric-exposed-wiring', category: 'Electric', subcategory: 'Defects', item: 'Exposed Wiring', required: false, type: 'checkbox' },
-  { id: 'electric-flickering-lights', category: 'Electric', subcategory: 'Defects', item: 'Flickering Lights', required: false, type: 'checkbox' },
-  { id: 'electric-dead-outlets', category: 'Electric', subcategory: 'Defects', item: 'Dead Outlets', required: false, type: 'checkbox' },
-  { id: 'electric-panel-issues', category: 'Electric', subcategory: 'Defects', item: 'Panel Issues', required: false, type: 'checkbox' },
-  { id: 'electric-improper-grounding', category: 'Electric', subcategory: 'Defects', item: 'Improper Grounding', required: false, type: 'checkbox' },
-  { id: 'electric-outdated-wiring', category: 'Electric', subcategory: 'Defects', item: 'Outdated Wiring', required: false, type: 'checkbox' },
+  // Electric - Lighting Fixtures, Switches & Receptacles
+  { id: 'electric-outlets-type', category: 'Electric', subcategory: 'Lighting Fixtures, Switches & Receptacles', item: 'Outlet Types', required: false, type: 'multiselect', options: ['Standard', 'GFCI', 'AFCI', 'USB Outlets'] },
+  { id: 'electric-connected-devices-rating', category: 'Electric', subcategory: 'Lighting Fixtures, Switches & Receptacles', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - Lighting Fixtures, Switches & Receptacles (from XLSX)
+  { id: 'electric-ungrounded-receptacle', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Ungrounded Receptacle', required: false, type: 'checkbox', commentText: 'One or more receptacles are ungrounded. To eliminate safety hazards, all receptacles in kitchen, bathrooms, garage & exterior should be grounded.' },
+  { id: 'electric-switches-installed-improperly', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Switches Installed Improperly', required: false, type: 'checkbox', commentText: 'One or more switches are installed improperly. Recommend licensed electrician repair or replace.' },
+  { id: 'electric-reverse-polarity', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Reverse Polarity', required: false, type: 'checkbox', commentText: 'One or more receptacles have been wired with reverse polarity. This can create a shock hazard. Recommend licensed electrician evaluate & repair.' },
+  { id: 'electric-light-inoperable', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Light Inoperable', required: false, type: 'checkbox', commentText: 'One or more lights are not operating. New light bulb possibly needed.' },
+  { id: 'electric-inadequate-number-of-receptacles', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Inadequate Number of Receptacles', required: false, type: 'checkbox', commentText: 'There is a minimal number of receptacles in the home. This can cause a short circuit if increased demand is present. Recommend licensed electrician add additional receptacles.' },
+  { id: 'electric-cover-plates-missing', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Cover Plates Missing', required: false, type: 'checkbox', commentText: 'One or more receptacles are missing a cover plate. This causes short and shock risk. Recommend installation of plates.' },
+  { id: 'electric-cover-plates-damaged', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Cover Plates Damaged', required: false, type: 'checkbox', commentText: 'One or more receptacles have a damaged cover plate. Recommend replacement.' },
+  
+  // Electric - GFCI & AFCI
+  { id: 'electric-gfci-afci-type', category: 'Electric', subcategory: 'GFCI & AFCI', item: 'Protection Type', required: false, type: 'multiselect', options: ['GFCI', 'AFCI', 'Dual Function', 'None'] },
+  { id: 'electric-gfci-afci-rating', category: 'Electric', subcategory: 'GFCI & AFCI', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - GFCI & AFCI (from XLSX)
+  { id: 'electric-no-gfci-protection', category: 'Electric', subcategory: 'Defects - GFCI & AFCI', item: 'No GFCI Protection Installed', required: false, type: 'checkbox', commentText: 'No GFCI protection present in all locations. Recommend licensed electrician upgrade by installing ground fault receptacles in all locations.' },
+  { id: 'electric-gfci-improper-installation', category: 'Electric', subcategory: 'Defects - GFCI & AFCI', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'GFCI/AFCI protection is improperly installed. Recommend licensed electrician evaluate and repair.' },
+  
+  // Electric - Smoke Detectors
+  { id: 'electric-smoke-detectors-type', category: 'Electric', subcategory: 'Smoke Detectors', item: 'Detector Type', required: false, type: 'multiselect', options: ['Battery Operated', 'Hardwired', 'Combination Smoke/CO'] },
+  { id: 'electric-smoke-detectors-rating', category: 'Electric', subcategory: 'Smoke Detectors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - Smoke Detectors (from XLSX)
+  { id: 'electric-smoke-low-battery', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Low Battery', required: false, type: 'checkbox', commentText: 'Smoke detector failed to respond when tested. Recommend battery be replaced.' },
+  { id: 'electric-smoke-inappropriate-location', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Inappropriate Location', required: false, type: 'checkbox', commentText: 'Smoke detector effectiveness may be compromised due to location. Recommend relocating according to manufacturer\'s instructions.' },
+  { id: 'electric-smoke-defective', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Defective', required: false, type: 'checkbox', commentText: 'Smoke detector is connected, but not functioning properly. Recommend replacement.' },
+  
+  // Electric - Carbon Monoxide Detectors
+  { id: 'electric-co-detectors-type', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Detector Type', required: false, type: 'multiselect', options: ['Battery Operated', 'Hardwired', 'Combination Smoke/CO'] },
+  { id: 'electric-co-detectors-rating', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Electric - Defects - Carbon Monoxide Detectors (from XLSX)
+  { id: 'electric-co-low-battery', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Low Battery', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector failed to respond when tested. Recommend battery be replaced.' },
+  { id: 'electric-co-inappropriate-location', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Inappropriate Location', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector effectiveness may be compromised due to location. Recommend relocating according to manufacturer\'s instructions.' },
+  { id: 'electric-co-defective', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Defective', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector is connected, but not functioning properly. Recommend replacement.' },
+  
+  // Electric - General Defects (legacy)
+  { id: 'electric-overloaded-circuits', category: 'Electric', subcategory: 'Defects - General', item: 'Overloaded Circuits', required: false, type: 'checkbox' },
+  { id: 'electric-exposed-wiring', category: 'Electric', subcategory: 'Defects - General', item: 'Exposed Wiring', required: false, type: 'checkbox' },
+  { id: 'electric-flickering-lights', category: 'Electric', subcategory: 'Defects - General', item: 'Flickering Lights', required: false, type: 'checkbox' },
+  { id: 'electric-dead-outlets', category: 'Electric', subcategory: 'Defects - General', item: 'Dead Outlets', required: false, type: 'checkbox' },
+  { id: 'electric-outdated-wiring', category: 'Electric', subcategory: 'Defects - General', item: 'Outdated Wiring', required: false, type: 'checkbox' },
 
   // ============== HEATING & COOLING ==============
   // Heating Equipment
