@@ -35,6 +35,7 @@ const categoryMapping: Record<string, string[]> = {
   'doors-windows': ['Doors & Windows', 'Doors, Windows & Interior'],
   'doors-windows-interior': ['Doors, Windows & Interior', 'Doors & Windows'],
   'appliances': ['Built-in Appliances', 'Cooking Area'],
+  'cooking-area': ['Cooking Area', 'Built-in Appliances'],
   'fireplaces': ['Fireplaces'],
   'attic': ['Attic, Insulation & Ventilation'],
   'green': ['Green Features'],
