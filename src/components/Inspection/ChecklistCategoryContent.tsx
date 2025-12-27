@@ -32,6 +32,7 @@ const categoryMapping: Record<string, string> = {
   'green': 'Green Features',
   'radon': 'Radon',
   'well': 'Well',
+  'water-testing': 'Water Testing',
   'pool-spa': 'Swimming Pools and Spas',
   'sewer-lateral': 'Sewer Lateral',
 };
@@ -499,9 +500,45 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'green-can-build-up', category: 'Green Features', item: 'Can Build Up', required: false, type: 'checkbox' },
 
   // ============== RADON ==============
-  // Radon - Summary
-  { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Summary', item: 'Average pCi/L', required: false, type: 'number' },
-  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Summary', item: 'EPA Resources', required: false, type: 'textarea' },
+  // Radon - Monitor Details (matching Inspection Details fields)
+  { id: 'radon-start-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Start Time', required: false, type: 'textarea' },
+  { id: 'radon-end-time', category: 'Radon', subcategory: 'Monitor Details', item: 'End Time', required: false, type: 'textarea' },
+  { id: 'radon-monitor-location', category: 'Radon', subcategory: 'Monitor Details', item: 'Monitor Location', required: false, type: 'multiselect', options: ['Basement', 'Lower Level', 'Main Level'] },
+  { id: 'radon-method', category: 'Radon', subcategory: 'Monitor Details', item: 'Method', required: false, type: 'multiselect', options: ['Continuous'] },
+  { id: 'radon-measurement-interval', category: 'Radon', subcategory: 'Monitor Details', item: 'Measurement Interval (hr)', required: false, type: 'number' },
+  { id: 'radon-elapsed-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Elapsed Time (days)', required: false, type: 'number' },
+  { id: 'radon-serial-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Serial Number', required: false, type: 'textarea' },
+  { id: 'radon-model-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Model Number', required: false, type: 'textarea' },
+  
+  // Radon - Test Results
+  { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Test Results', item: 'Average pCi/L', required: false, type: 'number' },
+  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Test Results', item: 'EPA Resources', required: false, type: 'textarea' },
+
+  // ============== WATER TESTING ==============
+  // Water Testing - Testing Details (matching Inspection Details fields)
+  { id: 'water-testing-locations', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Locations', required: false, type: 'multiselect', options: ['Kitchen Sink', 'Bathroom Sink'] },
+  { id: 'water-testing-method', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Method', required: false, type: 'multiselect', options: ['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'] },
+  { id: 'water-testing-device-info', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Device Information', required: false, type: 'textarea' },
+  { id: 'water-testing-start-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'Start Day', required: false, type: 'textarea' },
+  { id: 'water-testing-end-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'End Day', required: false, type: 'textarea' },
+  { id: 'water-testing-abnormal-smell-taste', category: 'Water Testing', subcategory: 'Testing Details', item: 'Abnormal Smell or Taste', required: false, type: 'multiselect', options: ['Yes', 'No', 'N/A'] },
+
+  // Water Testing - Test Results
+  { id: 'water-testing-ph', category: 'Water Testing', subcategory: 'Test Results', item: 'pH Level', required: false, type: 'number' },
+  { id: 'water-testing-chlorine', category: 'Water Testing', subcategory: 'Test Results', item: 'Chlorine Level', required: false, type: 'number' },
+  { id: 'water-testing-hardness', category: 'Water Testing', subcategory: 'Test Results', item: 'Hardness (ppm)', required: false, type: 'number' },
+  { id: 'water-testing-iron', category: 'Water Testing', subcategory: 'Test Results', item: 'Iron Level (ppm)', required: false, type: 'number' },
+  { id: 'water-testing-nitrate', category: 'Water Testing', subcategory: 'Test Results', item: 'Nitrate Level (ppm)', required: false, type: 'number' },
+  { id: 'water-testing-nitrite', category: 'Water Testing', subcategory: 'Test Results', item: 'Nitrite Level (ppm)', required: false, type: 'number' },
+  { id: 'water-testing-lead', category: 'Water Testing', subcategory: 'Test Results', item: 'Lead Level (ppb)', required: false, type: 'number' },
+  { id: 'water-testing-copper', category: 'Water Testing', subcategory: 'Test Results', item: 'Copper Level (ppm)', required: false, type: 'number' },
+  { id: 'water-testing-coliform', category: 'Water Testing', subcategory: 'Test Results', item: 'Coliform Bacteria', required: false, type: 'multiselect', options: ['Positive', 'Negative', 'Pending'] },
+
+  // Water Testing - Recommendations
+  { id: 'water-levels-within-range', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Within Range', required: false, type: 'checkbox', commentText: 'Test strip results showed the water substances to be within range and not abnormal.' },
+  { id: 'water-levels-slightly-abnormal', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Slightly Abnormal', required: false, type: 'checkbox', commentText: 'The water test results for some substances were slightly abnormal. Follow-up laboratory testing from a qualified contractor is recommended.' },
+  { id: 'water-lab-not-used', category: 'Water Testing', subcategory: 'Recommendations', item: 'Laboratory Testing Not Used', required: false, type: 'checkbox', commentText: 'A lab was not used for the water testing. The test strips are only a baseline test and may produce average or in some cases, inaccurate readings.' },
+  { id: 'water-levels-highly-abnormal', category: 'Water Testing', subcategory: 'Recommendations', item: 'Substance Levels Highly Abnormal', required: false, type: 'checkbox', commentText: 'The water test results for some substances were highly abnormal. Follow-up laboratory testing from a qualified contractor is recommended soon to verify the baseline readings.' },
 
   // ============== WELL ==============
   // Well - Inspection Details

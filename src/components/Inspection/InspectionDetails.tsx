@@ -299,210 +299,97 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               Water Testing Details
             </Label>
             
-            {/* Test Information Section */}
-            <div className="space-y-4">
-              <Label className="text-sm font-semibold text-foreground/80">Test Information</Label>
-              
-              {/* Delayed Test */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-delayed"
-                  className="mt-0.5"
-                  checked={formData.waterTestingDelayed || false}
-                  onCheckedChange={(checked) => onChange('waterTestingDelayed', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-delayed" className="text-sm font-medium cursor-pointer">Delayed Test</Label>
-                  <p className="text-xs text-muted-foreground">The test was delayed due to closed building conditions not met 12 hours to start of test.</p>
-                </div>
+            {/* Testing Locations */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Testing Locations</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {['Kitchen Sink', 'Bathroom Sink'].map((location) => (
+                  <div key={location} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`water-location-${location}`}
+                      checked={isSelected('waterTestingLocations', location)}
+                      onCheckedChange={() => handleMultiSelect('waterTestingLocations', location)}
+                    />
+                    <Label htmlFor={`water-location-${location}`} className="text-sm">
+                      {location}
+                    </Label>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Testing Method */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Testing Method</Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'].map((method) => (
-                    <div key={method} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`water-method-${method}`}
-                        checked={isSelected('waterTestingMethod', method)}
-                        onCheckedChange={() => handleMultiSelect('waterTestingMethod', method)}
-                      />
-                      <Label htmlFor={`water-method-${method}`} className="text-sm">
-                        {method}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
+            {/* Testing Method */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Testing Method</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'].map((method) => (
+                  <div key={method} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`water-method-${method}`}
+                      checked={isSelected('waterTestingMethod', method)}
+                      onCheckedChange={() => handleMultiSelect('waterTestingMethod', method)}
+                    />
+                    <Label htmlFor={`water-method-${method}`} className="text-sm">
+                      {method}
+                    </Label>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Fireplace Flue Open */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-flue-open"
-                  className="mt-0.5"
-                  checked={formData.waterTestingFlueOpen || false}
-                  onCheckedChange={(checked) => onChange('waterTestingFlueOpen', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-flue-open" className="text-sm font-medium cursor-pointer">Fireplace Flue Open</Label>
-                  <p className="text-xs text-muted-foreground">The fireplace flue damper could not be operated. Closed building conditions may not be fully met.</p>
-                </div>
+            {/* Abnormal Smell or Taste */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium">Abnormal Smell or Taste</Label>
+              <div className="flex gap-4 flex-wrap">
+                {['Yes', 'No', 'N/A'].map((option) => (
+                  <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="waterAbnormalSmellTaste"
+                      value={option}
+                      checked={formData.waterAbnormalSmellTaste === option}
+                      onChange={(e) => onChange('waterAbnormalSmellTaste', e.target.value)}
+                      className="h-4 w-4 text-primary border-input focus:ring-primary"
+                    />
+                    <span className="text-sm text-foreground">{option}</span>
+                  </label>
+                ))}
               </div>
+            </div>
 
-              {/* Testing Device Information */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-device"
-                  className="mt-0.5"
-                  checked={formData.waterTestingDeviceChecked || false}
-                  onCheckedChange={(checked) => onChange('waterTestingDeviceChecked', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-device" className="text-sm font-medium cursor-pointer">Testing Device Information</Label>
-                  <p className="text-xs text-muted-foreground">Best Prod 17 in One Test Kit for Water, Metric Coliform Bacteria Test Kit</p>
-                </div>
-              </div>
-
-              {/* Windows Were Opened */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-windows"
-                  className="mt-0.5"
-                  checked={formData.waterTestingWindowsOpened || false}
-                  onCheckedChange={(checked) => onChange('waterTestingWindowsOpened', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-windows" className="text-sm font-medium cursor-pointer">Windows Were Opened</Label>
-                  <p className="text-xs text-muted-foreground">The windows were opened during the inspection preventing a true analysis.</p>
-                </div>
-              </div>
-
-              {/* Testing Locations */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Testing Locations</Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {['Kitchen Sink', 'Bathroom Sink'].map((location) => (
-                    <div key={location} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`water-location-${location}`}
-                        checked={isSelected('waterTestingLocations', location)}
-                        onCheckedChange={() => handleMultiSelect('waterTestingLocations', location)}
-                      />
-                      <Label htmlFor={`water-location-${location}`} className="text-sm">
-                        {location}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Abnormal Smell or Taste */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Abnormal Smell or Taste</Label>
-                <div className="flex gap-4 flex-wrap">
-                  {['Yes', 'No', 'N/A'].map((option) => (
-                    <label key={option} className="flex items-center space-x-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="waterAbnormalSmellTaste"
-                        value={option}
-                        checked={formData.waterAbnormalSmellTaste === option}
-                        onChange={(e) => onChange('waterAbnormalSmellTaste', e.target.value)}
-                        className="h-4 w-4 text-primary border-input focus:ring-primary"
-                      />
-                      <span className="text-sm text-foreground">{option}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Window Mounted AC */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-ac"
-                  checked={formData.waterTestingWindowAC || false}
-                  onCheckedChange={(checked) => onChange('waterTestingWindowAC', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-ac" className="text-sm font-medium">Window Mounted Air Conditioner</Label>
-                  <p className="text-xs text-muted-foreground">One or more window mounted air conditioners were in place. Slight air blowby may have occurred.</p>
-                </div>
-              </div>
-
-              {/* Start/End Days */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="waterTestStartDay">Start Day</Label>
-                  <Input
-                    id="waterTestStartDay"
-                    type="text"
-                    placeholder="e.g., Monday"
-                    value={formData.waterTestStartDay || ''}
-                    onChange={(e) => onChange('waterTestStartDay', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="waterTestEndDay">End Day</Label>
-                  <Input
-                    id="waterTestEndDay"
-                    type="text"
-                    placeholder="e.g., Wednesday"
-                    value={formData.waterTestEndDay || ''}
-                    onChange={(e) => onChange('waterTestEndDay', e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Test Kit Moved */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-kit-moved"
-                  checked={formData.waterTestingKitMoved || false}
-                  onCheckedChange={(checked) => onChange('waterTestingKitMoved', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-kit-moved" className="text-sm font-medium">Test Kit Moved</Label>
-                  <p className="text-xs text-muted-foreground">The test kit was moved during the inspection. Tampering with the test kit voids the results. Recommend re-testing.</p>
-                </div>
-              </div>
-
-              {/* Current Mitigation Installed */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-mitigation"
-                  checked={formData.waterTestingMitigation || false}
-                  onCheckedChange={(checked) => onChange('waterTestingMitigation', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-mitigation" className="text-sm font-medium">Current Mitigation Installed</Label>
-                  <p className="text-xs text-muted-foreground">A current water treatment/mitigation system was in place which could change results.</p>
-                </div>
-              </div>
-
-              {/* COVID-19 */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-testing-covid"
-                  checked={formData.waterTestingCovid || false}
-                  onCheckedChange={(checked) => onChange('waterTestingCovid', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-testing-covid" className="text-sm font-medium">COVID-19</Label>
-                  <p className="text-xs text-muted-foreground">Due to the COVID-19 pandemic, the inspector shall wear a mask IAW CDC guidelines while indoors or in close proximity of personnel.</p>
-                </div>
-              </div>
-
-              {/* Testing Device Information Input */}
+            {/* Start/End Days */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="waterTestingDeviceInfo">Testing Device Information (Details)</Label>
+                <Label htmlFor="waterTestStartDay">Start Day</Label>
                 <Input
-                  id="waterTestingDeviceInfo"
-                  placeholder="e.g., Best Prod 17 in One Test Kit for Water"
-                  value={formData.waterTestingDeviceInfo || ''}
-                  onChange={(e) => onChange('waterTestingDeviceInfo', e.target.value)}
+                  id="waterTestStartDay"
+                  type="text"
+                  placeholder="e.g., Monday"
+                  value={formData.waterTestStartDay || ''}
+                  onChange={(e) => onChange('waterTestStartDay', e.target.value)}
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="waterTestEndDay">End Day</Label>
+                <Input
+                  id="waterTestEndDay"
+                  type="text"
+                  placeholder="e.g., Wednesday"
+                  value={formData.waterTestEndDay || ''}
+                  onChange={(e) => onChange('waterTestEndDay', e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Testing Device Information */}
+            <div className="space-y-2">
+              <Label htmlFor="waterTestingDeviceInfo">Testing Device Information</Label>
+              <Input
+                id="waterTestingDeviceInfo"
+                placeholder="e.g., Best Prod 17 in One Test Kit for Water"
+                value={formData.waterTestingDeviceInfo || ''}
+                onChange={(e) => onChange('waterTestingDeviceInfo', e.target.value)}
+              />
             </div>
 
             {/* EPA Resources Info Block */}
@@ -519,65 +406,6 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                   EPA Certified Laboratories for Drinking Water
                 </a>
               </p>
-            </div>
-
-            {/* Recommendations Section */}
-            <div className="space-y-4 pt-4 border-t border-border/50">
-              <Label className="text-sm font-semibold text-foreground/80">Recommendations</Label>
-
-              {/* Substance Levels Within Range */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-levels-normal"
-                  checked={formData.waterLevelsWithinRange || false}
-                  onCheckedChange={(checked) => onChange('waterLevelsWithinRange', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-levels-normal" className="text-sm font-medium">Substance Levels Within Range</Label>
-                  <p className="text-xs text-muted-foreground">Test strip results showed the water substances to be within range and not abnormal.</p>
-                </div>
-              </div>
-
-              {/* Substance Levels Slightly Abnormal */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-levels-slight"
-                  checked={formData.waterLevelsSlightlyAbnormal || false}
-                  onCheckedChange={(checked) => onChange('waterLevelsSlightlyAbnormal', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-levels-slight" className="text-sm font-medium">Substance Levels Slightly Abnormal</Label>
-                  <p className="text-xs text-muted-foreground">The water test results for some substances were slightly abnormal. Follow-up laboratory testing from a qualified contractor is recommended.</p>
-                </div>
-              </div>
-
-              {/* Laboratory Testing Not Used */}
-              <div className="space-y-2">
-                <div className="flex items-start space-x-3">
-                  <Checkbox
-                    id="water-lab-not-used"
-                    checked={formData.waterLabNotUsed || false}
-                    onCheckedChange={(checked) => onChange('waterLabNotUsed', checked)}
-                  />
-                  <div className="space-y-1">
-                    <Label htmlFor="water-lab-not-used" className="text-sm font-medium">Laboratory Testing Not Used</Label>
-                    <p className="text-xs text-muted-foreground">A lab was not used for the water testing. The test strips are only a baseline test and may produce average or in some cases, inaccurate readings.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Substance Levels Highly Abnormal */}
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="water-levels-high"
-                  checked={formData.waterLevelsHighlyAbnormal || false}
-                  onCheckedChange={(checked) => onChange('waterLevelsHighlyAbnormal', checked)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="water-levels-high" className="text-sm font-medium">Substance Levels Highly Abnormal</Label>
-                  <p className="text-xs text-muted-foreground">The water test results for some substances were highly abnormal. Follow-up laboratory testing from a qualified contractor is recommended soon to verify the baseline readings.</p>
-                </div>
-              </div>
             </div>
           </div>
         )}

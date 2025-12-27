@@ -19,8 +19,9 @@ const allInspectionCategories = [
   { id: 'doors-windows', label: 'Doors & Windows', subcategories: ['Windows', 'Entry Doors', 'Interior Doors', 'Garage Doors'] },
   { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
-  { id: 'radon', label: 'Radon', subcategories: [] },
+  { id: 'radon', label: 'Radon', subcategories: ['Monitor Details', 'Test Results'] },
   { id: 'well', label: 'Well', subcategories: ['Inspection Details', 'Well System Details'] },
+  { id: 'water-testing', label: 'Water Testing', subcategories: ['Testing Details', 'Test Results', 'Recommendations'] },
   { id: 'pool-spa', label: 'Swimming Pools and Spas', subcategories: ['Limitations', 'General', 'Safety Devices', 'Coping, Tile & Decking', 'Vessel Surface', 'Drains', 'Pool Electrical', 'Control Valves', 'Filtering & Cleaning', 'Pool Plumbing', 'Pumps', 'Spa Controls', 'Heating', 'Accessories'] },
   { id: 'sewer-lateral', label: 'Sewer Lateral', subcategories: ['Inspection Details', 'General Information', 'Main Sewer Line'] },
 ];
@@ -37,36 +38,29 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   
   // Filter categories based on Inspection Details "Inspection Level" selections
   // (InspectionDetails stores this as formData.inspectionCategories)
-  const radonSelected = useMemo(() => {
-    const selected = (formData.inspectionCategories ?? []) as string[];
-    return selected.includes("Radon");
+  const selectedCategories = useMemo(() => {
+    return (formData.inspectionCategories ?? []) as string[];
   }, [formData.inspectionCategories]);
 
-  const wellSelected = useMemo(() => {
-    const selected = (formData.inspectionCategories ?? []) as string[];
-    return selected.includes("Well");
-  }, [formData.inspectionCategories]);
+  const radonSelected = useMemo(() => selectedCategories.includes("Radon"), [selectedCategories]);
+  const wellSelected = useMemo(() => selectedCategories.includes("Well"), [selectedCategories]);
+  const waterTestingSelected = useMemo(() => selectedCategories.includes("Water Testing"), [selectedCategories]);
+  const poolSpaSelected = useMemo(() => selectedCategories.includes("Spa/Swimming Pool"), [selectedCategories]);
+  const sewerLateralSelected = useMemo(() => selectedCategories.includes("Sewer"), [selectedCategories]);
+  const greenFeaturesSelected = useMemo(() => selectedCategories.includes("Green Features"), [selectedCategories]);
 
-  const poolSpaSelected = useMemo(() => {
-    const selected = (formData.inspectionCategories ?? []) as string[];
-    return selected.includes("Spa/Swimming Pool");
-  }, [formData.inspectionCategories]);
-
-  const sewerLateralSelected = useMemo(() => {
-    const selected = (formData.inspectionCategories ?? []) as string[];
-    return selected.includes("Sewer");
-  }, [formData.inspectionCategories]);
-
-  // Only show Radon/Well/Pool-Spa/Sewer Lateral if they're selected in Inspection Details
+  // Only show optional categories if they're selected in Inspection Details
   const inspectionCategories = useMemo(() => {
     return allInspectionCategories.filter((cat) => {
       if (cat.id === "radon") return radonSelected;
       if (cat.id === "well") return wellSelected;
+      if (cat.id === "water-testing") return waterTestingSelected;
       if (cat.id === "pool-spa") return poolSpaSelected;
       if (cat.id === "sewer-lateral") return sewerLateralSelected;
+      if (cat.id === "green") return greenFeaturesSelected;
       return true;
     });
-  }, [radonSelected, wellSelected, poolSpaSelected, sewerLateralSelected]);
+  }, [radonSelected, wellSelected, waterTestingSelected, poolSpaSelected, sewerLateralSelected, greenFeaturesSelected]);
 
   // State for navigation - restore from formData if available
   const [activeMainCategory, setActiveMainCategory] = useState(
@@ -222,15 +216,12 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
     }
   }, [currentTabs]);
 
-  // Handle category change from sidebar
+  // Handle category change from sidebar - allow navigation to any category
   const handleCategoryChange = useCallback((categoryIndex: number) => {
-    // Can only navigate to completed categories or the next available one
-    if (completedCategories.includes(categoryIndex) || categoryIndex <= completedCategories.length) {
-      setAtSubmitScreen(false);
-      setActiveMainCategory(categoryIndex);
-      setActiveSubcategory(0);
-    }
-  }, [completedCategories]);
+    setAtSubmitScreen(false);
+    setActiveMainCategory(categoryIndex);
+    setActiveSubcategory(0);
+  }, []);
 
   // Navigation buttons
   const handlePrevious = useCallback(() => {
@@ -278,7 +269,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                 {inspectionCategories.map((category, index) => {
                   const isCompleted = completedCategories.includes(index);
                   const isCurrent = index === activeMainCategory;
-                  const isAccessible = isCompleted || index <= completedCategories.length;
+                  const isAccessible = true; // All categories are now accessible
                   const isLast = index === inspectionCategories.length - 1;
 
                   return (
