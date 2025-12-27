@@ -25,17 +25,35 @@ const categoryMapping: Record<string, string> = {
   'walkways': 'Walkways, Patios & Driveways',
   'decks': 'Wood Decks & Balconies',
   'foundation': 'Foundation & Structure',
+  'basement': 'Basement, Foundation and Crawlspace',
   'plumbing': 'Plumbing',
   'electric': 'Electric',
+  'electrical': 'Electrical',
   'hvac': 'Heating & Cooling',
+  'heating-cooling': 'Heating and Cooling',
   'doors-windows': 'Doors & Windows',
+  'doors-windows-interior': 'Doors, Windows & Interior',
   'appliances': 'Built-in Appliances',
+  'fireplaces': 'Fireplaces',
+  'attic': 'Attic, Insulation & Ventilation',
   'green': 'Green Features',
   'radon': 'Radon',
   'well': 'Well',
   'water-testing': 'Water Testing',
   'pool-spa': 'Swimming Pools and Spas',
   'sewer-lateral': 'Sewer Lateral',
+};
+
+// Merge existing checklist with missing defects from XLSX
+const mergeChecklists = (existing: ChecklistItem[], missing: typeof missingChecklistDefects): ChecklistItem[] => {
+  const existingIds = new Set(existing.map(item => item.id));
+  const newItems = missing
+    .filter(item => !existingIds.has(item.id))
+    .map(item => ({
+      ...item,
+      type: item.type as ChecklistItem['type'],
+    }));
+  return [...existing, ...newItems];
 };
 
 // Complete Inspection Checklist Data
@@ -747,9 +765,20 @@ export function ChecklistCategoryContent({
   // Support both category IDs ("foundation") and labels ("Foundation & Structure")
   const categoryLabel = categoryMapping[categoryId] ?? categoryId;
 
+  // Merge the existing checklist with missing defects
+  const fullChecklist = mergeChecklists(inspectionChecklist, missingChecklistDefects);
+
   // Filter items based on category and subcategory
-  const filteredItems = inspectionChecklist.filter((item) => {
-    if (item.category !== categoryLabel) return false;
+  const filteredItems = fullChecklist.filter((item) => {
+    // Match by exact category name OR by mapped category label
+    const categoryMatches = item.category === categoryLabel || 
+      item.category === categoryId ||
+      Object.entries(categoryMapping).some(([key, value]) => 
+        (key === categoryId || value === categoryLabel) && 
+        (item.category === key || item.category === value)
+      );
+    
+    if (!categoryMatches) return false;
 
     // When a subcategory is selected, match items with that subcategory OR items with Defects - subcategory
     if (subcategory) {
