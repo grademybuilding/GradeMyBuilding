@@ -1172,11 +1172,14 @@ More information can be found directly at the EPA's website: https://www.epa.gov
           const isDefectSelected = selectedDefects[item.id] === true;
           const defectCategoryLabel = `Defects - ${item.subcategory.replace('Defects - ', '')}`;
           
+          // Use item.commentText first (from missingChecklistDefects), then defectDescriptions, then empty
+          const defaultComment = item.commentText || defectDescriptions[item.id] || '';
+          
           return (
             <div className="space-y-0">
               <Textarea
                 placeholder="Add inspection comments..."
-                value={notes[item.id] || defectDescriptions[item.id] || ''}
+                value={notes[item.id] || defaultComment}
                 onChange={(e) => handleNoteChange(item.id, e.target.value)}
                 className="min-h-[100px] text-sm bg-background text-foreground border-t-0 rounded-t-none"
               />
