@@ -198,10 +198,6 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'foundation-basement-crawlspace-material', category: 'Foundation & Structure', subcategory: 'Basement & Crawlspace', item: 'Material', required: false, type: 'multiselect', options: ['Concrete Block', 'Poured Concrete', 'Stone', 'Brick', 'Wood Frame', 'Steel Frame'] },
   { id: 'foundation-basement-crawlspace-inspector-rating', category: 'Foundation & Structure', subcategory: 'Basement & Crawlspace', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Foundation - Defects - Basements & Crawlspaces
-  { id: 'basements-high-moisture-levels', category: 'Foundation & Structure', subcategory: 'Defects - Basements & Crawlspaces', item: 'High Moisture Levels', required: false, type: 'checkbox' },
-  { id: 'basements-efflorescence', category: 'Foundation & Structure', subcategory: 'Defects - Basements & Crawlspaces', item: 'Efflorescence', required: false, type: 'checkbox' },
-  
   // Foundation - Floor Structure
   { id: 'foundation-floor-structure-material', category: 'Foundation & Structure', subcategory: 'Floor Structure', item: 'Material', required: false, type: 'multiselect', options: ['Concrete Slab', 'Wood Joists', 'Steel Joists', 'Engineered Lumber', 'Composite Deck'] },
   { id: 'foundation-floor-structure-inspector-rating', category: 'Foundation & Structure', subcategory: 'Floor Structure', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
@@ -258,9 +254,6 @@ const inspectionChecklist: ChecklistItem[] = [
   // Plumbing - Fixtures
   { id: 'plumbing-fixtures-type', category: 'Plumbing', subcategory: 'Fixtures', item: 'Fixture Types', required: false, type: 'multiselect', options: ['Toilets', 'Sinks', 'Bathtubs', 'Showers', 'Laundry Connections'] },
   { id: 'plumbing-fixtures-rating', category: 'Plumbing', subcategory: 'Fixtures', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Plumbing - Sump Pump
-  { id: 'plumbing-sump-pump-location', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Location', required: false, type: 'multiselect', options: ['Basement', 'Under Stairs', 'Bedroom Closet'] },
   
   // Plumbing - Back-flow Prevention
   { id: 'plumbing-backflow-prevention-location', category: 'Plumbing', subcategory: 'Back-flow Prevention Device', item: 'Location', required: false, type: 'multiselect', options: ['North', 'South', 'East', 'West', 'Front of Building', 'Back of Building', 'Basement'] },
@@ -734,8 +727,8 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-flashings-corroded-minor', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Minor', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of corrosion, but are still in working condition. Flashing should be monitored to prevent severe corrosion leading to moisture intrusion.' },
 
   // Roof - Defects - Roof Structure & Attic
-  { id: 'roof-structure-thin-soft-sheathing', category: 'Roof', subcategory: 'Defects - Roof Structure & Attic', item: 'Thin/Soft Sheathing', required: false, type: 'checkbox', commentText: 'Roof sheathing appears to be soft/thin in certain areas. This can be from decay in the underlying wood panels & structure. Recommend further examination by a qualified roofer.' },
-  { id: 'roof-structure-sagging', category: 'Roof', subcategory: 'Defects - Roof Structure & Attic', item: 'Sagging', required: false, type: 'checkbox', commentText: 'Areas of the roof sagged, indicating sheathing or rafter deficiencies. Recommend a qualified roofer evaluate and repair.' },
+  { id: 'roof-structure-thin-soft-sheathing', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Thin/Soft Sheathing', required: false, type: 'checkbox', commentText: 'Roof sheathing appears to be soft/thin in certain areas. This can be from decay in the underlying wood panels & structure. Recommend further examination by a qualified roofer.' },
+  { id: 'roof-structure-sagging', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Sagging', required: false, type: 'checkbox', commentText: 'Areas of the roof sagged, indicating sheathing or rafter deficiencies. Recommend a qualified roofer evaluate and repair.' },
 
   // Exterior Cladding - Defects - Exterior Doors
   { id: 'exterior-door-sliding-failed-seal', category: 'Exterior Cladding', subcategory: 'Defects - Exterior Doors', item: 'Sliding Glass Door - Failed Seal', required: false, type: 'checkbox', commentText: 'The sliding glass door had double-pane glazing in which condensation was visible. This indicates a loss of thermal integrity. The door should be repaired or replaced as necessary by a qualified contractor. Replacement is more typical.' },
@@ -754,9 +747,9 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'exterior-retaining-wall-cracks', category: 'Exterior Cladding', subcategory: 'Defects - Vegetation & Grading', item: 'Retaining Wall Cracks', required: false, type: 'checkbox', commentText: 'Retaining wall is showing signs of failing. Recommend qualified contractor evaluate and repair.' },
   { id: 'exterior-negative-grading', category: 'Exterior Cladding', subcategory: 'Defects - Vegetation & Grading', item: 'Negative Grading', required: false, type: 'checkbox', commentText: 'Grading is sloping towards the home in some areas. This could lead to water intrusion and foundation issues. Recommend qualified landscaper or foundation contractor regrade so water flows away from home.' },
 
-  // Foundation & Structure - Defects - Basements & Crawlspaces
-  { id: 'basement-high-moisture-levels', category: 'Foundation & Structure', subcategory: 'Defects - Basements & Crawlspaces', item: 'High Moisture Levels', required: false, type: 'checkbox', commentText: 'High levels of moisture were noted in areas of the basement. Recommend monitoring and finding source of moisture intrusion to prevent damage to structure.' },
-  { id: 'basement-efflorescence', category: 'Foundation & Structure', subcategory: 'Defects - Basements & Crawlspaces', item: 'Efflorescence', required: false, type: 'checkbox', commentText: 'Efflorescence noted on the crawlspace surface. This a white, powdery deposit that is consistent with moisture intrusion. This can compromise the soil\'s ability to support the home structure and/or lead to mold growth. Recommend a qualified contractor identify source or moisture and correct.' },
+  // Foundation & Structure - Defects - Basement & Crawlspace
+  { id: 'basement-high-moisture-levels', category: 'Foundation & Structure', subcategory: 'Defects - Basement & Crawlspace', item: 'High Moisture Levels', required: false, type: 'checkbox', commentText: 'High levels of moisture were noted in areas of the basement. Recommend monitoring and finding source of moisture intrusion to prevent damage to structure.' },
+  { id: 'basement-efflorescence', category: 'Foundation & Structure', subcategory: 'Defects - Basement & Crawlspace', item: 'Efflorescence', required: false, type: 'checkbox', commentText: 'Efflorescence noted on the crawlspace surface. This a white, powdery deposit that is consistent with moisture intrusion. This can compromise the soil\'s ability to support the home structure and/or lead to mold growth. Recommend a qualified contractor identify source or moisture and correct.' },
 
   // Foundation & Structure - Defects - Floor Structure
   { id: 'basement-floor-evidence-structural-damage', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Evidence of Structural Damage', required: false, type: 'checkbox', commentText: 'Structural damage was observed in the underlying floor structure. Recommend a structural engineer evaluate.' },
@@ -848,9 +841,9 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-fuel-improper-installation', category: 'Plumbing', subcategory: 'Defects', item: 'Fuel System Improper Installation', required: false, type: 'checkbox', commentText: 'Gas supply or distribution pipes were improperly installed. Recommend a qualified contractor or local utility company evaluate and properly install pipes up to standards.' },
   { id: 'plumbing-fuel-gas-odor-severe', category: 'Plumbing', subcategory: 'Defects', item: 'Gas Odor (Severe)', required: false, type: 'checkbox', commentText: 'Excessive gas odor was present around meter. Recommend consulting with your local utility company or qualified gas company to evaluate for potential leaks.' },
   { id: 'plumbing-fuel-corrosion', category: 'Plumbing', subcategory: 'Defects', item: 'Gas Pipe Corrosion', required: false, type: 'checkbox', commentText: 'Gas pipes were corroded. This can lead to gas leaks. Recommend contacting local utility company for evaluation and repair.' },
-  { id: 'plumbing-sump-pump-no-shutoff-valve', category: 'Plumbing', subcategory: 'Defects', item: 'Sump Pump No Shut-off Valve', required: false, type: 'checkbox', commentText: 'No shut-off valve was observed at time of inspection. Recommend a qualified plumber install.' },
-  { id: 'plumbing-sump-pump-needs-cleaning', category: 'Plumbing', subcategory: 'Defects', item: 'Sump Pump Needs Cleaning', required: false, type: 'checkbox', commentText: 'Sump pump was excessively dirty and in need of cleaning/servicing.' },
-  { id: 'plumbing-sump-pump-improper-installation', category: 'Plumbing', subcategory: 'Defects', item: 'Sump Pump Improper Installation', required: false, type: 'checkbox', commentText: 'Sump pump had sub-standard installation. Recommend a qualified plumber evaluate and properly install.' },
+  { id: 'plumbing-sump-pump-no-shutoff-valve', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'No Shut-off Valve', required: false, type: 'checkbox', commentText: 'No shut-off valve was observed at time of inspection. Recommend a qualified plumber install.' },
+  { id: 'plumbing-sump-pump-needs-cleaning', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Needs Cleaning', required: false, type: 'checkbox', commentText: 'Sump pump was excessively dirty and in need of cleaning/servicing.' },
+  { id: 'plumbing-sump-pump-improper-installation', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Sump pump had sub-standard installation. Recommend a qualified plumber evaluate and properly install.' },
 
   // Electric - Defects
   { id: 'electric-service-water-intrusion', category: 'Electric', subcategory: 'Defects', item: 'Service Water Intrusion', required: false, type: 'checkbox', commentText: 'There is possible water intrusion and the meter / service entrance. Moisture can deteriorate the electrical equipment. Recommend that a licensed electrician repair / replace as needed.' },

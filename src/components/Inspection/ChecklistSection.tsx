@@ -816,11 +816,10 @@ const inspectionChecklist: ChecklistItem[] = [
     type: "rating",
     options: ["Excellent", "Very Good", "Good", "Poor", "Replace", "Not Inspected", "Partial Inspected"],
   },
-  // Basements & Crawlspaces Defects
   {
     id: "basements-high-moisture-levels",
     category: "Foundation & Structure",
-    subcategory: "Defects - Basements & Crawlspaces",
+    subcategory: "Defects - Basement & Crawlspace",
     item: "High Moisture Levels",
     required: false,
     type: "checkbox",
@@ -828,7 +827,7 @@ const inspectionChecklist: ChecklistItem[] = [
   {
     id: "basements-efflorescence",
     category: "Foundation & Structure",
-    subcategory: "Defects - Basements & Crawlspaces",
+    subcategory: "Defects - Basement & Crawlspace",
     item: "Efflorescence",
     required: false,
     type: "checkbox",
@@ -3253,7 +3252,7 @@ export function ChecklistSection({ formData, onChange }: ChecklistSectionProps) 
                     // Map the dropdown selections to actual subcategories
                     const foundationSubcategoryMap: Record<string, string[]> = {
                       Foundation: ["Foundation", "Defects - Foundation"],
-                      "Basement & Crawlspace": ["Basement & Crawlspace", "Defects - Basements & Crawlspaces"],
+                      "Basement & Crawlspace": ["Basement & Crawlspace", "Defects - Basement & Crawlspace"],
                       "Floor Structure": ["Floor Structure", "Defects - Floor Structure"],
                       "Wall Structure": ["Wall Structure", "Defects - Wall Structure"],
                       "Ceiling Structure": ["Ceiling Structure", "Defects - Ceiling Structure"],
