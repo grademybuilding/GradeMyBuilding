@@ -31,7 +31,7 @@ const categoryMapping: Record<string, string[]> = {
   'electrical': ['Electrical', 'Electric'],
   'hvac': ['Heating & Cooling', 'Heating and Cooling'],
   'heating-cooling': ['Heating and Cooling', 'Heating & Cooling'],
-  'doors-windows': ['Doors & Windows', 'Doors, Windows & Interior'],
+  'doors-windows': ['Doors, Windows & Interior', 'Doors & Windows'],
   'doors-windows-interior': ['Doors, Windows & Interior', 'Doors & Windows'],
   'appliances': ['Built-in Appliances', 'Cooking Area'],
   'cooking-area': ['Cooking Area', 'Built-in Appliances'],
@@ -93,7 +93,9 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-flashing-loose', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Loose', required: false, type: 'checkbox' },
   { id: 'roof-flashing-missing', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Missing', required: false, type: 'checkbox' },
   { id: 'roof-flashing-improper-installation', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Improper Installation', required: false, type: 'checkbox' },
-  
+  { id: 'roof-flashing-corroded-severe', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Severe', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of severe corrosion, which can lead to moisture intrusion and/or mold. Recommend a qualified roofing contractor evaluate and repair.' },
+  { id: 'roof-flashing-corroded-minor', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Minor', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of corrosion, but are still in working condition. Flashing should be monitored to prevent severe corrosion leading to moisture intrusion.' },
+
   // Roof - Skylights & Chimneys
   { id: 'roof-skylights-chimneys-material', category: 'Roof', subcategory: 'Skylights & Chimneys', item: 'Skylight/Chimney Material', required: false, type: 'multiselect', options: ['Glass', 'Acrylic', 'Polycarbonate', 'Brick', 'Stone', 'Metal', 'Stucco'] },
   { id: 'roof-skylights-chimneys-inspector-rating', category: 'Roof', subcategory: 'Skylights & Chimneys', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
@@ -263,40 +265,132 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-sump-pump-location', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Sump Pump Location', required: false, type: 'multiselect', options: ['Basement', 'Crawlspace', 'Utility Room', 'Garage'] },
   { id: 'plumbing-sump-pump-age', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Age - Year Installed', required: false, type: 'year' },
   { id: 'plumbing-sump-pump-rating', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Plumbing - Defects
-  { id: 'plumbing-leaky-faucets', category: 'Plumbing', subcategory: 'Defects', item: 'Leaky Faucets', required: false, type: 'checkbox' },
-  { id: 'plumbing-running-toilet', category: 'Plumbing', subcategory: 'Defects', item: 'Running Toilet', required: false, type: 'checkbox' },
-  { id: 'plumbing-clogged-drains', category: 'Plumbing', subcategory: 'Defects', item: 'Clogged Drains', required: false, type: 'checkbox' },
-  { id: 'plumbing-low-water-pressure', category: 'Plumbing', subcategory: 'Defects', item: 'Low Water Pressure', required: false, type: 'checkbox' },
-  { id: 'plumbing-pipe-leaks', category: 'Plumbing', subcategory: 'Defects', item: 'Pipe Leaks', required: false, type: 'checkbox' },
-  { id: 'plumbing-water-heater-issues', category: 'Plumbing', subcategory: 'Defects', item: 'Water Heater Issues', required: false, type: 'checkbox' },
-  { id: 'plumbing-sewer-backup', category: 'Plumbing', subcategory: 'Defects', item: 'Sewer Backup', required: false, type: 'checkbox' },
-  { id: 'plumbing-frozen-pipes', category: 'Plumbing', subcategory: 'Defects', item: 'Frozen Pipes', required: false, type: 'checkbox' },
+
+  // Plumbing - Defects - Water Supply (from XLSX)
+  { id: 'plumbing-main-shutoff-corrosion', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Shut-off Corrosion', required: false, type: 'checkbox', commentText: 'Water main shut-off shows signs of corrosion. Recommend a qualified plumber evaluate.' },
+  { id: 'plumbing-toilet-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Toilet Leaking', required: false, type: 'checkbox', commentText: 'Toilet is loose and/or leaking at the base. Recommend a qualified plumber evaluate and repair to prevent further water damage.' },
+  { id: 'plumbing-distribution-pipe-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Distribution Pipe Leaking', required: false, type: 'checkbox', commentText: 'Distribution pipe was leaking. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-improper-installation-water-supply', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Distribution pipes were installed in a sub-standard way. Recommend a qualified plumber evaluate and properly fit and install pipes.' },
+  { id: 'plumbing-main-supply-pipe-corroded', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Water Supply Pipe Corroded', required: false, type: 'checkbox', commentText: 'Main water supply pipe was heavily corroded. This can lead to shortened lifespan of the pipe. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-main-supply-valve-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Water Supply Valve Leaking', required: false, type: 'checkbox', commentText: 'Main water supply shut-off valve was leaking. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-no-protective-sleeve', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'No Protective Sleeve', required: false, type: 'checkbox', commentText: 'Main water supply pipe was missing protective sleeve, which prevents corrosion and extends lifespan. Recommend a qualified plumber install protective sleeve.' },
+  { id: 'plumbing-polybutylene-supply-pipes', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Polybutylene Supply Pipes', required: false, type: 'checkbox', commentText: 'Water supply pipes were made from polybutylene material. This material can be prone to fail without warning, causing damage to the home structure. Recommend a qualified plumber replace pipes and fittings with an approved material like PEX.' },
+
+  // Plumbing - Defects - Water Heater (from XLSX)
+  { id: 'plumbing-water-heater-near-end-of-life', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Near End of Life', required: false, type: 'checkbox', commentText: 'Water heater showed normal signs of wear and tear. Recommend monitoring its effectiveness and replacing in the near future.' },
+  { id: 'plumbing-water-heater-irregular-flame', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Irregular Flame', required: false, type: 'checkbox', commentText: 'Water heater flame is irregular. Recommend qualified plumber evaluate & repair.' },
+  { id: 'plumbing-water-heater-insufficient-capacity', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Insufficient Capacity', required: false, type: 'checkbox', commentText: 'Water heater may not have the capacity necessary to supply sufficient water to the home. Recommend evaluating options to replace water heater with a larger capacity tank.' },
+  { id: 'plumbing-water-heater-water-stains-leakage', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Water Stains / Leakage', required: false, type: 'checkbox', commentText: 'Water stains were observed beneath water heater, indicating a past or present leak. Recommend further evaluation and repair by a qualified plumber.' },
+  { id: 'plumbing-water-heater-corrosion', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Corrosion was noted at the burn chamber or pipe fittings. Recommend a qualified plumber evaluate for repair/replacement.' },
+  { id: 'plumbing-water-heater-improper-installation', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Water heater is improperly installed or in a dangerous location. Recommend qualified plumber evaluate & repair/relocate.' },
+  { id: 'plumbing-water-heater-no-expansion-tank', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Expansion Tank', required: false, type: 'checkbox', commentText: 'No expansion tank was present. Expansion tanks allow for the thermal expansion of water in the pipes. These are required in certain areas for new installs. Recommend a qualified plumber evaluate and install.' },
+  { id: 'plumbing-water-heater-no-drip-pan', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Drip Pan', required: false, type: 'checkbox', commentText: 'No drip pan was present. Recommend installation by a qualified plumber.' },
+  { id: 'plumbing-water-heater-no-burner-ignition', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Burner Ignition', required: false, type: 'checkbox', commentText: 'The burner was unresponsive and did not ignite, despite gas flowing properly. Recommend a qualified plumber evaluate and repair.' },
+
+  // Plumbing - Defects - Fuel Storage (from XLSX)
+  { id: 'plumbing-fuel-improper-installation', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Gas supply or distribution pipes were improperly installed. Recommend a qualified contractor or local utility company evaluate and properly install pipes up to standards.' },
+  { id: 'plumbing-fuel-gas-odor-severe', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Gas Odor - Severe', required: false, type: 'checkbox', commentText: 'Excessive gas odor was present around meter. Recommend consulting with your local utility company or qualified gas company to evaluate for potential leaks.' },
+  { id: 'plumbing-fuel-corrosion', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Gas pipes were corroded. This can lead to gas leaks. Recommend contacting local utility company for evaluation and repair.' },
+
+  // Plumbing - Defects - Sump Pump (from XLSX)
+  { id: 'plumbing-sump-no-shutoff-valve', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'No Shut-off Valve', required: false, type: 'checkbox', commentText: 'No shut-off valve was observed at time of inspection. Recommend a qualified plumber install.' },
+  { id: 'plumbing-sump-needs-cleaning', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Needs Cleaning', required: false, type: 'checkbox', commentText: 'Sump pump was excessively dirty and in need of cleaning/servicing.' },
+  { id: 'plumbing-sump-improper-installation', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Sump pump had sub-standard installation. Recommend a qualified plumber evaluate and properly install.' },
+
+  // Plumbing - Defects - Drain Waste Vent (from XLSX)
+  { id: 'plumbing-drain-sink-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Sink - Poor Drainage', required: false, type: 'checkbox', commentText: 'Sink had slow/poor drainage. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-drain-shower-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Shower - Poor Drainage', required: false, type: 'checkbox', commentText: 'Shower had slow/poor drainage. Recommend a qualified plumber repair.' },
+  { id: 'plumbing-drain-leaking-pipe', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Leaking Pipe', required: false, type: 'checkbox', commentText: 'A drain, waste and/or vent pipe showed signs of a leak. Recommend a qualified plumber evaluate and repair.' },
+  { id: 'plumbing-drain-improper-connection', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Improper Connection', required: false, type: 'checkbox', commentText: 'An improper connection was observed at a drain, waste or vent pipe. Recommend a qualified plumber evaluate and repair.' },
+
+  // Plumbing - General Defects (legacy)
+  { id: 'plumbing-leaky-faucets', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Leaky Faucets', required: false, type: 'checkbox' },
+  { id: 'plumbing-running-toilet', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Running Toilet', required: false, type: 'checkbox' },
+  { id: 'plumbing-clogged-drains', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Clogged Drains', required: false, type: 'checkbox' },
+  { id: 'plumbing-low-water-pressure', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Low Water Pressure', required: false, type: 'checkbox' },
+  { id: 'plumbing-sewer-backup', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Sewer Backup', required: false, type: 'checkbox' },
+  { id: 'plumbing-frozen-pipes', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Frozen Pipes', required: false, type: 'checkbox' },
 
   // ============== ELECTRIC ==============
-  // Electric - Service Entrance
-  { id: 'electric-main-panel-type', category: 'Electric', subcategory: 'Service Entrance', item: 'Main Panel Type', required: false, type: 'multiselect', options: ['Circuit Breaker', 'Fuse Box', 'Main Lug', 'Main Breaker'] },
-  { id: 'electric-panel-amperage', category: 'Electric', subcategory: 'Service Entrance', item: 'Panel Amperage', required: false, type: 'multiselect', options: ['100 Amp', '150 Amp', '200 Amp', '400 Amp', 'Other'] },
-  { id: 'electric-service-entrance-rating', category: 'Electric', subcategory: 'Service Entrance', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Electric - Service Entrance Conductors
+  { id: 'electric-main-panel-type', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Main Panel Type', required: false, type: 'multiselect', options: ['Circuit Breaker', 'Fuse Box', 'Main Lug', 'Main Breaker'] },
+  { id: 'electric-panel-amperage', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Panel Amperage', required: false, type: 'multiselect', options: ['100 Amp', '150 Amp', '200 Amp', '400 Amp', 'Other'] },
+  { id: 'electric-service-entrance-rating', category: 'Electric', subcategory: 'Service Entrance Conductors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Electric - Defects - Service Entrance Conductors (from XLSX)
+  { id: 'electric-service-water-intrusion', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Water Intrusion', required: false, type: 'checkbox', commentText: 'There is possible water intrusion and the meter / service entrance. Moisture can deteriorate the electrical equipment. Recommend that a licensed electrician repair / replace as needed.' },
+  { id: 'electric-service-not-enough-clearance', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Not Enough Clearance', required: false, type: 'checkbox', commentText: 'Service drop overhead wires are too low, not giving enough clearance above roof. Recommend contacting your local electric utility company or qualified electrician to see if they can correct.' },
+  { id: 'electric-service-mast-improperly-installed', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Mast Improperly Installed', required: false, type: 'checkbox', commentText: 'Mast is not properly installed.' },
+  { id: 'electric-service-frayed-sheathing', category: 'Electric', subcategory: 'Defects - Service Entrance Conductors', item: 'Frayed Sheathing', required: false, type: 'checkbox', commentText: 'Wires on service entrance are damaged or frayed. Recommend contacting your electric utility company or a qualified electrician to evaluate and repair.' },
+
+  // Electric - Main & Subpanels
+  { id: 'electric-main-subpanels-type', category: 'Electric', subcategory: 'Main & Subpanels', item: 'Panel Type', required: false, type: 'multiselect', options: ['Main Panel', 'Subpanel', 'Fuse Box', 'Circuit Breaker Panel'] },
+  { id: 'electric-main-subpanels-rating', category: 'Electric', subcategory: 'Main & Subpanels', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Electric - Defects - Main & Subpanels (from XLSX)
+  { id: 'electric-panel-damaged', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Panel Damaged', required: false, type: 'checkbox', commentText: 'Electrical panel is damaged. Recommend licensed electrician evaluate and repair.' },
+  { id: 'electric-no-ground-wire', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'No Ground Wire', required: false, type: 'checkbox', commentText: 'Missing ground wire. Recommend qualified electrician evaluate and install.' },
+  { id: 'electric-missing-labels-on-panel', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Missing Labels on Panel', required: false, type: 'checkbox', commentText: 'At the time of inspection, panel was missing labeling. Recommend a qualified electrician or person identify and map out locations.' },
+  { id: 'electric-meter-base-not-secure', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Meter Base Not Secure', required: false, type: 'checkbox', commentText: 'Meter base was loose at time of inspection. Recommend re-securing by a qualified contractor.' },
+  { id: 'electric-knockouts-missing', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Knockouts Missing', required: false, type: 'checkbox', commentText: '"Knockouts" are missing on the electric panel. This poses a safety hazard and it is recommended that the opening in the panel caused by the missing knockout(s) be properly sealed by a licensed electrician.' },
+  { id: 'electric-incompatible-meter-base', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Incompatible Meter Base', required: false, type: 'checkbox', commentText: 'I recommend meter base to be upgraded to be in line with upgraded service wires. Recommend qualified electrician evaluate.' },
+  { id: 'electric-inadequate-ground', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Inadequate Ground', required: false, type: 'checkbox', commentText: 'The ground at service entrance appears inadequate and should be checked by a licensed electrician.' },
+  { id: 'electric-breaker-incorrectly-wired', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Breaker Incorrectly Wired', required: false, type: 'checkbox', commentText: 'Circuit breaker was incorrectly wired / installed. This indicates that work was probably not performed by a licensed electrician and poses a safety hazard. Recommend that a licensed electrician check the entire panel and repair and replace as need.' },
   
   // Electric - Branch Circuits
   { id: 'electric-wiring-type', category: 'Electric', subcategory: 'Branch Circuits', item: 'Wiring Type', required: false, type: 'multiselect', options: ['Copper', 'Aluminum', 'Knob and Tube', 'Romex', 'Conduit'] },
   { id: 'electric-branch-circuits-rating', category: 'Electric', subcategory: 'Branch Circuits', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Electric - Connected Devices
-  { id: 'electric-outlets-type', category: 'Electric', subcategory: 'Connected Devices', item: 'Outlet Types', required: false, type: 'multiselect', options: ['Standard', 'GFCI', 'AFCI', 'USB Outlets'] },
-  { id: 'electric-connected-devices-rating', category: 'Electric', subcategory: 'Connected Devices', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Electric - Defects - Branch Circuits (from XLSX)
+  { id: 'electric-insufficient-load', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Insufficient Load', required: false, type: 'checkbox', commentText: 'Branch circuit has insufficient load capacity. Recommend licensed electrician evaluate.' },
+  { id: 'electric-improper-wiring', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Improper Wiring', required: false, type: 'checkbox', commentText: 'Improper wiring observed in branch circuits. Recommend licensed electrician evaluate and repair.' },
+  { id: 'electric-aluminum-branch-circuits', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Aluminum Branch Circuits', required: false, type: 'checkbox', commentText: 'Aluminum wire appears to be installed on branch electrical circuits in the subject premises. These single strand, branch circuit aluminum wires were used widely in houses during the mid 1960s and 1970s. According to the U.S. Consumer Product Safety Commission, problems due to expansion can cause overheating at connections between the wire and devices (switches and outlets) or at splices, which has resulted in fires. It is recommended that the electrical system be evaluated by a licensed electrician.' },
+
+  // Electric - Lighting Fixtures, Switches & Receptacles
+  { id: 'electric-outlets-type', category: 'Electric', subcategory: 'Lighting Fixtures, Switches & Receptacles', item: 'Outlet Types', required: false, type: 'multiselect', options: ['Standard', 'GFCI', 'AFCI', 'USB Outlets'] },
+  { id: 'electric-connected-devices-rating', category: 'Electric', subcategory: 'Lighting Fixtures, Switches & Receptacles', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Electric - Defects - Lighting Fixtures, Switches & Receptacles (from XLSX)
+  { id: 'electric-ungrounded-receptacle', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Ungrounded Receptacle', required: false, type: 'checkbox', commentText: 'One or more receptacles are ungrounded. To eliminate safety hazards, all receptacles in kitchen, bathrooms, garage & exterior should be grounded.' },
+  { id: 'electric-switches-installed-improperly', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Switches Installed Improperly', required: false, type: 'checkbox', commentText: 'One or more switches are installed improperly. Recommend licensed electrician repair or replace.' },
+  { id: 'electric-reverse-polarity', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Reverse Polarity', required: false, type: 'checkbox', commentText: 'One or more receptacles have been wired with reverse polarity. This can create a shock hazard. Recommend licensed electrician evaluate & repair.' },
+  { id: 'electric-light-inoperable', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Light Inoperable', required: false, type: 'checkbox', commentText: 'One or more lights are not operating. New light bulb possibly needed.' },
+  { id: 'electric-inadequate-number-of-receptacles', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Inadequate Number of Receptacles', required: false, type: 'checkbox', commentText: 'There is a minimal number of receptacles in the home. This can cause a short circuit if increased demand is present. Recommend licensed electrician add additional receptacles.' },
+  { id: 'electric-cover-plates-missing', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Cover Plates Missing', required: false, type: 'checkbox', commentText: 'One or more receptacles are missing a cover plate. This causes short and shock risk. Recommend installation of plates.' },
+  { id: 'electric-cover-plates-damaged', category: 'Electric', subcategory: 'Defects - Lighting Fixtures', item: 'Cover Plates Damaged', required: false, type: 'checkbox', commentText: 'One or more receptacles have a damaged cover plate. Recommend replacement.' },
+
+  // Electric - GFCI & AFCI
+  { id: 'electric-gfci-afci-type', category: 'Electric', subcategory: 'GFCI & AFCI', item: 'Protection Type', required: false, type: 'multiselect', options: ['GFCI', 'AFCI', 'Dual Function', 'None'] },
+  { id: 'electric-gfci-afci-rating', category: 'Electric', subcategory: 'GFCI & AFCI', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Electric - Defects - GFCI & AFCI (from XLSX)
+  { id: 'electric-no-gfci-protection', category: 'Electric', subcategory: 'Defects - GFCI & AFCI', item: 'No GFCI Protection Installed', required: false, type: 'checkbox', commentText: 'No GFCI protection present in all locations. Recommend licensed electrician upgrade by installing ground fault receptacles in all locations.' },
+  { id: 'electric-gfci-improper-installation', category: 'Electric', subcategory: 'Defects - GFCI & AFCI', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'GFCI/AFCI protection is improperly installed. Recommend licensed electrician evaluate and repair.' },
+
+  // Electric - Smoke Detectors
+  { id: 'electric-smoke-detectors-type', category: 'Electric', subcategory: 'Smoke Detectors', item: 'Detector Type', required: false, type: 'multiselect', options: ['Battery Operated', 'Hardwired', 'Combination Smoke/CO'] },
+  { id: 'electric-smoke-detectors-rating', category: 'Electric', subcategory: 'Smoke Detectors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Electric - Defects - Smoke Detectors (from XLSX)
+  { id: 'electric-smoke-low-battery', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Low Battery', required: false, type: 'checkbox', commentText: 'Smoke detector failed to respond when tested. Recommend battery be replaced.' },
+  { id: 'electric-smoke-inappropriate-location', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Inappropriate Location', required: false, type: 'checkbox', commentText: 'Smoke detector effectiveness may be compromised due to location. Recommend relocating according to manufacturer\'s instructions.' },
+  { id: 'electric-smoke-defective', category: 'Electric', subcategory: 'Defects - Smoke Detectors', item: 'Defective', required: false, type: 'checkbox', commentText: 'Smoke detector is connected, but not functioning properly. Recommend replacement.' },
+
+  // Electric - Carbon Monoxide Detectors
+  { id: 'electric-co-detectors-type', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Detector Type', required: false, type: 'multiselect', options: ['Battery Operated', 'Hardwired', 'Combination Smoke/CO'] },
+  { id: 'electric-co-detectors-rating', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Electric - Defects
-  { id: 'electric-overloaded-circuits', category: 'Electric', subcategory: 'Defects', item: 'Overloaded Circuits', required: false, type: 'checkbox' },
-  { id: 'electric-gfci-issues', category: 'Electric', subcategory: 'Defects', item: 'GFCI Issues', required: false, type: 'checkbox' },
-  { id: 'electric-exposed-wiring', category: 'Electric', subcategory: 'Defects', item: 'Exposed Wiring', required: false, type: 'checkbox' },
-  { id: 'electric-flickering-lights', category: 'Electric', subcategory: 'Defects', item: 'Flickering Lights', required: false, type: 'checkbox' },
-  { id: 'electric-dead-outlets', category: 'Electric', subcategory: 'Defects', item: 'Dead Outlets', required: false, type: 'checkbox' },
-  { id: 'electric-panel-issues', category: 'Electric', subcategory: 'Defects', item: 'Panel Issues', required: false, type: 'checkbox' },
-  { id: 'electric-improper-grounding', category: 'Electric', subcategory: 'Defects', item: 'Improper Grounding', required: false, type: 'checkbox' },
-  { id: 'electric-outdated-wiring', category: 'Electric', subcategory: 'Defects', item: 'Outdated Wiring', required: false, type: 'checkbox' },
+  // Electric - Defects - Carbon Monoxide Detectors (from XLSX)
+  { id: 'electric-co-low-battery', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Low Battery', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector failed to respond when tested. Recommend battery be replaced.' },
+  { id: 'electric-co-inappropriate-location', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Inappropriate Location', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector effectiveness may be compromised due to location. Recommend relocating according to manufacturer\'s instructions.' },
+  { id: 'electric-co-defective', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Defective', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector is connected, but not functioning properly. Recommend replacement.' },
+
+  // Electric - General Defects (legacy)
+  { id: 'electric-overloaded-circuits', category: 'Electric', subcategory: 'Defects - General', item: 'Overloaded Circuits', required: false, type: 'checkbox' },
+  { id: 'electric-exposed-wiring', category: 'Electric', subcategory: 'Defects - General', item: 'Exposed Wiring', required: false, type: 'checkbox' },
+  { id: 'electric-flickering-lights', category: 'Electric', subcategory: 'Defects - General', item: 'Flickering Lights', required: false, type: 'checkbox' },
+  { id: 'electric-dead-outlets', category: 'Electric', subcategory: 'Defects - General', item: 'Dead Outlets', required: false, type: 'checkbox' },
+  { id: 'electric-outdated-wiring', category: 'Electric', subcategory: 'Defects - General', item: 'Outdated Wiring', required: false, type: 'checkbox' },
 
   // ============== HEATING & COOLING ==============
   // Heating Equipment
@@ -353,56 +447,65 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'vents-flues-damaged-components', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Damaged Vent/Flue Components', required: false, type: 'checkbox' },
   { id: 'vents-flues-carbon-monoxide-risk', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Carbon Monoxide Risk', required: false, type: 'checkbox' },
 
-  // ============== DOORS & WINDOWS ==============
-  // Windows
-  { id: 'windows-type', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Type', required: false, type: 'multiselect', options: ['Casement', 'Double-hung', 'Drop-down', 'Single Pane', 'Single-hung', 'Sliders', 'Storm', 'Thermal'] },
-  { id: 'windows-manufacturer', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Manufacturer', required: false, type: 'multiselect', options: ['Andersen', 'JELD-WEN', 'Marvin', 'Milgard', 'Pella', 'WeatherShield'] },
-  { id: 'windows-age', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Age', required: false, type: 'year' },
-  { id: 'windows-inspector-rating', category: 'Doors & Windows', subcategory: 'Windows', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // ============== DOORS, WINDOWS & INTERIOR ==============
+  // Floors - Defects Only
+  { id: 'floors-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on flooring. Recommend investigation to determine source of moisture and repair as needed.' },
+  { id: 'floors-warped-buckled', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Warped/Buckled', required: false, type: 'checkbox', commentText: 'Flooring is warped or buckled. This could indicate moisture damage or improper installation. Recommend repair by qualified contractor.' },
+  { id: 'floors-squeaky', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Squeaky Floors', required: false, type: 'checkbox', commentText: 'Floors are squeaky in one or more areas. This is typically caused by loose subfloor or joists. Recommend repair.' },
+  { id: 'floors-cracked-tiles', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Cracked Tiles', required: false, type: 'checkbox', commentText: 'Floor tiles are cracked. Recommend repair or replacement by qualified contractor.' },
+  { id: 'floors-loose-tiles', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Loose Tiles', required: false, type: 'checkbox', commentText: 'Floor tiles are loose or not properly adhered. Recommend repair.' },
+  { id: 'floors-worn-carpet', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Worn Carpet', required: false, type: 'checkbox', commentText: 'Carpet is worn and may need replacement.' },
+
+  // Ceilings - Defects Only
+  { id: 'ceilings-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on ceiling. Recommend investigation to determine source of leak and repair.' },
+  { id: 'ceilings-cracks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Cracks', required: false, type: 'checkbox', commentText: 'Cracks were observed in ceiling. Minor cosmetic cracks are common, but larger cracks may indicate structural issues. Recommend evaluation.' },
+  { id: 'ceilings-sagging', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Sagging', required: false, type: 'checkbox', commentText: 'Ceiling is sagging in one or more areas. This could indicate water damage or structural issues. Recommend evaluation by qualified contractor.' },
+  { id: 'ceilings-peeling-paint', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Peeling Paint', required: false, type: 'checkbox', commentText: 'Paint is peeling from ceiling. This is often caused by moisture. Recommend repair and investigation of moisture source.' },
+  { id: 'ceilings-mold-mildew', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Mold/Mildew', required: false, type: 'checkbox', commentText: 'Mold or mildew was observed on ceiling. Recommend professional evaluation and remediation.' },
+
+  // Walls - Defects Only
+  { id: 'walls-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on walls. Recommend investigation to determine source of moisture and repair.' },
+  { id: 'walls-cracks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Cracks', required: false, type: 'checkbox', commentText: 'Cracks were observed in walls. Minor hairline cracks are common, but larger cracks may indicate structural movement. Recommend evaluation.' },
+  { id: 'walls-holes', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Holes', required: false, type: 'checkbox', commentText: 'Holes were observed in walls. Recommend patching and repair.' },
+  { id: 'walls-peeling-paint', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Peeling Paint', required: false, type: 'checkbox', commentText: 'Paint is peeling from walls. Recommend repair.' },
+  { id: 'walls-damaged-drywall', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Damaged Drywall', required: false, type: 'checkbox', commentText: 'Drywall is damaged. Recommend repair by qualified contractor.' },
+  { id: 'walls-mold-mildew', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Mold/Mildew', required: false, type: 'checkbox', commentText: 'Mold or mildew was observed on walls. Recommend professional evaluation and remediation.' },
+
+  // Windows - Defects Only
+  { id: 'windows-improper-installation', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Window was improperly installed. Recommend evaluation and correction by qualified contractor.' },
+  { id: 'windows-painted-shut', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Painted Shut', required: false, type: 'checkbox', commentText: 'Window is painted shut and inoperable. Recommend repair for emergency egress.' },
+  { id: 'windows-damaged', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Damaged', required: false, type: 'checkbox', commentText: 'Window is damaged. Recommend repair or replacement.' },
+  { id: 'windows-failed-seal', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Failed Seal', required: false, type: 'checkbox', commentText: 'Window seal has failed, causing condensation between panes. Recommend replacement of affected windows.' },
+  { id: 'windows-missing-screen', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Missing Screen', required: false, type: 'checkbox', commentText: 'Window screen is missing. Recommend replacement.' },
+  { id: 'windows-broken-glass', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Broken Glass', required: false, type: 'checkbox', commentText: 'Window glass is broken. Recommend immediate replacement for safety.' },
+  { id: 'windows-inoperable', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Inoperable', required: false, type: 'checkbox', commentText: 'Window is inoperable. Recommend repair or replacement.' },
   
-  // Windows - Defects
-  { id: 'windows-improper-installation', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Improper Installation', required: false, type: 'checkbox' },
-  { id: 'windows-painted-shut', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Painted Shut', required: false, type: 'checkbox' },
-  { id: 'windows-damaged', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Damaged', required: false, type: 'checkbox' },
-  { id: 'windows-failed-seal', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Failed Seal', required: false, type: 'checkbox' },
-  { id: 'windows-missing-screen', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Missing Screen', required: false, type: 'checkbox' },
+  // Entry Doors - Defects Only
+  { id: 'entry-door-water-staining', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Water Staining', required: false, type: 'checkbox', commentText: 'Water staining observed on entry door. Recommend investigation of water source and repair.' },
+  { id: 'entry-door-poor-weather-stripping', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Poor Weather-stripping', required: false, type: 'checkbox', commentText: 'Weather-stripping is worn or missing. Recommend replacement to improve energy efficiency.' },
+  { id: 'entry-door-noticeable-gap', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Noticeable Gap', required: false, type: 'checkbox', commentText: 'Noticeable gap around door allowing air infiltration. Recommend adjustment or replacement of weather-stripping.' },
+  { id: 'entry-door-hinges-missing', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Hinges Missing', required: false, type: 'checkbox', commentText: 'Door hinges are missing. Recommend immediate replacement for security.' },
+  { id: 'entry-door-hinges-loose', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Hinges Loose', required: false, type: 'checkbox', commentText: 'Door hinges are loose. Recommend tightening or repair.' },
+  { id: 'entry-door-door-sticks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Sticks', required: false, type: 'checkbox', commentText: 'Door sticks when opening or closing. Recommend adjustment or repair.' },
+  { id: 'entry-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Door latch is misaligned. Recommend adjustment.' },
+  { id: 'entry-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Door does not latch properly. Recommend repair for security.' },
   
-  // Entry Doors
-  { id: 'entry-door-type', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Type', required: false, type: 'multiselect', options: ['Single', 'Double', 'French', 'Sliding', 'Storm', 'Screen', 'Security'] },
-  { id: 'entry-door-manufacturer', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Manufacturer', required: false, type: 'multiselect', options: ['Andersen', 'JELD-WEN', 'Therma-Tru', 'Pella', 'Masonite', 'ProVia', 'Fiberglass', 'Steel', 'Wood'] },
-  { id: 'entry-door-age', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Age', required: false, type: 'year' },
-  { id: 'entry-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Interior Doors - Defects Only
+  { id: 'interior-door-hinges-missing', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Missing', required: false, type: 'checkbox', commentText: 'Interior door hinges are missing. Recommend replacement.' },
+  { id: 'interior-door-hinges-loose', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Loose', required: false, type: 'checkbox', commentText: 'Interior door hinges are loose. Recommend tightening.' },
+  { id: 'interior-door-door-sticks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Door Sticks', required: false, type: 'checkbox', commentText: 'Interior door sticks when opening or closing. Recommend adjustment.' },
+  { id: 'interior-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Interior door latch is misaligned. Recommend adjustment.' },
+  { id: 'interior-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Interior door does not latch properly. Recommend repair.' },
+  { id: 'interior-door-damaged', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Damaged', required: false, type: 'checkbox', commentText: 'Interior door is damaged. Recommend repair or replacement.' },
   
-  // Entry Doors - Defects
-  { id: 'entry-door-water-staining', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Water Staining', required: false, type: 'checkbox' },
-  { id: 'entry-door-poor-weather-stripping', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Poor Weather-stripping', required: false, type: 'checkbox' },
-  { id: 'entry-door-noticeable-gap', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Noticeable Gap', required: false, type: 'checkbox' },
-  { id: 'entry-door-hinges-missing', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Hinges Missing', required: false, type: 'checkbox' },
-  { id: 'entry-door-hinges-loose', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Hinges Loose', required: false, type: 'checkbox' },
-  { id: 'entry-door-door-sticks', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Door Sticks', required: false, type: 'checkbox' },
-  { id: 'entry-door-latch-alignment', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox' },
-  { id: 'entry-door-doesnt-latch', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox' },
-  
-  // Interior Doors
-  { id: 'interior-door-type', category: 'Doors & Windows', subcategory: 'Interior Doors', item: 'Interior Door Type', required: false, type: 'multiselect', options: ['Hollow Core', 'Solid Core', 'Panel', 'Flush', 'Pocket', 'Sliding', 'Bi-fold', 'French'] },
-  { id: 'interior-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Interior Doors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Garage Doors
-  { id: 'garage-door-type', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Type', required: false, type: 'multiselect', options: ['Sliding', 'Folding', 'Up-and-Over', 'Roll-Up', 'Automatic', 'Sectional'] },
-  { id: 'garage-door-material', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Material', required: false, type: 'multiselect', options: ['Metal', 'Insulated', 'Non-insulated', 'Steel', 'Aluminum', 'Wood', 'Wood Composite', 'Fiberglass', 'Vinyl', 'Glass'] },
-  { id: 'garage-door-mechanism', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Mechanism', required: false, type: 'multiselect', options: ['Manual', 'Electric Opener', 'Chain Drive', 'Belt Drive', 'Screw Drive', 'Direct Drive', 'Remote Control', 'Wall Switch'] },
-  { id: 'garage-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Garage Doors - Defects
-  { id: 'garage-door-loud-noises', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Loud Noises', required: false, type: 'checkbox' },
-  { id: 'garage-door-improper-installation', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Improper Installation', required: false, type: 'checkbox' },
-  { id: 'garage-door-broken-springs', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Broken Springs', required: false, type: 'checkbox' },
-  { id: 'garage-door-auto-reverse-sensor', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Auto Reverse Sensor Not Working', required: false, type: 'checkbox' },
-  
-  // Garage Door Opener - Defects
-  { id: 'garage-door-opener-inoperable-wall-switch', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Inoperable Wall Switch', required: false, type: 'checkbox' },
-  { id: 'garage-door-opener-inoperable-remote', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Inoperable Remote', required: false, type: 'checkbox' },
-  { id: 'garage-door-opener-delayed-wall-switch', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Delayed Wall Switch', required: false, type: 'checkbox' },
+  // Garage Doors - Defects Only
+  { id: 'garage-door-loud-noises', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Loud Noises', required: false, type: 'checkbox', commentText: 'Garage door makes loud noises during operation. Recommend lubrication or repair.' },
+  { id: 'garage-door-improper-installation', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Garage door was improperly installed. Recommend evaluation and correction by qualified contractor.' },
+  { id: 'garage-door-broken-springs', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Broken Springs', required: false, type: 'checkbox', commentText: 'Garage door springs are broken. Recommend immediate repair by qualified garage door contractor.' },
+  { id: 'garage-door-auto-reverse-sensor', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Auto Reverse Sensor Not Working', required: false, type: 'checkbox', commentText: 'Auto reverse sensor is not functioning properly. This is a safety hazard. Recommend immediate repair.' },
+  { id: 'garage-door-opener-inoperable-wall-switch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Inoperable Wall Switch', required: false, type: 'checkbox', commentText: 'Garage door wall switch is inoperable. Recommend repair.' },
+  { id: 'garage-door-opener-inoperable-remote', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Inoperable Remote', required: false, type: 'checkbox', commentText: 'Garage door remote is inoperable. May need battery replacement or reprogramming.' },
+  { id: 'garage-door-opener-delayed-wall-switch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Delayed Wall Switch', required: false, type: 'checkbox', commentText: 'Garage door wall switch has delayed response. Recommend evaluation.' },
 
   // ============== BUILT-IN APPLIANCES ==============
   // Refrigerator
@@ -473,10 +576,44 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'cooking-exhaust-inspector-rating', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
   // Cooking Exhaust - Defects
-  { id: 'cooking-exhaust-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fan Inoperable', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Excessive Noise', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-inadequate-ventilation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Inadequate Ventilation', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-light-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Light Inoperable', required: false, type: 'checkbox' },
+  { id: 'cooking-exhaust-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fan Inoperable', required: false, type: 'checkbox', commentText: 'The cooking exhaust fan is inoperable and needs repair or replacement.' },
+  { id: 'cooking-exhaust-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Excessive Noise', required: false, type: 'checkbox', commentText: 'The cooking exhaust system produces excessive noise during operation.' },
+  { id: 'cooking-exhaust-inadequate-ventilation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Inadequate Ventilation', required: false, type: 'checkbox', commentText: 'The cooking exhaust system provides inadequate ventilation for the cooking area.' },
+  { id: 'cooking-exhaust-light-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Light Inoperable', required: false, type: 'checkbox', commentText: 'The light on the cooking exhaust system is inoperable.' },
+  { id: 'cooking-exhaust-duct-dips', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Exhaust Duct Dips', required: false, type: 'checkbox', commentText: 'The exhaust duct has dips or sags that can trap grease and reduce airflow. Recommend repair to maintain proper ventilation.' },
+  { id: 'cooking-exhaust-grease-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Grease Buildup', required: false, type: 'checkbox', commentText: 'Excessive grease buildup was observed in the cooking exhaust system. This is a fire hazard and should be cleaned immediately.' },
+  { id: 'cooking-exhaust-fire-extinguisher-not-close', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fire Extinguisher Not Close Enough', required: false, type: 'checkbox', commentText: 'Fire extinguisher is not located within close proximity to the cooking area. Recommend relocating for safety.' },
+  { id: 'cooking-exhaust-duct-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Exhaust Duct Improper Installation', required: false, type: 'checkbox', commentText: 'The exhaust duct is improperly installed. Recommend evaluation and correction by a qualified contractor.' },
+
+  // ============== FIREPLACES (under Built-in Appliances) - DEFECTS ONLY ==============
+  { id: 'fireplace-hearth-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Hearth Insufficient Length', required: false, type: 'checkbox', commentText: 'Fireplace hearth should extend a minimum of 20 inches from the front and 12 inches to both sides of fireplace. Recommend a qualified fireplace contractor evaluate and remedy.' },
+  { id: 'fireplace-firewall-cracked', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Firewall Cracked', required: false, type: 'checkbox', commentText: 'The brick lining of the fireplace was cracked in one or more places, which could lead to chimney damage or toxic fumes entering the home. Recommend a qualified fireplace contractor evaluate and repair.' },
+  { id: 'fireplace-damper-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Damper Inoperable', required: false, type: 'checkbox', commentText: 'Damper was inoperable, which could allow toxic fumes into the home. Recommend a qualified fireplace contractor evaluate and repair.' },
+  { id: 'fireplace-no-screen', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'No Fireplace Screen', required: false, type: 'checkbox', commentText: 'Fireplace screen was missing in front of fireplace. Fire logs can split, so this is recommended as a safety precaution.' },
+  { id: 'fireplace-inadequate-clearance', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Inadequate Clearance', required: false, type: 'checkbox', commentText: 'Fireplace was too close to combustible items. Fireplace and surrounding space should be clear of personal items.' },
+  { id: 'fireplace-creosote-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Creosote Buildup', required: false, type: 'checkbox', commentText: 'There was a notable amount of creosote buildup in the flue. Recommend a qualified fireplace or chimney contractor inspect and sweep on an annual basis.' },
+
+  // ============== ATTIC, INSULATION & VENTILATION (under Built-in Appliances) - DEFECTS ONLY ==============
+  // Defects - Insulation
+  { id: 'attic-insulation-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insulation Damaged', required: false, type: 'checkbox', commentText: 'Insulation appears to have been pulled out and/or damaged by pests. Recommend a qualified insulation contractor evaluate and repair.' },
+  { id: 'attic-insulation-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Attic insulation was improperly installed. Recommend a qualified insulation contractor evaluate and correct.' },
+  { id: 'attic-insulation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insufficient Insulation', required: false, type: 'checkbox', commentText: 'Insulation depth was inadequate. Recommend a qualified attic insulation contractor install additional insulation.' },
+
+  // Defects - Ventilation
+  { id: 'attic-whole-house-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Whole House Fan Inoperable', required: false, type: 'checkbox', commentText: 'Whole house fan was inoperable at time of inspection. Recommend a qualified whole house fan contractor evaluate and repair.' },
+  { id: 'attic-gable-vent-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Gable Vent Damaged', required: false, type: 'checkbox', commentText: 'Gable vent was damaged, which could allow pests to enter. Recommend a qualified attic or ventilation contractor repair.' },
+  { id: 'attic-discoloration-mold', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Discoloration - Possible Mold', required: false, type: 'checkbox', commentText: 'Attic showed areas of discoloration and possible mold growth. Recommend a mold lab analysis to prevent spread of potential mold and damage to home or health risk. Also recommend finding source of moisture or lack of ventilation in attic space.' },
+  { id: 'attic-ventilation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Ventilation Insufficient', required: false, type: 'checkbox', commentText: 'Attic venting was insufficient at time of inspection. Modern standards recommend 1.5 square feet of venting area for every 300 square feet of attic floor space. Recommend an attic contractor evaluate and remedy.' },
+  { id: 'attic-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Fan Inoperable', required: false, type: 'checkbox', commentText: 'Attic fan was inoperable at time of inspection. Recommend an attic fan specialist evaluate and repair.' },
+
+  // Defects - Exhaust Systems
+  { id: 'attic-exhaust-ducts-loose', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Ducts Loose', required: false, type: 'checkbox', commentText: 'Ductwork in the attic is loose or disconnected. Recommend repair.' },
+  { id: 'attic-bathroom-vents-into-attic', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Bathroom Vents Into Attic', required: false, type: 'checkbox', commentText: 'Bathroom fan vents into the attic, which can cause moisture and mold. Recommend a qualified attic contractor properly install exhaust fan to terminate to the exterior.' },
+
+  // Defects - Vapor Retarders
+  { id: 'attic-vapor-barrier-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Damaged', required: false, type: 'checkbox', commentText: 'Vapor barrier is damaged in one or more areas. Recommend insulation contractor repair or replace.' },
+  { id: 'attic-no-vapor-barrier', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'No Vapor Barrier', required: false, type: 'checkbox', commentText: 'There is no vapor barrier beneath the flooring. This can result in unwanted moisture.' },
+  { id: 'attic-vapor-barrier-improper', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Improper Installation', required: false, type: 'checkbox', commentText: 'Vapor barrier is improperly installed. This can result in unwanted moisture. Recommend insulation contractor evaluate.' },
 
   // ============== GREEN FEATURES ==============
   { id: 'green-well-sealed', category: 'Green Features', item: 'Well Sealed', required: false, type: 'checkbox' },
