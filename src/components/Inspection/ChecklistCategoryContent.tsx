@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CheckCircle, AlertTriangle, X } from "lucide-react";
 import { defectDescriptions } from "@/data/defectDescriptions";
+import { missingChecklistDefects } from "@/data/missingChecklistDefects";
 
 interface ChecklistItem {
   id: string;
