@@ -31,7 +31,7 @@ const categoryMapping: Record<string, string[]> = {
   'electrical': ['Electrical', 'Electric'],
   'hvac': ['Heating & Cooling', 'Heating and Cooling'],
   'heating-cooling': ['Heating and Cooling', 'Heating & Cooling'],
-  'doors-windows': ['Doors & Windows', 'Doors, Windows & Interior'],
+  'doors-windows': ['Doors, Windows & Interior', 'Doors & Windows'],
   'doors-windows-interior': ['Doors, Windows & Interior', 'Doors & Windows'],
   'appliances': ['Built-in Appliances', 'Cooking Area'],
   'cooking-area': ['Cooking Area', 'Built-in Appliances'],
@@ -454,56 +454,65 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'vents-flues-damaged-components', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Damaged Vent/Flue Components', required: false, type: 'checkbox' },
   { id: 'vents-flues-carbon-monoxide-risk', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Carbon Monoxide Risk', required: false, type: 'checkbox' },
 
-  // ============== DOORS & WINDOWS ==============
-  // Windows
-  { id: 'windows-type', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Type', required: false, type: 'multiselect', options: ['Casement', 'Double-hung', 'Drop-down', 'Single Pane', 'Single-hung', 'Sliders', 'Storm', 'Thermal'] },
-  { id: 'windows-manufacturer', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Manufacturer', required: false, type: 'multiselect', options: ['Andersen', 'JELD-WEN', 'Marvin', 'Milgard', 'Pella', 'WeatherShield'] },
-  { id: 'windows-age', category: 'Doors & Windows', subcategory: 'Windows', item: 'Window Age', required: false, type: 'year' },
-  { id: 'windows-inspector-rating', category: 'Doors & Windows', subcategory: 'Windows', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // ============== DOORS, WINDOWS & INTERIOR ==============
+  // Floors - Defects Only
+  { id: 'floors-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on flooring. Recommend investigation to determine source of moisture and repair as needed.' },
+  { id: 'floors-warped-buckled', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Warped/Buckled', required: false, type: 'checkbox', commentText: 'Flooring is warped or buckled. This could indicate moisture damage or improper installation. Recommend repair by qualified contractor.' },
+  { id: 'floors-squeaky', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Squeaky Floors', required: false, type: 'checkbox', commentText: 'Floors are squeaky in one or more areas. This is typically caused by loose subfloor or joists. Recommend repair.' },
+  { id: 'floors-cracked-tiles', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Cracked Tiles', required: false, type: 'checkbox', commentText: 'Floor tiles are cracked. Recommend repair or replacement by qualified contractor.' },
+  { id: 'floors-loose-tiles', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Loose Tiles', required: false, type: 'checkbox', commentText: 'Floor tiles are loose or not properly adhered. Recommend repair.' },
+  { id: 'floors-worn-carpet', category: 'Doors, Windows & Interior', subcategory: 'Defects - Floors', item: 'Worn Carpet', required: false, type: 'checkbox', commentText: 'Carpet is worn and may need replacement.' },
+
+  // Ceilings - Defects Only
+  { id: 'ceilings-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on ceiling. Recommend investigation to determine source of leak and repair.' },
+  { id: 'ceilings-cracks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Cracks', required: false, type: 'checkbox', commentText: 'Cracks were observed in ceiling. Minor cosmetic cracks are common, but larger cracks may indicate structural issues. Recommend evaluation.' },
+  { id: 'ceilings-sagging', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Sagging', required: false, type: 'checkbox', commentText: 'Ceiling is sagging in one or more areas. This could indicate water damage or structural issues. Recommend evaluation by qualified contractor.' },
+  { id: 'ceilings-peeling-paint', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Peeling Paint', required: false, type: 'checkbox', commentText: 'Paint is peeling from ceiling. This is often caused by moisture. Recommend repair and investigation of moisture source.' },
+  { id: 'ceilings-mold-mildew', category: 'Doors, Windows & Interior', subcategory: 'Defects - Ceilings', item: 'Mold/Mildew', required: false, type: 'checkbox', commentText: 'Mold or mildew was observed on ceiling. Recommend professional evaluation and remediation.' },
+
+  // Walls - Defects Only
+  { id: 'walls-water-stains', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Water Stains', required: false, type: 'checkbox', commentText: 'Water stains were observed on walls. Recommend investigation to determine source of moisture and repair.' },
+  { id: 'walls-cracks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Cracks', required: false, type: 'checkbox', commentText: 'Cracks were observed in walls. Minor hairline cracks are common, but larger cracks may indicate structural movement. Recommend evaluation.' },
+  { id: 'walls-holes', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Holes', required: false, type: 'checkbox', commentText: 'Holes were observed in walls. Recommend patching and repair.' },
+  { id: 'walls-peeling-paint', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Peeling Paint', required: false, type: 'checkbox', commentText: 'Paint is peeling from walls. Recommend repair.' },
+  { id: 'walls-damaged-drywall', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Damaged Drywall', required: false, type: 'checkbox', commentText: 'Drywall is damaged. Recommend repair by qualified contractor.' },
+  { id: 'walls-mold-mildew', category: 'Doors, Windows & Interior', subcategory: 'Defects - Walls', item: 'Mold/Mildew', required: false, type: 'checkbox', commentText: 'Mold or mildew was observed on walls. Recommend professional evaluation and remediation.' },
+
+  // Windows - Defects Only
+  { id: 'windows-improper-installation', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Window was improperly installed. Recommend evaluation and correction by qualified contractor.' },
+  { id: 'windows-painted-shut', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Painted Shut', required: false, type: 'checkbox', commentText: 'Window is painted shut and inoperable. Recommend repair for emergency egress.' },
+  { id: 'windows-damaged', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Damaged', required: false, type: 'checkbox', commentText: 'Window is damaged. Recommend repair or replacement.' },
+  { id: 'windows-failed-seal', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Failed Seal', required: false, type: 'checkbox', commentText: 'Window seal has failed, causing condensation between panes. Recommend replacement of affected windows.' },
+  { id: 'windows-missing-screen', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Missing Screen', required: false, type: 'checkbox', commentText: 'Window screen is missing. Recommend replacement.' },
+  { id: 'windows-broken-glass', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Broken Glass', required: false, type: 'checkbox', commentText: 'Window glass is broken. Recommend immediate replacement for safety.' },
+  { id: 'windows-inoperable', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Inoperable', required: false, type: 'checkbox', commentText: 'Window is inoperable. Recommend repair or replacement.' },
   
-  // Windows - Defects
-  { id: 'windows-improper-installation', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Improper Installation', required: false, type: 'checkbox' },
-  { id: 'windows-painted-shut', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Painted Shut', required: false, type: 'checkbox' },
-  { id: 'windows-damaged', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Damaged', required: false, type: 'checkbox' },
-  { id: 'windows-failed-seal', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Failed Seal', required: false, type: 'checkbox' },
-  { id: 'windows-missing-screen', category: 'Doors & Windows', subcategory: 'Defects - Windows', item: 'Missing Screen', required: false, type: 'checkbox' },
+  // Entry Doors - Defects Only
+  { id: 'entry-door-water-staining', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Water Staining', required: false, type: 'checkbox', commentText: 'Water staining observed on entry door. Recommend investigation of water source and repair.' },
+  { id: 'entry-door-poor-weather-stripping', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Poor Weather-stripping', required: false, type: 'checkbox', commentText: 'Weather-stripping is worn or missing. Recommend replacement to improve energy efficiency.' },
+  { id: 'entry-door-noticeable-gap', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Noticeable Gap', required: false, type: 'checkbox', commentText: 'Noticeable gap around door allowing air infiltration. Recommend adjustment or replacement of weather-stripping.' },
+  { id: 'entry-door-hinges-missing', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Hinges Missing', required: false, type: 'checkbox', commentText: 'Door hinges are missing. Recommend immediate replacement for security.' },
+  { id: 'entry-door-hinges-loose', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Hinges Loose', required: false, type: 'checkbox', commentText: 'Door hinges are loose. Recommend tightening or repair.' },
+  { id: 'entry-door-door-sticks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Sticks', required: false, type: 'checkbox', commentText: 'Door sticks when opening or closing. Recommend adjustment or repair.' },
+  { id: 'entry-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Door latch is misaligned. Recommend adjustment.' },
+  { id: 'entry-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Door does not latch properly. Recommend repair for security.' },
   
-  // Entry Doors
-  { id: 'entry-door-type', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Type', required: false, type: 'multiselect', options: ['Single', 'Double', 'French', 'Sliding', 'Storm', 'Screen', 'Security'] },
-  { id: 'entry-door-manufacturer', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Manufacturer', required: false, type: 'multiselect', options: ['Andersen', 'JELD-WEN', 'Therma-Tru', 'Pella', 'Masonite', 'ProVia', 'Fiberglass', 'Steel', 'Wood'] },
-  { id: 'entry-door-age', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Entry Door Age', required: false, type: 'year' },
-  { id: 'entry-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Entry Doors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  // Interior Doors - Defects Only
+  { id: 'interior-door-hinges-missing', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Missing', required: false, type: 'checkbox', commentText: 'Interior door hinges are missing. Recommend replacement.' },
+  { id: 'interior-door-hinges-loose', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Loose', required: false, type: 'checkbox', commentText: 'Interior door hinges are loose. Recommend tightening.' },
+  { id: 'interior-door-door-sticks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Door Sticks', required: false, type: 'checkbox', commentText: 'Interior door sticks when opening or closing. Recommend adjustment.' },
+  { id: 'interior-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Interior door latch is misaligned. Recommend adjustment.' },
+  { id: 'interior-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Interior door does not latch properly. Recommend repair.' },
+  { id: 'interior-door-damaged', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Damaged', required: false, type: 'checkbox', commentText: 'Interior door is damaged. Recommend repair or replacement.' },
   
-  // Entry Doors - Defects
-  { id: 'entry-door-water-staining', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Water Staining', required: false, type: 'checkbox' },
-  { id: 'entry-door-poor-weather-stripping', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Poor Weather-stripping', required: false, type: 'checkbox' },
-  { id: 'entry-door-noticeable-gap', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Noticeable Gap', required: false, type: 'checkbox' },
-  { id: 'entry-door-hinges-missing', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Hinges Missing', required: false, type: 'checkbox' },
-  { id: 'entry-door-hinges-loose', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Hinges Loose', required: false, type: 'checkbox' },
-  { id: 'entry-door-door-sticks', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Door Sticks', required: false, type: 'checkbox' },
-  { id: 'entry-door-latch-alignment', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox' },
-  { id: 'entry-door-doesnt-latch', category: 'Doors & Windows', subcategory: 'Defects - Entry Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox' },
-  
-  // Interior Doors
-  { id: 'interior-door-type', category: 'Doors & Windows', subcategory: 'Interior Doors', item: 'Interior Door Type', required: false, type: 'multiselect', options: ['Hollow Core', 'Solid Core', 'Panel', 'Flush', 'Pocket', 'Sliding', 'Bi-fold', 'French'] },
-  { id: 'interior-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Interior Doors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Garage Doors
-  { id: 'garage-door-type', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Type', required: false, type: 'multiselect', options: ['Sliding', 'Folding', 'Up-and-Over', 'Roll-Up', 'Automatic', 'Sectional'] },
-  { id: 'garage-door-material', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Material', required: false, type: 'multiselect', options: ['Metal', 'Insulated', 'Non-insulated', 'Steel', 'Aluminum', 'Wood', 'Wood Composite', 'Fiberglass', 'Vinyl', 'Glass'] },
-  { id: 'garage-door-mechanism', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Garage Door Mechanism', required: false, type: 'multiselect', options: ['Manual', 'Electric Opener', 'Chain Drive', 'Belt Drive', 'Screw Drive', 'Direct Drive', 'Remote Control', 'Wall Switch'] },
-  { id: 'garage-door-inspector-rating', category: 'Doors & Windows', subcategory: 'Garage Doors', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
-  // Garage Doors - Defects
-  { id: 'garage-door-loud-noises', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Loud Noises', required: false, type: 'checkbox' },
-  { id: 'garage-door-improper-installation', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Improper Installation', required: false, type: 'checkbox' },
-  { id: 'garage-door-broken-springs', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Broken Springs', required: false, type: 'checkbox' },
-  { id: 'garage-door-auto-reverse-sensor', category: 'Doors & Windows', subcategory: 'Defects - Garage Doors', item: 'Auto Reverse Sensor Not Working', required: false, type: 'checkbox' },
-  
-  // Garage Door Opener - Defects
-  { id: 'garage-door-opener-inoperable-wall-switch', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Inoperable Wall Switch', required: false, type: 'checkbox' },
-  { id: 'garage-door-opener-inoperable-remote', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Inoperable Remote', required: false, type: 'checkbox' },
-  { id: 'garage-door-opener-delayed-wall-switch', category: 'Doors & Windows', subcategory: 'Defects - Garage Door Opener', item: 'Delayed Wall Switch', required: false, type: 'checkbox' },
+  // Garage Doors - Defects Only
+  { id: 'garage-door-loud-noises', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Loud Noises', required: false, type: 'checkbox', commentText: 'Garage door makes loud noises during operation. Recommend lubrication or repair.' },
+  { id: 'garage-door-improper-installation', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Garage door was improperly installed. Recommend evaluation and correction by qualified contractor.' },
+  { id: 'garage-door-broken-springs', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Broken Springs', required: false, type: 'checkbox', commentText: 'Garage door springs are broken. Recommend immediate repair by qualified garage door contractor.' },
+  { id: 'garage-door-auto-reverse-sensor', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Auto Reverse Sensor Not Working', required: false, type: 'checkbox', commentText: 'Auto reverse sensor is not functioning properly. This is a safety hazard. Recommend immediate repair.' },
+  { id: 'garage-door-opener-inoperable-wall-switch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Inoperable Wall Switch', required: false, type: 'checkbox', commentText: 'Garage door wall switch is inoperable. Recommend repair.' },
+  { id: 'garage-door-opener-inoperable-remote', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Inoperable Remote', required: false, type: 'checkbox', commentText: 'Garage door remote is inoperable. May need battery replacement or reprogramming.' },
+  { id: 'garage-door-opener-delayed-wall-switch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Delayed Wall Switch', required: false, type: 'checkbox', commentText: 'Garage door wall switch has delayed response. Recommend evaluation.' },
 
   // ============== BUILT-IN APPLIANCES ==============
   // Refrigerator
