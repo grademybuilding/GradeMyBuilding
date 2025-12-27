@@ -13,7 +13,22 @@ export interface MissingDefectItem {
   commentText?: string;
 }
 
-export const missingChecklistDefects: MissingDefectItem[] = [
+const CATEGORY_ALIASES: Record<string, string> = {
+  // Ensure category names match exactly with the canonical checklist data
+  "Basement, Foundation and Crawlspace": "Foundation & Structure",
+  "Heating and Cooling": "Heating & Cooling",
+  "Electrical": "Electric",
+  "Doors, Windows & Interior": "Doors & Windows",
+  "Cooking Area": "Built-in Appliances",
+  "Exterior": "Exterior Cladding",
+};
+
+const normalizeMissingDefectItem = (item: MissingDefectItem): MissingDefectItem => ({
+  ...item,
+  category: CATEGORY_ALIASES[item.category] ?? item.category,
+});
+
+export const missingChecklistDefectsRaw: MissingDefectItem[] = [
   // ============== ROOF ==============
   // Roof - Defects - Flashing
   { id: 'roof-flashings-corroded-severe', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Corroded - Severe', required: false, type: 'checkbox', commentText: 'Roof flashing showed signs of severe corrosion, which can lead to moisture intrusion and/or mold. Recommend a qualified roofing contractor evaluate and repair.' },
@@ -296,3 +311,9 @@ export const missingChecklistDefects: MissingDefectItem[] = [
   // Refrigerator - Defects (FROM XLSX)
   { id: 'appliances-refrigerator-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Refrigerator', item: 'Inoperable', required: false, type: 'checkbox', commentText: 'Refrigerator was inoperable at time of inspection. Recommend confirming with seller that it\'s operational before closing.' },
 ];
+
+// Export a normalized list so category names always align with the canonical checklist data
+export const missingChecklistDefects: MissingDefectItem[] = missingChecklistDefectsRaw.map(
+  normalizeMissingDefectItem
+);
+
