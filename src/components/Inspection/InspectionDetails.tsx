@@ -188,21 +188,27 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
             {/* General Info Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="radonStartTime">Start Time</Label>
+                <Label htmlFor="radon-start-time">Start Time</Label>
                 <Input
-                  id="radonStartTime"
+                  id="radon-start-time"
                   type="time"
-                  value={formData.radonStartTime || ''}
-                  onChange={(e) => onChange('radonStartTime', e.target.value)}
+                  value={formData.checklistNotes?.['radon-start-time'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'radon-start-time': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="radonEndTime">End Time</Label>
+                <Label htmlFor="radon-end-time">End Time</Label>
                 <Input
-                  id="radonEndTime"
+                  id="radon-end-time"
                   type="time"
-                  value={formData.radonEndTime || ''}
-                  onChange={(e) => onChange('radonEndTime', e.target.value)}
+                  value={formData.checklistNotes?.['radon-end-time'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'radon-end-time': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
             </div>
@@ -215,8 +221,15 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                   <div key={location} className="flex items-center space-x-2">
                     <Checkbox
                       id={`monitor-location-${location}`}
-                      checked={isSelected('radonMonitorLocation', location)}
-                      onCheckedChange={() => handleMultiSelect('radonMonitorLocation', location)}
+                      checked={(formData.checklistSelections?.['radon-monitor-location'] || []).includes(location)}
+                      onCheckedChange={() => {
+                        const current = formData.checklistSelections?.['radon-monitor-location'] || [];
+                        const updated = current.includes(location)
+                          ? current.filter((item: string) => item !== location)
+                          : [...current, location];
+                        const updatedSelections = { ...(formData.checklistSelections || {}), 'radon-monitor-location': updated };
+                        onChange('checklistSelections', updatedSelections);
+                      }}
                     />
                     <Label htmlFor={`monitor-location-${location}`} className="text-sm">
                       {location}
@@ -232,8 +245,15 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="radon-method-continuous"
-                  checked={isSelected('radonMethod', 'Continuous')}
-                  onCheckedChange={() => handleMultiSelect('radonMethod', 'Continuous')}
+                  checked={(formData.checklistSelections?.['radon-method'] || []).includes('Continuous')}
+                  onCheckedChange={() => {
+                    const current = formData.checklistSelections?.['radon-method'] || [];
+                    const updated = current.includes('Continuous')
+                      ? current.filter((item: string) => item !== 'Continuous')
+                      : [...current, 'Continuous'];
+                    const updatedSelections = { ...(formData.checklistSelections || {}), 'radon-method': updated };
+                    onChange('checklistSelections', updatedSelections);
+                  }}
                 />
                 <Label htmlFor="radon-method-continuous" className="text-sm">
                   Continuous
@@ -244,23 +264,29 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
             {/* Measurement Interval & Elapsed Time */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="radonMeasurementInterval">Measurement Interval (hr)</Label>
+                <Label htmlFor="radon-measurement-interval">Measurement Interval (hr)</Label>
                 <Input
-                  id="radonMeasurementInterval"
+                  id="radon-measurement-interval"
                   type="number"
                   placeholder="e.g., 1"
-                  value={formData.radonMeasurementInterval || ''}
-                  onChange={(e) => onChange('radonMeasurementInterval', e.target.value)}
+                  value={formData.checklistGallons?.['radon-measurement-interval'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistGallons || {}), 'radon-measurement-interval': e.target.value };
+                    onChange('checklistGallons', updated);
+                  }}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="radonElapsedTime">Elapsed Time (days)</Label>
+                <Label htmlFor="radon-elapsed-time">Elapsed Time (days)</Label>
                 <Input
-                  id="radonElapsedTime"
+                  id="radon-elapsed-time"
                   type="number"
                   placeholder="e.g., 2"
-                  value={formData.radonElapsedTime || ''}
-                  onChange={(e) => onChange('radonElapsedTime', e.target.value)}
+                  value={formData.checklistGallons?.['radon-elapsed-time'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistGallons || {}), 'radon-elapsed-time': e.target.value };
+                    onChange('checklistGallons', updated);
+                  }}
                 />
               </div>
             </div>
@@ -269,21 +295,27 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
             <Label className="text-sm font-semibold pt-2">Monitor Type</Label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="radonSerialNumber">Serial Number</Label>
+                <Label htmlFor="radon-serial-number">Serial Number</Label>
                 <Input
-                  id="radonSerialNumber"
+                  id="radon-serial-number"
                   placeholder="Enter serial number"
-                  value={formData.radonSerialNumber || ''}
-                  onChange={(e) => onChange('radonSerialNumber', e.target.value)}
+                  value={formData.checklistNotes?.['radon-serial-number'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'radon-serial-number': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="radonModelNumber">Model Number</Label>
+                <Label htmlFor="radon-model-number">Model Number</Label>
                 <Input
-                  id="radonModelNumber"
+                  id="radon-model-number"
                   placeholder="Enter model number"
-                  value={formData.radonModelNumber || ''}
-                  onChange={(e) => onChange('radonModelNumber', e.target.value)}
+                  value={formData.checklistNotes?.['radon-model-number'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'radon-model-number': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
             </div>
@@ -307,8 +339,15 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                   <div key={location} className="flex items-center space-x-2">
                     <Checkbox
                       id={`water-location-${location}`}
-                      checked={isSelected('waterTestingLocations', location)}
-                      onCheckedChange={() => handleMultiSelect('waterTestingLocations', location)}
+                      checked={(formData.checklistSelections?.['water-testing-locations'] || []).includes(location)}
+                      onCheckedChange={() => {
+                        const current = formData.checklistSelections?.['water-testing-locations'] || [];
+                        const updated = current.includes(location)
+                          ? current.filter((item: string) => item !== location)
+                          : [...current, location];
+                        const updatedSelections = { ...(formData.checklistSelections || {}), 'water-testing-locations': updated };
+                        onChange('checklistSelections', updatedSelections);
+                      }}
                     />
                     <Label htmlFor={`water-location-${location}`} className="text-sm">
                       {location}
@@ -326,8 +365,15 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                   <div key={method} className="flex items-center space-x-2">
                     <Checkbox
                       id={`water-method-${method}`}
-                      checked={isSelected('waterTestingMethod', method)}
-                      onCheckedChange={() => handleMultiSelect('waterTestingMethod', method)}
+                      checked={(formData.checklistSelections?.['water-testing-method'] || []).includes(method)}
+                      onCheckedChange={() => {
+                        const current = formData.checklistSelections?.['water-testing-method'] || [];
+                        const updated = current.includes(method)
+                          ? current.filter((item: string) => item !== method)
+                          : [...current, method];
+                        const updatedSelections = { ...(formData.checklistSelections || {}), 'water-testing-method': updated };
+                        onChange('checklistSelections', updatedSelections);
+                      }}
                     />
                     <Label htmlFor={`water-method-${method}`} className="text-sm">
                       {method}
@@ -347,8 +393,11 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
                       type="radio"
                       name="waterAbnormalSmellTaste"
                       value={option}
-                      checked={formData.waterAbnormalSmellTaste === option}
-                      onChange={(e) => onChange('waterAbnormalSmellTaste', e.target.value)}
+                      checked={formData.checklistRatings?.['water-testing-abnormal-smell-taste'] === option}
+                      onChange={(e) => {
+                        const updated = { ...(formData.checklistRatings || {}), 'water-testing-abnormal-smell-taste': e.target.value };
+                        onChange('checklistRatings', updated);
+                      }}
                       className="h-4 w-4 text-primary border-input focus:ring-primary"
                     />
                     <span className="text-sm text-foreground">{option}</span>
@@ -360,35 +409,44 @@ export function InspectionDetails({ formData, onChange, validationErrors = {} }:
             {/* Start/End Days */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="waterTestStartDay">Start Day</Label>
+                <Label htmlFor="water-testing-start-day">Start Day</Label>
                 <Input
-                  id="waterTestStartDay"
+                  id="water-testing-start-day"
                   type="text"
                   placeholder="e.g., Monday"
-                  value={formData.waterTestStartDay || ''}
-                  onChange={(e) => onChange('waterTestStartDay', e.target.value)}
+                  value={formData.checklistNotes?.['water-testing-start-day'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'water-testing-start-day': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="waterTestEndDay">End Day</Label>
+                <Label htmlFor="water-testing-end-day">End Day</Label>
                 <Input
-                  id="waterTestEndDay"
+                  id="water-testing-end-day"
                   type="text"
                   placeholder="e.g., Wednesday"
-                  value={formData.waterTestEndDay || ''}
-                  onChange={(e) => onChange('waterTestEndDay', e.target.value)}
+                  value={formData.checklistNotes?.['water-testing-end-day'] || ''}
+                  onChange={(e) => {
+                    const updated = { ...(formData.checklistNotes || {}), 'water-testing-end-day': e.target.value };
+                    onChange('checklistNotes', updated);
+                  }}
                 />
               </div>
             </div>
 
             {/* Testing Device Information */}
             <div className="space-y-2">
-              <Label htmlFor="waterTestingDeviceInfo">Testing Device Information</Label>
+              <Label htmlFor="water-testing-device-info">Testing Device Information</Label>
               <Input
-                id="waterTestingDeviceInfo"
+                id="water-testing-device-info"
                 placeholder="e.g., Best Prod 17 in One Test Kit for Water"
-                value={formData.waterTestingDeviceInfo || ''}
-                onChange={(e) => onChange('waterTestingDeviceInfo', e.target.value)}
+                value={formData.checklistNotes?.['water-testing-device-info'] || ''}
+                onChange={(e) => {
+                  const updated = { ...(formData.checklistNotes || {}), 'water-testing-device-info': e.target.value };
+                  onChange('checklistNotes', updated);
+                }}
               />
             </div>
 
