@@ -18,30 +18,31 @@ interface ChecklistItem {
   commentText?: string;
 }
 
-// Category to label mapping
-const categoryMapping: Record<string, string> = {
-  'roof': 'Roof',
-  'exterior': 'Exterior Cladding',
-  'walkways': 'Walkways, Patios & Driveways',
-  'decks': 'Wood Decks & Balconies',
-  'foundation': 'Foundation & Structure',
-  'basement': 'Basement, Foundation and Crawlspace',
-  'plumbing': 'Plumbing',
-  'electric': 'Electric',
-  'electrical': 'Electrical',
-  'hvac': 'Heating & Cooling',
-  'heating-cooling': 'Heating and Cooling',
-  'doors-windows': 'Doors & Windows',
-  'doors-windows-interior': 'Doors, Windows & Interior',
-  'appliances': 'Built-in Appliances',
-  'fireplaces': 'Fireplaces',
-  'attic': 'Attic, Insulation & Ventilation',
-  'green': 'Green Features',
-  'radon': 'Radon',
-  'well': 'Well',
-  'water-testing': 'Water Testing',
-  'pool-spa': 'Swimming Pools and Spas',
-  'sewer-lateral': 'Sewer Lateral',
+// Category to label mapping - maps URL slugs to display names
+// Also includes alternate category names from XLSX for matching
+const categoryMapping: Record<string, string[]> = {
+  'roof': ['Roof'],
+  'exterior': ['Exterior Cladding', 'Exterior'],
+  'walkways': ['Walkways, Patios & Driveways'],
+  'decks': ['Wood Decks & Balconies'],
+  'foundation': ['Foundation & Structure', 'Basement, Foundation and Crawlspace'],
+  'basement': ['Basement, Foundation and Crawlspace', 'Foundation & Structure'],
+  'plumbing': ['Plumbing'],
+  'electric': ['Electric', 'Electrical'],
+  'electrical': ['Electrical', 'Electric'],
+  'hvac': ['Heating & Cooling', 'Heating and Cooling'],
+  'heating-cooling': ['Heating and Cooling', 'Heating & Cooling'],
+  'doors-windows': ['Doors & Windows', 'Doors, Windows & Interior'],
+  'doors-windows-interior': ['Doors, Windows & Interior', 'Doors & Windows'],
+  'appliances': ['Built-in Appliances', 'Cooking Area'],
+  'fireplaces': ['Fireplaces'],
+  'attic': ['Attic, Insulation & Ventilation'],
+  'green': ['Green Features'],
+  'radon': ['Radon'],
+  'well': ['Well'],
+  'water-testing': ['Water Testing'],
+  'pool-spa': ['Swimming Pools and Spas'],
+  'sewer-lateral': ['Sewer Lateral'],
 };
 
 // Merge existing checklist with missing defects from XLSX
