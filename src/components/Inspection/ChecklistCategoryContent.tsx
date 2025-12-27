@@ -12,7 +12,7 @@ interface ChecklistItem {
   subcategory?: string;
   item: string;
   required: boolean;
-  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info' | 'textarea' | 'boolean';
+  type: 'checkbox' | 'rating' | 'year' | 'multiselect' | 'gallons' | 'number' | 'info' | 'textarea' | 'boolean' | 'time' | 'text' | 'radio';
   options?: string[];
   commentText?: string;
 }
@@ -500,28 +500,28 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'green-can-build-up', category: 'Green Features', item: 'Can Build Up', required: false, type: 'checkbox' },
 
   // ============== RADON ==============
-  // Radon - Monitor Details (matching Inspection Details fields)
-  { id: 'radon-start-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Start Time', required: false, type: 'textarea' },
-  { id: 'radon-end-time', category: 'Radon', subcategory: 'Monitor Details', item: 'End Time', required: false, type: 'textarea' },
+  // Radon - Monitor Details (matching Inspection Details fields exactly)
+  { id: 'radon-start-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Start Time', required: false, type: 'time' },
+  { id: 'radon-end-time', category: 'Radon', subcategory: 'Monitor Details', item: 'End Time', required: false, type: 'time' },
   { id: 'radon-monitor-location', category: 'Radon', subcategory: 'Monitor Details', item: 'Monitor Location', required: false, type: 'multiselect', options: ['Basement', 'Lower Level', 'Main Level'] },
   { id: 'radon-method', category: 'Radon', subcategory: 'Monitor Details', item: 'Method', required: false, type: 'multiselect', options: ['Continuous'] },
   { id: 'radon-measurement-interval', category: 'Radon', subcategory: 'Monitor Details', item: 'Measurement Interval (hr)', required: false, type: 'number' },
   { id: 'radon-elapsed-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Elapsed Time (days)', required: false, type: 'number' },
-  { id: 'radon-serial-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Serial Number', required: false, type: 'textarea' },
-  { id: 'radon-model-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Model Number', required: false, type: 'textarea' },
+  { id: 'radon-serial-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Serial Number', required: false, type: 'text' },
+  { id: 'radon-model-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Model Number', required: false, type: 'text' },
   
   // Radon - Test Results
   { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Test Results', item: 'Average pCi/L', required: false, type: 'number' },
-  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Test Results', item: 'EPA Resources', required: false, type: 'textarea' },
+  { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Test Results', item: 'EPA Resources', required: false, type: 'info' },
 
   // ============== WATER TESTING ==============
-  // Water Testing - Testing Details (matching Inspection Details fields)
+  // Water Testing - Testing Details (matching Inspection Details fields exactly)
   { id: 'water-testing-locations', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Locations', required: false, type: 'multiselect', options: ['Kitchen Sink', 'Bathroom Sink'] },
   { id: 'water-testing-method', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Method', required: false, type: 'multiselect', options: ['17 in One Water Test Strips', 'Coliform 48 Hour Test Kit'] },
-  { id: 'water-testing-device-info', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Device Information', required: false, type: 'textarea' },
-  { id: 'water-testing-start-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'Start Day', required: false, type: 'textarea' },
-  { id: 'water-testing-end-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'End Day', required: false, type: 'textarea' },
-  { id: 'water-testing-abnormal-smell-taste', category: 'Water Testing', subcategory: 'Testing Details', item: 'Abnormal Smell or Taste', required: false, type: 'multiselect', options: ['Yes', 'No', 'N/A'] },
+  { id: 'water-testing-abnormal-smell-taste', category: 'Water Testing', subcategory: 'Testing Details', item: 'Abnormal Smell or Taste', required: false, type: 'radio', options: ['Yes', 'No', 'N/A'] },
+  { id: 'water-testing-start-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'Start Day', required: false, type: 'text' },
+  { id: 'water-testing-end-day', category: 'Water Testing', subcategory: 'Testing Details', item: 'End Day', required: false, type: 'text' },
+  { id: 'water-testing-device-info', category: 'Water Testing', subcategory: 'Testing Details', item: 'Testing Device Information', required: false, type: 'text' },
 
   // Water Testing - Test Results
   { id: 'water-testing-ph', category: 'Water Testing', subcategory: 'Test Results', item: 'pH Level', required: false, type: 'number' },
@@ -979,6 +979,60 @@ export function ChecklistCategoryContent({
           );
         }
         return null;
+
+      case 'time':
+        return (
+          <div className="space-y-2">
+            <input
+              type="time"
+              value={notes[item.id] || ''}
+              onChange={(e) => handleNoteChange(item.id, e.target.value)}
+              className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background text-foreground"
+            />
+          </div>
+        );
+
+      case 'text':
+        return (
+          <div className="space-y-2">
+            <input
+              type="text"
+              placeholder={item.item === 'Serial Number' ? 'Enter serial number' : 
+                          item.item === 'Model Number' ? 'Enter model number' :
+                          item.item === 'Start Day' ? 'e.g., Monday' :
+                          item.item === 'End Day' ? 'e.g., Wednesday' :
+                          item.item === 'Testing Device Information' ? 'e.g., Best Prod 17 in One Test Kit for Water' :
+                          'Enter value'}
+              value={notes[item.id] || ''}
+              onChange={(e) => handleNoteChange(item.id, e.target.value)}
+              className="w-full px-3 py-2 border border-input rounded-md text-sm bg-background text-foreground"
+            />
+          </div>
+        );
+
+      case 'radio':
+        return (
+          <div className="space-y-3">
+            {item.commentText && (
+              <p className="text-xs text-muted-foreground italic mb-2">{item.commentText}</p>
+            )}
+            <div className="flex gap-4 flex-wrap">
+              {item.options?.map((option) => (
+                <label key={option} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name={item.id}
+                    value={option}
+                    checked={ratingValues[item.id] === option}
+                    onChange={(e) => handleRatingChange(item.id, e.target.value)}
+                    className="h-4 w-4 text-primary border-input focus:ring-primary"
+                  />
+                  <span className="text-sm text-foreground">{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        );
 
       case 'textarea':
         const defaultEpaText = item.id === 'radon-epa-resources' 
