@@ -764,19 +764,20 @@ export function ChecklistCategoryContent({
   const [selectedDefects, setSelectedDefects] = useState<Record<string, boolean>>(formData.selectedDefects || {});
 
   // Support both category IDs ("foundation") and labels ("Foundation & Structure")
-  const categoryLabel = categoryMapping[categoryId] ?? categoryId;
+  // categoryMapping now returns an array of possible category names
+  const categoryLabels = categoryMapping[categoryId] ?? [categoryId];
 
   // Merge the existing checklist with missing defects
   const fullChecklist = mergeChecklists(inspectionChecklist, missingChecklistDefects);
 
   // Filter items based on category and subcategory
   const filteredItems = fullChecklist.filter((item) => {
-    // Match by exact category name OR by mapped category label
-    const categoryMatches = item.category === categoryLabel || 
+    // Match by exact category name OR by any of the mapped category labels
+    const categoryMatches = 
+      categoryLabels.includes(item.category) ||
       item.category === categoryId ||
-      Object.entries(categoryMapping).some(([key, value]) => 
-        (key === categoryId || value === categoryLabel) && 
-        (item.category === key || item.category === value)
+      Object.values(categoryMapping).some(labels => 
+        labels.includes(item.category) && labels.some(l => categoryLabels.includes(l))
       );
     
     if (!categoryMatches) return false;
