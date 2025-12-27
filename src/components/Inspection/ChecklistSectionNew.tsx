@@ -17,7 +17,7 @@ const allInspectionCategories = [
   { id: 'electric', label: 'Electric', subcategories: ['Service Entrance Conductors', 'Main & Subpanels', 'Branch Circuits', 'Lighting Fixtures, Switches & Receptacles', 'GFCI & AFCI', 'Smoke Detectors', 'Carbon Monoxide Detectors'] },
   { id: 'hvac', label: 'Heating & Cooling', subcategories: ['Heating Equipment', 'Cooling Equipment', 'Operating Controls', 'Distribution Systems', 'Vents & Flues'] },
   { id: 'doors-windows', label: 'Doors & Windows', subcategories: ['Windows', 'Entry Doors', 'Interior Doors', 'Garage Doors'] },
-  { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust'] },
+  { id: 'appliances', label: 'Built-in Appliances', subcategories: ['Refrigerator', 'Range/Oven/Cooktop', 'Dishwasher', 'Built-in Microwave', 'Garbage Disposal', 'Cooking Exhaust', 'Fireplaces', 'Attic, Insulation & Ventilation'] },
   { id: 'green', label: 'Green Features', subcategories: [] },
   { id: 'radon', label: 'Radon', subcategories: ['Monitor Details', 'Test Results'] },
   { id: 'well', label: 'Well', subcategories: ['Inspection Details', 'Well System Details'] },

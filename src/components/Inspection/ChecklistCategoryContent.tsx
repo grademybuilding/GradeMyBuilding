@@ -583,6 +583,70 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'cooking-exhaust-fire-extinguisher-not-close', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fire Extinguisher Not Close Enough', required: false, type: 'checkbox', commentText: 'Fire extinguisher is not located within close proximity to the cooking area. Recommend relocating for safety.' },
   { id: 'cooking-exhaust-duct-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Exhaust Duct Improper Installation', required: false, type: 'checkbox', commentText: 'The exhaust duct is improperly installed. Recommend evaluation and correction by a qualified contractor.' },
 
+  // ============== FIREPLACES (under Built-in Appliances) ==============
+  // Solid Fuel Heating Device (Fireplace, Woodstove)
+  { id: 'fireplace-solid-fuel-type', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Solid Fuel Heating Device Type', required: false, type: 'multiselect', options: ['Masonry Fireplace', 'Factory-built Fireplace', 'Wood Stove', 'Pellet Stove', 'Coal Stove'] },
+  { id: 'fireplace-solid-fuel-manufacturer', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Solid Fuel Device Manufacturer', required: false, type: 'text' },
+  { id: 'fireplace-solid-fuel-age', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Solid Fuel Device Age', required: false, type: 'year' },
+  { id: 'fireplace-solid-fuel-inspector-rating', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Solid Fuel Device Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+  
+  // Gas/LP Firelogs & Fireplaces
+  { id: 'fireplace-gas-type', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Gas/LP Fireplace Type', required: false, type: 'multiselect', options: ['Gas Logs', 'Gas Insert', 'Direct Vent', 'Vent-free', 'B-Vent'] },
+  { id: 'fireplace-gas-manufacturer', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Gas/LP Fireplace Manufacturer', required: false, type: 'text' },
+  { id: 'fireplace-gas-age', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Gas/LP Fireplace Age', required: false, type: 'year' },
+  { id: 'fireplace-gas-inspector-rating', category: 'Built-in Appliances', subcategory: 'Fireplaces', item: 'Gas/LP Fireplace Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Fireplaces - Defects (Solid Fuel)
+  { id: 'fireplace-solid-hearth-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Hearth Insufficient Length', required: false, type: 'checkbox', commentText: 'Fireplace hearth should extend a minimum of 20 inches from the front and 12 inches to both sides of fireplace. Recommend a qualified fireplace contractor evaluate and remedy.' },
+  { id: 'fireplace-solid-firewall-cracked', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Firewall Cracked', required: false, type: 'checkbox', commentText: 'The brick lining of the fireplace was cracked in one or more places, which could lead to chimney damage or toxic fumes entering the home. Recommend a qualified fireplace contractor evaluate and repair.' },
+  { id: 'fireplace-solid-damper-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Damper Inoperable (Solid Fuel)', required: false, type: 'checkbox', commentText: 'Damper was inoperable, which could allow toxic fumes into the home. Recommend a qualified fireplace contractor evaluate and repair.' },
+  
+  // Fireplaces - Defects (Gas/LP)
+  { id: 'fireplace-gas-no-screen', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'No Fireplace Screen', required: false, type: 'checkbox', commentText: 'Fireplace screen was missing in front of fireplace. Fire logs can split, so this is recommended as a safety precaution.' },
+  { id: 'fireplace-gas-inadequate-clearance', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Inadequate Clearance', required: false, type: 'checkbox', commentText: 'Fireplace was too close to combustible items. Fireplace and surrounding space should be clear of personal items.' },
+  { id: 'fireplace-gas-damper-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Damper Inoperable (Gas)', required: false, type: 'checkbox', commentText: 'Damper was inoperable. Recommend a qualified fireplace contractor repair.' },
+  { id: 'fireplace-gas-creosote-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Creosote Buildup', required: false, type: 'checkbox', commentText: 'There was a notable amount of creosote buildup in the flue. Recommend a qualified fireplace or chimney contractor inspect and sweep on an annual basis.' },
+
+  // ============== ATTIC, INSULATION & VENTILATION (under Built-in Appliances) ==============
+  // Insulation of Unfinished Spaces
+  { id: 'attic-insulation-type', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Insulation Type', required: false, type: 'multiselect', options: ['Fiberglass Batts', 'Blown-in Fiberglass', 'Blown-in Cellulose', 'Spray Foam', 'Rigid Foam Board', 'Mineral Wool', 'None Visible'] },
+  { id: 'attic-insulation-depth', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Insulation Depth (inches)', required: false, type: 'number' },
+  { id: 'attic-insulation-r-value', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Estimated R-Value', required: false, type: 'multiselect', options: ['R-11', 'R-19', 'R-30', 'R-38', 'R-49', 'Unknown'] },
+  { id: 'attic-insulation-inspector-rating', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Insulation Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Ventilation
+  { id: 'attic-ventilation-type', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Ventilation Type', required: false, type: 'multiselect', options: ['Ridge Vent', 'Soffit Vents', 'Gable Vents', 'Turbine Vents', 'Power Attic Fan', 'Whole House Fan', 'None'] },
+  { id: 'attic-ventilation-inspector-rating', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Ventilation Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Exhaust Systems
+  { id: 'attic-exhaust-systems-type', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Exhaust Systems Type', required: false, type: 'multiselect', options: ['Bathroom Exhaust Fan', 'Kitchen Exhaust', 'Dryer Vent', 'HVAC Ductwork'] },
+  { id: 'attic-exhaust-inspector-rating', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Exhaust Systems Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Vapor Retarders
+  { id: 'attic-vapor-retarder-type', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Vapor Retarder Type', required: false, type: 'multiselect', options: ['Polyethylene Sheet', 'Kraft Paper Facing', 'Foil Facing', 'None Visible'] },
+  { id: 'attic-vapor-retarder-inspector-rating', category: 'Built-in Appliances', subcategory: 'Attic, Insulation & Ventilation', item: 'Vapor Retarder Inspector Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
+
+  // Attic, Insulation & Ventilation - Defects (Insulation)
+  { id: 'attic-insulation-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insulation Damaged', required: false, type: 'checkbox', commentText: 'Insulation appears to have been pulled out and/or damaged by pests. Recommend a qualified insulation contractor evaluate and repair.' },
+  { id: 'attic-insulation-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Attic insulation was improperly installed. Recommend a qualified insulation contractor evaluate and correct.' },
+  { id: 'attic-insulation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insufficient Insulation', required: false, type: 'checkbox', commentText: 'Insulation depth was inadequate. Recommend a qualified attic insulation contractor install additional insulation.' },
+
+  // Attic, Insulation & Ventilation - Defects (Ventilation)
+  { id: 'attic-whole-house-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Whole House Fan Inoperable', required: false, type: 'checkbox', commentText: 'Whole house fan was inoperable at time of inspection. Recommend a qualified whole house fan contractor evaluate and repair.' },
+  { id: 'attic-gable-vent-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Gable Vent Damaged', required: false, type: 'checkbox', commentText: 'Gable vent was damaged, which could allow pests to enter. Recommend a qualified attic or ventilation contractor repair.' },
+  { id: 'attic-discoloration-mold', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Discoloration - Possible Mold', required: false, type: 'checkbox', commentText: 'Attic showed areas of discoloration and possible mold growth. Recommend a mold lab analysis to prevent spread of potential mold and damage to home or health risk. Also recommend finding source of moisture or lack of ventilation in attic space.' },
+  { id: 'attic-ventilation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Ventilation Insufficient', required: false, type: 'checkbox', commentText: 'Attic venting was insufficient at time of inspection. Modern standards recommend 1.5 square feet of venting area for every 300 square feet of attic floor space. Recommend an attic contractor evaluate and remedy.' },
+  { id: 'attic-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Fan Inoperable', required: false, type: 'checkbox', commentText: 'Attic fan was inoperable at time of inspection. Recommend an attic fan specialist evaluate and repair.' },
+
+  // Attic, Insulation & Ventilation - Defects (Exhaust Systems)
+  { id: 'attic-exhaust-ducts-loose', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Ducts Loose', required: false, type: 'checkbox', commentText: 'Ductwork in the attic is loose or disconnected. Recommend repair.' },
+  { id: 'attic-bathroom-vents-into-attic', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Bathroom Vents Into Attic', required: false, type: 'checkbox', commentText: 'Bathroom fan vents into the attic, which can cause moisture and mold. Recommend a qualified attic contractor properly install exhaust fan to terminate to the exterior.' },
+
+  // Attic, Insulation & Ventilation - Defects (Vapor Retarders)
+  { id: 'attic-vapor-barrier-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Damaged', required: false, type: 'checkbox', commentText: 'Vapor barrier is damaged in one or more areas. Recommend insulation contractor repair or replace.' },
+  { id: 'attic-no-vapor-barrier', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'No Vapor Barrier', required: false, type: 'checkbox', commentText: 'There is no vapor barrier beneath the flooring. This can result in unwanted moisture.' },
+  { id: 'attic-vapor-barrier-improper', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Improper Installation', required: false, type: 'checkbox', commentText: 'Vapor barrier is improperly installed. This can result in unwanted moisture. Recommend insulation contractor evaluate.' },
+
   // ============== GREEN FEATURES ==============
   { id: 'green-well-sealed', category: 'Green Features', item: 'Well Sealed', required: false, type: 'checkbox' },
   { id: 'green-well-insulated', category: 'Green Features', item: 'Well Insulated', required: false, type: 'checkbox' },
