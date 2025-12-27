@@ -574,10 +574,14 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'cooking-exhaust-inspector-rating', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
   // Cooking Exhaust - Defects
-  { id: 'cooking-exhaust-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fan Inoperable', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Excessive Noise', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-inadequate-ventilation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Inadequate Ventilation', required: false, type: 'checkbox' },
-  { id: 'cooking-exhaust-light-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Light Inoperable', required: false, type: 'checkbox' },
+  { id: 'cooking-exhaust-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fan Inoperable', required: false, type: 'checkbox', commentText: 'The cooking exhaust fan is inoperable and needs repair or replacement.' },
+  { id: 'cooking-exhaust-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Excessive Noise', required: false, type: 'checkbox', commentText: 'The cooking exhaust system produces excessive noise during operation.' },
+  { id: 'cooking-exhaust-inadequate-ventilation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Inadequate Ventilation', required: false, type: 'checkbox', commentText: 'The cooking exhaust system provides inadequate ventilation for the cooking area.' },
+  { id: 'cooking-exhaust-light-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Light Inoperable', required: false, type: 'checkbox', commentText: 'The light on the cooking exhaust system is inoperable.' },
+  { id: 'cooking-exhaust-duct-dips', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Exhaust Duct Dips', required: false, type: 'checkbox', commentText: 'The exhaust duct has dips or sags that can trap grease and reduce airflow. Recommend repair to maintain proper ventilation.' },
+  { id: 'cooking-exhaust-grease-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Grease Buildup', required: false, type: 'checkbox', commentText: 'Excessive grease buildup was observed in the cooking exhaust system. This is a fire hazard and should be cleaned immediately.' },
+  { id: 'cooking-exhaust-fire-extinguisher-not-close', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fire Extinguisher Not Close Enough', required: false, type: 'checkbox', commentText: 'Fire extinguisher is not located within close proximity to the cooking area. Recommend relocating for safety.' },
+  { id: 'cooking-exhaust-duct-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Exhaust Duct Improper Installation', required: false, type: 'checkbox', commentText: 'The exhaust duct is improperly installed. Recommend evaluation and correction by a qualified contractor.' },
 
   // ============== GREEN FEATURES ==============
   { id: 'green-well-sealed', category: 'Green Features', item: 'Well Sealed', required: false, type: 'checkbox' },
