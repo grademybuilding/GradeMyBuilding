@@ -1217,6 +1217,22 @@ More information can be found directly at the EPA's website: https://www.epa.gov
     return 0;
   });
 
+  // Helper function to check if items should be rendered as a flex row pair
+  const isFlexRowPair = (item: ChecklistItem, nextItem: ChecklistItem | undefined) => {
+    // Radon Start/End Time should be in the same row
+    if (item.id === 'radon-start-time' && nextItem?.id === 'radon-end-time') return true;
+    // Radon Serial/Model Number should be in the same row
+    if (item.id === 'radon-serial-number' && nextItem?.id === 'radon-model-number') return true;
+    // Radon Measurement Interval and Elapsed Time
+    if (item.id === 'radon-measurement-interval' && nextItem?.id === 'radon-elapsed-time') return true;
+    // Water Testing Start/End Day
+    if (item.id === 'water-testing-start-day' && nextItem?.id === 'water-testing-end-day') return true;
+    return false;
+  };
+
+  // IDs that should be skipped because they're rendered as part of a pair
+  const skipIds = ['radon-end-time', 'radon-model-number', 'radon-elapsed-time', 'water-testing-end-day'];
+
   if (filteredItems.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
@@ -1248,10 +1264,20 @@ More information can be found directly at the EPA's website: https://www.epa.gov
             </div>
           )}
           
-          {groupedItems[groupKey].map((item) => {
+          {groupedItems[groupKey].map((item, index) => {
             const isDefectItem = item.subcategory?.includes('Defects');
             const defectCategoryLabel = isDefectItem ? `Defects - ${item.subcategory?.replace('Defects - ', '')}` : '';
             const isDefectSelected = selectedDefects[item.id] === true;
+            const groupItems = groupedItems[groupKey];
+            const nextItem = groupItems[index + 1];
+            
+            // Skip items that are part of a flex row pair (they're rendered with their partner)
+            if (skipIds.includes(item.id)) {
+              return null;
+            }
+            
+            // Check if this item should be rendered in a flex row with the next item
+            const shouldRenderFlexRow = isFlexRowPair(item, nextItem);
             
             // Special rendering for defect items to match reference design
             if (isDefectItem) {
@@ -1283,6 +1309,38 @@ More information can be found directly at the EPA's website: https://www.epa.gov
                   </div>
                   {/* Description textarea */}
                   {renderItemContent(item)}
+                </div>
+              );
+            }
+            
+            // Flex row rendering for paired items (like Start Time / End Time)
+            if (shouldRenderFlexRow && nextItem) {
+              return (
+                <div key={item.id} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg border border-border bg-card transition-colors">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(checkedItems[item.id])}
+                        <span className="font-medium text-sm text-foreground">{item.item}</span>
+                        {item.required && (
+                          <Badge variant="destructive" className="text-xs">Required</Badge>
+                        )}
+                      </div>
+                    </div>
+                    {renderItemContent(item)}
+                  </div>
+                  <div className="p-4 rounded-lg border border-border bg-card transition-colors">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(checkedItems[nextItem.id])}
+                        <span className="font-medium text-sm text-foreground">{nextItem.item}</span>
+                        {nextItem.required && (
+                          <Badge variant="destructive" className="text-xs">Required</Badge>
+                        )}
+                      </div>
+                    </div>
+                    {renderItemContent(nextItem)}
+                  </div>
                 </div>
               );
             }
