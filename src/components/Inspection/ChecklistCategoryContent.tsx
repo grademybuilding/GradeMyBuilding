@@ -264,13 +264,6 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-sump-pump-age', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Age - Year Installed', required: false, type: 'year' },
   { id: 'plumbing-sump-pump-rating', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
   
-  // Plumbing - Fuel Storage & Distribution Systems
-  { id: 'plumbing-fuel-storage-type', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Fuel Type', required: false, type: 'multiselect', options: ['Natural Gas', 'Propane', 'Oil', 'None'] },
-  { id: 'plumbing-fuel-storage-location', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Storage Location', required: false, type: 'multiselect', options: ['Exterior Tank', 'Basement', 'Garage', 'Underground', 'Utility Closet'] },
-  { id: 'plumbing-fuel-meter-location', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Meter Location', required: false, type: 'multiselect', options: ['Exterior - North', 'Exterior - South', 'Exterior - East', 'Exterior - West', 'Basement', 'Garage'] },
-  { id: 'plumbing-fuel-shutoff-location', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Main Shut-off Location', required: false, type: 'multiselect', options: ['At Meter', 'Basement', 'Utility Room', 'Near Appliance'] },
-  { id: 'plumbing-fuel-rating', category: 'Plumbing', subcategory: 'Fuel Storage', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
   // Plumbing - Defects
   { id: 'plumbing-leaky-faucets', category: 'Plumbing', subcategory: 'Defects', item: 'Leaky Faucets', required: false, type: 'checkbox' },
   { id: 'plumbing-running-toilet', category: 'Plumbing', subcategory: 'Defects', item: 'Running Toilet', required: false, type: 'checkbox' },
