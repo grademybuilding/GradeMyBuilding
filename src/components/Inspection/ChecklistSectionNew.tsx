@@ -256,7 +256,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
             {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3 sm:px-5 sm:py-4 border-b border-border/50">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent/15 text-accent">
-                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
               </div>
               <h2 className="text-base sm:text-lg font-semibold text-foreground">
                 Inspection Checklist
