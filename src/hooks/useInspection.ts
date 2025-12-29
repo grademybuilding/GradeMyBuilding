@@ -60,16 +60,16 @@ interface UseInspectionOptions {
   restoreDraftOnMount?: boolean;
 }
 
-// Debug logging helper
+// Debug logging helper (disabled for production)
 const DEBUG_PREFIX = '[INSPECTION]';
 const log = {
-  save: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[SAVE] ${msg}`, data ?? ''),
-  create: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[CREATE] ${msg}`, data ?? ''),
-  update: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[UPDATE] ${msg}`, data ?? ''),
-  submit: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[SUBMIT] ${msg}`, data ?? ''),
-  load: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[LOAD] ${msg}`, data ?? ''),
-  verify: (msg: string, data?: any) => console.log(`${DEBUG_PREFIX}[VERIFY] ${msg}`, data ?? ''),
-  error: (msg: string, data?: any) => console.error(`${DEBUG_PREFIX}[ERROR] ${msg}`, data ?? ''),
+  save: (_msg: string, _data?: any) => {},
+  create: (_msg: string, _data?: any) => {},
+  update: (_msg: string, _data?: any) => {},
+  submit: (_msg: string, _data?: any) => {},
+  load: (_msg: string, _data?: any) => {},
+  verify: (_msg: string, _data?: any) => {},
+  error: (_msg: string, _data?: any) => {},
 };
 
 export function useInspection(options: UseInspectionOptions = {}) {

@@ -45,8 +45,7 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      // For now, just log and show success - ready for future integration
-      console.log("Contact form submitted:", data);
+      // Ready for future integration
       toast.success("Thank you for your message! We'll be in touch soon.");
       form.reset();
     } catch (error) {
