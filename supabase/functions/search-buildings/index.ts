@@ -29,8 +29,6 @@ Deno.serve(async (req) => {
     const limit = 20;
     const offset = (page - 1) * limit;
 
-    console.log('Search parameters:', { address, city, state, propertyType, minGrade, maxGrade, dateFrom, dateTo, page });
-
     // Build query for public properties with completed inspections
     let query = supabase
       .from('properties')
@@ -114,7 +112,6 @@ Deno.serve(async (req) => {
     const { data, error } = await query;
 
     if (error) {
-      console.error('Search error:', error);
       return new Response(
         JSON.stringify({ error: 'Failed to search properties' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -123,7 +120,7 @@ Deno.serve(async (req) => {
 
     // Transform data to include only the most recent inspection per property
     const results = data?.map((property: any) => {
-      const latestInspection = property.inspections[0]; // Already ordered by date desc
+      const latestInspection = property.inspections[0];
       return {
         id: property.id,
         address: property.address,
@@ -147,8 +144,6 @@ Deno.serve(async (req) => {
       };
     }) || [];
 
-    console.log(`Found ${results.length} results`);
-
     return new Response(
       JSON.stringify({
         results,
@@ -163,7 +158,6 @@ Deno.serve(async (req) => {
     );
 
   } catch (error) {
-    console.error('Unexpected error:', error);
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

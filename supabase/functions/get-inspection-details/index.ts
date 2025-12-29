@@ -54,8 +54,7 @@ serve(async (req) => {
       });
     }
 
-    // Fetch inspection with related property (NOTE: no FK exists from inspections.inspector_id -> profiles.id)
-    // so we fetch inspector profile in a second query.
+    // Fetch inspection with related property
     const { data: inspection, error: inspectionError } = await supabase
       .from('inspections')
       .select(`
@@ -68,54 +67,37 @@ serve(async (req) => {
       .single();
 
     if (inspectionError) {
-      console.error('Error fetching inspection:', inspectionError);
       return new Response(JSON.stringify({ error: inspectionError.message }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    // Debug logging
-    console.log('[get-inspection-details] Inspection ID:', inspection_id);
-    console.log('[get-inspection-details] Properties:', inspection?.properties);
-    console.log('[get-inspection-details] Checklist Data:', inspection?.checklist_data);
-
     // Fetch inspector profile (best-effort; can fail due to RLS depending on viewer)
     let inspector_profile: any = null;
     if (inspection?.inspector_id) {
-      const { data: profile, error: profileError } = await supabase
+      const { data: profile } = await supabase
         .from('profiles')
         .select('full_name, email, phone, company_name, avatar_url')
         .eq('id', inspection.inspector_id)
         .maybeSingle();
 
-      if (profileError) {
-        console.warn('Could not fetch inspector profile (RLS likely):', profileError);
-      } else {
-        inspector_profile = profile;
-      }
+      inspector_profile = profile;
     }
+
     // Fetch checklist items
-    const { data: checklistItems, error: checklistError } = await supabase
+    const { data: checklistItems } = await supabase
       .from('checklist_items')
       .select('*')
       .eq('inspection_id', inspection_id)
       .order('category');
 
-    if (checklistError) {
-      console.error('Error fetching checklist items:', checklistError);
-    }
-
     // Fetch photos
-    const { data: photos, error: photosError } = await supabase
+    const { data: photos } = await supabase
       .from('inspection_photos')
       .select('*')
       .eq('inspection_id', inspection_id)
       .order('created_at');
-
-    if (photosError) {
-      console.error('Error fetching photos:', photosError);
-    }
 
     return new Response(JSON.stringify({
       inspection,
@@ -126,7 +108,6 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Unexpected error:', error);
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

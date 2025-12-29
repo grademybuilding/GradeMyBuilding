@@ -40,8 +40,6 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   };
 
   const handleResumeInspection = (inspectionId: string) => {
-    // Navigate to new-inspection page with inspection ID as query param
-    console.log('[RESUME] Navigating to /new-inspection with id', inspectionId);
     navigate(`/new-inspection?id=${inspectionId}`);
   };
 
@@ -244,13 +242,6 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh]">
           {(() => {
-            // Debug logging
-            if (selectedInspection) {
-              console.log('[INSPECTION DETAILS]', selectedInspection);
-              console.log('[PROPERTY DETAILS]', selectedInspection.properties);
-              console.log('[CHECKLIST DATA]', selectedInspection.checklist_data);
-            }
-
             // Compute display values with fallback logic
             const checklistData = selectedInspection?.checklist_data as Record<string, unknown> | null;
             const props = selectedInspection?.properties;
