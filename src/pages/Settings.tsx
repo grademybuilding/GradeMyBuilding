@@ -4,6 +4,7 @@ import { User, Bell, Shield, HelpCircle, ShieldCheck, ShieldX, Loader2 } from "l
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { useNotificationPreferences } from "@/hooks/useNotificationPreferences";
 import { ChangePasswordModal } from "@/components/Settings/ChangePasswordModal";
@@ -144,9 +145,16 @@ export default function Settings() {
           </CardHeader>
           <CardContent className="space-y-4">
             {prefsLoading ? (
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Loading preferences...
+              <div className="space-y-4">
+                {Array.from({ length: 2 }).map((_, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <div className="space-y-1">
+                      <Skeleton className="h-5 w-32" />
+                      <Skeleton className="h-4 w-48" />
+                    </div>
+                    <Skeleton className="h-6 w-11 rounded-full" />
+                  </div>
+                ))}
               </div>
             ) : (
               <>

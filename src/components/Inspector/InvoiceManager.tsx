@@ -10,6 +10,7 @@ import { Plus, Search, Eye, Edit, FileText } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { InvoiceForm } from "./InvoiceForm";
 import { format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Invoice {
   id: string;
@@ -204,7 +205,70 @@ export default function InvoiceManager() {
           <Card>
             <CardContent className="p-0">
               {loading ? (
-                <div className="p-8 text-center text-muted-foreground">Loading invoices...</div>
+                <>
+                  {/* Desktop Skeleton */}
+                  <div className="hidden md:block">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Invoice #</TableHead>
+                          <TableHead>Customer</TableHead>
+                          <TableHead>Issue Date</TableHead>
+                          <TableHead>Due Date</TableHead>
+                          <TableHead>Total</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <TableRow key={index}>
+                            <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                            <TableCell>
+                              <div className="space-y-1">
+                                <Skeleton className="h-4 w-32" />
+                                <Skeleton className="h-3 w-40" />
+                              </div>
+                            </TableCell>
+                            <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                            <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                            <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                            <TableCell><Skeleton className="h-5 w-16 rounded-full" /></TableCell>
+                            <TableCell className="text-right">
+                              <div className="flex justify-end gap-2">
+                                <Skeleton className="h-8 w-8 rounded-md" />
+                                <Skeleton className="h-8 w-8 rounded-md" />
+                                <Skeleton className="h-8 w-8 rounded-md" />
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                  {/* Mobile Skeleton */}
+                  <div className="md:hidden divide-y divide-border">
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <div key={index} className="p-4 space-y-3">
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-1">
+                            <Skeleton className="h-4 w-24" />
+                            <Skeleton className="h-3 w-32" />
+                          </div>
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <Skeleton className="h-3 w-28" />
+                          <Skeleton className="h-4 w-16" />
+                        </div>
+                        <div className="flex gap-2">
+                          <Skeleton className="h-8 flex-1 rounded-md" />
+                          <Skeleton className="h-8 flex-1 rounded-md" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               ) : filteredInvoices.length === 0 ? (
                 <div className="p-8 text-center text-muted-foreground text-sm">
                   No invoices found. Create your first invoice to get started.
