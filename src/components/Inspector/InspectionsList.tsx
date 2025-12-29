@@ -379,11 +379,24 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                           </CardHeader>
                           <CardContent className="p-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                              {Object.entries(selectedInspection.category_scores as Record<string, { score: number; grade: string }>)
+                              {Object.entries(selectedInspection.category_scores as Record<string, { score?: number; grade?: string; weighted_score?: number }>)
                                 .sort(([, a], [, b]) => (b.score ?? 0) - (a.score ?? 0))
                                 .map(([category, data]) => {
-                                  const gradeColor = getGradeColor(data.grade?.charAt(0));
                                   const score = data.score ?? 0;
+                                  // Derive grade from score if not provided
+                                  const derivedGrade = data.grade || (
+                                    score >= 95 ? 'A+' :
+                                    score >= 90 ? 'A' :
+                                    score >= 85 ? 'A-' :
+                                    score >= 80 ? 'B+' :
+                                    score >= 75 ? 'B' :
+                                    score >= 70 ? 'B-' :
+                                    score >= 65 ? 'C+' :
+                                    score >= 60 ? 'C' :
+                                    score >= 55 ? 'C-' :
+                                    score >= 45 ? 'D' : 'F'
+                                  );
+                                  const gradeColor = getGradeColor(derivedGrade.charAt(0));
                                   return (
                                     <div 
                                       key={category} 
@@ -413,7 +426,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                                           </div>
                                         </div>
                                         <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold text-white shadow-sm ${gradeColor}`}>
-                                          {data.grade}
+                                          {derivedGrade}
                                         </div>
                                       </div>
                                     </div>

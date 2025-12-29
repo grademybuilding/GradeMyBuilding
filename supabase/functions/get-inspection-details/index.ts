@@ -99,11 +99,37 @@ serve(async (req) => {
       .eq('inspection_id', inspection_id)
       .order('created_at');
 
+    // Generate signed URLs for photos (bucket is private)
+    const photosWithSignedUrls = await Promise.all(
+      (photos || []).map(async (photo) => {
+        // Extract the path from the full URL or use photo_url directly if it's a path
+        let storagePath = photo.photo_url;
+        
+        // If it's a full URL, extract the path after the bucket name
+        if (storagePath.includes('/storage/v1/object/')) {
+          const match = storagePath.match(/\/storage\/v1\/object\/(?:public|sign)\/inspection-photos\/(.+)/);
+          if (match) {
+            storagePath = match[1];
+          }
+        }
+        
+        // Generate signed URL (valid for 1 hour)
+        const { data: signedUrlData } = await supabase.storage
+          .from('inspection-photos')
+          .createSignedUrl(storagePath, 3600);
+        
+        return {
+          ...photo,
+          photo_url: signedUrlData?.signedUrl || photo.photo_url
+        };
+      })
+    );
+
     return new Response(JSON.stringify({
       inspection,
       inspector_profile,
       checklist_items: checklistItems || [],
-      photos: photos || []
+      photos: photosWithSignedUrls
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
