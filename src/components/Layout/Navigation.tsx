@@ -1,6 +1,6 @@
 import { Home, ClipboardCheck, Building, Camera, FileText, Settings, Receipt, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface NavigationProps {
   activeTab: string;
@@ -21,10 +21,19 @@ const navItems = [
 
 export function Navigation({ activeTab, onTabChange, isMobile = false }: NavigationProps) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavClick = (item: typeof navItems[0]) => {
     navigate(item.path);
     onTabChange(item.id);
+  };
+
+  // Check if current route should highlight a nav item
+  const isActiveTab = (itemId: string) => {
+    if (activeTab === itemId) return true;
+    // Highlight "Inspections" when on /new-inspection route
+    if (itemId === 'inspections' && location.pathname === '/new-inspection') return true;
+    return false;
   };
 
   if (isMobile) {
@@ -32,7 +41,7 @@ export function Navigation({ activeTab, onTabChange, isMobile = false }: Navigat
       <div className="flex items-center justify-around px-2 py-2 pb-[env(safe-area-inset-bottom)]">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = activeTab === item.id;
+          const isActive = isActiveTab(item.id);
           
           return (
             <button
@@ -72,7 +81,7 @@ export function Navigation({ activeTab, onTabChange, isMobile = false }: Navigat
     <nav className="flex items-center gap-1 max-w-4xl mx-auto">
       {navItems.map((item) => {
         const Icon = item.icon;
-        const isActive = activeTab === item.id;
+        const isActive = isActiveTab(item.id);
         
         return (
           <button
