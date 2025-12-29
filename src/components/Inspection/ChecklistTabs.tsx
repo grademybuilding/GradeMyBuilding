@@ -91,8 +91,8 @@ export function ChecklistTabs({
                     isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
                     // Completed (secondary)
                     isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
-                    // Skipped (orange)
-                    isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
+                    // Skipped (primary muted)
+                    isSkipped && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
                     // Locked
                     isLocked && "bg-muted/40 text-muted-foreground/50 border-border/60 cursor-not-allowed",
                     // Remaining
@@ -106,7 +106,7 @@ export function ChecklistTabs({
                       "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold shrink-0 transition-all",
                       isCurrent && "bg-primary-foreground/25 text-primary-foreground",
                       isCompleted && !isCurrent && "bg-secondary-foreground/20 text-secondary-foreground",
-                      isSkipped && !isCurrent && "bg-warning-foreground/20 text-warning-foreground",
+                      isSkipped && !isCurrent && "bg-primary/20 text-primary",
                       !isDone && !isCurrent && !isLocked && "bg-background text-muted-foreground",
                       isLocked && "bg-background/60 text-muted-foreground/50"
                     )}
