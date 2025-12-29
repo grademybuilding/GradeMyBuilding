@@ -357,17 +357,17 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border-2 cursor-pointer",
                           // Active
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                          // Completed (secondary)
+                          // Completed (secondary) - takes priority over skipped
                           isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
-                          // Skipped (primary muted)
-                          isSkipped && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
+                          // Skipped (primary muted) - only if not completed
+                          isSkipped && !isCompleted && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
                           // Remaining
                           !isCurrent && !isDone && "bg-muted text-foreground border-border hover:border-primary/50 hover:bg-muted/80"
                         )}
                       >
                         <span>{tab.label}</span>
                         {isCompleted && <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
-                        {isSkipped && <MinusCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
+                        {isSkipped && !isCompleted && <MinusCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
                       </button>
                     );
                   })
