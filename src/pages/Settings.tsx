@@ -43,7 +43,7 @@ export default function Settings() {
       const hasVerifiedFactor = data.totp.some(factor => factor.status === "verified");
       setMfaEnabled(hasVerifiedFactor);
     } catch (error) {
-      console.error("Failed to check MFA status:", error);
+      // Silent fail
     } finally {
       setCheckingMfa(false);
     }

@@ -54,7 +54,7 @@ export function NotificationsDropdown() {
       setNotifications(data || []);
       setUnreadCount(data?.filter(n => !n.is_read).length || 0);
     } catch (error) {
-      console.error("Failed to fetch notifications:", error);
+      // Silent fail
     } finally {
       setLoading(false);
     }
@@ -97,7 +97,7 @@ export function NotificationsDropdown() {
       );
       setUnreadCount((prev) => Math.max(0, prev - 1));
     } catch (error) {
-      console.error("Failed to mark notification as read:", error);
+      // Silent fail
     }
   };
 
@@ -114,7 +114,7 @@ export function NotificationsDropdown() {
       setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
       setUnreadCount(0);
     } catch (error) {
-      console.error("Failed to mark all notifications as read:", error);
+      // Silent fail
     }
   };
 

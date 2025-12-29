@@ -48,7 +48,7 @@ export function useNotificationPreferences() {
         setPreferences(newData);
       }
     } catch (error) {
-      console.error("Failed to fetch notification preferences:", error);
+      // Silent fail
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,6 @@ export function useNotificationPreferences() {
       setPreferences((prev) => prev ? { ...prev, ...updates } : null);
       return true;
     } catch (error) {
-      console.error("Failed to update notification preferences:", error);
       return false;
     }
   };
