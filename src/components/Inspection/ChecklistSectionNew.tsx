@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo, useEffect, useContext } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChecklistCategoryContent } from "./ChecklistCategoryContent";
-import { CheckCircle, ChevronRight, ChevronLeft } from "lucide-react";
+import { CheckCircle, ChevronRight, ChevronLeft, MinusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollContext } from "@/pages/NewInspection";
 
@@ -359,14 +359,15 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
                           // Completed (secondary)
                           isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
-                          // Skipped (orange)
-                          isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
+                          // Skipped (primary muted)
+                          isSkipped && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
                           // Remaining
                           !isCurrent && !isDone && "bg-muted text-foreground border-border hover:border-primary/50 hover:bg-muted/80"
                         )}
                       >
                         <span>{tab.label}</span>
                         {isCompleted && <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
+                        {isSkipped && <MinusCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5" />}
                       </button>
                     );
                   })
