@@ -1201,11 +1201,11 @@ export function ChecklistCategoryContent({
   const getStatusIcon = (status: 'pass' | 'fail' | 'na' | undefined) => {
     switch (status) {
       case 'pass':
-        return <CheckCircle className="h-4 w-4 text-emerald-600" />;
+        return <CheckCircle className="h-4 w-4 text-primary" />;
       case 'fail':
-        return <X className="h-4 w-4 text-red-600" />;
+        return <X className="h-4 w-4 text-destructive" />;
       case 'na':
-        return <AlertTriangle className="h-4 w-4 text-amber-600" />;
+        return <AlertTriangle className="h-4 w-4 text-warning" />;
       default:
         return null;
     }
