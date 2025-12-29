@@ -68,7 +68,10 @@ const Contact = () => {
               Get in Touch
             </h1>
             <p className="text-lg text-muted-foreground">
-              Have questions about our property inspection platform? We'd love to hear from you.
+              Fill out this form or email us at{" "}
+              <a href="mailto:saaj@grademybuilding.com" className="text-primary hover:underline">
+                saaj@grademybuilding.com
+              </a>
             </p>
           </div>
 
