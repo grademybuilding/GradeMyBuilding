@@ -89,10 +89,10 @@ export function ChecklistTabs({
                     "relative flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 whitespace-nowrap border-2",
                     // Active
                     isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                    // Completed (secondary)
+                    // Completed (secondary) - takes priority over skipped
                     isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
-                    // Skipped (primary muted)
-                    isSkipped && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
+                    // Skipped (primary muted) - only if not completed
+                    isSkipped && !isCompleted && !isCurrent && "bg-primary/15 text-primary border-primary/40 hover:bg-primary/25 shadow-sm",
                     // Locked
                     isLocked && "bg-muted/40 text-muted-foreground/50 border-border/60 cursor-not-allowed",
                     // Remaining
