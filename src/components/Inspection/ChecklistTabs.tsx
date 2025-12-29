@@ -89,8 +89,8 @@ export function ChecklistTabs({
                     "relative flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 whitespace-nowrap border-2",
                     // Active
                     isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                    // Completed (purple)
-                    isCompleted && !isCurrent && "bg-complete text-complete-foreground border-complete hover:bg-complete/90 shadow-sm",
+                    // Completed (secondary)
+                    isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
                     // Skipped (orange)
                     isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
                     // Locked
@@ -105,7 +105,7 @@ export function ChecklistTabs({
                     className={cn(
                       "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold shrink-0 transition-all",
                       isCurrent && "bg-primary-foreground/25 text-primary-foreground",
-                      isCompleted && !isCurrent && "bg-complete-foreground/20 text-complete-foreground",
+                      isCompleted && !isCurrent && "bg-secondary-foreground/20 text-secondary-foreground",
                       isSkipped && !isCurrent && "bg-warning-foreground/20 text-warning-foreground",
                       !isDone && !isCurrent && !isLocked && "bg-background text-muted-foreground",
                       isLocked && "bg-background/60 text-muted-foreground/50"

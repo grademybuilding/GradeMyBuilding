@@ -286,14 +286,14 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           "relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-200",
                           // Active: Solid primary
                           isCurrent && "bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/40",
-                          // Completed: Purple (complete)
-                          isCompleted && !isCurrent && "bg-complete border-complete text-complete-foreground shadow-md shadow-complete/30",
+                          // Completed: Secondary
+                          isCompleted && !isCurrent && "bg-secondary border-secondary text-secondary-foreground shadow-md",
                           // Remaining: Visible but neutral
                           !isCompleted && !isCurrent && isAccessible && "bg-muted border-border text-muted-foreground group-hover:border-primary/60 group-hover:bg-muted/80",
                           !isAccessible && "bg-muted/30 border-border/50 text-foreground/40 cursor-not-allowed"
                         )}>
                           {isCompleted ? (
-                            <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-complete-foreground" />
+                            <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6" />
                           ) : isCurrent ? (
                             <span className="text-xs sm:text-sm font-bold text-primary-foreground">{index + 1}</span>
                           ) : (
@@ -305,7 +305,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         <span className={cn(
                           "text-[10px] sm:text-xs font-bold text-center max-w-[70px] sm:max-w-[90px] leading-tight",
                           isCurrent && "text-primary",
-                          isCompleted && !isCurrent && "text-complete",
+                          isCompleted && !isCurrent && "text-secondary-foreground",
                           !isCompleted && !isCurrent && "text-muted-foreground"
                         )}>
                           {category.label}
@@ -318,7 +318,7 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           <div className={cn(
                             "w-6 sm:w-10 lg:w-14 h-0.5 rounded-full transition-colors",
                             // Completed connector
-                            index < activeMainCategory && completedCategories.includes(index) && "bg-complete",
+                            index < activeMainCategory && completedCategories.includes(index) && "bg-secondary",
                             // Progress connector
                             index < activeMainCategory && !completedCategories.includes(index) && "bg-primary",
                             // Future connector
@@ -357,8 +357,8 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border-2 cursor-pointer",
                           // Active
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                          // Completed (purple)
-                          isCompleted && !isCurrent && "bg-complete text-complete-foreground border-complete hover:bg-complete/90 shadow-sm",
+                          // Completed (secondary)
+                          isCompleted && !isCurrent && "bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/80 shadow-sm",
                           // Skipped (orange)
                           isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
                           // Remaining
