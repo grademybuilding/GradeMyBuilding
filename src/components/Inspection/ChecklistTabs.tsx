@@ -87,11 +87,16 @@ export function ChecklistTabs({
                   onClick={() => handleTabClick(tab.id, index)}
                   className={cn(
                     "relative flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap",
-                    isCurrent && "bg-primary text-primary-foreground shadow-md shadow-primary/20",
-                    isCompleted && !isCurrent && "bg-accent/10 text-accent border border-accent/25 hover:bg-accent/15",
-                    isSkipped && !isCurrent && "bg-muted/60 text-muted-foreground border border-border/50 hover:bg-muted/80",
-                    isLocked && "bg-muted/30 text-muted-foreground/40 border border-transparent cursor-not-allowed",
-                    !isLocked && !isCurrent && !isDone && "bg-muted/40 text-muted-foreground border border-transparent hover:bg-muted/60 hover:border-border/40",
+                    // Active: Solid primary with shadow
+                    isCurrent && "bg-primary text-primary-foreground shadow-md shadow-primary/30",
+                    // Completed: Green for clear visibility
+                    isCompleted && !isCurrent && "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 dark:hover:bg-emerald-900/60",
+                    // Skipped: Amber/orange for attention
+                    isSkipped && !isCurrent && "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700 hover:bg-amber-200 dark:hover:bg-amber-900/60",
+                    // Locked: Very muted
+                    isLocked && "bg-muted/30 dark:bg-muted/20 text-muted-foreground/40 border border-transparent cursor-not-allowed",
+                    // Remaining (accessible): Muted but visible
+                    !isLocked && !isCurrent && !isDone && "bg-muted/50 dark:bg-muted/30 text-muted-foreground border border-muted-foreground/20 dark:border-muted-foreground/30 hover:bg-muted hover:border-primary/40",
                     isClickable && !isCurrent && "cursor-pointer"
                   )}
                 >
@@ -99,11 +104,16 @@ export function ChecklistTabs({
                   <span
                     className={cn(
                       "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold shrink-0 transition-all",
-                      isCurrent && "bg-primary-foreground/20 text-primary-foreground",
-                      isCompleted && !isCurrent && "bg-accent text-accent-foreground",
-                      isSkipped && !isCurrent && "bg-muted text-muted-foreground",
-                      !isDone && !isCurrent && !isLocked && "bg-background text-muted-foreground",
-                      isLocked && "bg-muted text-muted-foreground/50"
+                      // Active: Light contrast circle
+                      isCurrent && "bg-primary-foreground/25 text-primary-foreground",
+                      // Completed: Green circle
+                      isCompleted && !isCurrent && "bg-emerald-500 dark:bg-emerald-600 text-white",
+                      // Skipped: Amber circle
+                      isSkipped && !isCurrent && "bg-amber-500 dark:bg-amber-600 text-white",
+                      // Remaining: Muted circle
+                      !isDone && !isCurrent && !isLocked && "bg-muted dark:bg-muted/60 text-muted-foreground",
+                      // Locked: Very muted
+                      isLocked && "bg-muted/60 dark:bg-muted/40 text-muted-foreground/40"
                     )}
                   >
                     {isCompleted ? (
