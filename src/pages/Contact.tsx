@@ -69,8 +69,8 @@ const Contact = () => {
             </h1>
             <p className="text-lg text-muted-foreground">
               Fill out this form or email us at{" "}
-              <a href="mailto:saaj@grademybuilding.com" className="text-primary hover:underline">
-                saaj@grademybuilding.com
+              <a href="mailto:contact@grademybuilding.com" className="text-primary hover:underline">
+                contact@grademybuilding.com
               </a>
             </p>
           </div>
