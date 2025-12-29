@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { PublicHeader } from "@/components/Layout/PublicHeader";
+import { supabase } from "@/integrations/supabase/client";
 
 const interestOptions = [
   { id: "mobile-app", label: "Free AI-Powered Mobile App for Inspectors" },
@@ -45,10 +46,22 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     try {
-      // Ready for future integration
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: data.name,
+          company: data.company,
+          email: data.email,
+          interests: data.interests,
+          message: data.message || null,
+        });
+
+      if (error) throw error;
+
       toast.success("Thank you for your message! We'll be in touch soon.");
       form.reset();
     } catch (error) {
+      console.error('Contact form submission error:', error);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
