@@ -35,7 +35,7 @@ All colors MUST be HSL.
     /* Professional blue from logo */
     --primary: 213 89% 42%;
     --primary-foreground: 0 0% 100%;
-    
+
     /* Light blue accent */
     --secondary: 213 45% 88%;
     --secondary-foreground: 213 89% 25%;
@@ -47,13 +47,19 @@ All colors MUST be HSL.
     --accent: 213 89% 95%;
     --accent-foreground: 213 89% 35%;
 
+    /* Checklist state colors (semantic) */
+    --complete: 268 85% 55%;
+    --complete-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 213 25% 90%;
     --input: 213 25% 90%;
     --ring: 213 89% 42%;
-    
+
     /* Custom gradients */
     --gradient-primary: linear-gradient(135deg, hsl(213 89% 42%), hsl(213 89% 35%));
     --gradient-accent: linear-gradient(135deg, hsl(142 69% 45%), hsl(142 69% 38%));
@@ -104,13 +110,19 @@ All colors MUST be HSL.
     --accent: 213 89% 25%;
     --accent-foreground: 0 0% 100%;
 
+    /* Checklist state colors (semantic) */
+    --complete: 268 85% 62%;
+    --complete-foreground: 0 0% 100%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 0 0% 100%;
+
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 213 25% 20%;
     --input: 213 25% 20%;
     --ring: 213 89% 55%;
-    
+
     --gradient-primary: linear-gradient(135deg, hsl(213 89% 55%), hsl(213 89% 45%));
     --gradient-accent: linear-gradient(135deg, hsl(142 69% 50%), hsl(142 69% 40%));
     --gradient-hero: linear-gradient(135deg, hsl(213 89% 55%), hsl(142 69% 50%));

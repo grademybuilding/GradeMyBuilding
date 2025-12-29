@@ -87,16 +87,16 @@ export function ChecklistTabs({
                   onClick={() => handleTabClick(tab.id, index)}
                   className={cn(
                     "relative flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 whitespace-nowrap border-2",
-                    // Active: Solid primary with shadow
+                    // Active
                     isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                    // Completed: Solid green with white text
-                    isCompleted && !isCurrent && "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 shadow-sm",
-                    // Skipped: Solid amber with white text
-                    isSkipped && !isCurrent && "bg-amber-500 text-white border-amber-500 hover:bg-amber-600 shadow-sm",
-                    // Locked: Light muted
-                    isLocked && "bg-slate-100 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 border-slate-200 dark:border-slate-700 cursor-not-allowed",
-                    // Remaining (accessible): Light gray with visible border
-                    !isLocked && !isCurrent && !isDone && "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-600 hover:border-primary hover:bg-slate-200 dark:hover:bg-slate-700",
+                    // Completed (purple)
+                    isCompleted && !isCurrent && "bg-complete text-complete-foreground border-complete hover:bg-complete/90 shadow-sm",
+                    // Skipped (orange)
+                    isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
+                    // Locked
+                    isLocked && "bg-muted/40 text-muted-foreground/50 border-border/60 cursor-not-allowed",
+                    // Remaining
+                    !isLocked && !isCurrent && !isDone && "bg-muted text-foreground border-border hover:border-primary/50 hover:bg-muted/80",
                     isClickable && !isCurrent && "cursor-pointer"
                   )}
                 >
@@ -104,16 +104,11 @@ export function ChecklistTabs({
                   <span
                     className={cn(
                       "flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[10px] sm:text-xs font-bold shrink-0 transition-all",
-                      // Active: Semi-transparent white
-                      isCurrent && "bg-white/25 text-primary-foreground",
-                      // Completed: White circle with green check
-                      isCompleted && !isCurrent && "bg-white/30 text-white",
-                      // Skipped: White circle with amber icon
-                      isSkipped && !isCurrent && "bg-white/30 text-white",
-                      // Remaining: Visible number circle
-                      !isDone && !isCurrent && !isLocked && "bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300",
-                      // Locked: Muted circle
-                      isLocked && "bg-slate-200 dark:bg-slate-700/50 text-slate-400 dark:text-slate-500"
+                      isCurrent && "bg-primary-foreground/25 text-primary-foreground",
+                      isCompleted && !isCurrent && "bg-complete-foreground/20 text-complete-foreground",
+                      isSkipped && !isCurrent && "bg-warning-foreground/20 text-warning-foreground",
+                      !isDone && !isCurrent && !isLocked && "bg-background text-muted-foreground",
+                      isLocked && "bg-background/60 text-muted-foreground/50"
                     )}
                   >
                     {isCompleted ? (
