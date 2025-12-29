@@ -1,13 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Eye, Calendar, MapPin, Loader2, AlertCircle } from "lucide-react";
+import { Eye, Calendar, MapPin, AlertCircle } from "lucide-react";
 import { useInspections } from "@/hooks/useInspections";
 import { format } from "date-fns";
+import { RecentInspectionsSkeleton } from "@/components/Skeletons";
 
 export function RecentInspections() {
   const { inspections, loading, error } = useInspections();
-
   const getStatusColor = (status: string | null) => {
     switch (status) {
       case 'completed':
@@ -45,9 +45,7 @@ export function RecentInspections() {
       </CardHeader>
       <CardContent className="pt-0">
         {loading ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
-          </div>
+          <RecentInspectionsSkeleton />
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-8">
             <AlertCircle className="h-6 w-6 text-destructive mb-2" />

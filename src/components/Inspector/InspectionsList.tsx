@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Building, Calendar, MapPin, FileText, Eye, Loader2, AlertCircle, RefreshCw, PlayCircle } from "lucide-react";
+import { Building, Calendar, MapPin, FileText, Eye, AlertCircle, RefreshCw, PlayCircle, Loader2 } from "lucide-react";
 import { QuickActions } from "@/components/Dashboard/QuickActions";
 import { useInspections, useInspectionDetails } from "@/hooks/useInspections";
 import { format } from "date-fns";
+import { InspectionCardSkeleton } from "@/components/Skeletons";
 import {
   Dialog,
   DialogContent,
@@ -72,9 +73,16 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
     return (
       <div className="p-4 space-y-6 animate-fade-in max-w-7xl mx-auto">
         <QuickActions />
-        <div className="flex flex-col items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
-          <p className="text-muted-foreground">Loading inspections...</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold">My Inspections</h1>
+            <p className="text-sm text-muted-foreground">Loading inspections...</p>
+          </div>
+        </div>
+        <div className="grid gap-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <InspectionCardSkeleton key={index} />
+          ))}
         </div>
       </div>
     );

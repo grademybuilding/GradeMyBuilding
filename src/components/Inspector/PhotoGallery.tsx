@@ -9,13 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Camera, Upload, Loader2, ImageIcon, FolderOpen } from "lucide-react";
+import { Camera, Upload, ImageIcon, FolderOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useInspectionPhotos, InspectionPhoto } from "@/hooks/useInspectionPhotos";
 import { PhotoUploadModal } from "@/components/Inspection/PhotoUploadModal";
 import { PhotoGalleryGrid } from "@/components/Inspection/PhotoGalleryGrid";
 import { PhotoCarousel } from "@/components/Inspection/PhotoCarousel";
 import { InspectionPhotoCard } from "@/components/Inspection/InspectionPhotoCard";
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Generate signed URLs for photos
 async function generateSignedUrls(photos: InspectionPhoto[]): Promise<InspectionPhoto[]> {
@@ -257,9 +258,9 @@ export default function PhotoGallery() {
         </CardHeader>
         <CardContent>
           {loadingInspections ? (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Loading inspections...
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <Skeleton className="h-10 w-full sm:max-w-md rounded-md" />
+              <Skeleton className="h-4 w-20" />
             </div>
           ) : inspections.length === 0 ? (
             <div className="text-center py-6 text-muted-foreground">
@@ -327,8 +328,19 @@ export default function PhotoGallery() {
           </CardHeader>
           <CardContent>
             {loadingAllPhotos ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div key={index} className="rounded-lg overflow-hidden border border-border">
+                    <Skeleton className="aspect-video w-full" />
+                    <div className="p-3 space-y-2">
+                      <Skeleton className="h-4 w-32" />
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="h-5 w-16 rounded-full" />
+                        <Skeleton className="h-4 w-20" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : inspectionsWithPhotos.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
@@ -372,8 +384,19 @@ export default function PhotoGallery() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div key={index} className="rounded-lg overflow-hidden border border-border">
+                    <Skeleton className="aspect-video w-full" />
+                    <div className="p-3 space-y-2">
+                      <Skeleton className="h-4 w-32" />
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="h-5 w-16 rounded-full" />
+                        <Skeleton className="h-4 w-20" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : singleInspectionPhotos.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
