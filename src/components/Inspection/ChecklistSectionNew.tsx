@@ -284,12 +284,12 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         {/* Circle indicator */}
                         <div className={cn(
                           "relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-200",
-                          // Active: Solid blue with strong contrast
+                          // Active: Solid blue with strong visibility
                           isCurrent && "bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/40",
-                          // Completed: Green background for clear visibility
-                          isCompleted && !isCurrent && "bg-emerald-500 dark:bg-emerald-600 border-emerald-500 dark:border-emerald-600 text-white",
-                          // Remaining: Muted with clear border
-                          !isCompleted && !isCurrent && isAccessible && "bg-muted/60 dark:bg-muted/40 border-muted-foreground/30 dark:border-muted-foreground/40 text-muted-foreground group-hover:border-primary/60 group-hover:bg-muted",
+                          // Completed: Solid green background for maximum visibility
+                          isCompleted && !isCurrent && "bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-500/30",
+                          // Remaining: Clear gray with visible border
+                          !isCompleted && !isCurrent && isAccessible && "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 group-hover:border-primary/60 group-hover:bg-slate-200 dark:group-hover:bg-slate-700",
                           !isAccessible && "bg-muted/30 border-border/50 text-foreground/40 cursor-not-allowed"
                         )}>
                           {isCompleted ? (
@@ -297,19 +297,19 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                           ) : isCurrent ? (
                             <span className="text-xs sm:text-sm font-bold text-primary-foreground">{index + 1}</span>
                           ) : (
-                            <span className="text-xs sm:text-sm font-semibold">{index + 1}</span>
+                            <span className="text-xs sm:text-sm font-bold">{index + 1}</span>
                           )}
                         </div>
                         
                         {/* Label */}
                         <span className={cn(
-                          "text-[10px] sm:text-xs font-semibold text-center max-w-[70px] sm:max-w-[90px] leading-tight",
-                          // Active: Primary color text
-                          isCurrent && "text-primary dark:text-primary",
-                          // Completed: Green text
-                          isCompleted && !isCurrent && "text-emerald-600 dark:text-emerald-400",
-                          // Remaining: Muted text
-                          !isCompleted && !isCurrent && "text-muted-foreground"
+                          "text-[10px] sm:text-xs font-bold text-center max-w-[70px] sm:max-w-[90px] leading-tight",
+                          // Active: Primary color text with strong contrast
+                          isCurrent && "text-primary",
+                          // Completed: Dark green text for visibility
+                          isCompleted && !isCurrent && "text-emerald-700 dark:text-emerald-400",
+                          // Remaining: Visible gray text
+                          !isCompleted && !isCurrent && "text-slate-600 dark:text-slate-400"
                         )}>
                           {category.label}
                         </span>
@@ -357,15 +357,15 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         type="button"
                         onClick={() => handleTabChange(tab.id)}
                         className={cn(
-                          "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border cursor-pointer",
-                          // Active: Solid primary
+                          "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border-2 cursor-pointer",
+                          // Active: Solid primary blue
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                          // Completed: Green with clear visibility
-                          isCompleted && !isCurrent && "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-200 dark:hover:bg-emerald-900/60",
-                          // Skipped: Orange/amber for attention
-                          isSkipped && !isCurrent && "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border-amber-300 dark:border-amber-700 hover:bg-amber-200 dark:hover:bg-amber-900/60",
-                          // Remaining: Muted but visible
-                          !isCurrent && !isDone && "bg-muted/60 dark:bg-muted/40 text-muted-foreground border-muted-foreground/20 dark:border-muted-foreground/30 hover:border-primary/50 hover:bg-muted"
+                          // Completed: Solid green with white text for maximum visibility
+                          isCompleted && !isCurrent && "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 shadow-sm",
+                          // Skipped: Solid amber with dark text
+                          isSkipped && !isCurrent && "bg-amber-500 text-white border-amber-500 hover:bg-amber-600 shadow-sm",
+                          // Remaining: Light gray with visible border
+                          !isCurrent && !isDone && "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-600 hover:border-primary hover:bg-slate-200 dark:hover:bg-slate-700"
                         )}
                       >
                         <span>{tab.label}</span>
