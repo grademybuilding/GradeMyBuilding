@@ -89,7 +89,7 @@ export function PhotoCarousel({
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Download failed:', error);
+      // Silent fail
     }
   };
 

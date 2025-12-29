@@ -49,13 +49,11 @@ async function generateSignedUrls(photos: InspectionPhoto[]): Promise<Inspection
           .createSignedUrl(filePath, 3600); // 1 hour expiry
 
         if (error) {
-          console.warn('Failed to generate signed URL for photo:', photo.id, error);
           return photo;
         }
 
         return { ...photo, signedUrl: data.signedUrl };
       } catch (error) {
-        console.warn('Error generating signed URL:', error);
         return photo;
       }
     })
@@ -89,7 +87,6 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
       const photosWithUrls = await generateSignedUrls(data || []);
       setPhotos(photosWithUrls);
     } catch (error: any) {
-      console.error('Error fetching photos:', error);
       toast.error('Failed to load photos');
     } finally {
       setIsLoading(false);
@@ -107,14 +104,6 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
     category: string = 'General'
   ) => {
     const targetInspectionId = inspectionIdParam || inspectionId;
-
-    console.debug('[useInspectionPhotos] uploadPhotos', {
-      hookInspectionId: inspectionId,
-      inspectionIdParam,
-      targetInspectionId,
-      filesCount: files.length,
-      category,
-    });
 
     if (!targetInspectionId) {
       toast.error('No inspection selected');
@@ -139,7 +128,6 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
           });
 
         if (uploadError) {
-          console.error('Upload error:', uploadError);
           throw uploadError;
         }
 
@@ -164,7 +152,6 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
       toast.success(`${files.length} photo(s) uploaded successfully`);
       await fetchPhotos();
     } catch (error: any) {
-      console.error('Error uploading photos:', error);
       toast.error(`Failed to upload photos: ${error.message}`);
     } finally {
       setIsUploading(false);
@@ -186,7 +173,7 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
         .remove([filePath]);
 
       if (storageError) {
-        console.warn('Storage deletion warning:', storageError);
+        // Storage deletion warning, continue anyway
       }
 
       // Delete from database
@@ -200,7 +187,6 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
       toast.success('Photo deleted');
       await fetchPhotos();
     } catch (error: any) {
-      console.error('Error deleting photo:', error);
       toast.error('Failed to delete photo');
     }
   };
@@ -229,13 +215,11 @@ export async function getSignedPhotoUrl(photoUrl: string): Promise<string | null
       .createSignedUrl(filePath, 3600);
 
     if (error) {
-      console.warn('Failed to generate signed URL:', error);
       return null;
     }
 
     return data.signedUrl;
   } catch (error) {
-    console.warn('Error generating signed URL:', error);
     return null;
   }
 }

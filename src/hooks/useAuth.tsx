@@ -76,7 +76,7 @@ export function useAuth() {
         role: roleData.role as UserRole,
       });
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      // Silent fail
     } finally {
       setLoading(false);
     }

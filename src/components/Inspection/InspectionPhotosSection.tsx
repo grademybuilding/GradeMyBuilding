@@ -71,12 +71,6 @@ export function InspectionPhotosSection({ inspectionId }: InspectionPhotosSectio
         open={isUploadModalOpen}
         onOpenChange={setIsUploadModalOpen}
         onUpload={async (files, selectedId, caption) => {
-          console.debug('[InspectionPhotosSection] onUpload', {
-            inspectionIdProp: inspectionId,
-            inspectionIdFromModal: selectedId,
-            filesCount: files.length,
-          });
-
           await uploadPhotos(files, selectedId || inspectionId || '', caption, 'General');
         }}
         isUploading={isUploading}

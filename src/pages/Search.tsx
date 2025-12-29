@@ -77,7 +77,6 @@ const Search = () => {
       setResults(data.results || []);
       setTotalResults(data.pagination?.total || 0);
     } catch (error) {
-      console.error('Search error:', error);
       setResults([]);
     } finally {
       setLoading(false);

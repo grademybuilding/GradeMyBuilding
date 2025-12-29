@@ -59,12 +59,6 @@ export function PhotoUploadModal({
   useEffect(() => {
     if (!open) return;
 
-    console.debug('[PhotoUploadModal] sync inspectionId', {
-      selectedInspectionId,
-      currentInspectionId: inspectionId,
-      inspectionsCount: inspections.length,
-    });
-
     // If parent provides a selected inspection, always respect it.
     if (selectedInspectionId) {
       setInspectionId(selectedInspectionId);
@@ -120,13 +114,6 @@ export function PhotoUploadModal({
   };
 
   const handleSubmit = async () => {
-    console.debug('[PhotoUploadModal] submit', {
-      inspectionId,
-      selectedInspectionId,
-      selectedFilesCount: selectedFiles.length,
-      captionLength: caption.length,
-    });
-
     if (selectedFiles.length === 0 || !inspectionId) return;
 
     await onUpload(selectedFiles, inspectionId, caption);
@@ -149,7 +136,6 @@ export function PhotoUploadModal({
   };
 
   const handleClose = () => {
-    console.debug('[PhotoUploadModal] close');
     resetForm();
     onOpenChange(false);
   };
@@ -158,7 +144,6 @@ export function PhotoUploadModal({
     <Dialog
       open={open}
       onOpenChange={(nextOpen) => {
-        console.debug('[PhotoUploadModal] onOpenChange', { nextOpen });
         if (!nextOpen) {
           handleClose();
         } else {
@@ -180,10 +165,7 @@ export function PhotoUploadModal({
             <Label htmlFor="inspection">Inspection *</Label>
             <Select
               value={inspectionId}
-              onValueChange={(val) => {
-                console.debug('[PhotoUploadModal] inspection selected', { val });
-                setInspectionId(val);
-              }}
+              onValueChange={(val) => setInspectionId(val)}
             >
               <SelectTrigger id="inspection">
                 <SelectValue placeholder="Select an inspection" />

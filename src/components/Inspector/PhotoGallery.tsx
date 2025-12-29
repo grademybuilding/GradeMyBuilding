@@ -36,13 +36,11 @@ async function generateSignedUrls(photos: InspectionPhoto[]): Promise<Inspection
           .createSignedUrl(filePath, 3600);
 
         if (error) {
-          console.warn('Failed to generate signed URL for photo:', photo.id, error);
           return photo;
         }
 
         return { ...photo, signedUrl: data.signedUrl };
       } catch (error) {
-        console.warn('Error generating signed URL:', error);
         return photo;
       }
     })
@@ -129,7 +127,7 @@ export default function PhotoGallery() {
 
         setInspections(transformedData);
       } catch (error) {
-        console.error('Error fetching inspections:', error);
+        // Silent fail
       } finally {
         setLoadingInspections(false);
       }
@@ -170,7 +168,7 @@ export default function PhotoGallery() {
         const photosWithUrls = await generateSignedUrls(data || []);
         setAllPhotos(photosWithUrls);
       } catch (error) {
-        console.error('Error fetching all photos:', error);
+        // Silent fail
       } finally {
         setLoadingAllPhotos(false);
       }
@@ -239,14 +237,7 @@ export default function PhotoGallery() {
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <Button 
-            onClick={() => {
-              console.debug('[PhotoGallery] open upload modal', {
-                selectedInspectionId,
-                isViewingAll,
-                inspectionsCount: inspections.length,
-              });
-              setIsUploadModalOpen(true);
-            }}
+            onClick={() => setIsUploadModalOpen(true)}
             disabled={isViewingAll && inspections.length === 0}
             className="flex-1 sm:flex-initial text-xs sm:text-sm"
           >
@@ -416,13 +407,6 @@ export default function PhotoGallery() {
         open={isUploadModalOpen}
         onOpenChange={setIsUploadModalOpen}
         onUpload={async (files, inspectionId, caption) => {
-          console.debug('[PhotoGallery] onUpload', {
-            isViewingAll,
-            selectedInspectionId,
-            inspectionIdFromModal: inspectionId,
-            filesCount: files.length,
-          });
-
           await uploadPhotos(files, inspectionId, caption, 'General');
 
           // If we're in "all" view, refetch grouped data after upload
