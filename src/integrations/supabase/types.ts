@@ -154,6 +154,42 @@ export type Database = {
           },
         ]
       }
+      contact_submissions: {
+        Row: {
+          company: string
+          created_at: string | null
+          email: string
+          id: string
+          interests: string[]
+          message: string | null
+          name: string
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          company: string
+          created_at?: string | null
+          email: string
+          id?: string
+          interests: string[]
+          message?: string | null
+          name: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          company?: string
+          created_at?: string | null
+          email?: string
+          id?: string
+          interests?: string[]
+          message?: string | null
+          name?: string
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           address: string | null
