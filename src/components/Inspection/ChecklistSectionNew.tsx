@@ -284,32 +284,29 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         {/* Circle indicator */}
                         <div className={cn(
                           "relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 transition-all duration-200",
-                          // Active: Solid blue with strong visibility
+                          // Active: Solid primary
                           isCurrent && "bg-primary border-primary text-primary-foreground shadow-lg shadow-primary/40",
-                          // Completed: Solid green background for maximum visibility
-                          isCompleted && !isCurrent && "bg-emerald-600 border-emerald-600 text-white shadow-md shadow-emerald-500/30",
-                          // Remaining: Clear gray with visible border
-                          !isCompleted && !isCurrent && isAccessible && "bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 group-hover:border-primary/60 group-hover:bg-slate-200 dark:group-hover:bg-slate-700",
+                          // Completed: Purple (complete)
+                          isCompleted && !isCurrent && "bg-complete border-complete text-complete-foreground shadow-md shadow-complete/30",
+                          // Remaining: Visible but neutral
+                          !isCompleted && !isCurrent && isAccessible && "bg-muted border-border text-muted-foreground group-hover:border-primary/60 group-hover:bg-muted/80",
                           !isAccessible && "bg-muted/30 border-border/50 text-foreground/40 cursor-not-allowed"
                         )}>
                           {isCompleted ? (
-                            <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                            <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-complete-foreground" />
                           ) : isCurrent ? (
                             <span className="text-xs sm:text-sm font-bold text-primary-foreground">{index + 1}</span>
                           ) : (
                             <span className="text-xs sm:text-sm font-bold">{index + 1}</span>
                           )}
                         </div>
-                        
+
                         {/* Label */}
                         <span className={cn(
                           "text-[10px] sm:text-xs font-bold text-center max-w-[70px] sm:max-w-[90px] leading-tight",
-                          // Active: Primary color text with strong contrast
                           isCurrent && "text-primary",
-                          // Completed: Dark green text for visibility
-                          isCompleted && !isCurrent && "text-emerald-700 dark:text-emerald-400",
-                          // Remaining: Visible gray text
-                          !isCompleted && !isCurrent && "text-slate-600 dark:text-slate-400"
+                          isCompleted && !isCurrent && "text-complete",
+                          !isCompleted && !isCurrent && "text-muted-foreground"
                         )}>
                           {category.label}
                         </span>
@@ -320,12 +317,12 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         <div className="flex items-center h-10 sm:h-12 mx-1 sm:mx-2">
                           <div className={cn(
                             "w-6 sm:w-10 lg:w-14 h-0.5 rounded-full transition-colors",
-                            // Completed connector: Green
-                            index < activeMainCategory && completedCategories.includes(index) && "bg-emerald-500 dark:bg-emerald-500",
-                            // Progress connector: Primary
+                            // Completed connector
+                            index < activeMainCategory && completedCategories.includes(index) && "bg-complete",
+                            // Progress connector
                             index < activeMainCategory && !completedCategories.includes(index) && "bg-primary",
-                            // Future connector: Muted
-                            index >= activeMainCategory && "bg-muted-foreground/20 dark:bg-muted-foreground/30"
+                            // Future connector
+                            index >= activeMainCategory && "bg-border"
                           )} />
                         </div>
                       )}
@@ -358,14 +355,14 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
                         onClick={() => handleTabChange(tab.id)}
                         className={cn(
                           "inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 whitespace-nowrap border-2 cursor-pointer",
-                          // Active: Solid primary blue
+                          // Active
                           isCurrent && "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/30",
-                          // Completed: Solid green with white text for maximum visibility
-                          isCompleted && !isCurrent && "bg-emerald-600 text-white border-emerald-600 hover:bg-emerald-700 shadow-sm",
-                          // Skipped: Solid amber with dark text
-                          isSkipped && !isCurrent && "bg-amber-500 text-white border-amber-500 hover:bg-amber-600 shadow-sm",
-                          // Remaining: Light gray with visible border
-                          !isCurrent && !isDone && "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-300 dark:border-slate-600 hover:border-primary hover:bg-slate-200 dark:hover:bg-slate-700"
+                          // Completed (purple)
+                          isCompleted && !isCurrent && "bg-complete text-complete-foreground border-complete hover:bg-complete/90 shadow-sm",
+                          // Skipped (orange)
+                          isSkipped && !isCurrent && "bg-warning text-warning-foreground border-warning hover:bg-warning/90 shadow-sm",
+                          // Remaining
+                          !isCurrent && !isDone && "bg-muted text-foreground border-border hover:border-primary/50 hover:bg-muted/80"
                         )}
                       >
                         <span>{tab.label}</span>
