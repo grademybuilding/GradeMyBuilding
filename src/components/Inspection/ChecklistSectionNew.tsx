@@ -242,9 +242,6 @@ export function ChecklistSection({ formData, onChange, onSubmit }: ChecklistSect
   }, [activeSubcategory, activeMainCategory, atSubmitScreen]);
 
   const canGoPrevious = activeMainCategory > 0 || activeSubcategory > 0 || atSubmitScreen;
-  const isLastTab = activeSubcategory === currentTabs.length - 1;
-  const isLastCategory = activeMainCategory === inspectionCategories.length - 1;
-  const isFinalChecklistScreen = isLastTab && isLastCategory;
   const canSkip = hasSubcategories && !atSubmitScreen;
 
   return (

@@ -1123,11 +1123,8 @@ export function ChecklistCategoryContent({
   // categoryMapping now returns an array of possible category names
   const categoryLabels = categoryMapping[categoryId] ?? [categoryId];
 
-  // Missing checklist defects from XLSX are inlined directly into inspectionChecklist (no runtime merge)
-  const fullChecklist = inspectionChecklist;
-
   // Filter items based on category and subcategory
-  const filteredItems = fullChecklist.filter((item) => {
+  const filteredItems = inspectionChecklist.filter((item) => {
     // Match by exact category name OR by any of the mapped category labels
     const categoryMatches = 
       categoryLabels.includes(item.category) ||
