@@ -1,4 +1,4 @@
-import { Loader2, Printer, X, AlertCircle } from "lucide-react";
+import { Loader2, Printer, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -40,24 +40,15 @@ export default function InspectionReportModal({
         <DialogHeader className="p-4 pb-0 no-print">
           <div className="flex items-center justify-between">
             <DialogTitle>Inspection Report</DialogTitle>
-            <div className="flex items-center gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handlePrint}
-                disabled={loading || !!error || !inspection}
-              >
-                <Printer className="h-4 w-4 mr-2" />
-                Print
-              </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => onOpenChange(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handlePrint}
+              disabled={loading || !!error || !inspection}
+            >
+              <Printer className="h-4 w-4 mr-2" />
+              Print
+            </Button>
           </div>
         </DialogHeader>
 
