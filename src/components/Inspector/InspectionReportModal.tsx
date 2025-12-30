@@ -1,4 +1,5 @@
-import { Loader2, Printer, AlertCircle } from "lucide-react";
+import { Loader2, Printer, AlertCircle, Download } from "lucide-react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,6 +10,9 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useInspectionDetails } from "@/hooks/useInspections";
 import InspectionReport from "./InspectionReport";
+import { toast } from "sonner";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 interface InspectionReportModalProps {
   inspectionId: string | null;
@@ -29,8 +33,65 @@ export default function InspectionReportModal({
     error 
   } = useInspectionDetails(open ? inspectionId : null);
 
+  const [downloading, setDownloading] = useState(false);
+  const reportRef = useRef<HTMLDivElement>(null);
+
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownload = async () => {
+    if (!reportRef.current || !inspection) return;
+
+    setDownloading(true);
+    toast.info("Generating PDF...");
+
+    try {
+      const element = reportRef.current;
+      
+      // Capture the report as canvas
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Add additional pages if content is longer than one page
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // Generate filename
+      const address = inspection.properties?.address || 'inspection';
+      const date = new Date(inspection.inspection_date).toISOString().split('T')[0];
+      const filename = `Inspection_Report_${address.replace(/[^a-zA-Z0-9]/g, '_')}_${date}.pdf`;
+
+      pdf.save(filename);
+      toast.success("Report downloaded successfully!");
+    } catch (err) {
+      console.error("PDF generation error:", err);
+      toast.error("Failed to generate PDF. Please try the Print option instead.");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   return (
@@ -40,21 +101,36 @@ export default function InspectionReportModal({
         <DialogHeader className="p-4 pb-0 no-print">
           <div className="flex items-center justify-between">
             <DialogTitle>Inspection Report</DialogTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handlePrint}
-              disabled={loading || !!error || !inspection}
-            >
-              <Printer className="h-4 w-4 mr-2" />
-              Print
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleDownload}
+                disabled={loading || !!error || !inspection || downloading}
+              >
+                {downloading ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Download className="h-4 w-4 mr-2" />
+                )}
+                Download PDF
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handlePrint}
+                disabled={loading || !!error || !inspection}
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Print
+              </Button>
+            </div>
           </div>
         </DialogHeader>
 
         {/* Content */}
         <ScrollArea className="max-h-[calc(95vh-80px)] print:max-h-none print:overflow-visible">
-          <div className="p-6 print:p-4">
+          <div className="p-6 print:p-4" ref={reportRef}>
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
