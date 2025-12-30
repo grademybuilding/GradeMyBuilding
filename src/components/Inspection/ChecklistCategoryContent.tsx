@@ -593,28 +593,6 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'fireplace-inadequate-clearance', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Inadequate Clearance', required: false, type: 'checkbox', commentText: 'Fireplace was too close to combustible items. Fireplace and surrounding space should be clear of personal items.' },
   { id: 'fireplace-creosote-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Creosote Buildup', required: false, type: 'checkbox', commentText: 'There was a notable amount of creosote buildup in the flue. Recommend a qualified fireplace or chimney contractor inspect and sweep on an annual basis.' },
 
-  // ============== ATTIC, INSULATION & VENTILATION (under Built-in Appliances) - DEFECTS ONLY ==============
-  // Defects - Insulation
-  { id: 'attic-insulation-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insulation Damaged', required: false, type: 'checkbox', commentText: 'Insulation appears to have been pulled out and/or damaged by pests. Recommend a qualified insulation contractor evaluate and repair.' },
-  { id: 'attic-insulation-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Attic insulation was improperly installed. Recommend a qualified insulation contractor evaluate and correct.' },
-  { id: 'attic-insulation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Insulation', item: 'Insufficient Insulation', required: false, type: 'checkbox', commentText: 'Insulation depth was inadequate. Recommend a qualified attic insulation contractor install additional insulation.' },
-
-  // Defects - Ventilation
-  { id: 'attic-whole-house-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Whole House Fan Inoperable', required: false, type: 'checkbox', commentText: 'Whole house fan was inoperable at time of inspection. Recommend a qualified whole house fan contractor evaluate and repair.' },
-  { id: 'attic-gable-vent-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Gable Vent Damaged', required: false, type: 'checkbox', commentText: 'Gable vent was damaged, which could allow pests to enter. Recommend a qualified attic or ventilation contractor repair.' },
-  { id: 'attic-discoloration-mold', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Discoloration - Possible Mold', required: false, type: 'checkbox', commentText: 'Attic showed areas of discoloration and possible mold growth. Recommend a mold lab analysis to prevent spread of potential mold and damage to home or health risk. Also recommend finding source of moisture or lack of ventilation in attic space.' },
-  { id: 'attic-ventilation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Ventilation Insufficient', required: false, type: 'checkbox', commentText: 'Attic venting was insufficient at time of inspection. Modern standards recommend 1.5 square feet of venting area for every 300 square feet of attic floor space. Recommend an attic contractor evaluate and remedy.' },
-  { id: 'attic-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic Ventilation', item: 'Attic Fan Inoperable', required: false, type: 'checkbox', commentText: 'Attic fan was inoperable at time of inspection. Recommend an attic fan specialist evaluate and repair.' },
-
-  // Defects - Exhaust Systems
-  { id: 'attic-exhaust-ducts-loose', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Ducts Loose', required: false, type: 'checkbox', commentText: 'Ductwork in the attic is loose or disconnected. Recommend repair.' },
-  { id: 'attic-bathroom-vents-into-attic', category: 'Built-in Appliances', subcategory: 'Defects - Attic Exhaust', item: 'Bathroom Vents Into Attic', required: false, type: 'checkbox', commentText: 'Bathroom fan vents into the attic, which can cause moisture and mold. Recommend a qualified attic contractor properly install exhaust fan to terminate to the exterior.' },
-
-  // Defects - Vapor Retarders
-  { id: 'attic-vapor-barrier-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Damaged', required: false, type: 'checkbox', commentText: 'Vapor barrier is damaged in one or more areas. Recommend insulation contractor repair or replace.' },
-  { id: 'attic-no-vapor-barrier', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'No Vapor Barrier', required: false, type: 'checkbox', commentText: 'There is no vapor barrier beneath the flooring. This can result in unwanted moisture.' },
-  { id: 'attic-vapor-barrier-improper', category: 'Built-in Appliances', subcategory: 'Defects - Vapor Retarders', item: 'Vapor Barrier Improper Installation', required: false, type: 'checkbox', commentText: 'Vapor barrier is improperly installed. This can result in unwanted moisture. Recommend insulation contractor evaluate.' },
-
   // ============== GREEN FEATURES ==============
   { id: 'green-well-sealed', category: 'Green Features', item: 'Well Sealed', required: false, type: 'checkbox' },
   { id: 'green-well-insulated', category: 'Green Features', item: 'Well Insulated', required: false, type: 'checkbox' },
