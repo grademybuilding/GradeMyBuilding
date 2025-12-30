@@ -185,3 +185,53 @@ All colors MUST be HSL.
     background-color: hsl(var(--muted-foreground) / 0.4);
   }
 }
+
+/* Print Styles */
+@media print {
+  /* Hide non-printable elements */
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+
+  /* Page break utilities */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* Force light mode for printing */
+  body {
+    background: white !important;
+    color: black !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Reset dialog styles for printing */
+  [role="dialog"] {
+    position: static !important;
+    max-width: none !important;
+    max-height: none !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  /* Ensure content is visible */
+  [data-radix-scroll-area-viewport] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
