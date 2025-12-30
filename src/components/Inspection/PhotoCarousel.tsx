@@ -97,7 +97,7 @@ export function PhotoCarousel({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 bg-black/95 border-none">
+      <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 bg-black/95 border-none" hideCloseButton>
         <VisuallyHidden>
           <DialogTitle>Photo Viewer</DialogTitle>
         </VisuallyHidden>
