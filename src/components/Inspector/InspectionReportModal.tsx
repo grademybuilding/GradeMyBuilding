@@ -1,6 +1,6 @@
 import { Loader2, Printer, AlertCircle, Download } from "lucide-react";
-import { useState, useRef } from "react";
-import { createRoot } from "react-dom/client";
+import { useState } from "react";
+import { pdf } from "@react-pdf/renderer";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -13,8 +13,6 @@ import { useInspectionDetails } from "@/hooks/useInspections";
 import InspectionReport from "./InspectionReport";
 import InspectionReportPDF from "./InspectionReportPDF";
 import { toast } from "sonner";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 interface InspectionReportModalProps {
   inspectionId: string | null;
@@ -48,68 +46,31 @@ export default function InspectionReportModal({
     toast.info("Generating PDF...");
 
     try {
-      // Create a temporary container for the PDF template
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.top = '0';
-      tempContainer.style.width = '794px'; // A4 width in pixels at 96 DPI
-      tempContainer.style.backgroundColor = '#ffffff';
-      document.body.appendChild(tempContainer);
-
-      // Render the PDF template to the temporary container
-      const root = createRoot(tempContainer);
-      root.render(
+      // Generate PDF using @react-pdf/renderer
+      const blob = await pdf(
         <InspectionReportPDF 
           inspection={inspection} 
           checklistItems={checklistItems} 
           photos={photos} 
         />
-      );
+      ).toBlob();
 
-      // Wait for render and images to load
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      // Capture the report as canvas
-      const canvas = await html2canvas(tempContainer, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-      });
-
-      // Cleanup
-      root.unmount();
-      document.body.removeChild(tempContainer);
-
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      // Create download link
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
       
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Add additional pages if content is longer than one page
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
       // Generate filename
       const address = inspection.properties?.address || 'inspection';
       const date = new Date(inspection.inspection_date).toISOString().split('T')[0];
       const filename = `Inspection_Report_${address.replace(/[^a-zA-Z0-9]/g, '_')}_${date}.pdf`;
 
-      pdf.save(filename);
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
       toast.success("Report downloaded successfully!");
     } catch (err) {
       console.error("PDF generation error:", err);
