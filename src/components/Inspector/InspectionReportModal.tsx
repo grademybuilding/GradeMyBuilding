@@ -1,4 +1,4 @@
-import { Loader2, Printer, AlertCircle, Download } from "lucide-react";
+import { Loader2, AlertCircle, Download } from "lucide-react";
 import { useState } from "react";
 import { pdf } from "@react-pdf/renderer";
 import { Button } from "@/components/ui/button";
@@ -34,10 +34,6 @@ export default function InspectionReportModal({
   } = useInspectionDetails(open ? inspectionId : null);
 
   const [downloading, setDownloading] = useState(false);
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   const handleDownload = async () => {
     if (!inspection) return;
@@ -100,15 +96,6 @@ export default function InspectionReportModal({
                   <Download className="h-4 w-4 mr-2" />
                 )}
                 Download PDF
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handlePrint}
-                disabled={loading || !!error || !inspection}
-              >
-                <Printer className="h-4 w-4 mr-2" />
-                Print
               </Button>
             </div>
           </div>
