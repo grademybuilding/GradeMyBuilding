@@ -1,5 +1,6 @@
 import { Loader2, Printer, AlertCircle, Download } from "lucide-react";
 import { useState, useRef } from "react";
+import { createRoot } from "react-dom/client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +11,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useInspectionDetails } from "@/hooks/useInspections";
 import InspectionReport from "./InspectionReport";
+import InspectionReportPDF from "./InspectionReportPDF";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -34,29 +36,52 @@ export default function InspectionReportModal({
   } = useInspectionDetails(open ? inspectionId : null);
 
   const [downloading, setDownloading] = useState(false);
-  const reportRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = () => {
     window.print();
   };
 
   const handleDownload = async () => {
-    if (!reportRef.current || !inspection) return;
+    if (!inspection) return;
 
     setDownloading(true);
     toast.info("Generating PDF...");
 
     try {
-      const element = reportRef.current;
-      
+      // Create a temporary container for the PDF template
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = '794px'; // A4 width in pixels at 96 DPI
+      tempContainer.style.backgroundColor = '#ffffff';
+      document.body.appendChild(tempContainer);
+
+      // Render the PDF template to the temporary container
+      const root = createRoot(tempContainer);
+      root.render(
+        <InspectionReportPDF 
+          inspection={inspection} 
+          checklistItems={checklistItems} 
+          photos={photos} 
+        />
+      );
+
+      // Wait for render and images to load
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       // Capture the report as canvas
-      const canvas = await html2canvas(element, {
+      const canvas = await html2canvas(tempContainer, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
       });
+
+      // Cleanup
+      root.unmount();
+      document.body.removeChild(tempContainer);
 
       const imgData = canvas.toDataURL('image/png');
       const imgWidth = 210; // A4 width in mm
@@ -130,7 +155,7 @@ export default function InspectionReportModal({
 
         {/* Content */}
         <ScrollArea className="max-h-[calc(95vh-80px)] print:max-h-none print:overflow-visible">
-          <div className="p-6 print:p-4" ref={reportRef}>
+          <div className="p-6 print:p-4">
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
