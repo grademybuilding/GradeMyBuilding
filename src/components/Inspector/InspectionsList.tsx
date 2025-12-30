@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import InspectionReportModal from "./InspectionReportModal";
 
 interface InspectionsListProps {
   onTabChange?: (tab: string) => void;
@@ -26,6 +27,8 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   const { inspections, loading, error, refetch } = useInspections();
   const [selectedInspectionId, setSelectedInspectionId] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [reportInspectionId, setReportInspectionId] = useState<string | null>(null);
+  const [reportOpen, setReportOpen] = useState(false);
 
   const { 
     inspection: selectedInspection, 
@@ -38,6 +41,11 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   const handleViewInspection = (inspectionId: string) => {
     setSelectedInspectionId(inspectionId);
     setDetailsOpen(true);
+  };
+
+  const handleViewReport = (inspectionId: string) => {
+    setReportInspectionId(inspectionId);
+    setReportOpen(true);
   };
 
   const handleResumeInspection = (inspectionId: string) => {
@@ -232,7 +240,12 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                           <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                           View
                         </Button>
-                        <Button variant="default" size="sm" className="flex-1 sm:flex-initial text-xs sm:text-sm">
+                        <Button 
+                          variant="default" 
+                          size="sm" 
+                          className="flex-1 sm:flex-initial text-xs sm:text-sm"
+                          onClick={() => handleViewReport(inspection.id)}
+                        >
                           <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                           Report
                         </Button>
@@ -517,6 +530,13 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
           })()}
         </DialogContent>
       </Dialog>
+
+      {/* Inspection Report Modal */}
+      <InspectionReportModal
+        inspectionId={reportInspectionId}
+        open={reportOpen}
+        onOpenChange={setReportOpen}
+      />
     </div>
   );
 }
