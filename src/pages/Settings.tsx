@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Bell, Shield, HelpCircle, ShieldCheck, ShieldX, Loader2 } from "lucide-react";
+import { User, Bell, Shield, HelpCircle, ShieldCheck, ShieldX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export default function Settings() {
-  const { profile, user } = useAuth();
+  const { profile, user, loading: authLoading } = useAuth();
   const { preferences, loading: prefsLoading, updatePreferences } = useNotificationPreferences();
   
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
@@ -24,6 +24,8 @@ export default function Settings() {
   const [mfaEnabled, setMfaEnabled] = useState(false);
   const [checkingMfa, setCheckingMfa] = useState(true);
   const [localProfile, setLocalProfile] = useState(profile);
+
+  const isProfileLoading = authLoading || !localProfile;
 
   useEffect(() => {
     setLocalProfile(profile);
@@ -111,27 +113,43 @@ export default function Settings() {
             <CardTitle>Profile</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label className="text-muted-foreground">Full Name</Label>
-                <p className="font-medium">{localProfile?.full_name || "Not set"}</p>
-              </div>
-              <div>
-                <Label className="text-muted-foreground">Email</Label>
-                <p className="font-medium">{localProfile?.email || "Not set"}</p>
-              </div>
-              <div>
-                <Label className="text-muted-foreground">Phone</Label>
-                <p className="font-medium">{localProfile?.phone || "Not set"}</p>
-              </div>
-              <div>
-                <Label className="text-muted-foreground">Company</Label>
-                <p className="font-medium">{localProfile?.company_name || "Not set"}</p>
-              </div>
-            </div>
-            <Button variant="outline" onClick={() => setEditProfileOpen(true)}>
-              Edit Profile
-            </Button>
+            {isProfileLoading ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="space-y-1">
+                      <Skeleton className="h-4 w-20" />
+                      <Skeleton className="h-5 w-32" />
+                    </div>
+                  ))}
+                </div>
+                <Skeleton className="h-9 w-24 rounded-md" />
+              </>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-muted-foreground">Full Name</Label>
+                    <p className="font-medium">{localProfile?.full_name || "Not set"}</p>
+                  </div>
+                  <div>
+                    <Label className="text-muted-foreground">Email</Label>
+                    <p className="font-medium">{localProfile?.email || "Not set"}</p>
+                  </div>
+                  <div>
+                    <Label className="text-muted-foreground">Phone</Label>
+                    <p className="font-medium">{localProfile?.phone || "Not set"}</p>
+                  </div>
+                  <div>
+                    <Label className="text-muted-foreground">Company</Label>
+                    <p className="font-medium">{localProfile?.company_name || "Not set"}</p>
+                  </div>
+                </div>
+                <Button variant="outline" onClick={() => setEditProfileOpen(true)}>
+                  Edit Profile
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -192,38 +210,54 @@ export default function Settings() {
             <CardTitle>Security</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Two-Factor Authentication</p>
-                <p className="text-sm text-muted-foreground">
-                  Add an extra layer of security to your account
-                </p>
-              </div>
-              {checkingMfa ? (
-                <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-              ) : mfaEnabled ? (
-                <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                  <ShieldCheck className="h-5 w-5" />
-                  <span className="text-sm font-medium">Enabled</span>
+            {checkingMfa ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <Skeleton className="h-5 w-40" />
+                    <Skeleton className="h-4 w-64" />
+                  </div>
+                  <Skeleton className="h-5 w-16" />
                 </div>
-              ) : (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <ShieldX className="h-5 w-5" />
-                  <span className="text-sm">Disabled</span>
+                <div className="flex flex-wrap gap-2">
+                  <Skeleton className="h-9 w-32 rounded-md" />
+                  <Skeleton className="h-9 w-48 rounded-md" />
                 </div>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button variant="outline" onClick={() => setChangePasswordOpen(true)}>
-                Change Password
-              </Button>
-              <Button 
-                variant={mfaEnabled ? "outline" : "default"}
-                onClick={() => setTwoFactorOpen(true)}
-              >
-                {mfaEnabled ? "Manage 2FA" : "Enable Two-Factor Authentication"}
-              </Button>
-            </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">Two-Factor Authentication</p>
+                    <p className="text-sm text-muted-foreground">
+                      Add an extra layer of security to your account
+                    </p>
+                  </div>
+                  {mfaEnabled ? (
+                    <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                      <ShieldCheck className="h-5 w-5" />
+                      <span className="text-sm font-medium">Enabled</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <ShieldX className="h-5 w-5" />
+                      <span className="text-sm">Disabled</span>
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" onClick={() => setChangePasswordOpen(true)}>
+                    Change Password
+                  </Button>
+                  <Button 
+                    variant={mfaEnabled ? "outline" : "default"}
+                    onClick={() => setTwoFactorOpen(true)}
+                  >
+                    {mfaEnabled ? "Manage 2FA" : "Enable Two-Factor Authentication"}
+                  </Button>
+                </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
