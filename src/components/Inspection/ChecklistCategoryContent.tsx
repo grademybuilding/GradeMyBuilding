@@ -51,12 +51,12 @@ const inspectionChecklist: ChecklistItem[] = [
   // Roof - Inspection Details
   { id: 'roof-inspection-method', category: 'Roof', subcategory: 'Inspection Details', item: 'Inspection Method', required: false, type: 'multiselect', options: ['Binoculars', 'Ground', 'Ladder', 'Roof', 'Drone', 'Moisture meter'] },
   { id: 'roof-type-style', category: 'Roof', subcategory: 'Inspection Details', item: 'Roof Type/Style', required: false, type: 'multiselect', options: ['Gable', 'Shed', 'Mansard', 'Combination', 'Gambrel', 'Flat', 'Hip'] },
-  
+
   // Roof - Coverings
   { id: 'roof-age', category: 'Roof', subcategory: 'Coverings', item: 'Age - Year Installed', required: false, type: 'year' },
   { id: 'roof-material', category: 'Roof', subcategory: 'Coverings', item: 'Material', required: false, type: 'multiselect', options: ['Asbestos', 'Ceramic', 'Wood', 'Asphalt', 'Fiberglass', 'Metal', 'Tile', 'Concrete', 'Slate', 'Solar', 'EPDM'] },
   { id: 'roof-inspector-rating', category: 'Roof', subcategory: 'Coverings', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Roof - Defects - Coverings
   { id: 'roof-under-driven-nails', category: 'Roof', subcategory: 'Defects - Coverings', item: 'Under-Driven Nails', required: false, type: 'checkbox' },
   { id: 'roof-tiles-cracked-broken', category: 'Roof', subcategory: 'Defects - Coverings', item: 'Tiles Cracked/Broken', required: false, type: 'checkbox' },
@@ -68,12 +68,12 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-delamination', category: 'Roof', subcategory: 'Defects - Coverings', item: 'Delamination', required: false, type: 'checkbox' },
   { id: 'roof-damaged-general', category: 'Roof', subcategory: 'Defects - Coverings', item: 'Damaged (General)', required: false, type: 'checkbox' },
   { id: 'roof-ponding', category: 'Roof', subcategory: 'Defects - Coverings', item: 'Ponding', required: false, type: 'checkbox' },
-  
+
   // Roof - Roof Drainage Systems
   { id: 'roof-drainage-system-type', category: 'Roof', subcategory: 'Roof Drainage Systems', item: 'Drainage System Type', required: false, type: 'multiselect', options: ['Internal Drains', 'Gutters', 'Scupper Drains'] },
   { id: 'roof-gutter-material', category: 'Roof', subcategory: 'Roof Drainage Systems', item: 'Gutter Material', required: false, type: 'multiselect', options: ['Aluminum', 'Seamless Aluminum', 'Vinyl', 'Copper', 'Steel'] },
   { id: 'roof-drainage-inspector-rating', category: 'Roof', subcategory: 'Roof Drainage Systems', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Roof - Defects - Roof Drainage Systems
   { id: 'roof-gutters-missing', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Gutters Missing', required: false, type: 'checkbox' },
   { id: 'roof-gutter-loose', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Gutter Loose', required: false, type: 'checkbox' },
@@ -83,11 +83,11 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-downspouts-missing', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Downspouts Missing', required: false, type: 'checkbox' },
   { id: 'roof-downspouts-drain-near-house', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Downspouts Drain Near House', required: false, type: 'checkbox' },
   { id: 'roof-debris', category: 'Roof', subcategory: 'Defects - Roof Drainage Systems', item: 'Debris', required: false, type: 'checkbox' },
-  
+
   // Roof - Flashing
   { id: 'roof-flashing-material', category: 'Roof', subcategory: 'Flashing', item: 'Flashing Material', required: false, type: 'multiselect', options: ['Aluminum', 'Copper', 'Galvanized Steel', 'Lead', 'Rubber', 'Plastic'] },
   { id: 'roof-flashing-condition', category: 'Roof', subcategory: 'Flashing', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Roof - Defects - Flashing
   { id: 'roof-flashing-damaged', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Damaged', required: false, type: 'checkbox' },
   { id: 'roof-flashing-loose', category: 'Roof', subcategory: 'Defects - Flashing', item: 'Flashing Loose', required: false, type: 'checkbox' },
@@ -99,7 +99,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Roof - Skylights & Chimneys
   { id: 'roof-skylights-chimneys-material', category: 'Roof', subcategory: 'Skylights & Chimneys', item: 'Skylight/Chimney Material', required: false, type: 'multiselect', options: ['Glass', 'Acrylic', 'Polycarbonate', 'Brick', 'Stone', 'Metal', 'Stucco'] },
   { id: 'roof-skylights-chimneys-inspector-rating', category: 'Roof', subcategory: 'Skylights & Chimneys', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Roof - Defects - Skylights & Chimneys
   { id: 'roof-skylight-water-penetration', category: 'Roof', subcategory: 'Defects - Skylights & Chimneys', item: 'Skylight Water Penetration', required: false, type: 'checkbox' },
   { id: 'roof-skylight-cracked', category: 'Roof', subcategory: 'Defects - Skylights & Chimneys', item: 'Skylight Cracked', required: false, type: 'checkbox' },
@@ -109,11 +109,11 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'roof-chimney-flue-dirty', category: 'Roof', subcategory: 'Defects - Skylights & Chimneys', item: 'Chimney Flue Dirty', required: false, type: 'checkbox' },
   { id: 'roof-chimney-flue-cracked', category: 'Roof', subcategory: 'Defects - Skylights & Chimneys', item: 'Chimney Flue Cracked', required: false, type: 'checkbox' },
   { id: 'roof-chimney-cap-missing', category: 'Roof', subcategory: 'Defects - Skylights & Chimneys', item: 'Chimney Cap Missing', required: false, type: 'checkbox' },
-  
+
   // Roof - Eaves, Soffits & Fascia
   { id: 'roof-eaves-soffits-fascia-material', category: 'Roof', subcategory: 'Eaves, Soffits & Fascia', item: 'Material', required: false, type: 'multiselect', options: ['Wood', 'Vinyl', 'Aluminum', 'Fiber Cement', 'Steel', 'Composite'] },
   { id: 'roof-eaves-soffits-fascia-inspector-rating', category: 'Roof', subcategory: 'Eaves, Soffits & Fascia', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Roof - Defects - Eaves, Soffits & Fascia
   { id: 'roof-wasps-nest', category: 'Roof', subcategory: 'Defects - Eaves, Soffits & Fascia', item: 'Wasps Nest', required: false, type: 'checkbox' },
   { id: 'roof-paint-finish-failing', category: 'Roof', subcategory: 'Defects - Eaves, Soffits & Fascia', item: 'Paint/Finish Failing', required: false, type: 'checkbox' },
@@ -127,11 +127,11 @@ const inspectionChecklist: ChecklistItem[] = [
   // ============== EXTERIOR CLADDING ==============
   // Exterior Cladding - Inspection Details
   { id: 'exterior-inspection-method', category: 'Exterior Cladding', subcategory: 'Inspection Details', item: 'Inspection Method', required: false, type: 'multiselect', options: ['Crawlspace Access', 'Infrared', 'Visual', 'Attic Access'] },
-  
+
   // Exterior Cladding - Siding, Flashing & Trim
   { id: 'exterior-siding-material', category: 'Exterior Cladding', subcategory: 'Siding, Flashing & Trim', item: 'Cladding Material', required: false, type: 'multiselect', options: ['Aluminum', 'Plastic', 'Logs', 'Asbestos', 'Asphalt', 'Brick', 'Concrete', 'Fiber Cement', 'Stucco', 'Brick Veneer', 'Engineered Wood', 'Masonry', 'Metal', 'Vinyl', 'Wood', 'Shingles', 'Stone', 'Stone Veneer'] },
   { id: 'exterior-siding-inspector-rating', category: 'Exterior Cladding', subcategory: 'Siding, Flashing & Trim', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Exterior Cladding - Defects - Siding, Flashing & Trim
   { id: 'exterior-multiple-layers-siding', category: 'Exterior Cladding', subcategory: 'Defects - Siding, Flashing & Trim', item: 'Multiple Layers of Siding', required: false, type: 'checkbox' },
   { id: 'exterior-mildew-algae', category: 'Exterior Cladding', subcategory: 'Defects - Siding, Flashing & Trim', item: 'Mildew/Algae', required: false, type: 'checkbox' },
@@ -149,7 +149,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // ============== WALKWAYS, PATIOS & DRIVEWAYS ==============
   { id: 'walkways-driveway-material', category: 'Walkways, Patios & Driveways', item: 'Driveway Material', required: false, type: 'multiselect', options: ['Asphalt', 'Brick', 'Cobblestone', 'Concrete', 'Dirt', 'Gravel', 'Pavers', 'Street Parking'] },
   { id: 'walkways-inspector-rating', category: 'Walkways, Patios & Driveways', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Walkways - Defects
   { id: 'walkways-walkway-cracking-major', category: 'Walkways, Patios & Driveways', subcategory: 'Defects', item: 'Walkway Cracking - Major', required: false, type: 'checkbox' },
   { id: 'walkways-walkway-cracking-minor', category: 'Walkways, Patios & Driveways', subcategory: 'Defects', item: 'Walkway Cracking - Minor', required: false, type: 'checkbox' },
@@ -165,7 +165,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'wood-decks-appurtenance', category: 'Wood Decks & Balconies', subcategory: 'Deck and Balconies', item: 'Appurtenance', required: false, type: 'multiselect', options: ['Balcony', 'Covered Porch', 'Deck with Steps', 'Shed', 'Deck', 'Sidewalk', 'Front Porch', 'Pool', 'Sunroom', 'Hot Tub', 'Patio', 'Retaining Wall'] },
   { id: 'wood-decks-material', category: 'Wood Decks & Balconies', subcategory: 'Deck and Balconies', item: 'Material', required: false, type: 'multiselect', options: ['Composite', 'Concrete', 'Wood'] },
   { id: 'wood-decks-inspector-rating', category: 'Wood Decks & Balconies', subcategory: 'Deck and Balconies', item: 'Overall Inspection Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Wood Decks - Defects - Deck and Balconies
   { id: 'wood-decks-ledger-board-improperly-installed', category: 'Wood Decks & Balconies', subcategory: 'Defects - Deck and Balconies', item: 'Ledger Board Improperly Installed', required: false, type: 'checkbox' },
   { id: 'wood-decks-joist-hangers', category: 'Wood Decks & Balconies', subcategory: 'Defects - Deck and Balconies', item: 'Joist Hangers', required: false, type: 'checkbox' },
@@ -181,11 +181,11 @@ const inspectionChecklist: ChecklistItem[] = [
   // ============== FOUNDATION & STRUCTURE ==============
   // Foundation - Inspection Method
   { id: 'foundation-inspection-method', category: 'Foundation & Structure', item: 'Inspection Method', required: false, type: 'multiselect', options: ['Attic Access', 'Basement Access', 'Crawlspace Access', 'Infrared', 'Visual'] },
-  
+
   // Foundation - Foundation
   { id: 'foundation-material', category: 'Foundation & Structure', subcategory: 'Foundation', item: 'Material', required: false, type: 'multiselect', options: ['Brick', 'Concrete', 'Masonry Block', 'Stone', 'Rock', 'Slab on Grade'] },
   { id: 'foundation-inspector-rating', category: 'Foundation & Structure', subcategory: 'Foundation', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Foundation - Defects - Foundation
   { id: 'foundation-walls-bowing-leaning', category: 'Foundation & Structure', subcategory: 'Defects - Foundation', item: 'Wall(s) Bowing/Leaning', required: false, type: 'checkbox' },
   { id: 'foundation-poor-ventilation', category: 'Foundation & Structure', subcategory: 'Defects - Foundation', item: 'Poor Ventilation of Foundation Area', required: false, type: 'checkbox' },
@@ -194,38 +194,38 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'foundation-cracks-minor', category: 'Foundation & Structure', subcategory: 'Defects - Foundation', item: 'Foundation Cracks - Minor', required: false, type: 'checkbox' },
   { id: 'foundation-cracks-major', category: 'Foundation & Structure', subcategory: 'Defects - Foundation', item: 'Foundation Cracks - Major', required: false, type: 'checkbox' },
   { id: 'foundation-heaving-settling', category: 'Foundation & Structure', subcategory: 'Defects - Foundation', item: 'Heaving/Settling', required: false, type: 'checkbox' },
-  
+
   // Foundation - Basement & Crawlspace
   { id: 'foundation-basement-crawlspace-type', category: 'Foundation & Structure', subcategory: 'Basement & Crawlspace', item: 'Type', required: false, type: 'multiselect', options: ['Full Basement', 'Partial Basement', 'Crawlspace', 'Slab on Grade', 'Walk-out Basement', 'Daylight Basement'] },
   { id: 'foundation-basement-crawlspace-material', category: 'Foundation & Structure', subcategory: 'Basement & Crawlspace', item: 'Material', required: false, type: 'multiselect', options: ['Concrete Block', 'Poured Concrete', 'Stone', 'Brick', 'Wood Frame', 'Steel Frame'] },
   { id: 'foundation-basement-crawlspace-inspector-rating', category: 'Foundation & Structure', subcategory: 'Basement & Crawlspace', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Foundation - Floor Structure
   { id: 'foundation-floor-structure-material', category: 'Foundation & Structure', subcategory: 'Floor Structure', item: 'Material', required: false, type: 'multiselect', options: ['Concrete Slab', 'Wood Joists', 'Steel Joists', 'Engineered Lumber', 'Composite Deck'] },
   { id: 'foundation-floor-structure-inspector-rating', category: 'Foundation & Structure', subcategory: 'Floor Structure', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Foundation - Defects - Floor Structure
   { id: 'foundation-floor-structure-sagging', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Floor Sagging', required: false, type: 'checkbox' },
   { id: 'foundation-floor-structure-bouncy', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Floor Bouncy/Springy', required: false, type: 'checkbox' },
   { id: 'foundation-floor-structure-damaged-joists', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Damaged/Cracked Joists', required: false, type: 'checkbox' },
   { id: 'foundation-floor-structure-inadequate-support', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Inadequate Support', required: false, type: 'checkbox' },
   { id: 'foundation-floor-structure-rot-damage', category: 'Foundation & Structure', subcategory: 'Defects - Floor Structure', item: 'Rot/Moisture Damage', required: false, type: 'checkbox' },
-  
+
   // Foundation - Wall Structure
   { id: 'foundation-wall-structure-material', category: 'Foundation & Structure', subcategory: 'Wall Structure', item: 'Material', required: false, type: 'multiselect', options: ['Wood Frame', 'Steel Frame', 'Masonry', 'Concrete Block', 'Poured Concrete', 'Stone'] },
   { id: 'foundation-wall-structure-inspector-rating', category: 'Foundation & Structure', subcategory: 'Wall Structure', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Foundation - Defects - Wall Structure
   { id: 'foundation-wall-structure-bowing', category: 'Foundation & Structure', subcategory: 'Defects - Wall Structure', item: 'Wall Bowing/Bulging', required: false, type: 'checkbox' },
   { id: 'foundation-wall-structure-cracks', category: 'Foundation & Structure', subcategory: 'Defects - Wall Structure', item: 'Structural Cracks', required: false, type: 'checkbox' },
   { id: 'foundation-wall-structure-water-damage', category: 'Foundation & Structure', subcategory: 'Defects - Wall Structure', item: 'Water Damage/Stains', required: false, type: 'checkbox' },
   { id: 'foundation-wall-structure-insulation-issues', category: 'Foundation & Structure', subcategory: 'Defects - Wall Structure', item: 'Insulation Issues', required: false, type: 'checkbox' },
   { id: 'foundation-wall-structure-mold-growth', category: 'Foundation & Structure', subcategory: 'Defects - Wall Structure', item: 'Mold/Mildew Growth', required: false, type: 'checkbox' },
-  
+
   // Foundation - Ceiling Structure
   { id: 'foundation-ceiling-structure-material', category: 'Foundation & Structure', subcategory: 'Ceiling Structure', item: 'Material', required: false, type: 'multiselect', options: ['Exposed Joists', 'Drywall', 'Plaster', 'Drop Ceiling', 'Concrete', 'Unfinished'] },
   { id: 'foundation-ceiling-structure-inspector-rating', category: 'Foundation & Structure', subcategory: 'Ceiling Structure', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Foundation - Defects - Ceiling Structure
   { id: 'foundation-ceiling-structure-sagging', category: 'Foundation & Structure', subcategory: 'Defects - Ceiling Structure', item: 'Ceiling Sagging', required: false, type: 'checkbox' },
   { id: 'foundation-ceiling-structure-water-stains', category: 'Foundation & Structure', subcategory: 'Defects - Ceiling Structure', item: 'Water Stains/Leaks', required: false, type: 'checkbox' },
@@ -241,25 +241,25 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-water-heater-age', category: 'Plumbing', subcategory: 'Water Heater', item: 'Water Heater Age - Year Installed', required: false, type: 'year' },
   { id: 'plumbing-hot-water-capacity', category: 'Plumbing', subcategory: 'Water Heater', item: 'Capacity', required: false, type: 'gallons' },
   { id: 'plumbing-water-heater-rating', category: 'Plumbing', subcategory: 'Water Heater', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Plumbing - Water Supply
   { id: 'plumbing-main-water-shutoff-location', category: 'Plumbing', subcategory: 'Water Supply', item: 'Main Water Shut-off Device - Location', required: false, type: 'multiselect', options: ['Basement', 'Crawlspace', 'North', 'South', 'East', 'West'] },
   { id: 'plumbing-water-supply-material', category: 'Plumbing', subcategory: 'Water Supply', item: 'Water Supply Material', required: false, type: 'multiselect', options: ['Copper', 'Galvanized', 'Unknown', 'Hose', 'Pex', 'Poly', 'PVC'] },
   { id: 'plumbing-water-source', category: 'Plumbing', subcategory: 'Water Supply', item: 'Water Source', required: false, type: 'multiselect', options: ['Public', 'Spring', 'Unknown', 'Well'] },
   { id: 'plumbing-filters', category: 'Plumbing', subcategory: 'Water Supply', item: 'Filters', required: false, type: 'multiselect', options: ['None', 'Sediment Filter', 'System flush', 'Unknown', 'Whole house conditioner'] },
   { id: 'plumbing-water-supply-rating', category: 'Plumbing', subcategory: 'Water Supply', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Plumbing - Drain Waste Vent
   { id: 'plumbing-drain-waste-vent-material', category: 'Plumbing', subcategory: 'Drain Waste Vent', item: 'Material', required: false, type: 'multiselect', options: ['ABS', 'Copper', 'Iron', 'Lead', 'PVC', 'Unknown'] },
   { id: 'plumbing-drain-waste-vent-rating', category: 'Plumbing', subcategory: 'Drain Waste Vent', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Plumbing - Fixtures
   { id: 'plumbing-fixtures-type', category: 'Plumbing', subcategory: 'Fixtures', item: 'Fixture Types', required: false, type: 'multiselect', options: ['Toilets', 'Sinks', 'Bathtubs', 'Showers', 'Laundry Connections'] },
   { id: 'plumbing-fixtures-rating', category: 'Plumbing', subcategory: 'Fixtures', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Plumbing - Back-flow Prevention
   { id: 'plumbing-backflow-prevention-location', category: 'Plumbing', subcategory: 'Back-flow Prevention Device', item: 'Location', required: false, type: 'multiselect', options: ['North', 'South', 'East', 'West', 'Front of Building', 'Back of Building', 'Basement'] },
-  
+
   // Plumbing - Sump Pump
   { id: 'plumbing-sump-pump-type', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Sump Pump Type', required: false, type: 'multiselect', options: ['Submersible', 'Pedestal', 'Battery Backup', 'Water-Powered Backup', 'Combination'] },
   { id: 'plumbing-sump-pump-location', category: 'Plumbing', subcategory: 'Sump Pump', item: 'Sump Pump Location', required: false, type: 'multiselect', options: ['Basement', 'Crawlspace', 'Utility Room', 'Garage'] },
@@ -336,11 +336,11 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'electric-incompatible-meter-base', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Incompatible Meter Base', required: false, type: 'checkbox', commentText: 'I recommend meter base to be upgraded to be in line with upgraded service wires. Recommend qualified electrician evaluate.' },
   { id: 'electric-inadequate-ground', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Inadequate Ground', required: false, type: 'checkbox', commentText: 'The ground at service entrance appears inadequate and should be checked by a licensed electrician.' },
   { id: 'electric-breaker-incorrectly-wired', category: 'Electric', subcategory: 'Defects - Main & Subpanels', item: 'Breaker Incorrectly Wired', required: false, type: 'checkbox', commentText: 'Circuit breaker was incorrectly wired / installed. This indicates that work was probably not performed by a licensed electrician and poses a safety hazard. Recommend that a licensed electrician check the entire panel and repair and replace as need.' },
-  
+
   // Electric - Branch Circuits
   { id: 'electric-wiring-type', category: 'Electric', subcategory: 'Branch Circuits', item: 'Wiring Type', required: false, type: 'multiselect', options: ['Copper', 'Aluminum', 'Knob and Tube', 'Romex', 'Conduit'] },
   { id: 'electric-branch-circuits-rating', category: 'Electric', subcategory: 'Branch Circuits', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Electric - Defects - Branch Circuits (from XLSX)
   { id: 'electric-insufficient-load', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Insufficient Load', required: false, type: 'checkbox', commentText: 'Branch circuit has insufficient load capacity. Recommend licensed electrician evaluate.' },
   { id: 'electric-improper-wiring', category: 'Electric', subcategory: 'Defects - Branch Circuits', item: 'Improper Wiring', required: false, type: 'checkbox', commentText: 'Improper wiring observed in branch circuits. Recommend licensed electrician evaluate and repair.' },
@@ -379,7 +379,7 @@ const inspectionChecklist: ChecklistItem[] = [
   // Electric - Carbon Monoxide Detectors
   { id: 'electric-co-detectors-type', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Detector Type', required: false, type: 'multiselect', options: ['Battery Operated', 'Hardwired', 'Combination Smoke/CO'] },
   { id: 'electric-co-detectors-rating', category: 'Electric', subcategory: 'Carbon Monoxide Detectors', item: 'Inspector Overall Grading', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Electric - Defects - Carbon Monoxide Detectors (from XLSX)
   { id: 'electric-co-low-battery', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Low Battery', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector failed to respond when tested. Recommend battery be replaced.' },
   { id: 'electric-co-inappropriate-location', category: 'Electric', subcategory: 'Defects - Carbon Monoxide Detectors', item: 'Inappropriate Location', required: false, type: 'checkbox', commentText: 'Carbon monoxide detector effectiveness may be compromised due to location. Recommend relocating according to manufacturer\'s instructions.' },
@@ -398,49 +398,49 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'heating-equipment-fuel-type', category: 'Heating & Cooling', subcategory: 'Heating Equipment', item: 'Fuel Type', required: false, type: 'multiselect', options: ['Natural Gas', 'Propane', 'Electric', 'Oil', 'Wood', 'Coal', 'Solar'] },
   { id: 'heating-equipment-age', category: 'Heating & Cooling', subcategory: 'Heating Equipment', item: 'Age - Year Installed', required: false, type: 'year' },
   { id: 'heating-equipment-inspector-rating', category: 'Heating & Cooling', subcategory: 'Heating Equipment', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Heating Equipment - Defects
   { id: 'heating-equipment-inadequate-ventilation', category: 'Heating & Cooling', subcategory: 'Defects - Heating Equipment', item: 'Inadequate Ventilation', required: false, type: 'checkbox' },
   { id: 'heating-equipment-filter-dirty', category: 'Heating & Cooling', subcategory: 'Defects - Heating Equipment', item: 'Filter Dirty/Missing', required: false, type: 'checkbox' },
   { id: 'heating-equipment-gas-leak', category: 'Heating & Cooling', subcategory: 'Defects - Heating Equipment', item: 'Gas Leak Detected', required: false, type: 'checkbox' },
   { id: 'heating-equipment-heat-exchanger-cracked', category: 'Heating & Cooling', subcategory: 'Defects - Heating Equipment', item: 'Heat Exchanger Cracked', required: false, type: 'checkbox' },
   { id: 'heating-equipment-improper-installation', category: 'Heating & Cooling', subcategory: 'Defects - Heating Equipment', item: 'Improper Installation', required: false, type: 'checkbox' },
-  
+
   // Cooling Equipment
   { id: 'cooling-equipment-type', category: 'Heating & Cooling', subcategory: 'Cooling Equipment', item: 'Cooling Equipment Type', required: false, type: 'multiselect', options: ['Central Air', 'Heat Pump', 'Window Units', 'Ductless Mini-Split', 'Evaporative Cooler', 'Geothermal'] },
   { id: 'cooling-equipment-age', category: 'Heating & Cooling', subcategory: 'Cooling Equipment', item: 'Age - Year Installed', required: false, type: 'year' },
   { id: 'cooling-equipment-inspector-rating', category: 'Heating & Cooling', subcategory: 'Cooling Equipment', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Cooling Equipment - Defects
   { id: 'cooling-equipment-refrigerant-leak', category: 'Heating & Cooling', subcategory: 'Defects - Cooling Equipment', item: 'Refrigerant Leak', required: false, type: 'checkbox' },
   { id: 'cooling-equipment-condenser-dirty', category: 'Heating & Cooling', subcategory: 'Defects - Cooling Equipment', item: 'Condenser Coils Dirty', required: false, type: 'checkbox' },
   { id: 'cooling-equipment-inadequate-cooling', category: 'Heating & Cooling', subcategory: 'Defects - Cooling Equipment', item: 'Inadequate Cooling Capacity', required: false, type: 'checkbox' },
   { id: 'cooling-equipment-electrical-issues', category: 'Heating & Cooling', subcategory: 'Defects - Cooling Equipment', item: 'Electrical Connection Issues', required: false, type: 'checkbox' },
-  
+
   // Operating Controls
   { id: 'operating-controls-thermostat-type', category: 'Heating & Cooling', subcategory: 'Operating Controls', item: 'Thermostat Type', required: false, type: 'multiselect', options: ['Manual', 'Programmable', 'Smart/WiFi', 'Zone Control', 'Heat Pump Control'] },
   { id: 'operating-controls-inspector-rating', category: 'Heating & Cooling', subcategory: 'Operating Controls', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Operating Controls - Defects
   { id: 'operating-controls-thermostat-malfunction', category: 'Heating & Cooling', subcategory: 'Defects - Operating Controls', item: 'Thermostat Malfunction', required: false, type: 'checkbox' },
   { id: 'operating-controls-wiring-issues', category: 'Heating & Cooling', subcategory: 'Defects - Operating Controls', item: 'Control Wiring Issues', required: false, type: 'checkbox' },
   { id: 'operating-controls-improper-calibration', category: 'Heating & Cooling', subcategory: 'Defects - Operating Controls', item: 'Improper Calibration', required: false, type: 'checkbox' },
-  
+
   // Distribution Systems
   { id: 'distribution-systems-ductwork-material', category: 'Heating & Cooling', subcategory: 'Distribution Systems', item: 'Ductwork Material', required: false, type: 'multiselect', options: ['Sheet Metal', 'Flexible Duct', 'Ductboard', 'PVC', 'Cast Iron', 'Copper'] },
   { id: 'distribution-systems-insulation-type', category: 'Heating & Cooling', subcategory: 'Distribution Systems', item: 'Insulation Type', required: false, type: 'multiselect', options: ['Fiberglass', 'Foam Board', 'Spray Foam', 'Cellulose', 'Mineral Wool', 'None'] },
   { id: 'distribution-systems-inspector-rating', category: 'Heating & Cooling', subcategory: 'Distribution Systems', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Distribution Systems - Defects
   { id: 'distribution-systems-duct-leakage', category: 'Heating & Cooling', subcategory: 'Defects - Distribution Systems', item: 'Duct Leakage', required: false, type: 'checkbox' },
   { id: 'distribution-systems-inadequate-insulation', category: 'Heating & Cooling', subcategory: 'Defects - Distribution Systems', item: 'Inadequate Insulation', required: false, type: 'checkbox' },
   { id: 'distribution-systems-blocked-returns', category: 'Heating & Cooling', subcategory: 'Defects - Distribution Systems', item: 'Blocked Return Air Vents', required: false, type: 'checkbox' },
   { id: 'distribution-systems-improper-sizing', category: 'Heating & Cooling', subcategory: 'Defects - Distribution Systems', item: 'Improper Duct Sizing', required: false, type: 'checkbox' },
-  
+
   // Vents & Flues
   { id: 'vents-flues-material', category: 'Heating & Cooling', subcategory: 'Vents & Flues', item: 'Vent/Flue Material', required: false, type: 'multiselect', options: ['Metal', 'PVC', 'Clay Tile', 'Masonry', 'Stainless Steel', 'Aluminum'] },
   { id: 'vents-flues-inspector-rating', category: 'Heating & Cooling', subcategory: 'Vents & Flues', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Vents & Flues - Defects
   { id: 'vents-flues-blockage', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Vent/Flue Blockage', required: false, type: 'checkbox' },
   { id: 'vents-flues-improper-clearance', category: 'Heating & Cooling', subcategory: 'Defects - Vents & Flues', item: 'Improper Clearance', required: false, type: 'checkbox' },
@@ -479,7 +479,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'windows-missing-screen', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Missing Screen', required: false, type: 'checkbox', commentText: 'Window screen is missing. Recommend replacement.' },
   { id: 'windows-broken-glass', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Broken Glass', required: false, type: 'checkbox', commentText: 'Window glass is broken. Recommend immediate replacement for safety.' },
   { id: 'windows-inoperable', category: 'Doors, Windows & Interior', subcategory: 'Defects - Windows', item: 'Inoperable', required: false, type: 'checkbox', commentText: 'Window is inoperable. Recommend repair or replacement.' },
-  
+
   // Entry Doors - Defects Only
   { id: 'entry-door-water-staining', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Water Staining', required: false, type: 'checkbox', commentText: 'Water staining observed on entry door. Recommend investigation of water source and repair.' },
   { id: 'entry-door-poor-weather-stripping', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Poor Weather-stripping', required: false, type: 'checkbox', commentText: 'Weather-stripping is worn or missing. Recommend replacement to improve energy efficiency.' },
@@ -489,7 +489,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'entry-door-door-sticks', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Sticks', required: false, type: 'checkbox', commentText: 'Door sticks when opening or closing. Recommend adjustment or repair.' },
   { id: 'entry-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Door latch is misaligned. Recommend adjustment.' },
   { id: 'entry-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Entry Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Door does not latch properly. Recommend repair for security.' },
-  
+
   // Interior Doors - Defects Only
   { id: 'interior-door-hinges-missing', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Missing', required: false, type: 'checkbox', commentText: 'Interior door hinges are missing. Recommend replacement.' },
   { id: 'interior-door-hinges-loose', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Hinges Loose', required: false, type: 'checkbox', commentText: 'Interior door hinges are loose. Recommend tightening.' },
@@ -497,7 +497,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'interior-door-latch-alignment', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Door Latch Alignment', required: false, type: 'checkbox', commentText: 'Interior door latch is misaligned. Recommend adjustment.' },
   { id: 'interior-door-doesnt-latch', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: "Door Doesn't Latch", required: false, type: 'checkbox', commentText: 'Interior door does not latch properly. Recommend repair.' },
   { id: 'interior-door-damaged', category: 'Doors, Windows & Interior', subcategory: 'Defects - Interior Doors', item: 'Damaged', required: false, type: 'checkbox', commentText: 'Interior door is damaged. Recommend repair or replacement.' },
-  
+
   // Garage Doors - Defects Only
   { id: 'garage-door-loud-noises', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Loud Noises', required: false, type: 'checkbox', commentText: 'Garage door makes loud noises during operation. Recommend lubrication or repair.' },
   { id: 'garage-door-improper-installation', category: 'Doors, Windows & Interior', subcategory: 'Defects - Garage Doors', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Garage door was improperly installed. Recommend evaluation and correction by qualified contractor.' },
@@ -513,19 +513,19 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'refrigerator-manufacturer', category: 'Built-in Appliances', subcategory: 'Refrigerator', item: 'Refrigerator Manufacturer', required: false, type: 'multiselect', options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Sub-Zero'] },
   { id: 'refrigerator-age', category: 'Built-in Appliances', subcategory: 'Refrigerator', item: 'Refrigerator Age', required: false, type: 'year' },
   { id: 'refrigerator-inspector-rating', category: 'Built-in Appliances', subcategory: 'Refrigerator', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Refrigerator - Defects
   { id: 'refrigerator-not-cooling-properly', category: 'Built-in Appliances', subcategory: 'Defects - Refrigerator', item: 'Not Cooling Properly', required: false, type: 'checkbox' },
   { id: 'refrigerator-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Refrigerator', item: 'Excessive Noise', required: false, type: 'checkbox' },
   { id: 'refrigerator-door-seal-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Refrigerator', item: 'Door Seal Damaged', required: false, type: 'checkbox' },
   { id: 'refrigerator-ice-maker-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Refrigerator', item: 'Ice Maker Inoperable', required: false, type: 'checkbox' },
-  
+
   // Range/Oven/Cooktop
   { id: 'range-oven-cooktop-type', category: 'Built-in Appliances', subcategory: 'Range/Oven/Cooktop', item: 'Range/Oven/Cooktop Type', required: false, type: 'multiselect', options: ['Electric Range', 'Gas Range', 'Induction Cooktop', 'Electric Cooktop', 'Gas Cooktop', 'Wall Oven', 'Double Oven'] },
   { id: 'range-oven-cooktop-manufacturer', category: 'Built-in Appliances', subcategory: 'Range/Oven/Cooktop', item: 'Range/Oven/Cooktop Manufacturer', required: false, type: 'multiselect', options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Viking', 'Wolf'] },
   { id: 'range-oven-cooktop-age', category: 'Built-in Appliances', subcategory: 'Range/Oven/Cooktop', item: 'Range/Oven/Cooktop Age', required: false, type: 'year' },
   { id: 'range-oven-cooktop-inspector-rating', category: 'Built-in Appliances', subcategory: 'Range/Oven/Cooktop', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Range/Oven/Cooktop - Defects
   { id: 'range-oven-cooktop-missing-control-knobs', category: 'Built-in Appliances', subcategory: 'Defects - Range/Oven/Cooktop', item: 'Missing Control Knobs', required: false, type: 'checkbox' },
   { id: 'range-oven-cooktop-exhaust-system-missing', category: 'Built-in Appliances', subcategory: 'Defects - Range/Oven/Cooktop', item: 'Exhaust System Missing', required: false, type: 'checkbox' },
@@ -536,45 +536,45 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'range-oven-cooktop-exhaust-duct-terminates-attic', category: 'Built-in Appliances', subcategory: 'Defects - Range/Oven/Cooktop', item: 'Exhaust Duct Terminates in Attic', required: false, type: 'checkbox' },
   { id: 'range-oven-cooktop-oven-not-heating-up', category: 'Built-in Appliances', subcategory: 'Defects - Range/Oven/Cooktop', item: 'Oven Not Heating Up', required: false, type: 'checkbox' },
   { id: 'range-oven-cooktop-no-gas-shutoff-valve', category: 'Built-in Appliances', subcategory: 'Defects - Range/Oven/Cooktop', item: 'No Gas Shut-off Valve', required: false, type: 'checkbox' },
-  
+
   // Dishwasher
   { id: 'dishwasher-type', category: 'Built-in Appliances', subcategory: 'Dishwasher', item: 'Dishwasher Type', required: false, type: 'multiselect', options: ['Built-in', 'Portable', 'Drawer', 'Countertop', 'Panel Ready'] },
   { id: 'dishwasher-manufacturer', category: 'Built-in Appliances', subcategory: 'Dishwasher', item: 'Dishwasher Manufacturer', required: false, type: 'multiselect', options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Miele'] },
   { id: 'dishwasher-age', category: 'Built-in Appliances', subcategory: 'Dishwasher', item: 'Dishwasher Age', required: false, type: 'year' },
   { id: 'dishwasher-inspector-rating', category: 'Built-in Appliances', subcategory: 'Dishwasher', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Dishwasher - Defects
   { id: 'dishwasher-not-cleaning-properly', category: 'Built-in Appliances', subcategory: 'Defects - Dishwasher', item: 'Not Cleaning Properly', required: false, type: 'checkbox' },
   { id: 'dishwasher-water-leakage', category: 'Built-in Appliances', subcategory: 'Defects - Dishwasher', item: 'Water Leakage', required: false, type: 'checkbox' },
   { id: 'dishwasher-door-latch-problems', category: 'Built-in Appliances', subcategory: 'Defects - Dishwasher', item: 'Door Latch Problems', required: false, type: 'checkbox' },
   { id: 'dishwasher-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Dishwasher', item: 'Excessive Noise', required: false, type: 'checkbox' },
-  
+
   // Built-in Microwave
   { id: 'builtin-microwave-type', category: 'Built-in Appliances', subcategory: 'Built-in Microwave', item: 'Built-in Microwave Type', required: false, type: 'multiselect', options: ['Over-the-range', 'Built-in Wall', 'Drawer', 'Countertop'] },
   { id: 'builtin-microwave-manufacturer', category: 'Built-in Appliances', subcategory: 'Built-in Microwave', item: 'Built-in Microwave Manufacturer', required: false, type: 'multiselect', options: ['Whirlpool', 'GE', 'Samsung', 'LG', 'KitchenAid', 'Frigidaire', 'Bosch', 'Sharp'] },
   { id: 'builtin-microwave-age', category: 'Built-in Appliances', subcategory: 'Built-in Microwave', item: 'Built-in Microwave Age', required: false, type: 'year' },
   { id: 'builtin-microwave-inspector-rating', category: 'Built-in Appliances', subcategory: 'Built-in Microwave', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Built-in Microwave - Defects
   { id: 'builtin-microwave-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Built-in Microwave', item: 'Inoperable', required: false, type: 'checkbox' },
   { id: 'builtin-microwave-improper-mounting', category: 'Built-in Appliances', subcategory: 'Defects - Built-in Microwave', item: 'Improper Mounting', required: false, type: 'checkbox' },
-  
+
   // Garbage Disposal
   { id: 'garbage-disposal-type', category: 'Built-in Appliances', subcategory: 'Garbage Disposal', item: 'Garbage Disposal Type', required: false, type: 'multiselect', options: ['Continuous Feed', 'Batch Feed', '1/2 HP', '3/4 HP', '1 HP'] },
   { id: 'garbage-disposal-manufacturer', category: 'Built-in Appliances', subcategory: 'Garbage Disposal', item: 'Garbage Disposal Manufacturer', required: false, type: 'multiselect', options: ['InSinkErator', 'Waste King', 'KitchenAid', 'Moen', 'GE', 'Whirlaway'] },
   { id: 'garbage-disposal-age', category: 'Built-in Appliances', subcategory: 'Garbage Disposal', item: 'Garbage Disposal Age', required: false, type: 'year' },
   { id: 'garbage-disposal-inspector-rating', category: 'Built-in Appliances', subcategory: 'Garbage Disposal', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Garbage Disposal - Defects
   { id: 'garbage-disposal-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Garbage Disposal', item: 'Inoperable', required: false, type: 'checkbox' },
   { id: 'garbage-disposal-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Garbage Disposal', item: 'Excessive Noise', required: false, type: 'checkbox' },
-  
+
   // Cooking Exhaust
   { id: 'cooking-exhaust-type', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Cooking Exhaust Type', required: false, type: 'multiselect', options: ['Range Hood', 'Island Hood', 'Downdraft', 'Over-the-range Microwave', 'Wall Mount', 'Under Cabinet'] },
   { id: 'cooking-exhaust-manufacturer', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Cooking Exhaust Manufacturer', required: false, type: 'multiselect', options: ['Broan', 'Zephyr', 'KitchenAid', 'GE', 'Whirlpool', 'Bosch', 'Viking', 'Best'] },
   { id: 'cooking-exhaust-age', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Cooking Exhaust Age', required: false, type: 'year' },
   { id: 'cooking-exhaust-inspector-rating', category: 'Built-in Appliances', subcategory: 'Cooking Exhaust', item: 'Inspector Overall Rating', required: false, type: 'rating', options: ['Excellent', 'Very Good', 'Good', 'Poor', 'Replace', 'Not Inspected', 'Partial Inspected'] },
-  
+
   // Cooking Exhaust - Defects
   { id: 'cooking-exhaust-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Fan Inoperable', required: false, type: 'checkbox', commentText: 'The cooking exhaust fan is inoperable and needs repair or replacement.' },
   { id: 'cooking-exhaust-excessive-noise', category: 'Built-in Appliances', subcategory: 'Defects - Cooking Exhaust', item: 'Excessive Noise', required: false, type: 'checkbox', commentText: 'The cooking exhaust system produces excessive noise during operation.' },
@@ -592,6 +592,28 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'fireplace-no-screen', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'No Fireplace Screen', required: false, type: 'checkbox', commentText: 'Fireplace screen was missing in front of fireplace. Fire logs can split, so this is recommended as a safety precaution.' },
   { id: 'fireplace-inadequate-clearance', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Inadequate Clearance', required: false, type: 'checkbox', commentText: 'Fireplace was too close to combustible items. Fireplace and surrounding space should be clear of personal items.' },
   { id: 'fireplace-creosote-buildup', category: 'Built-in Appliances', subcategory: 'Defects - Fireplaces', item: 'Creosote Buildup', required: false, type: 'checkbox', commentText: 'There was a notable amount of creosote buildup in the flue. Recommend a qualified fireplace or chimney contractor inspect and sweep on an annual basis.' },
+
+// ============== ATTIC, INSULATION & VENTILATION (under Built-in Appliances) - DEFECTS ONLY ==============
+  // Defects - Insulation
+  { id: 'attic-insulation-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Insulation Damaged', required: false, type: 'checkbox', commentText: 'Insulation appears to have been pulled out and/or damaged by pests. Recommend a qualified insulation contractor evaluate and repair.' },
+  { id: 'attic-insulation-improper-installation', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Attic insulation was improperly installed. Recommend a qualified insulation contractor evaluate and correct.' },
+  { id: 'attic-insulation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Insufficient Insulation', required: false, type: 'checkbox', commentText: 'Insulation depth was inadequate. Recommend a qualified attic insulation contractor install additional insulation.' },
+
+  // Defects - Ventilation
+  { id: 'attic-whole-house-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Whole House Fan Inoperable', required: false, type: 'checkbox', commentText: 'Whole house fan was inoperable at time of inspection. Recommend a qualified whole house fan contractor evaluate and repair.' },
+  { id: 'attic-gable-vent-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Gable Vent Damaged', required: false, type: 'checkbox', commentText: 'Gable vent was damaged, which could allow pests to enter. Recommend a qualified attic or ventilation contractor repair.' },
+  { id: 'attic-discoloration-mold', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Discoloration - Possible Mold', required: false, type: 'checkbox', commentText: 'Attic showed areas of discoloration and possible mold growth. Recommend a mold lab analysis to prevent spread of potential mold and damage to home or health risk. Also recommend finding source of moisture or lack of ventilation in attic space.' },
+  { id: 'attic-ventilation-insufficient', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Attic Ventilation Insufficient', required: false, type: 'checkbox', commentText: 'Attic venting was insufficient at time of inspection. Modern standards recommend 1.5 square feet of venting area for every 300 square feet of attic floor space. Recommend an attic contractor evaluate and remedy.' },
+  { id: 'attic-fan-inoperable', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Attic Fan Inoperable', required: false, type: 'checkbox', commentText: 'Attic fan was inoperable at time of inspection. Recommend an attic fan specialist evaluate and repair.' },
+
+  // Defects - Exhaust Systems
+  { id: 'attic-exhaust-ducts-loose', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Ducts Loose', required: false, type: 'checkbox', commentText: 'Ductwork in the attic is loose or disconnected. Recommend repair.' },
+  { id: 'attic-bathroom-vents-into-attic', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Bathroom Vents Into Attic', required: false, type: 'checkbox', commentText: 'Bathroom fan vents into the attic, which can cause moisture and mold. Recommend a qualified attic contractor properly install exhaust fan to terminate to the exterior.' },
+
+  // Defects - Vapor Retarders
+  { id: 'attic-vapor-barrier-damaged', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Vapor Barrier Damaged', required: false, type: 'checkbox', commentText: 'Vapor barrier is damaged in one or more areas. Recommend insulation contractor repair or replace.' },
+  { id: 'attic-no-vapor-barrier', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'No Vapor Barrier', required: false, type: 'checkbox', commentText: 'There is no vapor barrier beneath the flooring. This can result in unwanted moisture.' },
+  { id: 'attic-vapor-barrier-improper', category: 'Built-in Appliances', subcategory: 'Defects - Attic, Insulation & Ventilation', item: 'Vapor Barrier Improper Installation', required: false, type: 'checkbox', commentText: 'Vapor barrier is improperly installed. This can result in unwanted moisture. Recommend insulation contractor evaluate.' },
 
   // ============== GREEN FEATURES ==============
   { id: 'green-well-sealed', category: 'Green Features', item: 'Well Sealed', required: false, type: 'checkbox' },
@@ -631,7 +653,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'radon-elapsed-time', category: 'Radon', subcategory: 'Monitor Details', item: 'Elapsed Time (days)', required: false, type: 'number' },
   { id: 'radon-serial-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Serial Number', required: false, type: 'text' },
   { id: 'radon-model-number', category: 'Radon', subcategory: 'Monitor Details', item: 'Model Number', required: false, type: 'text' },
-  
+
   // Radon - Test Results
   { id: 'radon-average-pcil', category: 'Radon', subcategory: 'Test Results', item: 'Average pCi/L', required: false, type: 'number' },
   { id: 'radon-epa-resources', category: 'Radon', subcategory: 'Test Results', item: 'EPA Resources', required: false, type: 'info' },
@@ -934,13 +956,13 @@ const inspectionChecklist: ChecklistItem[] = [
 
   // Plumbing - Defects - Main Water Shut-off Device
   { id: 'plumbing-main-shutoff-corrosion', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Water main shut-off shows signs of corrosion. Recommend a qualified plumber evaluate.' },
-  
+
   // Plumbing - Defects - Drain Waste Vent
   { id: 'plumbing-sink-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Sink - Poor Drainage', required: false, type: 'checkbox', commentText: 'Sink had slow/poor drainage. Recommend a qualified plumber repair.' },
   { id: 'plumbing-shower-poor-drainage', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Shower - Poor Drainage', required: false, type: 'checkbox', commentText: 'Shower had slow/poor drainage. Recommend a qualified plumber repair.' },
   { id: 'plumbing-leaking-pipe', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Leaking Pipe', required: false, type: 'checkbox', commentText: 'A drain, waste and/or vent pipe showed signs of a leak. Recommend a qualified plumber evaluate and repair.' },
   { id: 'plumbing-improper-connection', category: 'Plumbing', subcategory: 'Defects - Drain Waste Vent', item: 'Improper Connection', required: false, type: 'checkbox', commentText: 'An improper connection was observed at a drain, waste or vent pipe. Recommend a qualified plumber evaluate and repair.' },
-  
+
   // Plumbing - Defects - Water Supply (Distribution & Fixtures)
   { id: 'plumbing-toilet-leaking', category: 'Plumbing', subcategory: 'Defects - Fixtures', item: 'Toilet Leaking', required: false, type: 'checkbox', commentText: 'Toilet is loose and/or leaking at the base. Recommend a qualified plumber evaluate and repair to prevent further water damage.' },
   { id: 'plumbing-distribution-pipe-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Distribution Pipe Leaking', required: false, type: 'checkbox', commentText: 'Distribution pipe was leaking. Recommend a qualified plumber evaluate and repair.' },
@@ -949,7 +971,7 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-main-supply-valve-leaking', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Main Water Supply Valve Leaking', required: false, type: 'checkbox', commentText: 'Main water supply shut-off valve was leaking. Recommend a qualified plumber evaluate and repair.' },
   { id: 'plumbing-no-protective-sleeve', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'No Protective Sleeve', required: false, type: 'checkbox', commentText: 'Main water supply pipe was missing protective sleeve, which prevents corrosion and extends lifespan. Recommend a qualified plumber install protective sleeve.' },
   { id: 'plumbing-polybutylene-pipes', category: 'Plumbing', subcategory: 'Defects - Water Supply', item: 'Polybutylene Supply Pipes', required: false, type: 'checkbox', commentText: 'Water supply pipes were made from polybutylene material. This material can be prone to fail without warning, causing damage to the home structure. Recommend a qualified plumber replace pipes and fittings with an approved material like PEX.' },
-  
+
   // Plumbing - Defects - Water Heater
   { id: 'plumbing-water-heater-near-end-life', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Near End of Life', required: false, type: 'checkbox', commentText: 'Water heater showed normal signs of wear and tear. Recommend monitoring it\'s effectiveness and replacing in the near future.' },
   { id: 'plumbing-water-heater-irregular-flame', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'Irregular Flame', required: false, type: 'checkbox', commentText: 'Water heater flame is irregular. Recommend qualified plumber evaluate & repair.' },
@@ -960,12 +982,12 @@ const inspectionChecklist: ChecklistItem[] = [
   { id: 'plumbing-water-heater-no-expansion-tank', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Expansion Tank', required: false, type: 'checkbox', commentText: 'No expansion tank was present. Expansion tanks allow for the thermal expansion of water in the pipes. These are required in certain areas for new installs. Recommend a qualified plumber evaluate and install.' },
   { id: 'plumbing-water-heater-no-drip-pan', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Drip Pan', required: false, type: 'checkbox', commentText: 'No drip pan was present. Recommend installation by a qualified plumber.' },
   { id: 'plumbing-water-heater-no-burner-ignition', category: 'Plumbing', subcategory: 'Defects - Water Heater', item: 'No Burner Ignition', required: false, type: 'checkbox', commentText: 'The burner was unresponsive and did not ignite, despite gas flowing properly. Recommend a qualified plumber evaluate and repair.' },
-  
+
   // Plumbing - Defects - Fuel Storage & Distribution
   { id: 'plumbing-fuel-improper-installation', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Improper Installation', required: false, type: 'checkbox', commentText: 'Gas supply or distribution pipes were improperly installed. Recommend a qualified contractor or local utility company evaluate and properly install pipes up to standards.' },
   { id: 'plumbing-fuel-gas-odor-severe', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Gas Odor (Severe)', required: false, type: 'checkbox', commentText: 'Excessive gas odor was present around meter. Recommend consulting with your local utility company or qualified gas company to evaluate for potential leaks.' },
   { id: 'plumbing-fuel-corrosion', category: 'Plumbing', subcategory: 'Defects - Fuel Storage', item: 'Corrosion', required: false, type: 'checkbox', commentText: 'Gas pipes were corroded. This can lead to gas leaks. Recommend contacting local utility company for evaluation and repair.' },
-  
+
   // Plumbing - Defects - Sump Pump
   { id: 'plumbing-sump-pump-no-shutoff-valve', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'No Shut-off Valve', required: false, type: 'checkbox', commentText: 'No shut-off valve was observed at time of inspection. Recommend a qualified plumber install.' },
   { id: 'plumbing-sump-pump-needs-cleaning', category: 'Plumbing', subcategory: 'Defects - Sump Pump', item: 'Needs Cleaning', required: false, type: 'checkbox', commentText: 'Sump pump was excessively dirty and in need of cleaning/servicing.' },
@@ -1104,13 +1126,13 @@ export function ChecklistCategoryContent({
   // Filter items based on category and subcategory
   const filteredItems = inspectionChecklist.filter((item) => {
     // Match by exact category name OR by any of the mapped category labels
-    const categoryMatches = 
+    const categoryMatches =
       categoryLabels.includes(item.category) ||
       item.category === categoryId ||
-      Object.values(categoryMapping).some(labels => 
+      Object.values(categoryMapping).some(labels =>
         labels.includes(item.category) && labels.some(l => categoryLabels.includes(l))
       );
-    
+
     if (!categoryMatches) return false;
 
     // When a subcategory is selected, match items with that subcategory OR items with Defects - subcategory
@@ -1137,7 +1159,7 @@ export function ChecklistCategoryContent({
     const updated = current.includes(option)
       ? current.filter(item => item !== option)
       : [...current, option];
-    
+
     const updatedSelections = { ...selectedOptions, [itemId]: updated };
     setSelectedOptions(updatedSelections);
     onChange('checklistSelections', updatedSelections);
@@ -1207,7 +1229,7 @@ export function ChecklistCategoryContent({
             </div>
           </div>
         );
-        
+
       case 'year':
         return (
           <div className="space-y-2">
@@ -1309,9 +1331,9 @@ export function ChecklistCategoryContent({
               <p className="text-sm text-foreground">
                 Homes should be checked every few years to make sure homes are lower than the 4 pCi/L level set by the EPA, whether or not you have a mitigation system.
               </p>
-              <a 
-                href="https://www.epa.gov/radon" 
-                target="_blank" 
+              <a
+                href="https://www.epa.gov/radon"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium"
               >
@@ -1330,9 +1352,9 @@ export function ChecklistCategoryContent({
               <p className="text-sm text-foreground">
                 Any abnormal readings should have a follow-up test by an EPA-approved laboratory.
               </p>
-              <a 
-                href="https://www.epa.gov/privatewells/protect-your-homes-water" 
-                target="_blank" 
+              <a
+                href="https://www.epa.gov/privatewells/protect-your-homes-water"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium"
               >
@@ -1368,7 +1390,7 @@ export function ChecklistCategoryContent({
           <div className="space-y-2">
             <input
               type="text"
-              placeholder={item.item === 'Serial Number' ? 'Enter serial number' : 
+              placeholder={item.item === 'Serial Number' ? 'Enter serial number' :
                           item.item === 'Model Number' ? 'Enter model number' :
                           item.item === 'Start Day' ? 'e.g., Monday' :
                           item.item === 'End Day' ? 'e.g., Wednesday' :
@@ -1406,7 +1428,7 @@ export function ChecklistCategoryContent({
         );
 
       case 'textarea':
-        const defaultEpaText = item.id === 'radon-epa-resources' 
+        const defaultEpaText = item.id === 'radon-epa-resources'
           ? `This report includes test results from a radon-testing device that records the levels of radon gas in an air sample. The actual radon levels in the home may vary depending on many factors including, time, temperature, season, barometric pressure, ventilation, and other factors.
 
 Homes tested using the EPAs protocol should not be mitigated on the basis of a single short term test as used for real estate transactions under EPA protocols. A follow-up test is necessary for mitigation decision-making regardless of the initial test result.
@@ -1419,7 +1441,7 @@ Homes should be checked every few years to make sure homes are lower than the 4p
 
 More information can be found directly at the EPA's website: https://www.epa.gov/radon`
           : '';
-        
+
         return (
           <div className="space-y-2">
             <Textarea
@@ -1430,7 +1452,7 @@ More information can be found directly at the EPA's website: https://www.epa.gov
             />
           </div>
         );
-        
+
       case 'rating':
         return (
           <div className="space-y-2">
@@ -1495,17 +1517,17 @@ More information can be found directly at the EPA's website: https://www.epa.gov
             </div>
           </div>
         );
-        
+
       case 'checkbox':
       default:
         // For defect items, show checkbox with category badge and description textarea
         if (item.subcategory?.includes('Defects')) {
           const isDefectSelected = selectedDefects[item.id] === true;
           const defectCategoryLabel = `Defects - ${item.subcategory.replace('Defects - ', '')}`;
-          
+
           // Use item.commentText first (from missingChecklistDefects), then defectDescriptions, then empty
           const defaultComment = item.commentText || defectDescriptions[item.id] || '';
-          
+
           return (
             <div className="space-y-0">
               <Textarea
@@ -1517,7 +1539,7 @@ More information can be found directly at the EPA's website: https://www.epa.gov
             </div>
           );
         }
-        
+
         // For green feature items
         if (item.category === 'Green Features') {
           return (
@@ -1531,7 +1553,7 @@ More information can be found directly at the EPA's website: https://www.epa.gov
             </div>
           );
         }
-        
+
         return (
           <div className="flex gap-2">
             <button
@@ -1637,22 +1659,22 @@ More information can be found directly at the EPA's website: https://www.epa.gov
               </h4>
             </div>
           )}
-          
+
           {groupedItems[groupKey].map((item, index) => {
             const isDefectItem = item.subcategory?.includes('Defects');
             const defectCategoryLabel = isDefectItem ? `Defects - ${item.subcategory?.replace('Defects - ', '')}` : '';
             const isDefectSelected = selectedDefects[item.id] === true;
             const groupItems = groupedItems[groupKey];
             const nextItem = groupItems[index + 1];
-            
+
             // Skip items that are part of a flex row pair (they're rendered with their partner)
             if (skipIds.includes(item.id)) {
               return null;
             }
-            
+
             // Check if this item should be rendered in a flex row with the next item
             const shouldRenderFlexRow = isFlexRowPair(item, nextItem);
-            
+
             // Special rendering for defect items to match reference design
             if (isDefectItem) {
               return (
@@ -1668,13 +1690,13 @@ More information can be found directly at the EPA's website: https://www.epa.gov
                       onCheckedChange={(checked) => handleDefectCheck(item.id, checked as boolean)}
                       className="h-5 w-5"
                     />
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className="text-xs font-normal border-destructive/50 text-destructive bg-destructive/5 whitespace-nowrap"
                     >
                       {defectCategoryLabel}
                     </Badge>
-                    <label 
+                    <label
                       htmlFor={item.id}
                       className="font-medium text-sm text-foreground cursor-pointer flex-1"
                     >
@@ -1686,7 +1708,7 @@ More information can be found directly at the EPA's website: https://www.epa.gov
                 </div>
               );
             }
-            
+
             // Flex row rendering for paired items (like Start Time / End Time)
             if (shouldRenderFlexRow && nextItem) {
               return (
@@ -1718,7 +1740,7 @@ More information can be found directly at the EPA's website: https://www.epa.gov
                 </div>
               );
             }
-            
+
             // Standard rendering for non-defect items
             return (
               <div
