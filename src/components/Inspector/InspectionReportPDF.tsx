@@ -1,3 +1,4 @@
+import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import type { InspectionDetails, ChecklistItem, InspectionPhoto } from "@/hooks/useInspections";
 
@@ -7,34 +8,256 @@ interface InspectionReportPDFProps {
   photos: InspectionPhoto[];
 }
 
-/**
- * PDF-optimized version of the Inspection Report
- * Uses inline styles for consistent rendering with html2canvas
- */
+// Create styles
+const styles = StyleSheet.create({
+  page: {
+    padding: 40,
+    fontSize: 10,
+    fontFamily: "Helvetica",
+    backgroundColor: "#ffffff",
+  },
+  header: {
+    textAlign: "center",
+    borderBottom: "1px solid #e5e7eb",
+    paddingBottom: 20,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#111827",
+  },
+  subtitle: {
+    fontSize: 10,
+    color: "#6b7280",
+    marginTop: 6,
+  },
+  row: {
+    flexDirection: "row",
+    gap: 12,
+    marginBottom: 12,
+  },
+  card: {
+    border: "1px solid #e5e7eb",
+    borderRadius: 6,
+    backgroundColor: "#ffffff",
+    marginBottom: 12,
+  },
+  cardHeader: {
+    padding: 12,
+    paddingBottom: 8,
+    borderBottom: "1px solid #f3f4f6",
+  },
+  cardTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    color: "#111827",
+  },
+  cardContent: {
+    padding: 12,
+  },
+  label: {
+    fontSize: 9,
+    color: "#6b7280",
+  },
+  value: {
+    fontSize: 10,
+    fontWeight: "medium",
+    color: "#111827",
+  },
+  mutedText: {
+    fontSize: 9,
+    color: "#6b7280",
+  },
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  gradeCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  gradeText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  gradePercent: {
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 8,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#e5e7eb",
+    marginVertical: 8,
+  },
+  ratingGrid: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  ratingItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+  ratingNumber: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  ratingLabel: {
+    fontSize: 8,
+    color: "#6b7280",
+    marginTop: 2,
+  },
+  categoryGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  categoryItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
+    border: "1px solid #e5e7eb",
+    borderRadius: 6,
+    width: "48%",
+  },
+  categoryName: {
+    fontSize: 10,
+    fontWeight: "medium",
+  },
+  categoryScore: {
+    fontSize: 8,
+    color: "#6b7280",
+  },
+  gradeBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4,
+    fontSize: 9,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  checklistCategory: {
+    marginBottom: 12,
+  },
+  checklistCategoryTitle: {
+    fontSize: 11,
+    fontWeight: "bold",
+    color: "#3b82f6",
+    marginBottom: 6,
+  },
+  checklistItems: {
+    paddingLeft: 12,
+    borderLeft: "2px solid rgba(59, 130, 246, 0.3)",
+  },
+  checklistItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    paddingVertical: 4,
+  },
+  checklistItemName: {
+    fontSize: 10,
+    flex: 1,
+    paddingRight: 8,
+  },
+  checklistItemNotes: {
+    fontSize: 8,
+    color: "#6b7280",
+    marginTop: 2,
+  },
+  photoGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  photoItem: {
+    width: "48%",
+    marginBottom: 8,
+  },
+  photo: {
+    width: "100%",
+    height: 120,
+    objectFit: "cover",
+    borderRadius: 6,
+    border: "1px solid #e5e7eb",
+  },
+  photoCaption: {
+    fontSize: 8,
+    color: "#6b7280",
+    marginTop: 4,
+  },
+  footer: {
+    textAlign: "center",
+    fontSize: 9,
+    color: "#6b7280",
+    paddingTop: 16,
+    borderTop: "1px solid #e5e7eb",
+    marginTop: 20,
+  },
+  col2: {
+    flex: 2,
+  },
+  col1: {
+    flex: 1,
+  },
+});
+
+const getGradeColor = (grade: string | null): string => {
+  if (!grade) return "#9ca3af";
+  const baseGrade = grade.charAt(0);
+  switch (baseGrade) {
+    case "A": return "#10b981";
+    case "B": return "#3b82f6";
+    case "C": return "#eab308";
+    case "D": return "#f97316";
+    case "F": return "#ef4444";
+    default: return "#9ca3af";
+  }
+};
+
+const getRatingColor = (rating: string): string => {
+  switch (rating) {
+    case "Excellent": return "#059669";
+    case "Very Good": return "#2563eb";
+    case "Good": return "#ca8a04";
+    case "Poor": return "#ea580c";
+    case "Replace": return "#dc2626";
+    default: return "#6b7280";
+  }
+};
+
 export default function InspectionReportPDF({ inspection, checklistItems, photos }: InspectionReportPDFProps) {
-  // Compute display values with fallback logic
   const checklistData = inspection.checklist_data as Record<string, unknown> | null;
   const props = inspection.properties;
   
   const hasRealPropertyData = props?.address && 
-    props.address !== 'Draft Property' && 
-    props.city !== 'Unknown';
+    props.address !== "Draft Property" && 
+    props.city !== "Unknown";
 
   const displayAddress = hasRealPropertyData 
     ? props?.address 
-    : (checklistData?.address as string) || 'Unknown Address';
+    : (checklistData?.address as string) || "Unknown Address";
   const displayCity = hasRealPropertyData 
     ? props?.city 
-    : (checklistData?.city as string) || '';
+    : (checklistData?.city as string) || "";
   const displayState = hasRealPropertyData 
     ? props?.state 
-    : (checklistData?.state as string) || '';
+    : (checklistData?.state as string) || "";
   const displayZipCode = hasRealPropertyData 
     ? props?.zip_code 
-    : (checklistData?.zipCode as string) || '';
+    : (checklistData?.zipCode as string) || "";
   const displayPropertyType = hasRealPropertyData 
     ? props?.property_type 
-    : (checklistData?.propertyType as string) || 'Unknown';
+    : (checklistData?.propertyType as string) || "Unknown";
   const displayYearBuilt = hasRealPropertyData 
     ? props?.year_built 
     : (checklistData?.yearBuilt as number) || null;
@@ -42,440 +265,283 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
     ? props?.square_footage 
     : (checklistData?.squareFootage as number) || null;
 
-  const getGradeStyles = (grade: string | null): React.CSSProperties => {
-    if (!grade) return { backgroundColor: '#9ca3af', color: '#ffffff' };
-    const baseGrade = grade.charAt(0);
-    switch (baseGrade) {
-      case 'A': return { backgroundColor: '#10b981', color: '#ffffff' };
-      case 'B': return { backgroundColor: '#3b82f6', color: '#ffffff' };
-      case 'C': return { backgroundColor: '#eab308', color: '#ffffff' };
-      case 'D': return { backgroundColor: '#f97316', color: '#ffffff' };
-      case 'F': return { backgroundColor: '#ef4444', color: '#ffffff' };
-      default: return { backgroundColor: '#9ca3af', color: '#ffffff' };
-    }
-  };
-
-  const getRatingStyles = (rating: string): React.CSSProperties => {
-    switch (rating) {
-      case 'Excellent': return { color: '#059669' };
-      case 'Very Good': return { color: '#2563eb' };
-      case 'Good': return { color: '#ca8a04' };
-      case 'Poor': return { color: '#ea580c' };
-      case 'Replace': return { color: '#dc2626' };
-      default: return { color: '#6b7280' };
-    }
-  };
-
   // Group checklist items by category
   const groupedItems = checklistItems.reduce((acc, item) => {
-    const category = item.category || 'Other';
+    const category = item.category || "Other";
     if (!acc[category]) acc[category] = [];
     acc[category].push(item);
     return acc;
   }, {} as Record<string, ChecklistItem[]>);
 
-  // Common styles
-  const cardStyle: React.CSSProperties = {
-    border: '1px solid #e5e7eb',
-    borderRadius: '8px',
-    backgroundColor: '#ffffff',
-    marginBottom: '16px',
-  };
-
-  const cardHeaderStyle: React.CSSProperties = {
-    padding: '16px 16px 8px 16px',
-  };
-
-  const cardTitleStyle: React.CSSProperties = {
-    fontSize: '14px',
-    fontWeight: 600,
-    color: '#111827',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-  };
-
-  const cardContentStyle: React.CSSProperties = {
-    padding: '0 16px 16px 16px',
-  };
-
-  const mutedTextStyle: React.CSSProperties = {
-    color: '#6b7280',
-    fontSize: '14px',
-  };
-
-  const separatorStyle: React.CSSProperties = {
-    height: '1px',
-    backgroundColor: '#e5e7eb',
-    margin: '8px 0',
-  };
+  const categoryScores = inspection.category_scores as Record<string, { score?: number; grade?: string }> | null;
 
   return (
-    <div style={{ fontFamily: 'system-ui, -apple-system, sans-serif', backgroundColor: '#ffffff', color: '#111827', padding: '24px' }}>
-      {/* Report Header */}
-      <div style={{ textAlign: 'center', borderBottom: '1px solid #e5e7eb', paddingBottom: '24px', marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#111827', margin: 0 }}>Building Inspection Report</h1>
-        <p style={{ ...mutedTextStyle, marginTop: '8px' }}>
-          Generated on {format(new Date(), 'MMMM d, yyyy')}
-        </p>
-      </div>
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Building Inspection Report</Text>
+          <Text style={styles.subtitle}>Generated on {format(new Date(), "MMMM d, yyyy")}</Text>
+        </View>
 
-      {/* Property & Grade Summary */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px', marginBottom: '16px' }}>
-        {/* Property Information */}
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 21h18M9 8h1M9 12h1M9 16h1M14 8h1M14 12h1M14 16h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16"/>
-              </svg>
-              Property Information
-            </div>
-          </div>
-          <div style={cardContentStyle}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" style={{ marginTop: '2px' }}>
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              <div>
-                <p style={{ fontWeight: 500, margin: 0 }}>{displayAddress}</p>
-                <p style={{ ...mutedTextStyle, margin: 0 }}>
-                  {displayCity}{displayState ? `, ${displayState}` : ''} {displayZipCode}
-                </p>
-              </div>
-            </div>
-            <div style={separatorStyle} />
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              <div>
-                <span style={mutedTextStyle}>Property Type:</span>
-                <span style={{ marginLeft: '8px', fontWeight: 500, textTransform: 'capitalize' }}>{displayPropertyType}</span>
-              </div>
+        {/* Property & Grade Row */}
+        <View style={styles.row}>
+          {/* Property Information */}
+          <View style={[styles.card, styles.col2]}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Property Information</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <Text style={styles.value}>{displayAddress}</Text>
+              <Text style={styles.mutedText}>
+                {displayCity}{displayState ? `, ${displayState}` : ""} {displayZipCode}
+              </Text>
+              <View style={styles.separator} />
+              <View style={styles.flexRow}>
+                <Text style={styles.label}>Property Type: </Text>
+                <Text style={styles.value}>{displayPropertyType}</Text>
+              </View>
               {displayYearBuilt && (
-                <div>
-                  <span style={mutedTextStyle}>Year Built:</span>
-                  <span style={{ marginLeft: '8px', fontWeight: 500 }}>{displayYearBuilt}</span>
-                </div>
+                <View style={styles.flexRow}>
+                  <Text style={styles.label}>Year Built: </Text>
+                  <Text style={styles.value}>{displayYearBuilt}</Text>
+                </View>
               )}
               {displaySquareFootage && (
-                <div>
-                  <span style={mutedTextStyle}>Size:</span>
-                  <span style={{ marginLeft: '8px', fontWeight: 500 }}>{Number(displaySquareFootage).toLocaleString()} sq ft</span>
-                </div>
+                <View style={styles.flexRow}>
+                  <Text style={styles.label}>Size: </Text>
+                  <Text style={styles.value}>{Number(displaySquareFootage).toLocaleString()} sq ft</Text>
+                </View>
               )}
-            </div>
-          </div>
-        </div>
+            </View>
+          </View>
 
-        {/* Overall Grade */}
-        <div style={cardStyle}>
-          <div style={{ ...cardHeaderStyle, textAlign: 'center' }}>
-            <div style={{ ...cardTitleStyle, justifyContent: 'center' }}>Overall Grade</div>
-          </div>
-          <div style={{ ...cardContentStyle, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '32px',
-              fontWeight: 'bold',
-              ...getGradeStyles(inspection.final_grade_letter)
-            }}>
-              {inspection.final_grade_letter || 'N/A'}
-            </div>
-            {inspection.final_grade_numeric !== null && (
-              <p style={{ fontSize: '18px', fontWeight: 600, marginTop: '12px' }}>{inspection.final_grade_numeric.toFixed(1)}%</p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Inspection Details & Inspector Info */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
-        {/* Inspection Details */}
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-              </svg>
-              Inspection Details
-            </div>
-          </div>
-          <div style={{ ...cardContentStyle, fontSize: '14px' }}>
-            <div style={{ marginBottom: '8px' }}>
-              <span style={mutedTextStyle}>Date:</span>
-              <span style={{ marginLeft: '8px', fontWeight: 500 }}>{format(new Date(inspection.inspection_date), 'MMMM d, yyyy')}</span>
-            </div>
-            {inspection.inspection_time && (
-              <div style={{ marginBottom: '8px' }}>
-                <span style={mutedTextStyle}>Time:</span>
-                <span style={{ marginLeft: '8px', fontWeight: 500 }}>{inspection.inspection_time}</span>
-              </div>
-            )}
-            <div style={{ marginBottom: '8px' }}>
-              <span style={mutedTextStyle}>Status:</span>
-              <span style={{ 
-                marginLeft: '8px', 
-                padding: '2px 8px', 
-                borderRadius: '4px', 
-                border: '1px solid #e5e7eb',
-                fontSize: '12px',
-                textTransform: 'capitalize'
-              }}>{inspection.status}</span>
-            </div>
-            {inspection.weather_conditions && inspection.weather_conditions.length > 0 && (
-              <div style={{ marginBottom: '8px' }}>
-                <span style={mutedTextStyle}>Weather:</span>
-                <span style={{ marginLeft: '8px', fontWeight: 500 }}>{inspection.weather_conditions.join(', ')}</span>
-              </div>
-            )}
-            {inspection.temperature !== null && (
-              <div>
-                <span style={mutedTextStyle}>Temperature:</span>
-                <span style={{ marginLeft: '8px', fontWeight: 500 }}>{inspection.temperature}°F</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Inspector Information */}
-        {inspection.profiles && (
-          <div style={cardStyle}>
-            <div style={cardHeaderStyle}>
-              <div style={cardTitleStyle}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                Inspector Information
-              </div>
-            </div>
-            <div style={{ ...cardContentStyle, fontSize: '14px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                  <circle cx="12" cy="7" r="4"/>
-                </svg>
-                <span style={{ fontWeight: 500 }}>{inspection.profiles.full_name}</span>
-              </div>
-              {inspection.profiles.company_name && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
-                  </svg>
-                  <span>{inspection.profiles.company_name}</span>
-                </div>
+          {/* Overall Grade */}
+          <View style={[styles.card, styles.col1]}>
+            <View style={styles.cardHeader}>
+              <Text style={[styles.cardTitle, { textAlign: "center" }]}>Overall Grade</Text>
+            </View>
+            <View style={[styles.cardContent, { alignItems: "center" }]}>
+              <View style={[styles.gradeCircle, { backgroundColor: getGradeColor(inspection.final_grade_letter) }]}>
+                <Text style={styles.gradeText}>{inspection.final_grade_letter || "N/A"}</Text>
+              </View>
+              {inspection.final_grade_numeric !== null && (
+                <Text style={styles.gradePercent}>{inspection.final_grade_numeric.toFixed(1)}%</Text>
               )}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-                <span>{inspection.profiles.email}</span>
-              </div>
-              {inspection.profiles.phone && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                  </svg>
-                  <span>{inspection.profiles.phone}</span>
-                </div>
+            </View>
+          </View>
+        </View>
+
+        {/* Inspection Details & Inspector Row */}
+        <View style={styles.row}>
+          {/* Inspection Details */}
+          <View style={[styles.card, styles.col1]}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Inspection Details</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <View style={styles.flexRow}>
+                <Text style={styles.label}>Date: </Text>
+                <Text style={styles.value}>{format(new Date(inspection.inspection_date), "MMMM d, yyyy")}</Text>
+              </View>
+              {inspection.inspection_time && (
+                <View style={styles.flexRow}>
+                  <Text style={styles.label}>Time: </Text>
+                  <Text style={styles.value}>{inspection.inspection_time}</Text>
+                </View>
               )}
-            </div>
-          </div>
+              <View style={styles.flexRow}>
+                <Text style={styles.label}>Status: </Text>
+                <Text style={styles.value}>{inspection.status}</Text>
+              </View>
+              {inspection.weather_conditions && inspection.weather_conditions.length > 0 && (
+                <View style={styles.flexRow}>
+                  <Text style={styles.label}>Weather: </Text>
+                  <Text style={styles.value}>{inspection.weather_conditions.join(", ")}</Text>
+                </View>
+              )}
+              {inspection.temperature !== null && (
+                <View style={styles.flexRow}>
+                  <Text style={styles.label}>Temperature: </Text>
+                  <Text style={styles.value}>{inspection.temperature}°F</Text>
+                </View>
+              )}
+            </View>
+          </View>
+
+          {/* Inspector Information */}
+          {inspection.profiles && (
+            <View style={[styles.card, styles.col1]}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Inspector Information</Text>
+              </View>
+              <View style={styles.cardContent}>
+                <Text style={styles.value}>{inspection.profiles.full_name}</Text>
+                {inspection.profiles.company_name && (
+                  <Text style={styles.mutedText}>{inspection.profiles.company_name}</Text>
+                )}
+                <Text style={styles.mutedText}>{inspection.profiles.email}</Text>
+                {inspection.profiles.phone && (
+                  <Text style={styles.mutedText}>{inspection.profiles.phone}</Text>
+                )}
+              </View>
+            </View>
+          )}
+        </View>
+
+        {/* Rating Breakdown */}
+        {inspection.total_items_rated && inspection.total_items_rated > 0 && (
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Rating Breakdown</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <View style={styles.ratingGrid}>
+                <View style={styles.ratingItem}>
+                  <Text style={[styles.ratingNumber, { color: "#059669" }]}>{inspection.excellent_count || 0}</Text>
+                  <Text style={styles.ratingLabel}>Excellent</Text>
+                </View>
+                <View style={styles.ratingItem}>
+                  <Text style={[styles.ratingNumber, { color: "#2563eb" }]}>{inspection.very_good_count || 0}</Text>
+                  <Text style={styles.ratingLabel}>Very Good</Text>
+                </View>
+                <View style={styles.ratingItem}>
+                  <Text style={[styles.ratingNumber, { color: "#ca8a04" }]}>{inspection.good_count || 0}</Text>
+                  <Text style={styles.ratingLabel}>Good</Text>
+                </View>
+                <View style={styles.ratingItem}>
+                  <Text style={[styles.ratingNumber, { color: "#ea580c" }]}>{inspection.poor_count || 0}</Text>
+                  <Text style={styles.ratingLabel}>Poor</Text>
+                </View>
+                <View style={styles.ratingItem}>
+                  <Text style={[styles.ratingNumber, { color: "#dc2626" }]}>{inspection.replace_count || 0}</Text>
+                  <Text style={styles.ratingLabel}>Replace</Text>
+                </View>
+              </View>
+              <Text style={[styles.mutedText, { textAlign: "center", marginTop: 10 }]}>
+                Total Items Rated: {inspection.total_items_rated}
+              </Text>
+            </View>
+          </View>
         )}
-      </div>
 
-      {/* Rating Breakdown */}
-      {inspection.total_items_rated && inspection.total_items_rated > 0 && (
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>Rating Breakdown</div>
-          </div>
-          <div style={cardContentStyle}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', textAlign: 'center' }}>
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#059669' }}>{inspection.excellent_count || 0}</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Excellent</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#2563eb' }}>{inspection.very_good_count || 0}</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Very Good</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ca8a04' }}>{inspection.good_count || 0}</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Good</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#ea580c' }}>{inspection.poor_count || 0}</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Poor</div>
-              </div>
-              <div>
-                <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#dc2626' }}>{inspection.replace_count || 0}</div>
-                <div style={{ fontSize: '12px', color: '#6b7280' }}>Replace</div>
-              </div>
-            </div>
-            <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
-              Total Items Rated: {inspection.total_items_rated}
-            </div>
-          </div>
-        </div>
-      )}
+        {/* Category Grades */}
+        {categoryScores && Object.keys(categoryScores).length > 0 && (
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Category Grades</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <View style={styles.categoryGrid}>
+                {Object.entries(categoryScores)
+                  .sort(([, a], [, b]) => (b.score ?? 0) - (a.score ?? 0))
+                  .map(([category, data]) => {
+                    const score = data.score ?? 0;
+                    const derivedGrade = data.grade || (
+                      score >= 95 ? "A+" :
+                      score >= 90 ? "A" :
+                      score >= 85 ? "A-" :
+                      score >= 80 ? "B+" :
+                      score >= 75 ? "B" :
+                      score >= 70 ? "B-" :
+                      score >= 65 ? "C+" :
+                      score >= 60 ? "C" :
+                      score >= 55 ? "C-" :
+                      score >= 45 ? "D" : "F"
+                    );
+                    return (
+                      <View key={category} style={styles.categoryItem}>
+                        <View>
+                          <Text style={styles.categoryName}>{category}</Text>
+                          <Text style={styles.categoryScore}>{score.toFixed(0)}%</Text>
+                        </View>
+                        <Text style={[styles.gradeBadge, { backgroundColor: getGradeColor(derivedGrade.charAt(0)) }]}>
+                          {derivedGrade}
+                        </Text>
+                      </View>
+                    );
+                  })}
+              </View>
+            </View>
+          </View>
+        )}
+      </Page>
 
-      {/* Category Grades */}
-      {inspection.category_scores && Object.keys(inspection.category_scores as Record<string, unknown>).length > 0 && (
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>Category Grades</div>
-          </div>
-          <div style={cardContentStyle}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-              {Object.entries(inspection.category_scores as Record<string, { score?: number; grade?: string }>)
-                .sort(([, a], [, b]) => (b.score ?? 0) - (a.score ?? 0))
-                .map(([category, data]) => {
-                  const score = data.score ?? 0;
-                  const derivedGrade = data.grade || (
-                    score >= 95 ? 'A+' :
-                    score >= 90 ? 'A' :
-                    score >= 85 ? 'A-' :
-                    score >= 80 ? 'B+' :
-                    score >= 75 ? 'B' :
-                    score >= 70 ? 'B-' :
-                    score >= 65 ? 'C+' :
-                    score >= 60 ? 'C' :
-                    score >= 55 ? 'C-' :
-                    score >= 45 ? 'D' : 'F'
-                  );
-                  return (
-                    <div 
-                      key={category} 
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        padding: '12px',
-                        border: '1px solid #e5e7eb',
-                        borderRadius: '8px',
-                      }}
-                    >
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <p style={{ fontSize: '14px', fontWeight: 500, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{category}</p>
-                        <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>{score.toFixed(0)}%</p>
-                      </div>
-                      <span style={{
-                        marginLeft: '8px',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        fontSize: '12px',
-                        fontWeight: 500,
-                        ...getGradeStyles(derivedGrade.charAt(0))
-                      }}>
-                        {derivedGrade}
-                      </span>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Checklist Items by Category */}
+      {/* Checklist Items Page */}
       {Object.keys(groupedItems).length > 0 && (
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>Detailed Checklist</div>
-          </div>
-          <div style={cardContentStyle}>
-            {Object.entries(groupedItems).map(([category, items]) => (
-              <div key={category} style={{ marginBottom: '16px' }}>
-                <h4 style={{ fontWeight: 500, fontSize: '14px', marginBottom: '8px', color: '#3b82f6' }}>{category}</h4>
-                <div style={{ paddingLeft: '16px', borderLeft: '2px solid rgba(59, 130, 246, 0.2)' }}>
-                  {items.map((item) => (
-                    <div key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', fontSize: '14px' }}>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <span>{item.item_name}</span>
-                        {item.notes && (
-                          <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px' }}>{item.notes}</p>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Detailed Checklist</Text>
+            </View>
+            <View style={styles.cardContent}>
+              {Object.entries(groupedItems).map(([category, items]) => (
+                <View key={category} style={styles.checklistCategory} wrap={false}>
+                  <Text style={styles.checklistCategoryTitle}>{category}</Text>
+                  <View style={styles.checklistItems}>
+                    {items.map((item) => (
+                      <View key={item.id} style={styles.checklistItem}>
+                        <View style={{ flex: 1 }}>
+                          <Text style={styles.checklistItemName}>{item.item_name}</Text>
+                          {item.notes && (
+                            <Text style={styles.checklistItemNotes}>{item.notes}</Text>
+                          )}
+                        </View>
+                        {item.rating && (
+                          <Text style={{ fontSize: 9, fontWeight: "bold", color: getRatingColor(item.rating) }}>
+                            {item.rating}
+                          </Text>
                         )}
-                      </div>
-                      {item.rating && (
-                        <span style={{ fontSize: '12px', fontWeight: 500, marginLeft: '8px', ...getRatingStyles(item.rating) }}>
-                          {item.rating}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Photos */}
-      {photos.length > 0 && (
-        <div style={{ ...cardStyle, pageBreakBefore: 'always' }}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>Inspection Photos ({photos.length})</div>
-          </div>
-          <div style={cardContentStyle}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-              {photos.map((photo) => (
-                <div key={photo.id}>
-                  <div style={{ 
-                    aspectRatio: '1', 
-                    backgroundColor: '#f3f4f6', 
-                    borderRadius: '8px', 
-                    overflow: 'hidden',
-                    border: '1px solid #e5e7eb'
-                  }}>
-                    <img 
-                      src={photo.photo_url} 
-                      alt={photo.caption || 'Inspection photo'} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      crossOrigin="anonymous"
-                    />
-                  </div>
-                  {(photo.caption || photo.category) && (
-                    <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {photo.caption || photo.category}
-                    </p>
-                  )}
-                </div>
+                      </View>
+                    ))}
+                  </View>
+                </View>
               ))}
-            </div>
-          </div>
-        </div>
+            </View>
+          </View>
+
+          {/* Notes */}
+          {inspection.notes && (
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Inspector Notes</Text>
+              </View>
+              <View style={styles.cardContent}>
+                <Text style={styles.mutedText}>{inspection.notes}</Text>
+              </View>
+            </View>
+          )}
+        </Page>
       )}
 
-      {/* Notes */}
-      {inspection.notes && (
-        <div style={cardStyle}>
-          <div style={cardHeaderStyle}>
-            <div style={cardTitleStyle}>Inspector Notes</div>
-          </div>
-          <div style={cardContentStyle}>
-            <p style={{ fontSize: '14px', color: '#6b7280', whiteSpace: 'pre-wrap', margin: 0 }}>
-              {inspection.notes}
-            </p>
-          </div>
-        </div>
-      )}
+      {/* Photos Page */}
+      {photos.length > 0 && (
+        <Page size="A4" style={styles.page}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Inspection Photos ({photos.length})</Text>
+            </View>
+            <View style={styles.cardContent}>
+              <View style={styles.photoGrid}>
+                {photos.map((photo) => (
+                  <View key={photo.id} style={styles.photoItem}>
+                    <Image src={photo.photo_url} style={styles.photo} />
+                    {(photo.caption || photo.category) && (
+                      <Text style={styles.photoCaption}>{photo.caption || photo.category}</Text>
+                    )}
+                  </View>
+                ))}
+              </View>
+            </View>
+          </View>
 
-      {/* Footer */}
-      <div style={{ textAlign: 'center', fontSize: '12px', color: '#6b7280', paddingTop: '16px', borderTop: '1px solid #e5e7eb', marginTop: '24px' }}>
-        <p style={{ margin: 0 }}>This report was generated by GradeMyBuilding</p>
-        <p style={{ margin: '4px 0 0 0' }}>© {new Date().getFullYear()} GradeMyBuilding. All rights reserved.</p>
-      </div>
-    </div>
+          {/* Footer */}
+          <View style={styles.footer}>
+            <Text>This report was generated by GradeMyBuilding</Text>
+            <Text>© {new Date().getFullYear()} GradeMyBuilding. All rights reserved.</Text>
+          </View>
+        </Page>
+      )}
+    </Document>
   );
 }
