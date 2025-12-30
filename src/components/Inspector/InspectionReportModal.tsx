@@ -81,23 +81,21 @@ export default function InspectionReportModal({
       <DialogContent className="max-w-5xl max-h-[95vh] p-0 print:max-w-none print:max-h-none print:p-0">
         {/* Header - Hidden in print */}
         <DialogHeader className="p-4 pb-0 no-print">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pr-8">
             <DialogTitle>Inspection Report</DialogTitle>
-            <div className="flex items-center gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleDownload}
-                disabled={loading || !!error || !inspection || downloading}
-              >
-                {downloading ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4 mr-2" />
-                )}
-                Download PDF
-              </Button>
-            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleDownload}
+              disabled={loading || !!error || !inspection || downloading}
+            >
+              {downloading ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4 mr-2" />
+              )}
+              Download PDF
+            </Button>
           </div>
         </DialogHeader>
 
