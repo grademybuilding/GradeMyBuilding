@@ -10,7 +10,7 @@ import { useNotificationPreferences } from "@/hooks/useNotificationPreferences";
 import { ChangePasswordModal } from "@/components/Settings/ChangePasswordModal";
 import { TwoFactorSetup } from "@/components/Settings/TwoFactorSetup";
 import { EditProfileModal } from "@/components/Settings/EditProfileModal";
-import { ThemeToggle } from "@/components/Layout/ThemeToggle";
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -95,12 +95,9 @@ export default function Settings() {
 
   return (
     <div className="p-4 md:p-6 lg:p-8 max-w-4xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Settings</h1>
-          <p className="text-muted-foreground">Manage your account and preferences</p>
-        </div>
-        <ThemeToggle />
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="text-muted-foreground">Manage your account and preferences</p>
       </div>
 
       <div className="space-y-6">
