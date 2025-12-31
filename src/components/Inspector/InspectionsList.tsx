@@ -605,7 +605,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
       />
 
       {/* Delete Confirmation Dialog */}
-      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+      <AlertDialog open={deleteOpen} onOpenChange={(open) => !isDeleting && setDeleteOpen(open)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Inspection</AlertDialogTitle>
@@ -615,10 +615,10 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <Button 
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              variant="destructive"
             >
               {isDeleting ? (
                 <>
@@ -628,7 +628,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
               ) : (
                 'Delete'
               )}
-            </AlertDialogAction>
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
