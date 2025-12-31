@@ -1,6 +1,18 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ImageIcon, Eye } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ImageIcon, Eye, Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface InspectionPhotoCardProps {
   inspectionId: string;
@@ -10,15 +22,18 @@ interface InspectionPhotoCardProps {
   photoCount: number;
   thumbnailUrl?: string;
   onClick: () => void;
+  onDeleteAll?: (inspectionId: string) => void;
 }
 
 export function InspectionPhotoCard({
+  inspectionId,
   address,
   date,
   status,
   photoCount,
   thumbnailUrl,
-  onClick
+  onClick,
+  onDeleteAll
 }: InspectionPhotoCardProps) {
   return (
     <Card 
@@ -43,8 +58,45 @@ export function InspectionPhotoCard({
             {photoCount} {photoCount === 1 ? 'photo' : 'photos'}
           </Badge>
         </div>
+        {/* Delete button on hover */}
+        {onDeleteAll && (
+          <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 bg-destructive/90 hover:bg-destructive text-destructive-foreground backdrop-blur-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete All Photos</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete all {photoCount} photo(s) from this inspection? This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteAll(inspectionId);
+                    }}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    Delete All
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </div>
+        )}
         {/* Overlay on hover */}
-        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
           <div className="bg-primary text-primary-foreground rounded-full p-3">
             <Eye className="h-6 w-6" />
           </div>

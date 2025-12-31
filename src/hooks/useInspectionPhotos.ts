@@ -25,6 +25,7 @@ interface UseInspectionPhotosReturn {
     category?: string
   ) => Promise<void>;
   deletePhoto: (photoId: string, photoUrl: string) => Promise<void>;
+  deleteAllPhotos: (inspectionId: string) => Promise<void>;
   refetch: () => Promise<void>;
 }
 
@@ -191,12 +192,62 @@ export function useInspectionPhotos(inspectionId: string | null): UseInspectionP
     }
   };
 
+  const deleteAllPhotos = async (targetInspectionId: string) => {
+    try {
+      // First fetch all photos for this inspection
+      const { data: photosToDelete, error: fetchError } = await supabase
+        .from('inspection_photos')
+        .select('id, photo_url')
+        .eq('inspection_id', targetInspectionId);
+
+      if (fetchError) throw fetchError;
+
+      if (!photosToDelete || photosToDelete.length === 0) {
+        toast.info('No photos to delete');
+        return;
+      }
+
+      // Extract file paths for storage deletion
+      const filePaths = photosToDelete.map(photo => {
+        let filePath = photo.photo_url;
+        if (photo.photo_url.includes('/inspection-photos/')) {
+          const urlParts = photo.photo_url.split('/inspection-photos/');
+          filePath = urlParts[urlParts.length - 1];
+        }
+        return filePath;
+      });
+
+      // Delete from storage (batch delete)
+      const { error: storageError } = await supabase.storage
+        .from('inspection-photos')
+        .remove(filePaths);
+
+      if (storageError) {
+        // Storage deletion warning, continue anyway
+      }
+
+      // Delete all records from database
+      const { error: dbError } = await supabase
+        .from('inspection_photos')
+        .delete()
+        .eq('inspection_id', targetInspectionId);
+
+      if (dbError) throw dbError;
+
+      toast.success(`${photosToDelete.length} photo(s) deleted`);
+      await fetchPhotos();
+    } catch (error: any) {
+      toast.error('Failed to delete photos');
+    }
+  };
+
   return {
     photos,
     isLoading,
     isUploading,
     uploadPhotos,
     deletePhoto,
+    deleteAllPhotos,
     refetch: fetchPhotos
   };
 }

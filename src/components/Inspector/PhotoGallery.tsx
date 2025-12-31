@@ -85,6 +85,7 @@ export default function PhotoGallery() {
     isUploading,
     uploadPhotos,
     deletePhoto,
+    deleteAllPhotos,
     refetch: refetchSinglePhotos
   } = useInspectionPhotos(selectedInspectionId !== ALL_INSPECTIONS ? selectedInspectionId : null);
 
@@ -202,6 +203,26 @@ export default function PhotoGallery() {
   const handleDeletePhoto = async (photoId: string, photoUrl: string) => {
     await deletePhoto(photoId, photoUrl);
     // Refetch all photos if viewing all
+    if (selectedInspectionId === ALL_INSPECTIONS) {
+      const inspectionIds = inspections.map(i => i.id);
+      const { data } = await supabase
+        .from('inspection_photos')
+        .select('*')
+        .in('inspection_id', inspectionIds)
+        .order('created_at', { ascending: false });
+      const photosWithUrls = await generateSignedUrls(data || []);
+      setAllPhotos(photosWithUrls);
+      // Update carousel photos to reflect deletion
+      setCarouselPhotos(prev => prev.filter(p => p.id !== photoId));
+    } else {
+      // Update carousel photos for single inspection view
+      setCarouselPhotos(prev => prev.filter(p => p.id !== photoId));
+    }
+  };
+
+  const handleDeleteAllPhotos = async (inspectionId: string) => {
+    await deleteAllPhotos(inspectionId);
+    // Refetch all photos
     if (selectedInspectionId === ALL_INSPECTIONS) {
       const inspectionIds = inspections.map(i => i.id);
       const { data } = await supabase
@@ -360,6 +381,7 @@ export default function PhotoGallery() {
                     photoCount={inspection.photos.length}
                     thumbnailUrl={inspection.photos[0]?.signedUrl || inspection.photos[0]?.photo_url}
                     onClick={() => handleInspectionCardClick(inspection)}
+                    onDeleteAll={handleDeleteAllPhotos}
                   />
                 ))}
               </div>
@@ -418,6 +440,7 @@ export default function PhotoGallery() {
                     setSelectedPhotoIndex(0);
                     setCarouselOpen(true);
                   }}
+                  onDeleteAll={handleDeleteAllPhotos}
                 />
               </div>
             )}
@@ -455,6 +478,7 @@ export default function PhotoGallery() {
         initialIndex={selectedPhotoIndex}
         open={carouselOpen}
         onOpenChange={setCarouselOpen}
+        onDeletePhoto={handleDeletePhoto}
       />
     </div>
   );
