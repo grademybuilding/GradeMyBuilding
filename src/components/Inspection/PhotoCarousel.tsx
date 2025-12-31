@@ -14,7 +14,19 @@ import {
   X,
   ZoomIn,
   ZoomOut,
+  Trash2,
 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { InspectionPhoto } from '@/hooks/useInspectionPhotos';
 import { cn } from '@/lib/utils';
 
@@ -23,16 +35,19 @@ interface PhotoCarouselProps {
   initialIndex: number;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onDeletePhoto?: (photoId: string, photoUrl: string) => Promise<void>;
 }
 
 export function PhotoCarousel({
   photos,
   initialIndex,
   open,
-  onOpenChange
+  onOpenChange,
+  onDeletePhoto
 }: PhotoCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -93,6 +108,25 @@ export function PhotoCarousel({
     }
   };
 
+  const handleDelete = async () => {
+    if (!currentPhoto || !onDeletePhoto) return;
+    
+    setIsDeleting(true);
+    try {
+      await onDeletePhoto(currentPhoto.id, currentPhoto.photo_url);
+      
+      // If this was the last photo, close the carousel
+      if (photos.length <= 1) {
+        onOpenChange(false);
+      } else if (currentIndex >= photos.length - 1) {
+        // If we deleted the last photo, go to previous
+        setCurrentIndex(prev => prev - 1);
+      }
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   if (!currentPhoto) return null;
 
   return (
@@ -130,6 +164,38 @@ export function PhotoCarousel({
             >
               <Download className="h-5 w-5" />
             </Button>
+            {onDeletePhoto && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-destructive hover:bg-destructive/20 hover:text-destructive"
+                    disabled={isDeleting}
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete Photo</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to delete this photo? This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      disabled={isDeleting}
+                    >
+                      {isDeleting ? 'Deleting...' : 'Delete'}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
             <Button
               variant="ghost"
               size="icon"
