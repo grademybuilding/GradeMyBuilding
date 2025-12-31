@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Building, Calendar, MapPin, FileText, Eye, AlertCircle, RefreshCw, PlayCircle, Loader2 } from "lucide-react";
+import { Building, Calendar, MapPin, FileText, Eye, AlertCircle, RefreshCw, PlayCircle, Loader2, Trash2 } from "lucide-react";
 import { QuickActions } from "@/components/Dashboard/QuickActions";
 import { useInspections, useInspectionDetails } from "@/hooks/useInspections";
 import { format } from "date-fns";
@@ -15,8 +15,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import InspectionReportModal from "./InspectionReportModal";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface InspectionsListProps {
   onTabChange?: (tab: string) => void;
@@ -29,6 +41,9 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [reportInspectionId, setReportInspectionId] = useState<string | null>(null);
   const [reportOpen, setReportOpen] = useState(false);
+  const [deleteInspectionId, setDeleteInspectionId] = useState<string | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const { 
     inspection: selectedInspection, 
@@ -50,6 +65,39 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
 
   const handleResumeInspection = (inspectionId: string) => {
     navigate(`/new-inspection?id=${inspectionId}`);
+  };
+
+  const handleDeleteClick = (inspectionId: string) => {
+    setDeleteInspectionId(inspectionId);
+    setDeleteOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteInspectionId) return;
+    
+    setIsDeleting(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('delete-inspection', {
+        body: { inspection_id: deleteInspectionId }
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Failed to delete inspection');
+      }
+
+      if (data?.error) {
+        throw new Error(data.error);
+      }
+
+      toast.success('Inspection deleted successfully');
+      refetch();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to delete inspection');
+    } finally {
+      setIsDeleting(false);
+      setDeleteOpen(false);
+      setDeleteInspectionId(null);
+    }
   };
 
   const getGradeColor = (grade: string | null) => {
@@ -220,15 +268,25 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                   </div>
                   <div className="flex gap-2 w-full sm:w-auto">
                     {isDraft ? (
-                      <Button 
-                        variant="default" 
-                        size="sm" 
-                        className="flex-1 sm:flex-initial text-xs sm:text-sm"
-                        onClick={() => handleResumeInspection(inspection.id)}
-                      >
-                        <PlayCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-                        Resume
-                      </Button>
+                      <>
+                        <Button 
+                          variant="default" 
+                          size="sm" 
+                          className="flex-1 sm:flex-initial text-xs sm:text-sm"
+                          onClick={() => handleResumeInspection(inspection.id)}
+                        >
+                          <PlayCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                          Resume
+                        </Button>
+                        <Button 
+                          variant="destructive" 
+                          size="sm" 
+                          className="text-xs sm:text-sm"
+                          onClick={() => handleDeleteClick(inspection.id)}
+                        >
+                          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+                        </Button>
+                      </>
                     ) : (
                       <>
                         <Button 
@@ -248,6 +306,14 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                         >
                           <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                           Report
+                        </Button>
+                        <Button 
+                          variant="destructive" 
+                          size="sm" 
+                          className="text-xs sm:text-sm"
+                          onClick={() => handleDeleteClick(inspection.id)}
+                        >
+                          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                         </Button>
                       </>
                     )}
@@ -537,6 +603,35 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
         open={reportOpen}
         onOpenChange={setReportOpen}
       />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Inspection</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this inspection? This action cannot be undone and will permanently remove all associated data including photos, checklist items, and reports.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
