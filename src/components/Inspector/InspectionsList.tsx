@@ -281,7 +281,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                         <Button 
                           variant="ghost" 
                           size="icon" 
-                          className="h-9 w-9 sm:h-10 sm:w-10 bg-destructive/10 hover:bg-destructive/20 text-destructive border border-destructive/20"
+                          className="h-9 w-9 sm:h-10 sm:w-10 bg-destructive/10 hover:bg-destructive/20 text-destructive hover:text-destructive border border-destructive/20"
                           onClick={() => handleDeleteClick(inspection.id)}
                         >
                           <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -310,7 +310,7 @@ export default function InspectionsList({ onTabChange }: InspectionsListProps) {
                         <Button 
                           variant="ghost" 
                           size="icon" 
-                          className="h-9 w-9 sm:h-10 sm:w-10 bg-destructive/10 hover:bg-destructive/20 text-destructive border border-destructive/20"
+                          className="h-9 w-9 sm:h-10 sm:w-10 bg-destructive/10 hover:bg-destructive/20 text-destructive hover:text-destructive border border-destructive/20"
                           onClick={() => handleDeleteClick(inspection.id)}
                         >
                           <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
