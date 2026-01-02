@@ -12,8 +12,9 @@ import { z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Building2, FileCheck, Home, Briefcase, Calculator, Shield, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Building2, FileCheck, Home, Briefcase, Calculator, Shield, ArrowLeft, ArrowRight, CheckCircle2, Check, X } from "lucide-react";
 import { UserRole } from "@/hooks/useAuth";
+import { ThemeToggle } from "@/components/Layout/ThemeToggle";
 
 const US_STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
@@ -246,16 +247,34 @@ export default function Auth() {
     }
   };
 
-  const canProceedToStep2 = email && password && fullName && passwordStrength === 100;
+  // Validation checks for Step 1
+  const nameOk = fullName.trim().length >= 2;
+  const emailOk = z.string().email().safeParse(email.trim()).success;
+  const passwordOk = passwordStrength === 100;
+  const canProceedToStep2 = nameOk && emailOk && passwordOk;
   const canProceedToStep3 = role;
   const config = role ? roleConfig[role as UserRole] : null;
+
+  // Handler for input events (helps with autofill)
+  const handleInputChange = (setter: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setter(e.target.value);
+  };
+
+  const handleInputEvent = (setter: (value: string) => void) => (e: React.FormEvent<HTMLInputElement>) => {
+    setter((e.target as HTMLInputElement).value);
+  };
 
   if (user) {
     return null;
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4 relative">
+      {/* Theme Toggle */}
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Building Inspection System</CardTitle>
@@ -332,10 +351,14 @@ export default function Auth() {
                         <Label htmlFor="signup-name">Full Name *</Label>
                         <Input
                           id="signup-name"
+                          name="name"
                           type="text"
+                          autoComplete="name"
                           placeholder="John Doe"
                           value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
+                          onChange={handleInputChange(setFullName)}
+                          onInput={handleInputEvent(setFullName)}
+                          onBlur={(e) => setFullName(e.target.value.trim())}
                           required
                         />
                       </div>
@@ -344,10 +367,14 @@ export default function Auth() {
                         <Label htmlFor="signup-email">Email *</Label>
                         <Input
                           id="signup-email"
+                          name="email"
                           type="email"
+                          autoComplete="email"
                           placeholder="you@example.com"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={handleInputChange(setEmail)}
+                          onInput={handleInputEvent(setEmail)}
+                          onBlur={(e) => setEmail(e.target.value.trim())}
                           required
                         />
                       </div>
@@ -356,10 +383,13 @@ export default function Auth() {
                         <Label htmlFor="signup-password">Password *</Label>
                         <Input
                           id="signup-password"
+                          name="password"
                           type="password"
+                          autoComplete="new-password"
                           placeholder="Minimum 8 characters"
                           value={password}
-                          onChange={(e) => setPassword(e.target.value)}
+                          onChange={handleInputChange(setPassword)}
+                          onInput={handleInputEvent(setPassword)}
                           required
                         />
                         {password && (
@@ -390,11 +420,51 @@ export default function Auth() {
                         <Label htmlFor="signup-phone">Phone (Optional)</Label>
                         <Input
                           id="signup-phone"
+                          name="phone"
                           type="tel"
+                          autoComplete="tel"
                           placeholder="+1 (555) 123-4567"
                           value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
+                          onChange={handleInputChange(setPhone)}
+                          onInput={handleInputEvent(setPhone)}
                         />
+                      </div>
+
+                      {/* Validation Feedback */}
+                      <div className="bg-muted/50 rounded-lg p-3 space-y-2">
+                        <p className="text-xs font-medium text-muted-foreground">Requirements:</p>
+                        <div className="grid grid-cols-1 gap-1.5">
+                          <div className="flex items-center gap-2 text-sm">
+                            {nameOk ? (
+                              <Check className="h-4 w-4 text-green-500" />
+                            ) : (
+                              <X className="h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span className={nameOk ? "text-foreground" : "text-muted-foreground"}>
+                              Name entered (min 2 characters)
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            {emailOk ? (
+                              <Check className="h-4 w-4 text-green-500" />
+                            ) : (
+                              <X className="h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span className={emailOk ? "text-foreground" : "text-muted-foreground"}>
+                              Valid email address
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            {passwordOk ? (
+                              <Check className="h-4 w-4 text-green-500" />
+                            ) : (
+                              <X className="h-4 w-4 text-muted-foreground" />
+                            )}
+                            <span className={passwordOk ? "text-foreground" : "text-muted-foreground"}>
+                              Strong password (8+ chars, upper, lower, number)
+                            </span>
+                          </div>
+                        </div>
                       </div>
 
                       <Button 
