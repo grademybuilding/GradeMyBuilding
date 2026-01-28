@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   checklistItems: {
     paddingLeft: 10,
-    borderLeft: "2px solid rgba(59, 130, 246, 0.3)",
+    borderLeft: "2px solid #3b82f6",
   },
   checklistItem: {
     flexDirection: "row",
@@ -573,7 +573,7 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
                     const hasDefects = categoryDefects.length > 0 && subcategory.defectSubcategory;
 
                     return (
-                      <View key={subcategory.id} style={{ marginBottom: 4, paddingLeft: 6, borderLeftWidth: 2, borderLeftColor: "rgba(59, 130, 246, 0.2)" }}>
+                      <View key={subcategory.id} style={{ marginBottom: 4, paddingLeft: 6, borderLeftWidth: 2, borderLeftColor: "#3b82f6" }}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 2 }}>
                           <Text style={{ fontSize: 9, fontWeight: "medium" }}>{subcategory.label}</Text>
                           <Text style={{ fontSize: 7, marginLeft: 4, color: hasDefects ? "#ea580c" : "#059669" }}>
