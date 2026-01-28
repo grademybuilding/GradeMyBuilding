@@ -2,8 +2,9 @@ import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Building, Calendar, User, MapPin, Mail, Phone, Briefcase } from "lucide-react";
+import { Building, Calendar, User, MapPin, Mail, Phone, Briefcase, AlertTriangle, CheckCircle2 } from "lucide-react";
 import type { InspectionDetails, ChecklistItem, InspectionPhoto } from "@/hooks/useInspections";
+import { CHECKLIST_CATEGORY_ORDER, extractDefectsByCategory } from "@/data/checklistCategoryOrder";
 
 interface InspectionReportProps {
   inspection: InspectionDetails;
@@ -14,6 +15,9 @@ interface InspectionReportProps {
 export default function InspectionReport({ inspection, checklistItems, photos }: InspectionReportProps) {
   // Compute display values with fallback logic
   const checklistData = inspection.checklist_data as Record<string, unknown> | null;
+  const checklistRatings = inspection.checklist_ratings as Record<string, string> | null;
+  const selectedDefects = inspection.selected_defects as Record<string, boolean | string[] | unknown> | null;
+  const checklistNotes = inspection.checklist_notes as Record<string, string> | null;
   const props = inspection.properties;
   
   const hasRealPropertyData = props?.address && 
@@ -55,24 +59,35 @@ export default function InspectionReport({ inspection, checklistItems, photos }:
     }
   };
 
+  const categoryScores = inspection.category_scores as Record<string, { score?: number; grade?: string }> | null;
+
+  // Extract defects organized by category using the centralized config
+  const defectsByCategory = extractDefectsByCategory(selectedDefects, checklistNotes);
+
+  // Get ratings by category from checklistRatings
+  const getRatingForCategory = (categoryLabel: string): string | null => {
+    if (!checklistRatings) return null;
+    
+    // Look for any rating key that matches this category
+    const ratingKey = Object.keys(checklistRatings).find(key => {
+      const lowerKey = key.toLowerCase();
+      const catLabel = categoryLabel.toLowerCase().replace(/[^a-z0-9]/g, '');
+      return lowerKey.includes('inspector') && lowerKey.includes('rating');
+    });
+    
+    return ratingKey ? checklistRatings[ratingKey] : null;
+  };
+
   const getRatingColor = (rating: string) => {
     switch (rating) {
-      case 'Excellent': return 'text-emerald-600';
-      case 'Very Good': return 'text-blue-600';
-      case 'Good': return 'text-yellow-600';
-      case 'Poor': return 'text-orange-600';
-      case 'Replace': return 'text-red-600';
+      case 'Excellent': return 'text-emerald-600 dark:text-emerald-400';
+      case 'Very Good': return 'text-blue-600 dark:text-blue-400';
+      case 'Good': return 'text-yellow-600 dark:text-yellow-400';
+      case 'Poor': return 'text-orange-600 dark:text-orange-400';
+      case 'Replace': return 'text-red-600 dark:text-red-400';
       default: return 'text-muted-foreground';
     }
   };
-
-  // Group checklist items by category
-  const groupedItems = checklistItems.reduce((acc, item) => {
-    const category = item.category || 'Other';
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(item);
-    return acc;
-  }, {} as Record<string, ChecklistItem[]>);
 
   return (
     <div className="space-y-6 print:space-y-4">
@@ -294,38 +309,141 @@ export default function InspectionReport({ inspection, checklistItems, photos }:
         </Card>
       )}
 
-      {/* Checklist Items by Category */}
-      {Object.keys(groupedItems).length > 0 && (
-        <Card className="print:border-gray-300">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Detailed Checklist</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Object.entries(groupedItems).map(([category, items]) => (
-              <div key={category} className="avoid-break">
-                <h4 className="font-medium text-sm mb-2 text-primary">{category}</h4>
-                <div className="space-y-1 pl-4 border-l-2 border-primary/20">
-                  {items.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between py-1 text-sm">
-                      <div className="flex-1 min-w-0">
-                        <span className="truncate">{item.item_name}</span>
-                        {item.notes && (
-                          <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>
+      {/* Detailed Findings by Category - Following Checklist Structure */}
+      <Card className="print:border-gray-300">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm">Detailed Findings by Category</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {CHECKLIST_CATEGORY_ORDER.map((category) => {
+            const categoryDefects = defectsByCategory[category.label] || [];
+            const categoryScore = categoryScores?.[category.label];
+            
+            // Skip categories with no data
+            if (!categoryScore && categoryDefects.length === 0) {
+              return null;
+            }
+
+            const score = categoryScore?.score ?? 0;
+            const derivedGrade = categoryScore?.grade || (
+              score >= 95 ? 'A+' :
+              score >= 90 ? 'A' :
+              score >= 85 ? 'A-' :
+              score >= 80 ? 'B+' :
+              score >= 75 ? 'B' :
+              score >= 70 ? 'B-' :
+              score >= 65 ? 'C+' :
+              score >= 60 ? 'C' :
+              score >= 55 ? 'C-' :
+              score >= 45 ? 'D' : 'F'
+            );
+
+            return (
+              <div key={category.id} className="avoid-break">
+                {/* Category Header */}
+                <div className="flex items-center justify-between mb-3 pb-2 border-b border-border">
+                  <h4 className="font-semibold text-base text-primary">{category.label}</h4>
+                  {categoryScore && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">{score.toFixed(0)}%</span>
+                      <Badge className={getGradeColor(derivedGrade.charAt(0))}>
+                        {derivedGrade}
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+
+                {/* Subcategories with Defects */}
+                <div className="space-y-3 pl-4">
+                  {category.subcategories.map((subcategory) => {
+                    // Filter defects for this subcategory based on defect naming patterns
+                    const subcategoryDefects = categoryDefects.filter(defect => {
+                      // Match defects to subcategories by checking the defect name patterns
+                      const defectLower = defect.name.toLowerCase();
+                      const subLabel = subcategory.label.toLowerCase();
+                      
+                      // General matching - if no specific defect subcategory, show all category defects
+                      if (subcategory.label === 'General' || !subcategory.defectSubcategory) {
+                        return true;
+                      }
+                      
+                      // Try to match based on subcategory patterns in the defect name
+                      return defectLower.includes(subLabel.split(' ')[0].toLowerCase());
+                    });
+
+                    // Only show subcategories that have defects or if we want to show "No defects found"
+                    const hasDefects = subcategoryDefects.length > 0;
+                    
+                    // Skip inspection details subcategories in report
+                    if (subcategory.label === 'Inspection Details') {
+                      return null;
+                    }
+
+                    return (
+                      <div key={subcategory.id} className="border-l-2 border-primary/20 pl-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-medium text-sm text-foreground">{subcategory.label}</span>
+                          {hasDefects ? (
+                            <AlertTriangle className="h-3.5 w-3.5 text-orange-500" />
+                          ) : (
+                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                          )}
+                        </div>
+                        
+                        {hasDefects ? (
+                          <ul className="space-y-1 ml-2">
+                            {subcategoryDefects.map((defect, idx) => (
+                              <li key={idx} className="text-sm">
+                                <span className="text-destructive">• {defect.name}</span>
+                                {defect.notes && (
+                                  <p className="text-xs text-muted-foreground ml-3 mt-0.5">
+                                    {defect.notes}
+                                  </p>
+                                )}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic ml-2">No defects found</p>
                         )}
                       </div>
-                      {item.rating && (
-                        <span className={`text-xs font-medium ml-2 ${getRatingColor(item.rating)}`}>
-                          {item.rating}
-                        </span>
-                      )}
+                    );
+                  })}
+
+                  {/* Show all defects if no subcategory matching */}
+                  {categoryDefects.length > 0 && category.subcategories.every(sub => sub.label === 'Inspection Details') && (
+                    <div className="border-l-2 border-primary/20 pl-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-sm text-foreground">Defects</span>
+                        <AlertTriangle className="h-3.5 w-3.5 text-orange-500" />
+                      </div>
+                      <ul className="space-y-1 ml-2">
+                        {categoryDefects.map((defect, idx) => (
+                          <li key={idx} className="text-sm">
+                            <span className="text-destructive">• {defect.name}</span>
+                            {defect.notes && (
+                              <p className="text-xs text-muted-foreground ml-3 mt-0.5">
+                                {defect.notes}
+                              </p>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
-            ))}
-          </CardContent>
-        </Card>
-      )}
+            );
+          })}
+
+          {/* Show message if no findings */}
+          {Object.keys(defectsByCategory).length === 0 && !categoryScores && (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              No detailed findings recorded for this inspection.
+            </p>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Photos */}
       {photos.length > 0 && (

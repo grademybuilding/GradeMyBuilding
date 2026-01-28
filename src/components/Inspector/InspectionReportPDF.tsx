@@ -1,6 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Image } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import type { InspectionDetails, ChecklistItem, InspectionPhoto } from "@/hooks/useInspections";
+import { CHECKLIST_CATEGORY_ORDER, extractDefectsByCategory } from "@/data/checklistCategoryOrder";
 
 interface InspectionReportPDFProps {
   inspection: InspectionDetails;
@@ -265,6 +266,8 @@ const PageFooter = () => (
 
 export default function InspectionReportPDF({ inspection, checklistItems, photos }: InspectionReportPDFProps) {
   const checklistData = inspection.checklist_data as Record<string, unknown> | null;
+  const selectedDefects = inspection.selected_defects as Record<string, unknown> | null;
+  const checklistNotes = inspection.checklist_notes as Record<string, string> | null;
   const props = inspection.properties;
   
   const hasRealPropertyData = props?.address && 
@@ -293,15 +296,10 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
     ? props?.square_footage 
     : (checklistData?.squareFootage as number) || null;
 
-  // Group checklist items by category
-  const groupedItems = checklistItems.reduce((acc, item) => {
-    const category = item.category || "Other";
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(item);
-    return acc;
-  }, {} as Record<string, ChecklistItem[]>);
-
   const categoryScores = inspection.category_scores as Record<string, { score?: number; grade?: string }> | null;
+
+  // Extract defects organized by category using the centralized config
+  const defectsByCategory = extractDefectsByCategory(selectedDefects, checklistNotes);
 
   // Split photos into chunks for pagination (9 photos per page in 3x3 grid)
   const photosPerPage = 9;
@@ -517,35 +515,93 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
         )}
       </Page>
 
-      {/* Checklist Page(s) */}
-      {Object.keys(groupedItems).length > 0 && (
+      {/* Detailed Findings Page(s) - Following Checklist Structure */}
+      {(Object.keys(defectsByCategory).length > 0 || (categoryScores && Object.keys(categoryScores).length > 0)) && (
         <Page size="A4" style={styles.page} wrap>
           <PageFooter />
           
-          <Text style={styles.sectionTitle}>Detailed Checklist</Text>
+          <Text style={styles.sectionTitle}>Detailed Findings by Category</Text>
           
-          {Object.entries(groupedItems).map(([category, items]) => (
-            <View key={category} style={styles.checklistCategory} wrap={false}>
-              <Text style={styles.checklistCategoryTitle}>{category}</Text>
-              <View style={styles.checklistItems}>
-                {items.map((item) => (
-                  <View key={item.id} style={styles.checklistItem}>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.checklistItemName}>{item.item_name}</Text>
-                      {item.notes && (
-                        <Text style={styles.checklistItemNotes}>{item.notes}</Text>
-                      )}
-                    </View>
-                    {item.rating && (
-                      <Text style={{ fontSize: 8, fontWeight: "bold", color: getRatingColor(item.rating) }}>
-                        {item.rating}
+          {CHECKLIST_CATEGORY_ORDER.map((category) => {
+            const categoryDefects = defectsByCategory[category.label] || [];
+            const categoryScore = categoryScores?.[category.label];
+            
+            // Skip categories with no data
+            if (!categoryScore && categoryDefects.length === 0) {
+              return null;
+            }
+
+            const score = categoryScore?.score ?? 0;
+            const derivedGrade = categoryScore?.grade || (
+              score >= 95 ? "A+" :
+              score >= 90 ? "A" :
+              score >= 85 ? "A-" :
+              score >= 80 ? "B+" :
+              score >= 75 ? "B" :
+              score >= 70 ? "B-" :
+              score >= 65 ? "C+" :
+              score >= 60 ? "C" :
+              score >= 55 ? "C-" :
+              score >= 45 ? "D" : "F"
+            );
+
+            return (
+              <View key={category.id} style={styles.checklistCategory} wrap={false}>
+                {/* Category Header with Grade */}
+                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6, borderBottomWidth: 1, borderBottomColor: "#e5e7eb", paddingBottom: 4 }}>
+                  <Text style={[styles.checklistCategoryTitle, { marginBottom: 0 }]}>{category.label}</Text>
+                  {categoryScore && (
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                      <Text style={{ fontSize: 7, color: "#6b7280" }}>{score.toFixed(0)}%</Text>
+                      <Text style={[styles.gradeBadge, { backgroundColor: getGradeColor(derivedGrade.charAt(0)) }]}>
+                        {derivedGrade}
                       </Text>
-                    )}
-                  </View>
-                ))}
+                    </View>
+                  )}
+                </View>
+
+                {/* Subcategories with Defects */}
+                <View style={styles.checklistItems}>
+                  {category.subcategories.map((subcategory) => {
+                    // Skip inspection details subcategories
+                    if (subcategory.label === "Inspection Details") {
+                      return null;
+                    }
+
+                    // Filter defects for this subcategory (simple matching for now)
+                    const subcategoryDefects = categoryDefects;
+                    const hasDefects = categoryDefects.length > 0 && subcategory.defectSubcategory;
+
+                    return (
+                      <View key={subcategory.id} style={{ marginBottom: 4, paddingLeft: 6, borderLeftWidth: 2, borderLeftColor: "rgba(59, 130, 246, 0.2)" }}>
+                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 2 }}>
+                          <Text style={{ fontSize: 9, fontWeight: "medium" }}>{subcategory.label}</Text>
+                          <Text style={{ fontSize: 7, marginLeft: 4, color: hasDefects ? "#ea580c" : "#059669" }}>
+                            {hasDefects ? "⚠" : "✓"}
+                          </Text>
+                        </View>
+                        
+                        {hasDefects && subcategory === category.subcategories.find(s => s.defectSubcategory) ? (
+                          <View style={{ marginLeft: 6 }}>
+                            {categoryDefects.map((defect, idx) => (
+                              <View key={idx} style={{ marginBottom: 2 }}>
+                                <Text style={{ fontSize: 8, color: "#dc2626" }}>• {defect.name}</Text>
+                                {defect.notes && (
+                                  <Text style={{ fontSize: 7, color: "#6b7280", marginLeft: 8, marginTop: 1 }}>{defect.notes}</Text>
+                                )}
+                              </View>
+                            ))}
+                          </View>
+                        ) : !hasDefects ? (
+                          <Text style={{ fontSize: 7, color: "#6b7280", fontStyle: "italic", marginLeft: 6 }}>No defects found</Text>
+                        ) : null}
+                      </View>
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-          ))}
+            );
+          })}
         </Page>
       )}
 
@@ -580,7 +636,7 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
       ))}
 
       {/* Footer page if no photos */}
-      {photos.length === 0 && Object.keys(groupedItems).length === 0 && (
+      {photos.length === 0 && Object.keys(defectsByCategory).length === 0 && (
         <View style={styles.footer}>
           <Text>This report was generated by GradeMyBuilding</Text>
           <Text>© {new Date().getFullYear()} GradeMyBuilding. All rights reserved.</Text>
