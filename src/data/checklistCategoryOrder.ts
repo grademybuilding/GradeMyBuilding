@@ -311,48 +311,144 @@ export function extractDefectsByCategory(
 
   const result: Record<string, { name: string; notes?: string }[]> = {};
 
-  // Category prefix mappings
-  const prefixMap: Record<string, string> = {
-    'roof-': 'Roof',
-    'exterior-': 'Exterior Cladding',
-    'walkways-': 'Walkways, Patios & Driveways',
-    'wood-decks-': 'Wood Decks & Balconies',
-    'foundation-': 'Foundation & Structure',
-    'basement-': 'Foundation & Structure',
-    'crawlspace-': 'Foundation & Structure',
-    'plumbing-': 'Plumbing',
-    'electric-': 'Electrical',
-    'electrical-': 'Electrical',
-    'hvac-': 'Heating & Cooling',
-    'heating-': 'Heating & Cooling',
-    'cooling-': 'Heating & Cooling',
-    'doors-': 'Doors, Windows & Interior',
-    'windows-': 'Doors, Windows & Interior',
-    'interior-': 'Doors, Windows & Interior',
-    'garage-': 'Doors, Windows & Interior',
-    'appliances-': 'Built-in Appliances',
-    'kitchen-': 'Built-in Appliances',
-    'laundry-': 'Built-in Appliances',
-    'fireplace-': 'Fireplaces',
-    'attic-': 'Attic, Insulation & Ventilation',
-    'green-': 'Green Features',
-    'well-': 'Well',
-    'water-': 'Water Testing',
-    'radon-': 'Radon',
-    'pool-': 'Swimming Pools and Spas',
-    'spa-': 'Swimming Pools and Spas',
-    'sewer-': 'Sewer Lateral',
-  };
+  // Comprehensive category prefix mappings - ordered by specificity (longer prefixes first)
+  const prefixMappings: { prefix: string; category: string }[] = [
+    // Roof
+    { prefix: 'roof-gutter', category: 'Roof' },
+    { prefix: 'roof-gutters', category: 'Roof' },
+    { prefix: 'roof-', category: 'Roof' },
+    
+    // Exterior Cladding
+    { prefix: 'exterior-door', category: 'Doors, Windows & Interior' },
+    { prefix: 'exterior-', category: 'Exterior Cladding' },
+    { prefix: 'siding-', category: 'Exterior Cladding' },
+    
+    // Walkways/Patios/Driveways
+    { prefix: 'walkways-', category: 'Walkways, Patios & Driveways' },
+    { prefix: 'walkway-', category: 'Walkways, Patios & Driveways' },
+    { prefix: 'patio-', category: 'Walkways, Patios & Driveways' },
+    { prefix: 'driveway-', category: 'Walkways, Patios & Driveways' },
+    
+    // Wood Decks & Balconies
+    { prefix: 'wood-decks-', category: 'Wood Decks & Balconies' },
+    { prefix: 'wood-deck-', category: 'Wood Decks & Balconies' },
+    { prefix: 'deck-', category: 'Wood Decks & Balconies' },
+    { prefix: 'balcony-', category: 'Wood Decks & Balconies' },
+    
+    // Foundation & Structure
+    { prefix: 'foundation-floor-structure', category: 'Foundation & Structure' },
+    { prefix: 'foundation-', category: 'Foundation & Structure' },
+    { prefix: 'basement-floor-structure', category: 'Foundation & Structure' },
+    { prefix: 'basement-floor-joists', category: 'Foundation & Structure' },
+    { prefix: 'basement-floor-slab', category: 'Foundation & Structure' },
+    { prefix: 'basement-', category: 'Foundation & Structure' },
+    { prefix: 'crawlspace-', category: 'Foundation & Structure' },
+    { prefix: 'crawl-space-', category: 'Foundation & Structure' },
+    { prefix: 'structure-', category: 'Foundation & Structure' },
+    { prefix: 'wall-structure-', category: 'Foundation & Structure' },
+    { prefix: 'ceiling-structure-', category: 'Foundation & Structure' },
+    { prefix: 'roof-structure-', category: 'Foundation & Structure' },
+    
+    // Plumbing
+    { prefix: 'plumbing-water-heater', category: 'Plumbing' },
+    { prefix: 'plumbing-', category: 'Plumbing' },
+    { prefix: 'water-heater-', category: 'Plumbing' },
+    { prefix: 'drain-', category: 'Plumbing' },
+    { prefix: 'fixture-', category: 'Plumbing' },
+    
+    // Electrical
+    { prefix: 'electric-service', category: 'Electrical' },
+    { prefix: 'electric-', category: 'Electrical' },
+    { prefix: 'electrical-', category: 'Electrical' },
+    { prefix: 'wiring-', category: 'Electrical' },
+    { prefix: 'panel-', category: 'Electrical' },
+    
+    // Heating & Cooling
+    { prefix: 'hvac-cooling', category: 'Heating & Cooling' },
+    { prefix: 'hvac-heating', category: 'Heating & Cooling' },
+    { prefix: 'hvac-', category: 'Heating & Cooling' },
+    { prefix: 'heating-', category: 'Heating & Cooling' },
+    { prefix: 'cooling-', category: 'Heating & Cooling' },
+    { prefix: 'furnace-', category: 'Heating & Cooling' },
+    { prefix: 'air-conditioning-', category: 'Heating & Cooling' },
+    { prefix: 'ductwork-', category: 'Heating & Cooling' },
+    
+    // Doors, Windows & Interior
+    { prefix: 'entry-door-', category: 'Doors, Windows & Interior' },
+    { prefix: 'interior-door-', category: 'Doors, Windows & Interior' },
+    { prefix: 'doors-', category: 'Doors, Windows & Interior' },
+    { prefix: 'door-', category: 'Doors, Windows & Interior' },
+    { prefix: 'windows-', category: 'Doors, Windows & Interior' },
+    { prefix: 'window-', category: 'Doors, Windows & Interior' },
+    { prefix: 'interior-floor', category: 'Doors, Windows & Interior' },
+    { prefix: 'interior-wall', category: 'Doors, Windows & Interior' },
+    { prefix: 'interior-ceiling', category: 'Doors, Windows & Interior' },
+    { prefix: 'interior-', category: 'Doors, Windows & Interior' },
+    { prefix: 'floors-', category: 'Doors, Windows & Interior' },
+    { prefix: 'ceilings-', category: 'Doors, Windows & Interior' },
+    { prefix: 'walls-', category: 'Doors, Windows & Interior' },
+    { prefix: 'garage-door-', category: 'Doors, Windows & Interior' },
+    { prefix: 'garage-', category: 'Doors, Windows & Interior' },
+    
+    // Built-in Appliances
+    { prefix: 'range-oven-cooktop', category: 'Built-in Appliances' },
+    { prefix: 'range-', category: 'Built-in Appliances' },
+    { prefix: 'oven-', category: 'Built-in Appliances' },
+    { prefix: 'cooktop-', category: 'Built-in Appliances' },
+    { prefix: 'appliances-', category: 'Built-in Appliances' },
+    { prefix: 'appliance-', category: 'Built-in Appliances' },
+    { prefix: 'kitchen-', category: 'Built-in Appliances' },
+    { prefix: 'dishwasher-', category: 'Built-in Appliances' },
+    { prefix: 'disposal-', category: 'Built-in Appliances' },
+    { prefix: 'refrigerator-', category: 'Built-in Appliances' },
+    { prefix: 'microwave-', category: 'Built-in Appliances' },
+    { prefix: 'laundry-', category: 'Built-in Appliances' },
+    { prefix: 'washer-', category: 'Built-in Appliances' },
+    { prefix: 'dryer-', category: 'Built-in Appliances' },
+    { prefix: 'exhaust-', category: 'Built-in Appliances' },
+    
+    // Fireplaces
+    { prefix: 'fireplace-', category: 'Fireplaces' },
+    
+    // Attic, Insulation & Ventilation
+    { prefix: 'attic-', category: 'Attic, Insulation & Ventilation' },
+    { prefix: 'insulation-', category: 'Attic, Insulation & Ventilation' },
+    { prefix: 'ventilation-', category: 'Attic, Insulation & Ventilation' },
+    
+    // Green Features
+    { prefix: 'green-', category: 'Green Features' },
+    { prefix: 'solar-', category: 'Green Features' },
+    { prefix: 'energy-', category: 'Green Features' },
+    
+    // Well
+    { prefix: 'well-', category: 'Well' },
+    
+    // Water Testing
+    { prefix: 'water-testing-', category: 'Water Testing' },
+    
+    // Radon
+    { prefix: 'radon-', category: 'Radon' },
+    
+    // Swimming Pools and Spas
+    { prefix: 'pool-', category: 'Swimming Pools and Spas' },
+    { prefix: 'spa-', category: 'Swimming Pools and Spas' },
+    { prefix: 'swimming-', category: 'Swimming Pools and Spas' },
+    
+    // Sewer Lateral
+    { prefix: 'sewer-', category: 'Sewer Lateral' },
+  ];
 
   for (const [defectId, isSelected] of Object.entries(selectedDefects)) {
     // Check if defect is selected (truthy value - could be boolean true or other truthy values)
     if (!isSelected) continue;
 
-    // Find matching category
+    // Find matching category using ordered prefix list (first match wins due to specificity order)
     let category = 'Other';
-    for (const [prefix, catName] of Object.entries(prefixMap)) {
-      if (defectId.toLowerCase().startsWith(prefix)) {
-        category = catName;
+    const lowerDefectId = defectId.toLowerCase();
+    
+    for (const mapping of prefixMappings) {
+      if (lowerDefectId.startsWith(mapping.prefix)) {
+        category = mapping.category;
         break;
       }
     }
@@ -361,18 +457,85 @@ export function extractDefectsByCategory(
       result[category] = [];
     }
 
-    // Convert ID to readable name
-    const defectName = defectId
-      .replace(/^[a-z]+-[a-z]*-?/, '') // Remove category prefix more aggressively
-      .split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    // Convert ID to readable name - remove the category prefix
+    const defectName = formatDefectName(defectId);
 
     result[category].push({
-      name: defectName || defectId,
+      name: defectName,
       notes: checklistNotes?.[defectId],
     });
   }
 
   return result;
+}
+
+/**
+ * Formats a defect ID into a human-readable name
+ * e.g., "roof-under-driven-nails" -> "Under Driven Nails"
+ * e.g., "range-oven-cooktop-missing-control-knobs" -> "Missing Control Knobs"
+ */
+function formatDefectName(defectId: string): string {
+  // Common category prefixes to remove (ordered by length/specificity)
+  const prefixesToRemove = [
+    'range-oven-cooktop-',
+    'foundation-floor-structure-',
+    'basement-floor-structure-',
+    'hvac-cooling-',
+    'hvac-heating-',
+    'electric-service-',
+    'entry-door-',
+    'interior-door-',
+    'exterior-door-',
+    'garage-door-',
+    'water-heater-',
+    'walkways-walkway-',
+    'basement-floor-',
+    'interior-floor-',
+    'roof-gutter-',
+    'roof-gutters-',
+    'wood-deck-',
+    'basement-',
+    'crawlspace-',
+    'foundation-',
+    'plumbing-',
+    'electric-',
+    'electrical-',
+    'heating-',
+    'cooling-',
+    'exterior-',
+    'interior-',
+    'walkways-',
+    'fireplace-',
+    'floors-',
+    'ceilings-',
+    'walls-',
+    'attic-',
+    'doors-',
+    'windows-',
+    'garage-',
+    'hvac-',
+    'roof-',
+    'pool-',
+    'spa-',
+    'well-',
+    'radon-',
+    'sewer-',
+    'green-',
+  ];
+
+  let cleanId = defectId.toLowerCase();
+  
+  // Remove the longest matching prefix
+  for (const prefix of prefixesToRemove) {
+    if (cleanId.startsWith(prefix)) {
+      cleanId = cleanId.substring(prefix.length);
+      break;
+    }
+  }
+
+  // Convert remaining kebab-case to Title Case
+  return cleanId
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
