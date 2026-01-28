@@ -567,9 +567,22 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
                       return null;
                     }
 
-                    // Filter defects for this subcategory (simple matching for now)
-                    const subcategoryDefects = categoryDefects;
-                    const hasDefects = categoryDefects.length > 0 && subcategory.defectSubcategory;
+                    // Filter defects for this subcategory based on defect naming patterns
+                    // This matches the web version logic exactly
+                    const subcategoryDefects = categoryDefects.filter(defect => {
+                      const defectLower = defect.name.toLowerCase();
+                      const subLabel = subcategory.label.toLowerCase();
+                      
+                      // General matching - if no specific defect subcategory, show all category defects
+                      if (subcategory.label === "General" || !subcategory.defectSubcategory) {
+                        return true;
+                      }
+                      
+                      // Try to match based on subcategory patterns in the defect name
+                      return defectLower.includes(subLabel.split(" ")[0].toLowerCase());
+                    });
+                    
+                    const hasDefects = subcategoryDefects.length > 0;
 
                     return (
                       <View key={subcategory.id} style={{ marginBottom: 4, paddingLeft: 6, borderLeftWidth: 2, borderLeftColor: "#2563eb" }}>
@@ -580,9 +593,9 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
                           </Text>
                         </View>
                         
-                        {hasDefects && subcategory === category.subcategories.find(s => s.defectSubcategory) ? (
+                        {hasDefects ? (
                           <View style={{ marginLeft: 6 }}>
-                            {categoryDefects.map((defect, idx) => (
+                            {subcategoryDefects.map((defect, idx) => (
                               <View key={idx} style={{ marginBottom: 2 }}>
                                 <Text style={{ fontSize: 8, color: "#dc2626" }}>• {defect.name}</Text>
                                 {defect.notes && (
@@ -591,9 +604,9 @@ export default function InspectionReportPDF({ inspection, checklistItems, photos
                               </View>
                             ))}
                           </View>
-                        ) : !hasDefects ? (
+                        ) : (
                           <Text style={{ fontSize: 7, color: "#6b7280", fontStyle: "italic", marginLeft: 6 }}>No defects found</Text>
-                        ) : null}
+                        )}
                       </View>
                     );
                   })}
