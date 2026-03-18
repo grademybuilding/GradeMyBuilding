@@ -26,6 +26,7 @@ interface HeaderProps {
 export function Header({ activeTab, onTabChange }: HeaderProps) {
   const { profile, signOut } = useAuth();
   const { resolvedTheme } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <>
