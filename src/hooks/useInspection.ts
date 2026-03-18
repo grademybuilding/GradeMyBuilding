@@ -103,7 +103,7 @@ export function useInspection(options: UseInspectionOptions = {}) {
   });
   
   const { toast } = useToast();
-  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingChangesRef = useRef<boolean>(false);
   const formDataRef = useRef<InspectionFormData>(formData);
   const inspectionIdRef = useRef<string | null>(inspectionId);
