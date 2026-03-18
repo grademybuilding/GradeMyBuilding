@@ -33,7 +33,12 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
       {/* Top Header - Desktop/Tablet */}
       <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-card border-b border-border shadow-card">
         <div className="flex items-center gap-4 md:gap-6">
-          <div className="flex items-center gap-2 relative">
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 relative cursor-pointer"
+            aria-label="Go to home"
+          >
             {/* Render both logos and use CSS to toggle visibility - prevents reload on route change */}
             <img 
               src={logoColor} 
@@ -45,7 +50,7 @@ export function Header({ activeTab, onTabChange }: HeaderProps) {
               alt="GradeMyBuilding" 
               className={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-opacity duration-200 ${resolvedTheme === 'dark' ? 'opacity-100' : 'opacity-0 absolute'}`}
             />
-          </div>
+          </button>
           {/* Navigation - Hidden on mobile, shown on md+ */}
           <div className="hidden md:block">
             <Navigation activeTab={activeTab} onTabChange={onTabChange} />
