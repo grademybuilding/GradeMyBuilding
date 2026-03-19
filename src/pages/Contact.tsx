@@ -89,14 +89,14 @@ const Contact = () => {
       {/* Two-column layout */}
       <section className="pb-12 md:pb-16">
         <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* LEFT: Embedded AI Chat (60%) */}
-            <div className="lg:col-span-3">
+            <div>
               <EmbeddedChat />
             </div>
 
             {/* RIGHT: Contact Form (40%) */}
-            <div className="lg:col-span-2">
+            <div>
               <Card className="shadow-lg h-full">
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center gap-2 text-lg">
