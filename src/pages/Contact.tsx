@@ -16,7 +16,7 @@ import { User, Mail, Building2, Briefcase, Tag, MessageSquare, Clock, ArrowRight
 import { Link } from "react-router-dom";
 
 const roleOptions = ["Inspector", "Appraiser", "Real Estate Agent", "Assessor", "Underwriter", "Other"] as const;
-const categoryOptions = ["Building Codes", "Inspection Procedures", "Platform Help", "Partnership Inquiry", "Pricing", "Other"] as const;
+
 
 const contactFormSchema = z.object({
   name: z.string().trim().min(1, "Full name is required").max(100),
