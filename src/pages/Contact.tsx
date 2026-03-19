@@ -12,18 +12,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PublicHeader } from "@/components/Layout/PublicHeader";
 import { EmbeddedChat } from "@/components/AIChat/EmbeddedChat";
 import { supabase } from "@/integrations/supabase/client";
-import { User, Mail, Building2, Briefcase, Tag, MessageSquare, Clock, ArrowRight } from "lucide-react";
+import { User, Mail, Building2, Briefcase, MessageSquare, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const roleOptions = ["Inspector", "Appraiser", "Real Estate Agent", "Assessor", "Underwriter", "Other"] as const;
-const categoryOptions = ["Building Codes", "Inspection Procedures", "Platform Help", "Partnership Inquiry", "Pricing", "Other"] as const;
-
 const contactFormSchema = z.object({
   name: z.string().trim().min(1, "Full name is required").max(100),
   email: z.string().trim().email("Please enter a valid email").max(255),
   company: z.string().trim().max(100).optional().or(z.literal("")),
   role: z.string().min(1, "Please select a role"),
-  category: z.string().min(1, "Please select a category"),
+  
   message: z.string().trim().min(20, "Message must be at least 20 characters").max(2000),
 });
 
@@ -39,7 +37,7 @@ const Contact = () => {
       email: "",
       company: "",
       role: "",
-      category: "",
+      
       message: "",
     },
   });
@@ -53,7 +51,7 @@ const Contact = () => {
           email: data.email,
           company: data.company || "",
           role: data.role,
-          category: data.category,
+          category: "",
           message: data.message,
         },
       });
@@ -187,31 +185,6 @@ const Contact = () => {
                         )}
                       />
 
-                      <FormField
-                        control={form.control}
-                        name="category"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="flex items-center gap-1.5">
-                              <Tag className="h-3.5 w-3.5 text-muted-foreground" />
-                              Question Category *
-                            </FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select a category" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {categoryOptions.map((c) => (
-                                  <SelectItem key={c} value={c}>{c}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
 
                       <FormField
                         control={form.control}
