@@ -116,7 +116,7 @@ serve(async (req) => {
     const replyBody = {
       to: [senderEmail],
       subject: `Re: ${subject}`,
-      reply_to: 'beena@agentmail.to',
+      reply_to: 'grademybuilding@agentmail.to',
       text: aiReply + FOOTER,
     };
 
