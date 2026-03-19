@@ -1,175 +1,56 @@
 
-# Plan: Fix Inspection Report Generation
 
-## Problem Summary
+# AI Chat Widget - "Beena" Inspector Assistant
 
-The current inspection report does not follow the checklist structure. Items are grouped only by category (not subcategory), ordered alphabetically instead of following the checklist sequence, and defects are not properly extracted and displayed.
+## Overview
+Build a floating AI chatbot powered by OpenAI GPT-4o-mini, accessible to logged-in users on all authenticated pages. No database tables needed.
 
-## Requirements
+## Components
 
-The report must:
-1. Follow the exact category/subcategory sequence from the inspection checklist
-2. Group items under their respective Categories and Sub-Categories
-3. Under each Sub-Category, list only the defects selected by the inspector
-4. Display "No defects found" if no defects are selected for a Sub-Category
-5. Maintain consistent formatting and professional appearance
+### 1. Edge Function: `supabase/functions/chat/index.ts`
+- CORS headers, OPTIONS handler
+- `verify_jwt = false` in config.toml, authenticate via `getClaims()` in code
+- Reads `OPENAI_API_KEY` from env
+- Calls OpenAI `https://api.openai.com/v1/chat/completions` with model `gpt-4o-mini`
+- System prompt about Beena the AI Inspector Assistant
+- Returns JSON response (non-streaming for simplicity with `supabase.functions.invoke`)
 
----
+### 2. Secret: `OPENAI_API_KEY`
+- Store the provided key as a Supabase secret using the secrets tool
 
-## Solution Overview
+### 3. Chat Widget: `src/components/AIChat/AIChat.tsx`
+- Floating blue button bottom-right with "Ask Beena" label
+- Expands to 400x600px chat panel
+- Blue header with title and subtitle
+- Message list with user (blue, right) and assistant (gray, left) bubbles
+- Renders markdown-like formatting (bold, bullets) via simple parsing or `react-markdown`
+- Textarea + send button, Enter to send, Shift+Enter for newline
+- Loading indicator while awaiting response
+- Initial greeting message from Beena
+- Footer disclaimer
+- Calls `supabase.functions.invoke("chat", { body: { messages } })`
 
-Create a shared category configuration and update both report components to use the proper structure.
-
----
-
-## Files to Create/Modify
-
-| File | Action | Description |
-|------|--------|-------------|
-| `src/data/checklistCategoryOrder.ts` | **Create** | Centralized category/subcategory order configuration |
-| `src/components/Inspector/InspectionReport.tsx` | **Modify** | Update to use proper category/subcategory structure |
-| `src/components/Inspector/InspectionReportPDF.tsx` | **Modify** | Update to use proper category/subcategory structure |
-
----
-
-## Implementation Details
-
-### Step 1: Create Centralized Category Configuration
-
-Create `src/data/checklistCategoryOrder.ts` with:
-- Export `CHECKLIST_CATEGORY_ORDER` - array defining the exact sequence of categories with their subcategories
-- Export helper function `getOrderedCategoriesWithDefects()` to organize inspection data
-
-```text
-Structure:
-[
-  {
-    id: 'roof',
-    label: 'Roof',
-    subcategories: [
-      { id: 'coverings', label: 'Coverings', defectPrefix: 'Defects - Coverings' },
-      { id: 'drainage', label: 'Roof Drainage Systems', defectPrefix: 'Defects - Roof Drainage Systems' },
-      ...
-    ]
-  },
-  {
-    id: 'exterior',
-    label: 'Exterior Cladding',
-    subcategories: [...]
-  },
-  ...
-]
-```
-
-### Step 2: Update InspectionReport.tsx (Web Preview)
-
-Modify the "Detailed Checklist" section to:
-
-1. Import the category order configuration
-2. Group checklist items by category AND subcategory
-3. Extract defects from `selected_defects` field (checkbox items that are checked)
-4. Display in hierarchical structure:
-
-```text
-Category Name
-  Sub-Category Name
-    - Defect 1
-    - Defect 2
-    - Defect 3
-  Sub-Category Name 2
-    - No defects found
-
-Category Name 2
-  ...
-```
-
-5. Only show categories/subcategories that have data
-6. Use `checklist_notes` to show any defect descriptions
-
-### Step 3: Update InspectionReportPDF.tsx (PDF Download)
-
-Apply the same structural changes to the PDF report:
-
-1. Import the category order configuration
-2. Update the "Detailed Checklist" page section
-3. Use proper page breaks between major categories
-4. Maintain consistent styling with the web preview
-
----
+### 4. Integration: `src/components/Layout/AuthenticatedLayout.tsx`
+- Add `<AIChat />` inside the authenticated layout, only when `isAuthenticated` is true
+- Renders after the `<Outlet />` so it floats above all pages
 
 ## Technical Details
 
-### Data Sources for Defects
-
-The inspection data contains:
-- `selected_defects`: Record of checkbox items that were selected (defect_id -> true)
-- `checklist_notes`: Record of notes for each item (item_id -> note text)
-- `checklist_items`: Database table with all checklist entries
-
-### Category Matching Logic
-
-Map checklist items to their proper category/subcategory using:
-- Item ID prefix (e.g., `roof-` maps to Roof category)
-- Subcategory field from the item
-- Defect subcategories start with "Defects - "
-
-### Display Logic
-
-For each subcategory:
-1. Filter items where `type: 'checkbox'` and item is in `selected_defects`
-2. If defects found, display them as a list
-3. If no defects found, optionally show "No defects found" or omit the subcategory
-
----
-
-## UI Changes
-
-### Web Report (InspectionReport.tsx)
-
-**Before:**
-```text
-Detailed Checklist
-  Roof
-    - Roof Material: Asphalt
-    - Inspector Rating: Good
-    - Under-Driven Nails (no indication if selected)
+**Edge Function config** (`supabase/config.toml`):
+```toml
+[functions.chat]
+verify_jwt = false
 ```
 
-**After:**
-```text
-Detailed Findings by Category
+**Edge Function** authenticates via `getClaims()`, calls OpenAI API directly (not Lovable AI gateway since user provided their own OpenAI key), returns `{ reply: string }`.
 
-Roof
-  Coverings
-    Rating: Good
-    Defects:
-      - Under-Driven Nails
-      - Shingles Missing
-  
-  Roof Drainage Systems
-    Rating: Very Good
-    Defects:
-      - No defects found
+**Frontend** uses `supabase.functions.invoke("chat")` which automatically includes the auth token. Messages array sent as conversation history for context.
 
-Exterior Cladding
-  Siding, Flashing & Trim
-    Rating: Good
-    Defects:
-      - Cracking - Minor
-```
+**Dependencies**: `react-markdown` for rendering assistant responses with formatting.
 
-### PDF Report (InspectionReportPDF.tsx)
+## File Changes
+1. `supabase/functions/chat/index.ts` - New edge function
+2. `supabase/config.toml` - Add chat function config
+3. `src/components/AIChat/AIChat.tsx` - New chat widget component
+4. `src/components/Layout/AuthenticatedLayout.tsx` - Add AIChat to layout
 
-Same hierarchical structure with:
-- Category headers with page break control
-- Subcategory sections
-- Defect lists with proper spacing
-- Professional formatting
-
----
-
-## Estimated Changes
-
-- **checklistCategoryOrder.ts**: ~150 lines (new file with all categories/subcategories)
-- **InspectionReport.tsx**: ~80 lines modified (checklist section restructure)
-- **InspectionReportPDF.tsx**: ~100 lines modified (PDF checklist section restructure)
