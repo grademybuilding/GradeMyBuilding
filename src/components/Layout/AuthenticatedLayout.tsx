@@ -59,6 +59,7 @@ export function AuthenticatedLayout() {
       <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
         <Outlet />
       </main>
+      {isAuthenticated && <AIChat />}
     </div>
   );
 }
