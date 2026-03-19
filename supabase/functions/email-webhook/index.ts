@@ -7,7 +7,7 @@ const corsHeaders = {
 
 const SYSTEM_PROMPT = `You are Beena, the AI Inspector Assistant for GradeMyBuilding.com. You help building inspectors via email with inspection procedures, building codes (IRC, IBC, NEC, UPC, IMC), defect identification, and report generation. Be professional but friendly. Include relevant code references. Always note guidance is informational. Sign off as Beena - AI Inspector Assistant, GradeMyBuilding.com`;
 
-const FOOTER = `\n\n---\nBeena — AI Inspector Assistant\nGradeMyBuilding.com\nEmail: beena@agentmail.to\n\nNote: This is an AI-generated response. Always consult with your local AHJ and applicable building codes.`;
+const FOOTER = `\n\n---\nGradeMyBuilding AI Inspector Assistant\nGradeMyBuilding.com\nEmail: grademybuilding@agentmail.to\n\nNote: This is an AI-generated response. Always consult with your local AHJ and applicable building codes.`;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
