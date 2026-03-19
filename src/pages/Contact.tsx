@@ -39,7 +39,7 @@ const Contact = () => {
       email: "",
       company: "",
       role: "",
-      category: "",
+      
       message: "",
     },
   });
