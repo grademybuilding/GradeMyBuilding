@@ -2,6 +2,7 @@ import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useMemo, useCallback } from "react";
 import { Header } from "./Header";
+import { AIChat } from "@/components/AIChat/AIChat";
 import { PublicHeader } from "./PublicHeader";
 
 export function AuthenticatedLayout() {
@@ -58,6 +59,7 @@ export function AuthenticatedLayout() {
       <main className="flex-1 overflow-y-auto bg-muted/30 pb-20 md:pb-0">
         <Outlet />
       </main>
+      {isAuthenticated && <AIChat />}
     </div>
   );
 }
