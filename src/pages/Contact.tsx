@@ -96,7 +96,7 @@ const Contact = () => {
             </div>
 
             {/* RIGHT: Contact Form (40%) */}
-            <div className="lg:col-span-2">
+            <div>
               <Card className="shadow-lg h-full">
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center gap-2 text-lg">
