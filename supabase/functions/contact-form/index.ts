@@ -29,7 +29,7 @@ serve(async (req) => {
       });
     }
 
-    const sendUrl = 'https://api.agentmail.to/v0/inboxes/beena%40agentmail.to/messages/send';
+    const sendUrl = 'https://api.agentmail.to/v0/inboxes/grademybuilding%40agentmail.to/messages/send';
     const authHeaders = {
       'Authorization': `Bearer ${AGENTMAIL_API_KEY}`,
       'Content-Type': 'application/json',
