@@ -39,14 +39,14 @@ serve(async (req) => {
     const userEmailBody = {
       to: [email],
       subject: 'Thanks for contacting GradeMyBuilding!',
-      reply_to: 'beena@agentmail.to',
+      reply_to: 'grademybuilding@agentmail.to',
       text: `Hi ${name},
 
 Thank you for reaching out to GradeMyBuilding! We've received your message about ${category}.
 
-Beena, our AI Inspector Assistant, will review your question and send you a detailed response shortly at this email address.
+Our AI Inspector Assistant will review your question and send you a detailed response shortly at this email address.
 
-If you need immediate help, you can also chat with Beena directly at www.grademybuilding.com/contact
+If you need immediate help, you can also chat with us directly at www.grademybuilding.com/contact
 
 Best regards,
 The GradeMyBuilding Team`,

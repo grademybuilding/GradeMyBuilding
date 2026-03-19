@@ -120,7 +120,7 @@ serve(async (req) => {
       text: aiReply + FOOTER,
     };
 
-    const sendUrl = 'https://api.agentmail.to/v0/inboxes/beena%40agentmail.to/messages/send';
+    const sendUrl = 'https://api.agentmail.to/v0/inboxes/grademybuilding%40agentmail.to/messages/send';
     const sendResponse = await fetch(sendUrl, {
       method: 'POST',
       headers: {
