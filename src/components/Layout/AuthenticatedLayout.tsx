@@ -2,6 +2,7 @@ import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useMemo, useCallback } from "react";
 import { Header } from "./Header";
+import { AIChat } from "@/components/AIChat/AIChat";
 import { PublicHeader } from "./PublicHeader";
 
 export function AuthenticatedLayout() {
