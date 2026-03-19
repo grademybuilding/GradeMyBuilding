@@ -15,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User, Mail, Building2, Briefcase, Tag, MessageSquare, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const roleOptions = ["Inspector", "Building Owner", "Property Manager", "Contractor", "Other"] as const;
+const roleOptions = ["Inspector", "Appraiser", "Real Estate Agent", "Assessor", "Underwriter", "Other"] as const;
 const categoryOptions = ["Building Codes", "Inspection Procedures", "Platform Help", "Partnership Inquiry", "Pricing", "Other"] as const;
 
 const contactFormSchema = z.object({
