@@ -72,6 +72,17 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <PublicHeader />
 
+      {/* Hero */}
+      <section className="py-10 md:py-14">
+        <div className="container px-4 md:px-6 text-center max-w-3xl mx-auto">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-3">
+            Get in Touch
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Get instant answers from our AI Inspector Assistant, or send us a message.
+          </p>
+        </div>
+      </section>
 
       {/* Two-column layout */}
       <section className="pb-12 md:pb-16">
