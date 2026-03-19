@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PublicHeader } from "@/components/Layout/PublicHeader";
 import { EmbeddedChat } from "@/components/AIChat/EmbeddedChat";
 import { supabase } from "@/integrations/supabase/client";
-import { User, Mail, Building2, Briefcase, Tag, MessageSquare, Clock, ArrowRight } from "lucide-react";
+import { User, Mail, Building2, Briefcase, MessageSquare, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const roleOptions = ["Inspector", "Appraiser", "Real Estate Agent", "Assessor", "Underwriter", "Other"] as const;
