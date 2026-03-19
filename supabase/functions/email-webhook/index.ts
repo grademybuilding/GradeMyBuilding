@@ -52,7 +52,7 @@ serve(async (req) => {
     }
 
     // Skip our own messages
-    if (senderEmail.toLowerCase() === 'beena@agentmail.to') {
+    if (senderEmail.toLowerCase() === 'grademybuilding@agentmail.to' || senderEmail.toLowerCase() === 'beena@agentmail.to') {
       return new Response(JSON.stringify({ status: 'skipped', reason: 'own message' }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
