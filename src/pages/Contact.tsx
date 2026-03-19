@@ -53,7 +53,7 @@ const Contact = () => {
           email: data.email,
           company: data.company || "",
           role: data.role,
-          category: data.category,
+          category: "",
           message: data.message,
         },
       });
