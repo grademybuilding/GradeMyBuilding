@@ -7,7 +7,7 @@ const corsHeaders = {
 
 const SYSTEM_PROMPT = `You are Beena, the AI Inspector Assistant for GradeMyBuilding.com. You help building inspectors via email with inspection procedures, building codes (IRC, IBC, NEC, UPC, IMC), defect identification, and report generation. Be professional but friendly. Include relevant code references. Always note guidance is informational. Sign off as Beena - AI Inspector Assistant, GradeMyBuilding.com`;
 
-const FOOTER = `\n\n---\nBeena — AI Inspector Assistant\nGradeMyBuilding.com\nEmail: beena@agentmail.to\n\nNote: This is an AI-generated response. Always consult with your local AHJ and applicable building codes.`;
+const FOOTER = `\n\n---\nGradeMyBuilding AI Inspector Assistant\nGradeMyBuilding.com\nEmail: grademybuilding@agentmail.to\n\nNote: This is an AI-generated response. Always consult with your local AHJ and applicable building codes.`;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -52,7 +52,7 @@ serve(async (req) => {
     }
 
     // Skip our own messages
-    if (senderEmail.toLowerCase() === 'beena@agentmail.to') {
+    if (senderEmail.toLowerCase() === 'grademybuilding@agentmail.to' || senderEmail.toLowerCase() === 'beena@agentmail.to') {
       return new Response(JSON.stringify({ status: 'skipped', reason: 'own message' }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -116,11 +116,11 @@ serve(async (req) => {
     const replyBody = {
       to: [senderEmail],
       subject: `Re: ${subject}`,
-      reply_to: 'beena@agentmail.to',
+      reply_to: 'grademybuilding@agentmail.to',
       text: aiReply + FOOTER,
     };
 
-    const sendUrl = 'https://api.agentmail.to/v0/inboxes/beena%40agentmail.to/messages/send';
+    const sendUrl = 'https://api.agentmail.to/v0/inboxes/grademybuilding%40agentmail.to/messages/send';
     const sendResponse = await fetch(sendUrl, {
       method: 'POST',
       headers: {
