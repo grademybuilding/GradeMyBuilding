@@ -16,8 +16,7 @@ import { User, Mail, Building2, Briefcase, MessageSquare, Clock, ArrowRight } fr
 import { Link } from "react-router-dom";
 
 const roleOptions = ["Inspector", "Appraiser", "Real Estate Agent", "Assessor", "Underwriter", "Other"] as const;
-
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 const contactFormSchema = z.object({
   name: z.string().trim().min(1, "Full name is required").max(100),
   email: z.string().trim().email("Please enter a valid email").max(255),
