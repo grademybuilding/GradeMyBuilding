@@ -23,7 +23,7 @@ const contactFormSchema = z.object({
   email: z.string().trim().email("Please enter a valid email").max(255),
   company: z.string().trim().max(100).optional().or(z.literal("")),
   role: z.string().min(1, "Please select a role"),
-  category: z.string().min(1, "Please select a category"),
+  
   message: z.string().trim().min(20, "Message must be at least 20 characters").max(2000),
 });
 
