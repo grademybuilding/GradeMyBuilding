@@ -58,7 +58,7 @@ const Contact = () => {
 
       if (error) throw error;
 
-      toast.success("Thanks! Beena will reply to your email shortly with helpful information. Our team may also follow up personally.");
+      toast.success("Thanks! Our AI Inspector Assistant will reply to your email shortly with helpful information. Our team may also follow up personally.");
       form.reset();
     } catch (error) {
       console.error("Contact form error:", error);
@@ -227,15 +227,15 @@ const Contact = () => {
             <div>
               <Mail className="h-6 w-6 mx-auto mb-2 text-primary" />
               <p className="font-medium text-sm">Email</p>
-              <a href="mailto:beena@agentmail.to" className="text-sm text-primary hover:underline">
-                beena@agentmail.to
+              <a href="mailto:grademybuilding@agentmail.to" className="text-sm text-primary hover:underline">
+                grademybuilding@agentmail.to
               </a>
             </div>
             <div>
               <Clock className="h-6 w-6 mx-auto mb-2 text-primary" />
               <p className="font-medium text-sm">Response Time</p>
               <p className="text-sm text-muted-foreground">
-                Beena responds instantly. Our team follows up within 24 hours.
+                Our AI assistant responds instantly. Our team follows up within 24 hours.
               </p>
             </div>
             <div>
