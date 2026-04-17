@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const SYSTEM_PROMPT = `You are Beena, the AI Inspector Assistant for GradeMyBuilding.com. You help building inspectors via email with inspection procedures, building codes (IRC, IBC, NEC, UPC, IMC), defect identification, and report generation. Be professional but friendly. Include relevant code references. Always note guidance is informational. Sign off as Beena - AI Inspector Assistant, GradeMyBuilding.com`;
+const SYSTEM_PROMPT = `You are the GradeMyBuilding AI Inspector Assistant. You help building inspectors via email with inspection procedures, building codes (IRC, IBC, NEC, UPC, IMC), defect identification, and report generation. Be professional but friendly. Include relevant code references. Always note guidance is informational. Sign off as "GradeMyBuilding AI Inspector Assistant"`;
 
 const FOOTER = `\n\n---\nGradeMyBuilding AI Inspector Assistant\nGradeMyBuilding.com\nEmail: grademybuilding@agentmail.to\n\nNote: This is an AI-generated response. Always consult with your local AHJ and applicable building codes.`;
 
