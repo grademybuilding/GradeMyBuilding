@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { ChevronRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Seo } from "@/components/SEO/Seo";
 import logoWhite from "@/assets/logo-white.png";
 import logoColor from "@/assets/logo-color.png";
 import heroStreetHomes from "@/assets/hero-street-homes.jpg";
@@ -41,6 +42,11 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="GradeMyBuilding — Inspect. Grade. Trust."
+        description="Professional building inspections and A+ to F grading for inspectors, agents, appraisers, and owners. Streamline inspections and share trusted results."
+        path="/"
+      />
       {/* Navigation Header */}
       <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,6 +89,7 @@ const Landing = () => {
         </div>
       </header>
 
+      <main>
       {/* Hero Section with Background Image */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center">
         {/* Background Video */}
@@ -182,6 +189,7 @@ const Landing = () => {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border bg-background">
