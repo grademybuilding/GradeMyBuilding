@@ -1,6 +1,7 @@
 import { Check, Zap, Star, Crown, Rocket } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Seo } from "@/components/SEO/Seo";
 
 const pricingPlans = [
   {
@@ -39,7 +40,12 @@ const pricingPlans = [
 
 export default function Pricing() {
   return (
-    <section className="p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
+    <main className="p-4 md:p-6 lg:p-8 pb-20 md:pb-8">
+      <Seo
+        title="Pricing — GradeMyBuilding Plans for Every Team"
+        description="Choose a GradeMyBuilding plan: Free/Starter, Professional, Business, or Enterprise. 14-day free trial on Professional and annual discounts available."
+        path="/pricing"
+      />
       {/* Hero Section */}
       <header className="text-center mb-12">
         <h1 className="text-4xl font-bold text-foreground mb-4">
@@ -126,6 +132,6 @@ export default function Pricing() {
           <span className="font-semibold text-foreground">Annual discount</span> (20% off for yearly commitment)
         </p>
       </div>
-    </section>
+    </main>
   );
 }

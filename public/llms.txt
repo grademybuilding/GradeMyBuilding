@@ -1,0 +1,11 @@
+# GradeMyBuilding
+
+> Professional building inspection and grading platform. Inspectors, agents, appraisers, assessors, underwriters, and owners use it to grade buildings A+ to F with photos, reports, and shareable results.
+
+## Pages
+
+- [Home](/): What GradeMyBuilding does and who it serves.
+- [Search Building Grades](/search): Look up inspection grades for buildings by address, city, state, or property type.
+- [Pricing](/pricing): Subscription tiers from Free/Starter to Enterprise.
+- [Contact](/contact): Get answers from the AI Inspector Assistant or message the team.
+- [Sign In / Sign Up](/auth): Create an account or sign in.

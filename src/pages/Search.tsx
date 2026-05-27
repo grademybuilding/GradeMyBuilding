@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { PublicHeader } from "@/components/Layout/PublicHeader";
+import { Seo } from "@/components/SEO/Seo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -97,9 +98,15 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Search Building Grades — GradeMyBuilding"
+        description="Search inspection grades for buildings by address, city, state, or property type. Find trusted A+ to F building grades in your area."
+        path="/search"
+      />
       {/* Header */}
       <PublicHeader />
 
+      <main>
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-background via-background to-muted/20 py-12 border-b relative overflow-hidden">
         {/* Decorative Elements */}
@@ -296,6 +303,7 @@ const Search = () => {
           </div>
         )}
       </div>
+      </main>
     </div>
   );
 };
