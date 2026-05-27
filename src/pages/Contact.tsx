@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PublicHeader } from "@/components/Layout/PublicHeader";
+import { Seo } from "@/components/SEO/Seo";
 import { EmbeddedChat } from "@/components/AIChat/EmbeddedChat";
 import { supabase } from "@/integrations/supabase/client";
 import { User, Mail, Building2, Briefcase, MessageSquare, Clock, ArrowRight } from "lucide-react";
@@ -70,8 +71,14 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Contact GradeMyBuilding — Talk to Our AI Inspector Assistant"
+        description="Ask the GradeMyBuilding AI Inspector Assistant or send our team a message. We respond instantly via AI and follow up personally within 24 hours."
+        path="/contact"
+      />
       <PublicHeader />
 
+      <main>
       {/* Hero */}
       <section className="py-10 md:py-14">
         <div className="container px-4 md:px-6 text-center max-w-3xl mx-auto">
@@ -248,6 +255,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      </main>
     </div>
   );
 };

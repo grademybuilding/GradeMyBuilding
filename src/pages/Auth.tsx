@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { Building2, FileCheck, Home, Briefcase, Calculator, Shield, ArrowLeft, ArrowRight, CheckCircle2, Check, X } from "lucide-react";
 import { UserRole } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/Layout/ThemeToggle";
+import { Seo } from "@/components/SEO/Seo";
 
 const US_STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"];
 
@@ -269,7 +270,12 @@ export default function Auth() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4 relative">
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4 relative">
+      <Seo
+        title="Sign In or Sign Up — GradeMyBuilding"
+        description="Sign in to GradeMyBuilding or create a free account as an Inspector, Appraiser, or Real Estate Agent to start grading buildings."
+        path="/auth"
+      />
       {/* Theme Toggle */}
       <div className="absolute top-4 right-4">
         <ThemeToggle />
@@ -638,6 +644,6 @@ export default function Auth() {
           </Tabs>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 }
